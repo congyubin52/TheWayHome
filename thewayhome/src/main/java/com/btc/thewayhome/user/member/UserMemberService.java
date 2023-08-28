@@ -50,4 +50,12 @@ public class UserMemberService implements IUserMemberService{
             return 0;
         }
     }
+
+    public int userMemeberDeleteConfirm(int u_m_no) {
+        log.info("[UserMemberService] userMemeberDeleteConfirm");
+
+        return iUserMemberDaoMapper.deleteUserMember(u_m_no);
+
+
+    }
 }
