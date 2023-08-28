@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.thewayhome.admin.member.IAdminMemberDaoMapper">
+
+    <insert id="insertShelterNum" parameterType="com.btc.thewayhome.admin.member.ShelterNumDto">
+        INSERT INTO tbl_shelterNum(s_no, s_name)
+        VALUES(#{s_no}, #{s_name})
+    </insert>
+
+
+</mapper>
