@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<header th:fragment="header">
+    <div id="header_wrap">
+        <a th:href="@{/}">홈</a>
+        <a th:href="@{/admin/member/create_account_form}">회원가입</a>
+        <a th:href="@{/admin/member/member_login_form}">로그인</a>
+    </div>
+</header>
 
-</body>
-</html>
+<nav th:fragment="nav">
+    <div id="nav_wrap">
+
+    </div>
+</nav>
+
+<footer th:fragment="footer">
+    <div id="footer_wrap">
+        Copyright ©OFFICE Corp.All Rights Reserved.
+    </div>
+</footer>
