@@ -52,7 +52,7 @@ public class UserMemberService implements IUserMemberService{
     }
 
     public int userMemeberDeleteConfirm(int u_m_no) {
-        log.info("[UserMemberService] userMemeberDeleteConfirm");
+        log.info("[UserMemberService] userMemeberDeleteConfirm()");
 
         return iUserMemberDaoMapper.deleteUserMember(u_m_no);
 

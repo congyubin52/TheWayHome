@@ -46,7 +46,7 @@ public class UserMemberController {
         log.info("[UserMemberController] userMemeberDelete()");
 
 
-        String nextPage = "redirect:/member/user/member_logout_confirm";
+        String nextPage = "redirect:/user/member/member_logout_confirm";
 
         UserMemberDto loginedUserMemberDto =
                 (UserMemberDto) session.getAttribute("loginedUserMemberDto");

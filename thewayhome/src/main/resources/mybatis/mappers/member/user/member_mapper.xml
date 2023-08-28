@@ -4,6 +4,14 @@
 
 <mapper namespace="com.btc.thewayhome.user.member.IUserMemberDaoMapper">
 
+    <update id="deleteUserMember" parameterType="Integer">
 
+        UPDATE
+            use_yn
+        SET
+            use_yn = 'N'
+        WHERE
+            u_m_no = #{u_m_no}
+    </update>
 
 </mapper>
