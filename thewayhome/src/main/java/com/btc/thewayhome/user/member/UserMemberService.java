@@ -32,15 +32,15 @@ public class UserMemberService implements IUserMemberService{
 
             switch (result) {
                 case DATABASE_COMMUNICATION_TROUBLE:
-                    System.out.println("[MemberService] DATABASE COMMUNICATION TROUBLE");
+                    System.out.println("[UserMemberService] DATABASE COMMUNICATION TROUBLE");
                     break;
 
                 case INSERT_FAIL_AT_DATABASE:
-                    System.out.println("[MemberService] INSERT FAIL AT DATABASE");
+                    System.out.println("[UserMemberService] INSERT FAIL AT DATABASE");
                     break;
 
                 case INSERT_SUCCESS_AT_DATABASE:
-                    System.out.println("[MemberService] INSERT SUCCESS AT DATABASE");
+                    System.out.println("[UserMemberService] INSERT SUCCESS AT DATABASE");
                     break;
             }
 
