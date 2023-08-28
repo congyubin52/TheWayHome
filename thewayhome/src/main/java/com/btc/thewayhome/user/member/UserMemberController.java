@@ -1,5 +1,6 @@
 package com.btc.thewayhome.user.member;
 
+import lombok.extern.log4j.Log4j2;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,25 @@ public class UserMemberController {
 
     @GetMapping("/create_account_form")
     public String createAccountForm() {
-        System.out.println("[UserMemberController] createAccountForm()");
+        log.info("[UserMemberController] createAccountForm()");
 
         String nextPage = "/member/user/create_account_form";
+
+        return nextPage;
+
+    }
+
+    @GetMapping("/create_account_confirm")
+    public String createAccountConfirm(UserMemberDto userMemberDto) {
+        log.info("[UserMemberController] createAccountConfirm()");
+
+        String nextPage = "redirect:/member/user/create_account_form";
+
+        int result = userMemberService.createAccountConfirm(userMemberDto);
+        if(result > userMemberService.INSERT_FAIL_AT_DATABASE) {
+            nextPage = "/member/user/member_login_form";
+
+        }
 
         return nextPage;
 

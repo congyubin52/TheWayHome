@@ -7,5 +7,6 @@ public interface IUserMemberService {
 
     public int userMemeberDeleteConfirm(int uMNo);
 
+    public int createAccountConfirm(UserMemberDto userMemberDto);
 
 }
