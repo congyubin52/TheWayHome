@@ -10,16 +10,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 @Log4j2
 @Controller
-@RequestMapping("/member/admin")
+@RequestMapping("/admin/member")
 public class AdminMemberController {
 
     @Autowired
     AdminMemberService adminMemberService;
-
-
 
     // 보호소 api db에 삽입
     @RequestMapping("/")
@@ -27,6 +26,34 @@ public class AdminMemberController {
         log.info("shelterRegist()");
         StringBuilder result = new StringBuilder();
         ShelterNumDto shelterNumDto = new ShelterNumDto();
+
+
+
+        try {
+            String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?" +
+                    "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
+                    "&_type=json" +
+                    "&pageNo=1" +
+                    "&numOfRows=5";
+            System.out.println(">>url: " + apiUrl);
+            URL url = new URL(apiUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            BufferedReader br;
+
+            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+            String returnLine;
+
+            while ((returnLine = br.readLine()) != null) {
+                result.append(returnLine);
+            }
+            urlConnection.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         try {
             String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/shelter?" +
                     "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
@@ -54,7 +81,7 @@ public class AdminMemberController {
         return "result";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/admin_member_confirm")
     public Object shelterRegistInfo(){
         log.info("shelterRegistInfo()");
         StringBuilder result = new StringBuilder();
@@ -65,7 +92,7 @@ public class AdminMemberController {
                     "&_type=json" +
                     "&pageNo=1" +
                     "&numOfRows=5";
-            System.out.println(">>url: " + apiUrl);
+//            System.out.println(">>url: " + apiUrl);
             URL url = new URL(apiUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -87,13 +114,13 @@ public class AdminMemberController {
     }
 
 
-    @GetMapping("/create_account_form")
-    public String createAccountForm(){
-        log.info("createAccountForm()");
-
-        String nextPage = "/admin/member/create_account_form";
-
-        return nextPage;
-
-    }
+//    @GetMapping("/create_account_form")
+//    public String createAccountForm(){
+//        log.info("createAccountForm()");
+//
+//        String nextPage = "/member/member/create_account_form";
+//
+//        return nextPage;
+//
+//    }
 }

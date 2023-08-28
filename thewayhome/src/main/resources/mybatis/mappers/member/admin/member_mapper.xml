@@ -10,4 +10,10 @@
     </insert>
 
 
+    <insert id="insertShelterInfo" parameterType="com.btc.thewayhome.admin.member.ShelterInfoDto">
+        INSERT INTO tbl_shelterInfo(s_name, s_phone, s_address, s_reg_date, s_mod_date)
+        VALUES(#{s_name}, #{s_phone}, #{s_address}, NOW(), NOW())
+    </insert>
+
+
 </mapper>
