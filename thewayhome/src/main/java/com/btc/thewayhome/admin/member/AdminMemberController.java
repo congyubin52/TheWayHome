@@ -14,7 +14,7 @@ public class AdminMemberController {
 
     @Autowired
     AdminMemberService adminMemberService;
-    
+
     //회원가입
     @GetMapping("/create_account_form")
     public String createAccountForm() {
@@ -42,6 +42,18 @@ public class AdminMemberController {
         return nextPage;
 
     }
+
+    // 로그인
+    @GetMapping("/login_form")
+    public String loginForm() {
+        log.info("[AdminMemberController] loginForm()");
+
+        String nextPage = "/member/admin/login_form";
+
+        return nextPage;
+
+    }
+
 
 
 }
