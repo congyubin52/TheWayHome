@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>타이틀</title>
+
+    <script th:src="@{/js/user/member_login_form_js.js}" type="text/javascript"></script>
+
+</head>
+<body>
+
+    <section>
+        <div id="section_wrap">
+            <div class="word">
+                USER LOGIN FORM
+            </div>
+
+            <div class="create_account_form">
+                <form th:action="@{/user/member/member_login_confirm}" name="member_login_form" method="post">
+                    <input type="text" name="u_m_id" placeholder="INPUT ID"><br>
+                    <input type="password" name="u_m_pw" placeholder="INPUT PW"><br>
+                    <input type="button" value="login" onclick="memberLoginForm();">
+                </form>
+            </div>
+
+            <div class="go_login_form">
+                <a th:href="@{/user/member/create_account_form}">Don't you have an account? create account.</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -28,7 +28,7 @@ public class UserMemberService implements IUserMemberService{
 
             userMemberDto.setU_m_pw(passwordEncoder.encode(userMemberDto.getU_m_pw()));
 
-            int result = iUserMemberDaoMapper.insertMember(userMemberDto);
+            int result = iUserMemberDaoMapper.insertUserMember(userMemberDto);
 
             switch (result) {
                 case DATABASE_COMMUNICATION_TROUBLE:
