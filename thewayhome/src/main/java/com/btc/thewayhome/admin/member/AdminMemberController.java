@@ -1,6 +1,10 @@
 package com.btc.thewayhome.admin.member;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +14,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -24,10 +30,9 @@ public class AdminMemberController {
     @RequestMapping("/")
     public Object shelterRegistNum() {
         log.info("shelterRegist()");
-        StringBuilder result = new StringBuilder();
+//        StringBuilder result = new StringBuilder();
+        List<String> result = new ArrayList<>();
         ShelterNumDto shelterNumDto = new ShelterNumDto();
-
-
 
         try {
             String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?" +
@@ -44,8 +49,58 @@ public class AdminMemberController {
             br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
             String returnLine;
 
+            StringBuilder response = new StringBuilder();
+
             while ((returnLine = br.readLine()) != null) {
-                result.append(returnLine);
+                result.add(returnLine);
+            }
+            urlConnection.disconnect();
+
+
+            // Jackson ObjectMapper를 사용하여 JSON 파싱
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(response.toString());
+
+            JsonNode itemArrayNode = rootNode
+                    .get("response")
+                    .get("body")
+                    .get("items")
+                    .get("item");
+
+            for (JsonNode itemNode : itemArrayNode) {
+                String orgCd = itemNode.get("orgCd").asText();
+                result.add(orgCd);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // result 리스트에 "orgCd" 값들이 저장되어 있음
+        for (String orgCd : result) {
+            System.out.println("orgCd: " + orgCd);
+        }
+//
+//        log.info(result.size());
+
+        try {
+            String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu?" +
+                    "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
+                    "&upr_cd=" +
+                    "&_type=json" +
+                    "&pageNo=1" +
+                    "&numOfRows=5";
+            System.out.println(">>url: " + apiUrl);
+            URL url = new URL(apiUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            BufferedReader br;
+
+            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+            String returnLine;
+
+            while ((returnLine = br.readLine()) != null) {
+                result.add(returnLine);
             }
             urlConnection.disconnect();
 
@@ -70,7 +125,7 @@ public class AdminMemberController {
             String returnLine;
 
             while ((returnLine = br.readLine()) != null) {
-                result.append(returnLine);
+                result.add(returnLine);
             }
             urlConnection.disconnect();
 
