@@ -22,9 +22,9 @@ public class SpringSecurityConfig {
 	}
 
 	@Bean
-	@Order(1)
+//	@Order(1)
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		log.info("filterChain");
+		log.info("UserFilterChain");
 
 		http.csrf().disable()
 				.cors().disable()
@@ -34,18 +34,20 @@ public class SpringSecurityConfig {
 								"/user/member/create_account_form", "/user/member/create_account_confirm").permitAll()   // Security 제외
 						.anyRequest().authenticated()
 				)
-				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
-						.loginPage("/user/member/member_login_form")            // 로그인시 폼 주소 설정
-						.loginProcessingUrl("/member_login_confirm")
+				.formLogin(login -> login                           	// 로그인 시 폼(form)을 이용
+						.loginPage("/user/member/member_login_form")    // 로그인시 폼 주소 설정
+						.loginProcessingUrl("/user/member/member_login_confirm")
 						.usernameParameter("u_m_id")
 						.passwordParameter("u_m_pw")
 						.defaultSuccessUrl("/", true)
+						.failureUrl("/user/member/create_account_form")
 						.permitAll())
 				.logout()
 				.logoutUrl("/user/member/member_logout_confirm")
 				.logoutSuccessUrl("/");
 		return http.build();
 	}
+
 	@Bean
 	@Order(2)
 	public SecurityFilterChain filterChainAdmin(HttpSecurity http) throws Exception {
@@ -61,7 +63,7 @@ public class SpringSecurityConfig {
 				)
 				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
 						.loginPage("/admin/member/member_login_form")            // 로그인시 폼 주소 설정
-						.loginProcessingUrl("/member_login_confirm")
+						.loginProcessingUrl("/admin/member/member_login_confirm")
 						.usernameParameter("a_m_id")
 						.passwordParameter("a_m_pw")
 						.defaultSuccessUrl("/", true)
