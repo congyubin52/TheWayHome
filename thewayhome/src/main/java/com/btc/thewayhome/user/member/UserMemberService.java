@@ -28,19 +28,19 @@ public class UserMemberService implements IUserMemberService{
 
             userMemberDto.setU_m_pw(passwordEncoder.encode(userMemberDto.getU_m_pw()));
 
-            int result = iUserMemberDaoMapper.insertMember(userMemberDto);
+            int result = iUserMemberDaoMapper.insertUserMember(userMemberDto);
 
             switch (result) {
                 case DATABASE_COMMUNICATION_TROUBLE:
-                    System.out.println("[MemberService] DATABASE COMMUNICATION TROUBLE");
+                    System.out.println("[UserMemberService] DATABASE COMMUNICATION TROUBLE");
                     break;
 
                 case INSERT_FAIL_AT_DATABASE:
-                    System.out.println("[MemberService] INSERT FAIL AT DATABASE");
+                    System.out.println("[UserMemberService] INSERT FAIL AT DATABASE");
                     break;
 
                 case INSERT_SUCCESS_AT_DATABASE:
-                    System.out.println("[MemberService] INSERT SUCCESS AT DATABASE");
+                    System.out.println("[UserMemberService] INSERT SUCCESS AT DATABASE");
                     break;
             }
 
@@ -49,5 +49,13 @@ public class UserMemberService implements IUserMemberService{
         } else {
             return 0;
         }
+    }
+
+    public int userMemeberDeleteConfirm(int u_m_no) {
+        log.info("[UserMemberService] userMemeberDeleteConfirm()");
+
+        return iUserMemberDaoMapper.deleteUserMember(u_m_no);
+
+
     }
 }
