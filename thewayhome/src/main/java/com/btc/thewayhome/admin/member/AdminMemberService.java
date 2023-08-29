@@ -20,6 +20,7 @@ public class AdminMemberService implements IAdminMemberService {
     PasswordEncoder passwordEncoder;
 
     //회원가입
+    @Override
     public int createAccountConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] createAccountConfirm()");
 
@@ -57,6 +58,35 @@ public class AdminMemberService implements IAdminMemberService {
         } else {
             return INSERT_FAIL_AT_DATABASE;
 
+        }
+
+    }
+
+    // 로그인
+    @Override
+    public AdminMemberDto loginConfirm(AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberService] loginConfirm()");
+
+        AdminMemberDto idVerifiedAdminDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
+        /*if(idVerifiedAdminDto != null && passwordEncoder.matches(adminMemberDto.getA_m_pw(), idVerifiedAdminDto.getA_m_pw()))*/
+        if(idVerifiedAdminDto != null){
+            return idVerifiedAdminDto;
+        } else {
+            return null;
+        }
+
+    }
+
+    //회원정보 수정
+    @Override
+    public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberService] memberModifyConfirm()");
+
+        int result = iAdminMemberDaoMapper.updateAccount(adminMemberDto);
+        if(result > 0) {
+            return iAdminMemberDaoMapper.getLatestAccountInfo(adminMemberDto);
+        } else {
+            return null;
         }
 
     }

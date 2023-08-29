@@ -17,11 +17,7 @@ public class HomeController {
     @GetMapping({"", "/"})
     public String home() {
         System.out.println("[HomeController] home()");
-        log.trace("[HomeController] home()");
-        log.debug("[HomeController] home()");
         log.info("[HomeController] home()");
-        log.warn("[HomeController] home()");
-        log.error("[HomeController] home()");
 
         return "home";
     }

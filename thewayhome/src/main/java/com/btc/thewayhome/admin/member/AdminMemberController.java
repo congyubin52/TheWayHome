@@ -1,8 +1,10 @@
 package com.btc.thewayhome.admin.member;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,7 @@ public class AdminMemberController {
     public String createAccountForm() {
         log.info("[AdminMemberController] createAccountForm()");
 
-        String nextPage = "member/admin/create_account_form";
+        String nextPage = "admin/member/create_account_form";
 
         return nextPage;
 
@@ -36,7 +38,7 @@ public class AdminMemberController {
         int result = adminMemberService.createAccountConfirm(adminMemberDto);
 
         if(result <= 0) {
-            nextPage = "member/admin/create_account_fail";
+            nextPage = "admin/member/create_account_fail";
         }
 
         return nextPage;
@@ -44,16 +46,81 @@ public class AdminMemberController {
     }
 
     // 로그인
-    @GetMapping("/login_form")
-    public String loginForm() {
-        log.info("[AdminMemberController] loginForm()");
+    @GetMapping("/member_login_form")
+    public String memberLoginForm() {
+        log.info("[AdminMemberController] memberLoginForm()");
 
-        String nextPage = "/member/admin/login_form";
+        String nextPage = "admin/member/member_login_form";
 
         return nextPage;
 
     }
 
+    @PostMapping("/member_login_confirm")
+    public String memberLoginConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
+        log.info("[AdminMemberController] memberLoginConfirm()");
 
+        String nextPage = "redirect:/";
+
+        AdminMemberDto loginedAdminMemberDto = adminMemberService.loginConfirm(adminMemberDto);
+
+        if(loginedAdminMemberDto != null) {
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60*30);
+
+            log.info("loginedAdminMemberDto" + loginedAdminMemberDto.getA_m_id());
+
+        } else {
+            nextPage = "admin/member/member_login_fail";
+        }
+
+        return nextPage;
+
+    }
+
+    //로그아웃
+    @GetMapping("/member_logout_comfirm")
+    public String memberLogoutConfirm(HttpSession session) {
+        log.info("[AdminMemberController] memberLogoutConfirm()");
+
+        String nextPage = "redirect:/";
+
+        session.removeAttribute("loginedAdminMemberDto");
+
+        return nextPage;
+
+    }
+
+    //회원정보 수정
+    @GetMapping("/member_modify_form")
+    public String memberModifyForm() {
+        log.info("[AdminMemberController] memberModifyForm()");
+
+        String nextPage = "admin/member/member_modify_form";
+
+        return nextPage;
+
+    }
+
+    @PostMapping("/member_modify_confirm")
+    public String memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberController] memberModifyConfirm()");
+
+        String nextPage = "/admin/member/member_modify_success";
+
+        AdminMemberDto loginedAdminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
+
+        if(loginedAdminMemberDto != null) {
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60*30);
+
+        } else {
+            nextPage = "/admin/member/member_modify_fail";
+
+        }
+
+        return nextPage;
+
+    }
 
 }
