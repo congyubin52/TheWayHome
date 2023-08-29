@@ -5,9 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface IUserMemberDaoMapper {
 
-    boolean isMember(String uMId);
+    boolean isMember(String u_m_id);
 
-    int insertMember(UserMemberDto userMemberDto);
+    int insertUserMember(UserMemberDto userMemberDto);
 
     public UserMemberDto updateUserMember(UserMemberDto userMemberDto);
 

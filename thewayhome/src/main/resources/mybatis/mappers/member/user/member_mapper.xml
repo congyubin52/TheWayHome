@@ -4,6 +4,26 @@
 
 <mapper namespace="com.btc.thewayhome.user.member.IUserMemberDaoMapper">
 
+    <select id="isMember" parameterType="String" resultType="Boolean">
+
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_member_user
+        WHERE u_m_id = #{u_m_id}
+
+    </select>
+
+    <insert id="insertUserMember" parameterType="com.btc.thewayhome.user.member.UserMemberDto" >
+
+        INSERT INTO
+            tbl_member_user(u_m_id, u_m_pw, u_m_name, u_m_phone, u_m_mail, u_m_reg_date, u_m_mod_date)
+        VALUES
+            (#{u_m_id}, #{u_m_pw}, #{u_m_name}, #{u_m_phone}, #{u_m_mail}, NOW(),NOW())
+
+
+    </insert>
+
     <update id="deleteUserMember" parameterType="Integer">
 
         UPDATE

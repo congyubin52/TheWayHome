@@ -20,7 +20,7 @@ public class UserMemberController {
     public String createAccountForm() {
         log.info("[UserMemberController] createAccountForm()");
 
-        String nextPage = "/member/user/create_account_form";
+        String nextPage = "/user/member/create_account_form";
 
         return nextPage;
 
@@ -30,17 +30,29 @@ public class UserMemberController {
     public String createAccountConfirm(UserMemberDto userMemberDto) {
         log.info("[UserMemberController] createAccountConfirm()");
 
-        String nextPage = "redirect:/member/user/create_account_form";
+        String nextPage = "redirect:/user/member/create_account_form";
 
         int result = userMemberService.createAccountConfirm(userMemberDto);
         if(result > userMemberService.INSERT_FAIL_AT_DATABASE) {
-            nextPage = "/member/user/member_login_form";
+            nextPage = "/user/member/member_login_form";
 
         }
 
         return nextPage;
 
     }
+
+    @GetMapping("/member_login_form")
+    public String memberLoginForm() {
+        log.info("[UserMemberController] memberLoginForm()");
+
+        String nextPage = "/user/member/member_login_form";
+
+        return nextPage;
+
+    }
+
+    @PostMapping("/user_delete_confirm")
 
     @GetMapping ("/member_modify_form")
     public String userMemeberModfiyForm() {
@@ -78,6 +90,7 @@ public class UserMemberController {
     @PostMapping("/member_delete_confirm")
     public String userMemeberDeleteConfirm(HttpSession session) {
         log.info("[UserMemberController] userMemeberDelete()");
+
 
         String nextPage = "redirect:/user/member/member_logout_confirm";
 
