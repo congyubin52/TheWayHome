@@ -23,15 +23,36 @@ public class AdminMemberService implements IAdminMemberService{
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
 
+            System.out.println("service ------------------------------------> " + jsonObj);
+
             JSONObject parseResponse = (JSONObject) jsonObj.get("response");
             JSONObject parseBody = (JSONObject) parseResponse.get("body");
 
             JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
 
-            JSONArray array = (JSONArray) items.get("item"); // item is a JSONArray inside items
+//            JSONArray array = (JSONArray) items.get("item"); // item is a JSONArray inside items
+//
+//
+//
+//
+//            for (int i = 0; i < array.size(); i++) {
+//                JSONObject jObj = (JSONObject) array.get(i);
+//                shelterNumDto.setS_no(jObj.get("careRegNo").toString());
+//                shelterNumDto.setS_name(jObj.get("careNm").toString());
+//                iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
+            Object item = items.get("item");
 
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject jObj = (JSONObject) array.get(i);
+            if (item instanceof JSONArray) {
+                JSONArray array = (JSONArray) item; // item is a JSONArray
+
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject jObj = (JSONObject) array.get(i);
+                    shelterNumDto.setS_no(jObj.get("careRegNo").toString());
+                    shelterNumDto.setS_name(jObj.get("careNm").toString());
+                    iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
+                }
+            } else if (item instanceof JSONObject) {
+                JSONObject jObj = (JSONObject) item; // item is a single JSONObject
                 shelterNumDto.setS_no(jObj.get("careRegNo").toString());
                 shelterNumDto.setS_name(jObj.get("careNm").toString());
                 iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);

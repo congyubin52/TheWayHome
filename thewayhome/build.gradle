@@ -44,6 +44,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
 
+	implementation 'com.google.code.gson:gson:2.8.8'
+
 }
 
 tasks.named('test') {
