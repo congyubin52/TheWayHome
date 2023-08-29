@@ -31,12 +31,15 @@ public class SpringSecurityConfig {
 				.authorizeHttpRequests(request -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-								"/user/member/create_account_form", "/user/member/create_account_confirm").permitAll()   // Security 제외
+								"/user/member/create_account_form",
+								"/user/member/create_account_confirm",
+								"/user/member/member_modify_form",
+								"/user/member/member_modify_confirm").permitAll()   // Security 제외
 						.anyRequest().authenticated()
 				)
 				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
 						.loginPage("/user/member/member_login_form")            // 로그인시 폼 주소 설정
-						.loginProcessingUrl("/member_login_confirm")
+						.loginProcessingUrl("/user/member/member_login_confirm")
 						.usernameParameter("u_m_id")
 						.passwordParameter("u_m_pw")
 						.defaultSuccessUrl("/", true)
@@ -61,7 +64,7 @@ public class SpringSecurityConfig {
 				)
 				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
 						.loginPage("/admin/member/member_login_form")            // 로그인시 폼 주소 설정
-						.loginProcessingUrl("/member_login_confirm")
+						.loginProcessingUrl("/user/member/member_login_confirm")
 						.usernameParameter("a_m_id")
 						.passwordParameter("a_m_pw")
 						.defaultSuccessUrl("/", true)

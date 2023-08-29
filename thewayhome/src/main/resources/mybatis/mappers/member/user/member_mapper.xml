@@ -27,7 +27,7 @@
     <update id="deleteUserMember" parameterType="Integer">
 
         UPDATE
-            tbl_user_member
+            tbl_member_user
         SET
             use_yn = 'N',
             u_mod_date = NOW()
@@ -38,7 +38,7 @@
     <update id="updateUserMember" parameterType="com.btc.thewayhome.user.member.UserMemberDto">
 
         UPDATE
-            tbl_user_member
+            tbl_member_user
         SET
             u_m_pw = #{u_m_pw},
             u_m_name = #{u_m_name},

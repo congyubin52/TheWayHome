@@ -52,7 +52,7 @@ public class UserMemberController {
 
     }
 
-    @PostMapping("/user_delete_confirm")
+
 
     @GetMapping ("/member_modify_form")
     public String userMemeberModfiyForm() {
@@ -63,6 +63,8 @@ public class UserMemberController {
         return nextPage;
 
     }
+
+
 
     @PostMapping ("/member_modify_confirm")
     public String userMemeberModfiyConfirm(HttpSession session, UserMemberDto userMemberDto) {
@@ -81,16 +83,14 @@ public class UserMemberController {
             nextPage = "redirect:/user/member/member_modify_form";
         }
 
-
         return nextPage;
 
     }
 
 
     @PostMapping("/member_delete_confirm")
-    public String userMemeberDeleteConfirm(HttpSession session) {
-        log.info("[UserMemberController] userMemeberDelete()");
-
+    public String userMemberDeleteConfirm(HttpSession session) {
+        log.info("[UserMemberController] userMemberDeleteConfirm()");
 
         String nextPage = "redirect:/user/member/member_logout_confirm";
 

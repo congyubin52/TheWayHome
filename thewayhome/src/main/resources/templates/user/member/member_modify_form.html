@@ -15,13 +15,18 @@
             USER MODIFY FORM
         </div>
 
-        <div class="modify_form">
-            <form th:action="@{/user/member/modify_confirm}" name="member_modify_form" method="post">
-                <input type="text" name="u_m_id" th:value="${session.loginedUserMemberDto.u_m_id}" readonly><br>
-                <input type="password" name="u_m_pw" th:value="${session.loginedUserMemberDto.u_m_name}"><br>
-                <input type="text" name="u_m_name" th:value="${session.loginedUserMemberDto.u_m_name}"><br>
-                <input type="email" name="u_m_mail" th:value="${session.loginedUserMemberDto.u_m_mail}"><br>
-                <input type="text" name="u_m_phone" th:value="${session.loginedUserMemberDto.u_m_phone}"><br>
+        <div class="create_account_form">
+            <form th:action="@{/user/member/member_modify_confirm}" name="member_modify_form" method="post">
+<!--                <input type="text" name="u_m_id" th:value="${session.loginedUserMemberDto.u_m_id}" readonly><br>-->
+<!--                <input type="password" name="u_m_pw" th:value="${session.loginedUserMemberDto.u_m_name}"><br>-->
+<!--                <input type="text" name="u_m_name" th:value="${session.loginedUserMemberDto.u_m_name}"><br>-->
+<!--                <input type="email" name="u_m_mail" th:value="${session.loginedUserMemberDto.u_m_mail}"><br>-->
+<!--                <input type="text" name="u_m_phone" th:value="${session.loginedUserMemberDto.u_m_phone}"><br> -->
+                <input type="text" name="u_m_id" placeholder="1" readonly><br>
+                <input type="password" name="u_m_pw" placeholder="2"><br>
+                <input type="text" name="u_m_name" placeholder="3"><br>
+                <input type="email" name="u_m_mail" placeholder="4"><br>
+                <input type="text" name="u_m_phone" placeholder="5"><br>
                 <input type="button" value="modify" onclick="memberModifyForm();">
                 <input type="reset" value="reset">
             </form>
