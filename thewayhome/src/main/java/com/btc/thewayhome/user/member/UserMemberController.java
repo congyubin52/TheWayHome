@@ -26,7 +26,7 @@ public class UserMemberController {
 
     }
 
-    @GetMapping("/create_account_confirm")
+    @PostMapping("/create_account_confirm")
     public String createAccountConfirm(UserMemberDto userMemberDto) {
         log.info("[UserMemberController] createAccountConfirm()");
 

@@ -24,6 +24,17 @@
 
     </insert>
 
+    <select id="selectUserMemberForLogin"
+            parameterType="com.btc.thewayhome.user.member.UserMemberDto"
+            resultType="com.btc.thewayhome.user.member.UserMemberDto">
+        SELECT
+            *
+        FROM
+            tbl_member_user
+        WHERE
+            u_m_id = #{u_m_id}
+    </select>
+
     <update id="deleteUserMember" parameterType="Integer">
 
         UPDATE
