@@ -41,10 +41,43 @@ public class UserMemberController {
         return nextPage;
 
     }
-    @PostMapping("/user_delete_confirm")
+
+    @GetMapping ("/member_modify_form")
+    public String userMemeberModfiyForm() {
+        log.info("[UserMemberController] userMemeberModfiyForm()");
+
+        String nextPage = "/user/member/member_modify_form";
+
+        return nextPage;
+
+    }
+
+    @PostMapping ("/member_modify_confirm")
+    public String userMemeberModfiyConfirm(HttpSession session, UserMemberDto userMemberDto) {
+        log.info("[UserMemberController] userMemeberModfiyConfirm()");
+
+        String nextPage = "/user/member/member_modify_success";
+
+        UserMemberDto loginedUserMemberDto =
+                (UserMemberDto) session.getAttribute("loginedUserMemberDto");
+        UserMemberDto updateUserDto = userMemberService.userMemeberModifyConfirm(loginedUserMemberDto.getU_m_no(), userMemberDto);
+
+        if(updateUserDto != null){
+            session.setAttribute("loginedUserMemberDto", updateUserDto);
+            session.setMaxInactiveInterval(60 * 30);
+        } else {
+            nextPage = "redirect:/user/member/member_modify_form";
+        }
+
+
+        return nextPage;
+
+    }
+
+
+    @PostMapping("/member_delete_confirm")
     public String userMemeberDeleteConfirm(HttpSession session) {
         log.info("[UserMemberController] userMemeberDelete()");
-
 
         String nextPage = "redirect:/user/member/member_logout_confirm";
 

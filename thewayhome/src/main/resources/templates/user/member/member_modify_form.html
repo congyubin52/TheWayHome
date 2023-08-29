@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>타이틀</title>
+
+    <script th:src="@{/js/user/member_modify_form_js.js}" type="text/javascript"></script>
+
+</head>
+<body>
+
+<section>
+    <div id="section_wrap">
+        <div class="word">
+            USER MODIFY FORM
+        </div>
+
+        <div class="modify_form">
+            <form th:action="@{/user/member/modify_confirm}" name="member_modify_form" method="post">
+                <input type="text" name="u_m_id" th:value="${session.loginedUserMemberDto.u_m_id}" readonly><br>
+                <input type="password" name="u_m_pw" th:value="${session.loginedUserMemberDto.u_m_name}"><br>
+                <input type="text" name="u_m_name" th:value="${session.loginedUserMemberDto.u_m_name}"><br>
+                <input type="email" name="u_m_mail" th:value="${session.loginedUserMemberDto.u_m_mail}"><br>
+                <input type="text" name="u_m_phone" th:value="${session.loginedUserMemberDto.u_m_phone}"><br>
+                <input type="button" value="modify" onclick="memberModifyForm();">
+                <input type="reset" value="reset">
+            </form>
+        </div>
+
+        <div class="delete_account">
+            <a th:href="@{/user/member/member_delete_confirm}">delete account</a>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

@@ -7,9 +7,24 @@
     <update id="deleteUserMember" parameterType="Integer">
 
         UPDATE
-            use_yn
+            tbl_user_member
         SET
-            use_yn = 'N'
+            use_yn = 'N',
+            u_mod_date = NOW()
+        WHERE
+            u_m_no = #{u_m_no}
+    </update>
+
+    <update id="updateUserMember" parameterType="com.btc.thewayhome.user.member.UserMemberDto">
+
+        UPDATE
+            tbl_user_member
+        SET
+            u_m_pw = #{u_m_pw},
+            u_m_name = #{u_m_name},
+            u_m_mail = #{u_m_mail},
+            u_m_phone = #{u_m_phone},
+            u_mod_date = NOW()
         WHERE
             u_m_no = #{u_m_no}
     </update>

@@ -9,5 +9,7 @@ public interface IUserMemberDaoMapper {
 
     int insertMember(UserMemberDto userMemberDto);
 
+    public UserMemberDto updateUserMember(UserMemberDto userMemberDto);
+
     public int deleteUserMember(int u_m_no);
 }

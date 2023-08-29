@@ -56,6 +56,13 @@ public class UserMemberService implements IUserMemberService{
 
         return iUserMemberDaoMapper.deleteUserMember(u_m_no);
 
+    }
 
+    public UserMemberDto userMemeberModifyConfirm(int u_m_no, UserMemberDto userMemberDto) {
+        log.info("[UserMemberService] userMemeberModifyConfirm()");
+
+        userMemberDto.setU_m_no(u_m_no);
+
+        return iUserMemberDaoMapper.updateUserMember(userMemberDto);
     }
 }
