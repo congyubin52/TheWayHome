@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.BufferedReader;
@@ -28,7 +30,7 @@ public class AdminMemberController {
     public Object shelterRegistNum() {
         log.info("shelterRegist()");
 //        StringBuilder result = new StringBuilder();
-        while(true) {
+        while (true) {
             List<String> result = new ArrayList<>();
             String responseString = "";
             String orgCd = "";
@@ -68,32 +70,14 @@ public class AdminMemberController {
                 JSONObject parseResponse = (JSONObject) jsonObj.get("response");
                 JSONObject parseBody = (JSONObject) parseResponse.get("body");
                 JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
-//                JSONArray array = (JSONArray) items.get("item");
-//
-//
-//                for (int i = 0; i < array.size(); i++) {
-//                    JSONObject jObj = (JSONObject) array.get(i);
-//                    orgCd = jObj.get("orgCd").toString();
-//                    System.out.println("orgCd : " + orgCd);
-//                    orgCdList.add(jObj.get("orgCd").toString());
-//                }
+                JSONArray array = (JSONArray) items.get("item");
 
-                Object item = items.get("item");
 
-                if (item instanceof JSONArray) {
-                    JSONArray array = (JSONArray) item; // item is a JSONArray
-
-                    for (int i = 0; i < array.size(); i++) {
-                        JSONObject jObj = (JSONObject) array.get(i);
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject jObj = (JSONObject) array.get(i);
                     orgCd = jObj.get("orgCd").toString();
                     System.out.println("orgCd : " + orgCd);
-
-                    }
-                } else if (item instanceof JSONObject) {
-                    JSONObject jObj = (JSONObject) item; // item is a single JSONObject
-                    orgCd = jObj.get("orgCd").toString();
-                    System.out.println("orgCd : " + orgCd);
-
+                    orgCdList.add(jObj.get("orgCd").toString());
                 }
 
 
@@ -105,6 +89,7 @@ public class AdminMemberController {
 //
 //        log.info(result.size());
 
+            StringBuilder sigungu = new StringBuilder();
             try {
                 String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu?" +
                         "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
@@ -129,47 +114,30 @@ public class AdminMemberController {
                 }
                 urlConnection.disconnect();
 
-                responseString = response.toString();
 
+                responseString = response.toString();
+                System.out.println("response : " + response);
+                System.out.println("response : " + response);
+
+                System.out.println("responseString : " + responseString);
 
                 JSONParser jsonParser = new JSONParser();
                 JSONObject jsonObj = (JSONObject) jsonParser.parse(responseString);
-
                 JSONObject parseResponse = (JSONObject) jsonObj.get("response");
                 JSONObject parseBody = (JSONObject) parseResponse.get("body");
 
                 JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
 
-//                JSONArray array = (JSONArray) items.get("item");
-//
-//                for (int i = 0; i < array.size(); i++) {
-//                    JSONObject jObj = (JSONObject) array.get(i);
-//                    uprCd = jObj.get("uprCd").toString();
-//                    orgCd = jObj.get("orgCd").toString();
-//                    System.out.println("uprCd : " + uprCd);
-//                    System.out.println("orgCd : " + orgCd);
-//                }
+                System.out.println("items : " + items);
 
-                Object item = items.get("item");
+                JSONArray array = (JSONArray) items.get("item");
 
-                if (item instanceof JSONArray) {
-                    JSONArray array = (JSONArray) item; // item is a JSONArray
-
-                    for (int i = 0; i < array.size(); i++) {
-                        JSONObject jObj = (JSONObject) array.get(i);
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject jObj = (JSONObject) array.get(i);
                     uprCd = jObj.get("uprCd").toString();
                     orgCd = jObj.get("orgCd").toString();
                     System.out.println("uprCd : " + uprCd);
-                    System.out.println("orgCd : " + orgCd);
-
-                    }
-                } else if (item instanceof JSONObject) {
-                    JSONObject jObj = (JSONObject) item; // item is a single JSONObject
-                    uprCd = jObj.get("uprCd").toString();
-                    orgCd = jObj.get("orgCd").toString();
-                    System.out.println("uprCd : " + uprCd);
-                    System.out.println("orgCd : " + orgCd);
-
+                    System.out.println("orgCd : " + sigungu);
                 }
 
 
@@ -177,7 +145,7 @@ public class AdminMemberController {
                 e.printStackTrace();
             }
 
-
+//쉘터
             try {
                 String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/shelter?" +
                         "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
@@ -194,52 +162,91 @@ public class AdminMemberController {
 
                 br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
                 String returnLine;
-
+                StringBuilder response = new StringBuilder();
 
                 while ((returnLine = br.readLine()) != null) {
                     result.add(returnLine);
+                    response.append(returnLine);
                 }
                 urlConnection.disconnect();
+                responseString = response.toString();
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            adminMemberService.shelterRegistNum(result.toString(), shelterNumDto);
-            return "result";
-        }
-    }
+            adminMemberService.shelterRegistNum(responseString, shelterNumDto);
 
-    @RequestMapping("/admin_member_confirm")
-    public Object shelterRegistInfo(){
-        log.info("shelterRegistInfo()");
-        StringBuilder result = new StringBuilder();
-        ShelterInfoDto shelterInfoDto = new ShelterInfoDto();
-        try {
-            String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?" +
-                    "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
-                    "&_type=json" +
-                    "&pageNo=1" +
-                    "&numOfRows=5";
+            ShelterInfoDto shelterInfoDto = new ShelterInfoDto();
+
+            try {
+                String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?" +
+                        "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
+                        "&_type=json" +
+                        "&pageNo=1" +
+                        "&numOfRows=1000";
 //            System.out.println(">>url: " + apiUrl);
-            URL url = new URL(apiUrl);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            BufferedReader br;
+                URL url = new URL(apiUrl);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                BufferedReader br;
 
-            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
-            String returnLine;
+                br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+                String returnLine;
+                StringBuilder response = new StringBuilder();
 
-            while ((returnLine = br.readLine()) != null) {
-                result.append(returnLine);
+                while ((returnLine = br.readLine()) != null) {
+                    result.add(returnLine);
+                    response.append(returnLine);
+                }
+                urlConnection.disconnect();
+                responseString = response.toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            urlConnection.disconnect();
+            adminMemberService.shelterRegistInfo(responseString, shelterInfoDto);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            return null;
         }
-        adminMemberService.shelterRegistInfo(result.toString(), shelterInfoDto);
-        return "result";
     }
+
+        @GetMapping("/create_account_form")
+        public String createAccountForm() {
+            log.info("createAccountForm()");
+
+            String nextPage = "/admin/member/create_account_form";
+
+            return nextPage;
+        }
+
+        @PostMapping ("/create_account_confirm")
+        public String createAccountConfirm(AdminMemberDto adminMemberDto){
+            log.info("createAccountConfirm()");
+
+            AdminMemberDto shelterNameJoinDto = adminMemberService.ShelterNameJoin(adminMemberDto);
+
+            log.info("[AdminMemberController] shelterNameJoinDto" + shelterNameJoinDto);
+
+            String nextPage = "/admin/member/create_account_success";
+
+//            int result = adminMemberService.createAccountConfirm(adminMemberDto);
+//            if(result <= 0){
+//                nextPage = "/admin/member/create_account_fail";
+//            }
+
+            return nextPage;
+        }
+
+
+
+
+//    @RequestMapping("/admin_member_confirm")
+//    public Object shelterRegistInfo(){
+//        log.info("shelterRegistInfo()");
+//        StringBuilder result = new StringBuilder();
+//
+//    }
 
 
 //    @GetMapping("/create_account_form")

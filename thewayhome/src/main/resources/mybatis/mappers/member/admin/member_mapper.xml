@@ -15,5 +15,14 @@
         VALUES(#{s_name}, #{s_phone}, #{s_address}, NOW(), NOW())
     </insert>
 
+    <select id="ShelterNameJoin" parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
+    resultType="com.btc.thewayhome.admin.member.AdminMemberDto">
+        select a.s_name, a.s_no, b.s_phone, b.s_address
+        from
+            db_thewayhome.tbl_shelterNum a natural join db_thewayhome.tbl_shelterInfo b
+        where a.#{s_name} = b.#{s_name};
+    </select>
+
+
 
 </mapper>
