@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Log4j2
 @Service
-public class UserMemberService implements IUserMemberService{
+public class UserMemberService implements IUserMemberService {
 
     final static public int DATABASE_COMMUNICATION_TROUBLE = -1;
     final static public int INSERT_FAIL_AT_DATABASE = 0;
@@ -24,7 +24,7 @@ public class UserMemberService implements IUserMemberService{
 
         boolean isMember = iUserMemberDaoMapper.isMember(userMemberDto.getU_m_id());
 
-        if(!isMember) {
+        if (!isMember) {
 
             userMemberDto.setU_m_pw(passwordEncoder.encode(userMemberDto.getU_m_pw()));
 
@@ -62,7 +62,7 @@ public class UserMemberService implements IUserMemberService{
         log.info("[UserMemberService] userMemeberModifyConfirm()");
 
         int result = iUserMemberDaoMapper.updateUserMember(userMemberDto);
-        if(result > 0) {
+        if (result > 0) {
             return iUserMemberDaoMapper.getLatestMemberInfo(userMemberDto);
         } else {
             return null;
@@ -70,4 +70,26 @@ public class UserMemberService implements IUserMemberService{
 
 
     }
+
+    public UserMemberDto userMemeberPasswordModifyConfirm(UserMemberDto userMemberDto, String currentPw, String changePw) {
+        log.info("[UserMemberService] userMemeberPasswordModifyConfirm()");
+
+        UserMemberDto idVerifiedMemberDto = iUserMemberDaoMapper.selectUserMemberForLogin(userMemberDto);
+
+        if (idVerifiedMemberDto != null && !passwordEncoder.matches(passwordEncoder.encode(userMemberDto.getU_m_pw()),
+                idVerifiedMemberDto.getU_m_pw())) {
+            userMemberDto.setU_m_pw(passwordEncoder.encode(changePw));
+            int result = iUserMemberDaoMapper.updateUserMemberPassword(userMemberDto);
+            if (result > 0){
+                return iUserMemberDaoMapper.getLatestMemberInfo(userMemberDto);
+            } else{
+                System.out.println("service false tp2");
+                return null;
+            }
+        } else{
+            System.out.println("service false tp1");
+            return null;
+        }
+    }
+
 }

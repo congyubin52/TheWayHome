@@ -61,9 +61,21 @@ public class SpringSecurityConfig {
 
 						})
 						.permitAll())
-				.logout()
-				.logoutUrl("/user/member/member_logout_confirm")
-				.logoutSuccessUrl("/");
+				.logout(logout -> logout
+						.logoutUrl("/user/member/member_logout_confirm")
+						.logoutSuccessHandler((request, response, authentication) -> {
+							log.info("logoutSuccessHandler!!");
+
+							HttpSession session = request.getSession();
+							session.invalidate();
+
+							response.sendRedirect("/");
+
+						})
+				)
+				.sessionManagement()
+				.maximumSessions(1)
+				.maxSessionsPreventsLogin(false);
 		return http.build();
 	}
 

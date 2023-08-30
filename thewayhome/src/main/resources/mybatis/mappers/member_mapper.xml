@@ -59,6 +59,18 @@
             u_m_no = #{u_m_no}
     </update>
 
+    <update id="updateUserMemberPassword" parameterType="com.btc.thewayhome.user.member.UserMemberDto">
+
+UPDATE
+            tbl_member_user
+        SET
+            u_m_pw = #{u_m_pw},
+            u_m_mod_date = NOW()
+        WHERE
+            u_m_no = #{u_m_no}
+
+    </update>
+
     <select id="getLatestMemberInfo"
             parameterType="com.btc.thewayhome.user.member.UserMemberDto"
             resultType="com.btc.thewayhome.user.member.UserMemberDto">
