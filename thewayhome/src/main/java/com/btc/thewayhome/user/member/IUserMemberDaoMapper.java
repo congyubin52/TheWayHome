@@ -11,6 +11,8 @@ public interface IUserMemberDaoMapper {
 
     public int updateUserMember(UserMemberDto userMemberDto);
 
+    public int updateUserMemberPassword(UserMemberDto userMemberDto);
+
     public UserMemberDto getLatestMemberInfo(UserMemberDto userMemberDto);
 
     public int deleteUserMember(int u_m_no);
