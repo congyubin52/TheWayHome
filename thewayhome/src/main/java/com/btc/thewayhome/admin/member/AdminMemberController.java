@@ -5,9 +5,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Log4j2
 @Controller
@@ -56,30 +56,49 @@ public class AdminMemberController {
 
     }
 
+//    @PostMapping("/member_login_confirm")
+//
+//    public int memberLoginConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
+//        log.info("[AdminMemberController] memberLoginConfirm()");
+//
+//        // String nextPage = "redirect:/"; 쏴리
+//
+//        AdminMemberDto loginedAdminMemberDto = adminMemberService.loginConfirm(adminMemberDto);
+//
+//        if(loginedAdminMemberDto != null) {
+//            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+//            session.setMaxInactiveInterval(60 * 30);
+//            return 1;
+//        }
+//            log.info("loginedAdminMemberDto" + loginedAdminMemberDto.getA_m_id());
+//
+//        return 0;
+//
+//    }
+
     @PostMapping("/member_login_confirm")
-    public String memberLoginConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
+    @ResponseBody
+    public Object memberLoginConfirm(@RequestBody Map<String, String> msgMap, HttpSession session) {
         log.info("[AdminMemberController] memberLoginConfirm()");
 
-        String nextPage = "redirect:/";
+        // String nextPage = "redirect:/"; 쏴리
 
-        AdminMemberDto loginedAdminMemberDto = adminMemberService.loginConfirm(adminMemberDto);
+        Map<String, Object> map = adminMemberService.loginConfirm(msgMap);
 
-        if(loginedAdminMemberDto != null) {
+        if(map != null) {
+            AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) map.get("adminMemberDto");
             session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
-            session.setMaxInactiveInterval(60*30);
+            session.setMaxInactiveInterval(60 * 30);
+            return map;
 
-            log.info("loginedAdminMemberDto" + loginedAdminMemberDto.getA_m_id());
-
-        } else {
-            nextPage = "admin/member/member_login_fail";
         }
 
-        return nextPage;
+        return null;
 
     }
-
     //로그아웃
     @GetMapping("/member_logout_comfirm")
+    @ResponseBody
     public String memberLogoutConfirm(HttpSession session) {
         log.info("[AdminMemberController] memberLogoutConfirm()");
 
@@ -106,7 +125,7 @@ public class AdminMemberController {
     public String memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] memberModifyConfirm()");
 
-        String nextPage = "/admin/member/member_modify_success";
+        String nextPage = "/admin/member/member_modify_form";
 
         AdminMemberDto loginedAdminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
 

@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Log4j2
 @Service
 public class AdminMemberService implements IAdminMemberService {
@@ -64,16 +67,38 @@ public class AdminMemberService implements IAdminMemberService {
 
     // 로그인
     @Override
-    public AdminMemberDto loginConfirm(AdminMemberDto adminMemberDto) {
+    public Map<String, Object> loginConfirm(Map<String, String> msgMap) {
         log.info("[AdminMemberService] loginConfirm()");
 
-        AdminMemberDto idVerifiedAdminDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
-        /*if(idVerifiedAdminDto != null && passwordEncoder.matches(adminMemberDto.getA_m_pw(), idVerifiedAdminDto.getA_m_pw()))*/
-        if(idVerifiedAdminDto != null){
-            return idVerifiedAdminDto;
+        Map<String, Object> map = new HashMap<>();
+        AdminMemberDto adminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(msgMap);
+
+        if(adminMemberDto != null) {
+            map.put("adminMemberDto", adminMemberDto);
+            return map;
+
         } else {
             return null;
+
         }
+
+
+
+//        if(adminMemberDto != null && passwordEncoder.matches(adminMemberDto.getA_m_pw(), msgMap.get("a_m_pw"))) {
+//            map.put("adminMemberDto", adminMemberDto);
+//            return map;
+//
+//        }  else {
+//            return null;
+//        }
+
+        /*if(idVerifiedAdminDto != null){
+            return idVerifiedAdminDto;
+
+        } else {
+            return null;
+
+        }*/
 
     }
 

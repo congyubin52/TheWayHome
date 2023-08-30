@@ -1,9 +1,14 @@
 <header th:fragment="header">
-    <div id="header_wrap">
+    <div id="header_wrap" th:if="${session.loginedAdminMemberDto == null}">
         <a th:href="@{/}">홈</a>
         <a th:href="@{/admin/member/create_account_form}">회원가입</a>
-        <a th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
+
         <a th:href="@{/admin/member/member_login_form}">로그인</a>
+    </div>
+    <div id="header_wrap" th:unless="${session.loginedAdminMemberDto == null}">
+        <a th:href="@{/}">홈</a>&nbsp;&nbsp;
+        <a th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
+        <a th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>&nbsp;&nbsp;
     </div>
 </header>
 

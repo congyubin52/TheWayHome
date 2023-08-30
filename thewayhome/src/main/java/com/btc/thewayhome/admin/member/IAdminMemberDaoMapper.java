@@ -2,6 +2,8 @@ package com.btc.thewayhome.admin.member;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 @Mapper
 public interface IAdminMemberDaoMapper {
 
@@ -10,9 +12,9 @@ public interface IAdminMemberDaoMapper {
 
     public void insertNewAccount(AdminMemberDto adminMemberDto);
 
-    public AdminMemberDto selectAdminForLogin(AdminMemberDto adminMemberDto);
+    public AdminMemberDto selectAdminForLogin(Map<String, String> msgMap);
 
-    int updateAccount(AdminMemberDto adminMemberDto);
+    public int updateAccount(AdminMemberDto adminMemberDto);
 
-    AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
+    public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
 }
