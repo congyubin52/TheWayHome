@@ -1,28 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title th:replace="~{/include/title.html::title}"></title>
-
-<!--    <link rel="stylesheet" th:href="@{/css/common.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/header_footer.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/home.css}">-->
-
+<head th:replace="~{user/include/head_header_footer.html::head}">
 </head>
 <body>
 
-<header th:replace="~{/admin/include/admin_header_footer.html::header}">
+<header th:replace="~{user/include/head_header_footer.html::header}">
 </header>
 
 <section>
     <div id="section_wrap">
-        <div class="word">
-            집으로 가는 길 HOME
+        <div id="carouselExampleCaptions" class="carousel slide mx-auto" style="max-width: 1800px;">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="#none"><img th:src="@{/img/temp3.jpg}" class="d-block w-100" alt="temp3" style="max-height: 950px;"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>First slide label</h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="#none"><img th:src="@{/img/temp2.png}" class="d-block w-100" alt="temp2" style="max-height: 950px;"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                        <p>Some representative placeholder content for the second slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="#none"> <img th:src="@{/img/temp1.png}" class="d-block w-100" alt="temp1" style="max-height: 950px;"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Third slide label</h5>
+                        <p>Some representative placeholder content for the third slide.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
 </section>
 
-<footer th:replace="~{/admin/include/admin_header_footer.html::footer}">
+<footer th:replace="~{user/include/head_header_footer.html::footer}">
 </footer>
 
 </body>

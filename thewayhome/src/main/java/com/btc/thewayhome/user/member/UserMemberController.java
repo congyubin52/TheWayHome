@@ -16,6 +16,7 @@ public class UserMemberController {
     @Autowired
     UserMemberService userMemberService;
 
+    //사용자 회원가입
     @GetMapping("/create_account_form")
     public String createAccountForm() {
         log.info("[UserMemberController] createAccountForm()");
@@ -26,7 +27,7 @@ public class UserMemberController {
 
     }
 
-    @GetMapping("/create_account_confirm")
+    @PostMapping("/create_account_confirm")
     public String createAccountConfirm(UserMemberDto userMemberDto) {
         log.info("[UserMemberController] createAccountConfirm()");
 
@@ -42,6 +43,7 @@ public class UserMemberController {
 
     }
 
+    //사용자 로그인
     @GetMapping("/member_login_form")
     public String memberLoginForm() {
         log.info("[UserMemberController] memberLoginForm()");
