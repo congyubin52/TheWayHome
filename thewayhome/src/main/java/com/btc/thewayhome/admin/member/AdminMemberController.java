@@ -1,5 +1,6 @@
 package com.btc.thewayhome.admin.member;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
+
+import static java.lang.System.out;
 
 @Log4j2
 @Controller
@@ -78,20 +83,24 @@ public class AdminMemberController {
 
     @PostMapping("/member_login_confirm")
     @ResponseBody
-    public Object memberLoginConfirm(@RequestBody Map<String, String> msgMap, HttpSession session) {
+    public Object memberLoginConfirm(@RequestBody Map<String, String> msgMap, HttpSession session, Model model) {
         log.info("[AdminMemberController] memberLoginConfirm()");
 
         // String nextPage = "redirect:/"; 쏴리
 
         Map<String, Object> map = adminMemberService.loginConfirm(msgMap);
 
-        if(map != null) {
-            AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) map.get("adminMemberDto");
+        AdminMemberDto loginedAdminMemberDto = null;
+        if (map != null) {
+            loginedAdminMemberDto = (AdminMemberDto) map.get("adminMemberDto");
             session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
             session.setMaxInactiveInterval(60 * 30);
             return map;
 
         }
+
+        model.addAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+
 
         return null;
 
@@ -105,6 +114,7 @@ public class AdminMemberController {
         String nextPage = "redirect:/";
 
         session.removeAttribute("loginedAdminMemberDto");
+
 
         return nextPage;
 
@@ -121,7 +131,7 @@ public class AdminMemberController {
 
     }
 
-   @PostMapping("/member_modify_confirm")
+   /*@PostMapping("/member_modify_confirm")
     @ResponseBody
     public Map<String, Object> memberModifyConfirm(@RequestBody Map<String, String> msgMap,HttpSession session, AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] memberModifyConfirm()");
@@ -137,7 +147,7 @@ public class AdminMemberController {
 
         }
         return null;
-    }
+    }*/
 
   /* @PostMapping("/member_modify_confirm")
    @ResponseBody
@@ -154,7 +164,7 @@ public class AdminMemberController {
 
    }*/
 
-    /*@PostMapping("/member_modify_confirm")
+   /* @PostMapping("/member_modify_confirm")
     public Object memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] memberModifyConfirm()");
 
@@ -175,5 +185,55 @@ public class AdminMemberController {
         return nextPage;
     }*/
 
+    @PostMapping("/member_modify_confirm")
+    public void memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto, HttpServletResponse response) throws IOException {
+        log.info("[AdminMemberController] memberModifyConfirm()");
+
+//        String nextPage = "admin/member/member_modify_form";
+
+        AdminMemberDto loginedAdminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
+
+        if (loginedAdminMemberDto != null) {
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60 * 30);
+
+            /*// contentType을 먼저하지 않으면, 한글이 깨질 수 있음
+            response.setContentType("text/html; charset=euc-kr");*/
+
+            PrintWriter out = response.getWriter();
+            // 성공 시 alert 메시지를 띄우고 페이지를 이동
+                out.println("<script>alert('수정이 완료되었습니다.'); location.href = \"/admin/member/member_modify_form\";</script>");
+                out.flush();
+        } else {
+            // 실패 시 alert 메시지를 띄우고 페이지를 이동
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert(''); location.href = \"/admin/member/member_modify_form\";</script>");
+            out.flush();
+        }
     }
+
+    //회원 탈퇴
+    @PostMapping("/member_delete_confirm")
+    public String memberDeleteConfirm(HttpSession session) {
+        log.info("[AdminMemberController] memberDeleteConfirm()");
+
+        String nextPage = "redirect:/";
+
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
+        int result = adminMemberService.memberDeleteConfirm(loginedAdminMemberDto.getA_m_no());
+
+        if(result<=0) {
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert(''); location.href = \"/admin/member/member_modify_form\";</script>");
+            out.flush();
+
+        }
+
+        return nextPage;
+
+
+    }
+
+}
 

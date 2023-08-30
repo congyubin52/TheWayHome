@@ -12,7 +12,7 @@ public interface IAdminMemberService {
     public Map<String, Object> loginConfirm(Map<String, String> msgMap);
 
     //회원정보 수정
-//    public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto);
-    public Map<String, Object> memberModifyConfirm(Map<String, String> msgMap);
+    public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto);
+    //public Map<String, Object> memberModifyConfirm(Map<String, String> msgMap);
 
 }

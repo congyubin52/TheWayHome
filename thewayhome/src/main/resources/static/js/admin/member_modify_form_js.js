@@ -6,7 +6,7 @@ function memberModifyForm() {
         alert('아이디를 입력해주세요.');
         form.a_m_id.focus();
 
-    } else if (form.a_m_pw.value == '') {
+    } else if (form.a_m_pw.value == '' && loginedAdminMemberDto.getA_m_pw == form.a_m_pw.value) {
         alert('비밀번호를 입력해주세요.');
         form.a_m_pw.focus();
 

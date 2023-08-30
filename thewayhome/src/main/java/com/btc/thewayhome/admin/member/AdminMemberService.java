@@ -102,8 +102,8 @@ public class AdminMemberService implements IAdminMemberService {
     }
 
     //회원정보 수정
-//    @Override
-    /*public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto) {
+    @Override
+    public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] memberModifyConfirm()");
 
         int result = iAdminMemberDaoMapper.updateAccount(adminMemberDto);
@@ -113,29 +113,29 @@ public class AdminMemberService implements IAdminMemberService {
             return null;
         }
 
-    }*/
-
-
-    @Override
-    public Map<String, Object> memberModifyConfirm(Map<String, String> msgMap) {
-        log.info("[AdminMemberService] memberModifyConfirm()");
-        Map<String, Object> map = new HashMap<>();
-
-        int result = iAdminMemberDaoMapper.updateAccount(msgMap);
-
-        if(result > 0) {
-            AdminMemberDto adminMemberDto = iAdminMemberDaoMapper.getLatestAccountInfo(msgMap);
-
-            if (adminMemberDto != null) {
-                map.put("adminMemberDto", adminMemberDto);
-                return map;
-            } else {
-                return null;
-            }
-
-        }
-        return null;
     }
+
+
+//    @Override
+//    public Map<String, Object> memberModifyConfirm(Map<String, String> msgMap) {
+//        log.info("[AdminMemberService] memberModifyConfirm()");
+//        Map<String, Object> map = new HashMap<>();
+//
+//        int result = iAdminMemberDaoMapper.updateAccount(msgMap);
+//
+//        if(result > 0) {
+//            AdminMemberDto adminMemberDto = iAdminMemberDaoMapper.getLatestAccountInfo(msgMap);
+//
+//            if (adminMemberDto != null) {
+//                map.put("adminMemberDto", adminMemberDto);
+//                return map;
+//            } else {
+//                return null;
+//            }
+//
+//        }
+//        return null;
+//    }
 
 
     /*public Map<String, Object> memberModifyConfirm(String a_m_pw, AdminMemberDto adminMemberDto) {
