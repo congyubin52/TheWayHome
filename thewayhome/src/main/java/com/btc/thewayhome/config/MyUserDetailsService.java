@@ -25,6 +25,11 @@ public class MyUserDetailsService implements UserDetailsService {
         userMemberDto.setU_m_id(username);
 
         UserMemberDto selectedUserMemberDto = iUserMemberDaoMapper.selectUserMemberForLogin(userMemberDto);
+
+        if (selectedUserMemberDto == null) {
+            throw new UsernameNotFoundException("사용자 정보가 일치하지 않습니다.");
+        }
+
         return User.builder()
                 .username(selectedUserMemberDto.getU_m_id())
                 .password(selectedUserMemberDto.getU_m_pw())

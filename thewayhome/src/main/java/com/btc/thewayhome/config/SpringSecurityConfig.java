@@ -22,7 +22,7 @@ public class SpringSecurityConfig {
 	}
 
 	@Bean
-//	@Order(1)
+	@Order(1)
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		log.info("UserFilterChain");
 
@@ -40,7 +40,7 @@ public class SpringSecurityConfig {
 						.usernameParameter("u_m_id")
 						.passwordParameter("u_m_pw")
 						.defaultSuccessUrl("/", true)
-						.failureUrl("/user/member/create_account_form")
+						.failureUrl("/user/member/member_login_form?error=true")
 						.permitAll())
 				.logout()
 				.logoutUrl("/user/member/member_logout_confirm")

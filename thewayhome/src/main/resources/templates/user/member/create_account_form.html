@@ -1,37 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>타이틀</title>
-
-    <script th:src="@{/js/user/create_account_form_js.js}" type="text/javascript"></script>
-
+<head th:replace="~{user/include/head_header_footer.html::head}">
 </head>
 <body>
 
+    <script th:src="@{/js/user/create_account_form_js.js}" type="text/javascript"></script>
+
+    <header th:replace="~{user/include/head_header_footer.html::header}">개집
+    </header>
+
     <section>
         <div id="section_wrap">
-            <div class="word">
-                USER CREATE ACCOUNT FORM
-            </div>
 
-            <div class="create_account_form">
+            <div th:fragment="content" class="container mx-auto">
                 <form th:action="@{/user/member/create_account_confirm}" name="create_account_form" method="post">
-                    <input type="text" name="u_m_id" placeholder="INPUT ID"><br>
-                    <input type="password" name="u_m_pw" placeholder="INPUT PW"><br>
-                    <input type="text" name="u_m_name" placeholder="INPUT NAME"><br>
-                    <input type="email" name="u_m_mail" placeholder="INPUT MAIL"><br>
-                    <input type="text" name="u_m_phone" placeholder="INPUT PHONE"><br>
-                    <input type="button" value="create account" onclick="createAccountForm();">
-                    <input type="reset" value="reset">
+                    <div class="form-group w-25 p-3 mx-auto">
+                        <label class="form-label mt-4 ">USER CREATE ACCOUNT FORM</label>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="u_m_id" class="form-control" id="floatingInput" placeholder="Id">
+                            <label for="floatingInput">ID</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" name="u_m_pw" class="form-control" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input type="text" name="u_m_name" class="form-control" id="floatingName" placeholder="Name">
+                            <label for="floatingName">Name</label>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input type="email" name="u_m_mail" class="form-control" id="floatingMail" placeholder="Email">
+                            <label for="floatingMail">E-mail</label>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input type="text" name="u_m_phone" class="form-control" id="floatingPhone" placeholder="Phone">
+                            <label for="floatingPhone">Phone Number</label>
+                        </div>
+                            <input type="button" class="btn btn-primary" value="계정 생성" onclick="createAccountForm();"/>
+                    </div>
                 </form>
             </div>
+
+<!--            <div class="create_account_form">-->
+<!--                <form th:action="@{/user/member/create_account_confirm}" name="create_account_form" method="post">-->
+<!--                    <input type="text" name="u_m_id" placeholder="INPUT ID"><br>-->
+<!--                    <input type="password" name="u_m_pw" placeholder="INPUT PW"><br>-->
+<!--                    <input type="text" name="u_m_name" placeholder="INPUT NAME"><br>-->
+<!--                    <input type="email" name="u_m_mail" placeholder="INPUT MAIL"><br>-->
+<!--                    <input type="text" name="u_m_phone" placeholder="INPUT PHONE"><br>-->
+<!--                    <input type="button" value="create account" onclick="createAccountForm();">-->
+<!--                </form>-->
+<!--            </div>-->
 
             <div class="go_login_form">
                 <a th:href="@{/user/member/member_login_form}">Already have an account? login</a>
             </div>
         </div>
     </section>
+
+    <footer th:replace="~{user/include/head_header_footer.html::footer}">
+    </footer>
 
 </body>
 </html>

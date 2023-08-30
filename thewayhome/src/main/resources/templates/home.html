@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-<!--    <title th:replace="~{/include/title.html::title}"></title>-->
-
-<!--    <link rel="stylesheet" th:href="@{/css/common.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/header_footer.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/home.css}">-->
+<head th:replace="~{user/include/head_header_footer.html::head}">
 
 </head>
 <body>
 
-<!--<header th:replace="~{/include/header_footer.html::header}">-->
-<!--</header>-->
+<header th:replace="~{user/include/head_header_footer.html::header}">
+</header>
 
 <section>
     <div id="section_wrap">
@@ -22,7 +16,7 @@
     </div>
 </section>
 
-<!--<footer th:replace="~{/include/header_footer.html::footer}">-->
+<footer th:replace="~{user/include/head_header_footer.html::footer}">
 </footer>
 
 </body>
