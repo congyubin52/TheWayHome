@@ -1,4 +1,4 @@
-<script th:fragment="js" type="text/javascript">
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
 
     $(document).ready(function () {
         console.log("DOCUMENT READY!!");
@@ -57,7 +57,16 @@
             }
         });
 
+        //회원탈퇴
+        $('#section_wrap div.go_delete_confirm a').click(function () {
+            console.log('button CLICK HANDLER!!');
 
+            let result = confirm('정말 탈퇴하시겠습니까?');
+
+            if(result)
+                ajax_delete_confirm();
+
+        });
 
     }
 
@@ -83,8 +92,7 @@
             success: function(data) {
                 console.log('AJAX SUCCESS - ajax_login_confirm()');
 
-                alert('성공');
-                location.href = "/"
+                location.href = "/admin"
 
                 /*if(data.adminMemberDto.a_m_pw != null) {
                     alert('성공');
@@ -105,6 +113,7 @@
 
     }
 
+    //회원정보 수정
     function ajax_modify_confirm(a_m_pw) {
         console.log('ajax_modify_confirm() CALLED!!');
 
@@ -118,19 +127,54 @@
             data: JSON.stringify(msgDto),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_login_confirm()');
 
                 alert('성공');
-                location.href = "/"
+                location.href = "/admin"
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_login_confirm()');
                 alert('실패');
                 location.href = "/admin/member/member_modify_form"
             }
         });
+    }
+
+    //회원탈퇴
+    function ajax_delete_confirm() {
+        console.log('ajax_delete_confirm() CALLED!!');
+
+        let msg = {
+            'a_m_no': [[${session.loginedAdminMemberDto}]].a_m_no,
+        };
+        $.ajax({
+            url:			'/admin/member/member_delete_confirm',
+            type:			'POST',
+            data: 			JSON.stringify(msg),
+            contentType:	'application/json; chartset=utf-8;',
+            dataType:		'json',
+            success: function(data) {
+                console.log('AJAX SUCCESS - ajax_delete_confirm()');
+
+                if (data.result >= 1) {
+                    alert('계정이 삭제되었습니다.');
+                    location.href = "/admin";
+                }
+
+            },
+            error: function(data) {
+                console.log('AJAX ERROR - ajax_delete_confirm()');
+                alert('계정이 삭제되지 않았습니다. 다시 시도해주세요.');
+
+            }
+
+        });
 
     }
+
+    /*
+   * AJAX END
+   */
 
 </script>

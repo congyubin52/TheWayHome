@@ -19,5 +19,7 @@ public interface IAdminMemberDaoMapper {
 
 
     public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
+
+    public int deleteAccount(int a_m_no);
     //public AdminMemberDto getLatestAccountInfo(Map<String, String> msgMap);
 }

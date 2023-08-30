@@ -15,4 +15,8 @@ public interface IAdminMemberService {
     public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto);
     //public Map<String, Object> memberModifyConfirm(Map<String, String> msgMap);
 
+    //회원 탈퇴
+    //public int memberDeleteConfirm(int a_m_no);
+    public Map<String, Object> memberDeleteConfirm(int a_m_no);
+
 }

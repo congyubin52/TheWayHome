@@ -22,6 +22,8 @@ public class AdminMemberController {
     @Autowired
     AdminMemberService adminMemberService;
 
+
+
     //회원가입
     @GetMapping("/create_account_form")
     public String createAccountForm() {
@@ -38,7 +40,7 @@ public class AdminMemberController {
         log.info("[AdminMemberController] createAccountConfirm()");
 
         //로그인 성공시 홈 메인화면으로 이동
-        String nextPage = "redirect:/";
+        String nextPage = "redirect:/admin";
 
         int result = adminMemberService.createAccountConfirm(adminMemberDto);
 
@@ -111,7 +113,7 @@ public class AdminMemberController {
     public String memberLogoutConfirm(HttpSession session) {
         log.info("[AdminMemberController] memberLogoutConfirm()");
 
-        String nextPage = "redirect:/";
+        String nextPage = "redirect:/admin";
 
         session.removeAttribute("loginedAdminMemberDto");
 
@@ -197,8 +199,8 @@ public class AdminMemberController {
             session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
             session.setMaxInactiveInterval(60 * 30);
 
-            /*// contentType을 먼저하지 않으면, 한글이 깨질 수 있음
-            response.setContentType("text/html; charset=euc-kr");*/
+            // contentType을 먼저하지 않으면, 한글이 깨질 수 있음
+            response.setContentType("text/html; charset=euc-kr");
 
             PrintWriter out = response.getWriter();
             // 성공 시 alert 메시지를 띄우고 페이지를 이동
@@ -213,26 +215,40 @@ public class AdminMemberController {
     }
 
     //회원 탈퇴
-    @PostMapping("/member_delete_confirm")
-    public String memberDeleteConfirm(HttpSession session) {
+/*    @GetMapping("/member_delete_confirm")
+    public String memberDeleteConfirm(HttpSession session, HttpServletResponse response) throws IOException {
         log.info("[AdminMemberController] memberDeleteConfirm()");
+        response.setContentType("text/html; charset=euc-kr");
+        PrintWriter out = response.getWriter();
 
-        String nextPage = "redirect:/";
+        String nextPage = "redirect:/admin";
 
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
         int result = adminMemberService.memberDeleteConfirm(loginedAdminMemberDto.getA_m_no());
 
         if(result<=0) {
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert(''); location.href = \"/admin/member/member_modify_form\";</script>");
+            out.println("<script>alert('삭제 실패'); location.href = \"/admin/member/member_modify_form\";</script>");
             out.flush();
 
         }
 
         return nextPage;
 
+    }*/
 
+    @PostMapping("/member_delete_confirm")
+    @ResponseBody
+    public Map<String, Object> memberDeleteConfirm(@RequestBody Map<String, String> msgMap, HttpSession session){
+        log.info("[AdminMemberController] memberDeleteConfirm()");
+
+        Map<String, Object> map = adminMemberService.memberDeleteConfirm(Integer.parseInt(msgMap.get("a_m_no")));
+
+        if((int) map.get("result") > 0) {
+            session.removeAttribute("loginedAdminMemberDto");
+
+        }
+        return map;
     }
 
 }
