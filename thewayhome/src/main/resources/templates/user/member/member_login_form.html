@@ -4,7 +4,7 @@
 </head>
 <body>
 
-    <script th:src="@{/js/user/member_login_form_js.js}" type="text/javascript"></script>
+    <script th:replace="~{user/include/user_member_js.html::js}" type="text/javascript"></script>
 
     <header th:replace="~{user/include/head_header_footer.html::header}">
     </header>
@@ -26,7 +26,7 @@
                             <label for="floatingPassword">Password</label>
                         </div>
                         <div class="text-center mb-4">
-                            <input type="button" class="btn btn-primary" value="로그인" onclick="memberLoginForm();"/>
+                            <input type="button" class="btn btn-primary" value="로그인"/>
                         </div>
                     </div>
                 </form>
