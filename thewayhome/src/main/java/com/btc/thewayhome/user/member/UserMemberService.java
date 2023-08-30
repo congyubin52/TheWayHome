@@ -58,11 +58,16 @@ public class UserMemberService implements IUserMemberService{
 
     }
 
-    public UserMemberDto userMemeberModifyConfirm(int u_m_no, UserMemberDto userMemberDto) {
+    public UserMemberDto userMemeberModifyConfirm(UserMemberDto userMemberDto) {
         log.info("[UserMemberService] userMemeberModifyConfirm()");
 
-        userMemberDto.setU_m_no(u_m_no);
+        int result = iUserMemberDaoMapper.updateUserMember(userMemberDto);
+        if(result > 0) {
+            return iUserMemberDaoMapper.getLatestMemberInfo(userMemberDto);
+        } else {
+            return null;
+        }
 
-        return iUserMemberDaoMapper.updateUserMember(userMemberDto);
+
     }
 }

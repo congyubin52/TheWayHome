@@ -1,7 +1,11 @@
 package com.btc.thewayhome.config;
 
+import com.btc.thewayhome.user.member.IUserMemberDaoMapper;
+import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.DispatcherType;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -15,6 +19,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
+
+	@Autowired
+	IUserMemberDaoMapper iUserMemberDaoMapper;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -39,7 +46,20 @@ public class SpringSecurityConfig {
 						.loginProcessingUrl("/user/member/member_login_confirm")
 						.usernameParameter("u_m_id")
 						.passwordParameter("u_m_pw")
-						.defaultSuccessUrl("/", true)
+						.successHandler((request, response, authentication) -> {	// 로그인 성공시 이동 페이지 URI
+							log.info("successHandler!!");
+
+							UserMemberDto userMemberDto = new UserMemberDto();
+							userMemberDto.setU_m_id(authentication.getName());
+							UserMemberDto loginedUserMemberDto = iUserMemberDaoMapper.selectUserMemberForLogin(userMemberDto);
+
+							HttpSession session = request.getSession();
+							session.setAttribute("loginedUserMemberDto", loginedUserMemberDto);
+							session.setMaxInactiveInterval(60 * 30);
+
+							response.sendRedirect("/");
+
+						})
 						.permitAll())
 				.logout()
 				.logoutUrl("/user/member/member_logout_confirm")

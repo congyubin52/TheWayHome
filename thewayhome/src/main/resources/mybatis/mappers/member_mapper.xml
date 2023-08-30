@@ -41,7 +41,7 @@
             tbl_member_user
         SET
             use_yn = 'N',
-            u_mod_date = NOW()
+            u_m_mod_date = NOW()
         WHERE
             u_m_no = #{u_m_no}
     </update>
@@ -51,13 +51,23 @@
         UPDATE
             tbl_member_user
         SET
-            u_m_pw = #{u_m_pw},
             u_m_name = #{u_m_name},
             u_m_mail = #{u_m_mail},
             u_m_phone = #{u_m_phone},
-            u_mod_date = NOW()
+            u_m_mod_date = NOW()
         WHERE
             u_m_no = #{u_m_no}
     </update>
+
+    <select id="getLatestMemberInfo"
+            parameterType="com.btc.thewayhome.user.member.UserMemberDto"
+            resultType="com.btc.thewayhome.user.member.UserMemberDto">
+        SELECT
+            *
+        FROM
+            tbl_member_user
+        WHERE
+            u_m_no = #{u_m_no}
+    </select>
 
 </mapper>

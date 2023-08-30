@@ -72,9 +72,7 @@ public class UserMemberController {
 
         String nextPage = "/user/member/member_modify_success";
 
-        UserMemberDto loginedUserMemberDto =
-                (UserMemberDto) session.getAttribute("loginedUserMemberDto");
-        UserMemberDto updateUserDto = userMemberService.userMemeberModifyConfirm(loginedUserMemberDto.getU_m_no(), userMemberDto);
+        UserMemberDto updateUserDto = userMemberService.userMemeberModifyConfirm(userMemberDto);
 
         if(updateUserDto != null){
             session.setAttribute("loginedUserMemberDto", updateUserDto);
@@ -88,7 +86,7 @@ public class UserMemberController {
     }
 
 
-    @PostMapping("/member_delete_confirm")
+    @GetMapping ("/member_delete_confirm")
     public String userMemberDeleteConfirm(HttpSession session) {
         log.info("[UserMemberController] userMemberDeleteConfirm()");
 
