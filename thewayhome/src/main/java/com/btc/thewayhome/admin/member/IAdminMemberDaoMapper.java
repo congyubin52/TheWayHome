@@ -14,7 +14,10 @@ public interface IAdminMemberDaoMapper {
 
     public AdminMemberDto selectAdminForLogin(Map<String, String> msgMap);
 
-    public int updateAccount(AdminMemberDto adminMemberDto);
+    //public int updateAccount(AdminMemberDto adminMemberDto);
+    public int updateAccount(Map<String, String> msgMap);
 
-    public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
+
+    //public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
+    public AdminMemberDto getLatestAccountInfo(Map<String, String> msgMap);
 }

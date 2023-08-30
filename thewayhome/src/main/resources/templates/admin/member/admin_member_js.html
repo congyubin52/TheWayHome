@@ -83,14 +83,17 @@
             success: function(data) {
                 console.log('AJAX SUCCESS - ajax_login_confirm()');
 
-                if(data.adminMemberDto.a_m_pw != null) {
+                alert('성공');
+                location.href = "/"
+
+                /*if(data.adminMemberDto.a_m_pw != null) {
                     alert('성공');
                     location.href = "/"
 
                 } else {
                     alert('실패');
                     location.href = "/admin/member/member_login_form"
-                }
+                }*/
 
             },
             error: function(data) {
@@ -118,15 +121,8 @@
             success: function(data) {
                 console.log('AJAX SUCCESS - ajax_login_confirm()');
 
-                if(data.adminMemberDto.a_m_pw != null) {
-                    alert('성공');
-                    location.href = "/"
-
-                } else {
-                    alert('실패');
-                    location.href = "/admin/member/member_modify_form"
-                }
-
+                alert('성공');
+                location.href = "/"
             },
             error: function(data) {
                 console.log('AJAX ERROR - ajax_login_confirm()');

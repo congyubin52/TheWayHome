@@ -22,6 +22,16 @@ public class SpringSecurityConfig {
 	}
 
 	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+		http.csrf().disable()
+				.formLogin().disable();
+
+
+		return http.build();
+	}
+
+	/*@Bean
 	@Order(1)
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		log.info("filterChain");
@@ -71,6 +81,6 @@ public class SpringSecurityConfig {
 				.logoutSuccessUrl("/");
 		return http.build();
 	}
-
+*/
 
 }

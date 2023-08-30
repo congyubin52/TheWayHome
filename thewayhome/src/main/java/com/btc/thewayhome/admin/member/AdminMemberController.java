@@ -121,25 +121,59 @@ public class AdminMemberController {
 
     }
 
-    @PostMapping("/member_modify_confirm")
-    public String memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto) {
+   @PostMapping("/member_modify_confirm")
+    @ResponseBody
+    public Map<String, Object> memberModifyConfirm(@RequestBody Map<String, String> msgMap,HttpSession session, AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] memberModifyConfirm()");
 
-        String nextPage = "/admin/member/member_modify_form";
+        Map<String, Object> map = adminMemberService.memberModifyConfirm(msgMap);
 
-        AdminMemberDto loginedAdminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
+        if(map != null) {
+            AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) map.get("adminMemberDto");
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60*30);
+
+            return map;
+
+        }
+        return null;
+    }
+
+  /* @PostMapping("/member_modify_confirm")
+   @ResponseBody
+   public Map<String, Object> memberModifyConfirm(@RequestParam(value = "a_m_pw", required = false) String a_m_pw, HttpSession session, AdminMemberDto adminMemberDto) {
+       log.info("[AdminMemberController] memberModifyConfirm()");
+
+       Map<String, Object> resultMap = adminMemberService.memberModifyConfirm(a_m_pw, adminMemberDto);
 
         if(loginedAdminMemberDto != null) {
             session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
             session.setMaxInactiveInterval(60*30);
+        }
+       return resultMap;
 
-        } else {
-            nextPage = "/admin/member/member_modify_fail";
+   }*/
+
+    /*@PostMapping("/member_modify_confirm")
+    public Object memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberController] memberModifyConfirm()");
+
+        String nextPage = "admin/member/member_modify_form";
+
+        AdminMemberDto loginedAdminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
+
+        if(loginedAdminMemberDto != null) {
+
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60*30);
+        }
+        else {
+            nextPage = "admin/member/member_modify_fail";
 
         }
 
         return nextPage;
+    }*/
 
     }
 
-}
