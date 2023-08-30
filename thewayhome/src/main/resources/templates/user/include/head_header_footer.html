@@ -6,14 +6,14 @@
 </head>
 
 <header th:fragment="header">
-    <div id="header_wrap" class=" p-3 mb-2 bg-danger text-white">
-        <a href="#none"><img class="img-fluid" style="max-width: 150px;" th:src="@{/img/menu_button.png}"></a>
-        <a th:href="@{/}"><img class="img-fluid" style="max-width: 150px;" th:src="@{/img/TheWayHome_logo.png}"></a>&nbsp;&nbsp;
+    <div id="header_wrap" class="p-3 bg-warning text-white">
+        <a href="#none"><img class="img-fluid" style="max-width: 130px;" th:src="@{/img/menu_button.png}"></a>
+        <a th:href="@{/}"><img class="img-fluid" style="max-width: 130px;" th:src="@{/img/TheWayHome_logo.png}"></a>&nbsp;&nbsp;
     </div>
 </header>
 
 <footer th:fragment="footer">
-    <div id="footer_wrap" class="fixed-bottom">
-        Copyright ©OFFICE Corp.All Rights Reserved.
+    <div id="footer_wrap" class="p-3 bg-warning sticky-bottom">
+        <p class="text-center">Copyright ©OFFICE Corp.All Rights Reserved.</p>
     </div>
 </footer>
