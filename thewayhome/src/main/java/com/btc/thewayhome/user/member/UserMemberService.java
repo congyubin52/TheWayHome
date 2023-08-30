@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Log4j2
 @Service
 public class UserMemberService implements IUserMemberService {
@@ -48,6 +51,23 @@ public class UserMemberService implements IUserMemberService {
 
         } else {
             return 0;
+        }
+    }
+
+    @Override
+    public Map<String, Object> memberLoginConfirm(Map<String, String> msgMap) {
+        log.info("[UserMemberService] memberLoginConfirm()");
+
+        Map<String, Object> map = new HashMap<>();
+        UserMemberDto userMemberDto = iUserMemberDaoMapper.selectUserForLogin(msgMap);
+
+        if (userMemberDto != null) {
+            map.put("userMemberDto", userMemberDto);
+            return map;
+
+        } else {
+            return null;
+
         }
     }
 

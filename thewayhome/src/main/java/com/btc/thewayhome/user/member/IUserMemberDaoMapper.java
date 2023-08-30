@@ -2,6 +2,8 @@ package com.btc.thewayhome.user.member;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 @Mapper
 public interface IUserMemberDaoMapper {
 
@@ -18,4 +20,6 @@ public interface IUserMemberDaoMapper {
     public int deleteUserMember(int u_m_no);
 
     public UserMemberDto selectUserMemberForLogin(UserMemberDto userMemberDto);
+
+    public UserMemberDto selectUserForLogin(Map<String, String> msgMap);
 }
