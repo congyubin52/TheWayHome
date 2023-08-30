@@ -40,6 +40,7 @@
             let a_m_pw = $('#section_wrap input[name="a_m_pw"]').val();
             ajax_login_confirm(a_m_id, a_m_pw);
         }
+
     });
 
     //정보수정
@@ -52,8 +53,11 @@
           form.a_m_pw.focus();
 
         } else {
+            let a_m_no = $('#section_wrap input[name="a_m_no"]').val();
+            let a_m_id = $('#section_wrap input[name="a_m_id"]').val();
             let a_m_pw = $('#section_wrap input[name="a_m_pw"]').val();
-            ajax_modify_confirm(a_m_pw);
+
+            ajax_modify_confirm(a_m_no, a_m_id, a_m_pw);
             }
         });
 
@@ -94,15 +98,6 @@
 
                 location.href = "/admin"
 
-                /*if(data.adminMemberDto.a_m_pw != null) {
-                    alert('성공');
-                    location.href = "/"
-
-                } else {
-                    alert('실패');
-                    location.href = "/admin/member/member_login_form"
-                }*/
-
             },
             error: function(data) {
                 console.log('AJAX ERROR - ajax_login_confirm()');
@@ -114,10 +109,14 @@
     }
 
     //회원정보 수정
-    function ajax_modify_confirm(a_m_pw) {
+    function ajax_modify_confirm(a_m_no, a_m_id, a_m_pw) {
         console.log('ajax_modify_confirm() CALLED!!');
 
+        console.log("----------->", a_m_no, a_m_id, a_m_pw);
+
         let msgDto = {
+            'a_m_no': a_m_no,
+            'a_m_id': a_m_id,
             'a_m_pw': a_m_pw,
         };
 
@@ -129,14 +128,17 @@
             dataType: 'json',
             success: function (data) {
                 console.log('AJAX SUCCESS - ajax_login_confirm()');
-
                 alert('성공');
+
                 location.href = "/admin"
+
             },
             error: function (data) {
                 console.log('AJAX ERROR - ajax_login_confirm()');
                 alert('실패');
+
                 location.href = "/admin/member/member_modify_form"
+
             }
         });
     }
@@ -174,7 +176,7 @@
     }
 
     /*
-   * AJAX END
-   */
+     * AJAX END
+     */
 
 </script>

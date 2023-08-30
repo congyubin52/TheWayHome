@@ -13,7 +13,7 @@ public interface IAdminMemberService {
 
     //회원정보 수정
     public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto);
-    //public Map<String, Object> memberModifyConfirm(Map<String, String> msgMap);
+//    public Map<String, Object> memberModifyConfirm(Map<String, String> msgMap);
 
     //회원 탈퇴
     //public int memberDeleteConfirm(int a_m_no);

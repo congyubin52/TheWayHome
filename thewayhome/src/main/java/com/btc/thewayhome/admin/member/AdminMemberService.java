@@ -107,7 +107,9 @@ public class AdminMemberService implements IAdminMemberService {
         log.info("[AdminMemberService] memberModifyConfirm()");
 
         int result = iAdminMemberDaoMapper.updateAccount(adminMemberDto);
+
         if(result > 0) {
+            log.info("[AdminMemberService] result success");
             return iAdminMemberDaoMapper.getLatestAccountInfo(adminMemberDto);
         } else {
             return null;

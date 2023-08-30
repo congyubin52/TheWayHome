@@ -28,7 +28,7 @@
                     <input type="hidden" name="a_m_no" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.a_m_no}">
                     <input type="text" name="a_m_id" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.a_m_id}" readonly="readonly" disabled="disabled">
                     <input type="password" name="a_m_pw" value="******">
-                    <input type="button" value="회원정보 수정" onclick="memberModifyForm();">
+                    <input type="button" value="회원정보 수정">
                     <input type="reset" value="초기화">
                 </form>
             </div>

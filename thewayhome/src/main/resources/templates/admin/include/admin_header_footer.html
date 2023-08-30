@@ -1,4 +1,21 @@
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title th:replace="~{/include/title.html::title}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</head>
+
 <header th:fragment="header">
+    <div id="header_wrap" class="p-2 bg-dark text-white d-flex justify-content-between align-items-center">
+        <div style="margin-left: 30px;">
+            <a href="#none"><img class="img-fluid" style="max-width: 130px;" th:src="@{/img/menu_button.png}"></a>
+        </div>
+        <div class="text-center flex-grow-1" style="margin-right: 100px;">
+            <a th:href="@{/admin}"><img class="img-fluid" style="max-width: 130px;" th:src="@{/img/TheWayHome_logo.png}"></a>
+        </div>
+        <div></div>
+    </div>
     <div id="header_wrap" th:if="${session.loginedAdminMemberDto == null}">
         <a th:href="@{/admin}">홈</a>
         <a th:href="@{/admin/member/create_account_form}">회원가입</a>
@@ -16,7 +33,7 @@
 </header>
 
 <footer th:fragment="footer">
-    <div id="footer_wrap">
-        Copyright ©OFFICE Corp.All Rights Reserved.
-    </div>
+    <div id="footer_wrap" class="bg-dark sticky-bottom">
+    <p class="p-4 text-center">Copyright ©OFFICE Corp.All Rights Reserved.</p>
+</div>
 </footer>

@@ -15,11 +15,11 @@ public interface IAdminMemberDaoMapper {
     public AdminMemberDto selectAdminForLogin(Map<String, String> msgMap);
 
     public int updateAccount(AdminMemberDto adminMemberDto);
-    //public int updateAccount(Map<String, String> msgMap);
+//    public int updateAccount(Map<String, String> msgMap);
 
 
     public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
 
     public int deleteAccount(int a_m_no);
-    //public AdminMemberDto getLatestAccountInfo(Map<String, String> msgMap);
+//    public Map<String,Object> getLatestAccountInfo(Map<String, String> msgMap);
 }

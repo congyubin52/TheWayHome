@@ -109,7 +109,6 @@ public class AdminMemberController {
     }
     //로그아웃
     @GetMapping("/member_logout_comfirm")
-    @ResponseBody
     public String memberLogoutConfirm(HttpSession session) {
         log.info("[AdminMemberController] memberLogoutConfirm()");
 
@@ -133,23 +132,29 @@ public class AdminMemberController {
 
     }
 
-   /*@PostMapping("/member_modify_confirm")
+    @PostMapping("/member_modify_confirm")
     @ResponseBody
-    public Map<String, Object> memberModifyConfirm(@RequestBody Map<String, String> msgMap,HttpSession session, AdminMemberDto adminMemberDto) {
+    public AdminMemberDto memberModifyConfirm(@RequestBody Map<String, String> msgMap,HttpSession session) {
         log.info("[AdminMemberController] memberModifyConfirm()");
 
-        Map<String, Object> map = adminMemberService.memberModifyConfirm(msgMap);
+        //service에서 adminMemberDto로 받으므로 dto로 변환해서 들고 가야 함
+        AdminMemberDto adminMemberDto = new AdminMemberDto();
+        adminMemberDto.setA_m_no(Integer.parseInt(msgMap.get("a_m_no")));
+        adminMemberDto.setA_m_id(msgMap.get("a_m_id"));
+        adminMemberDto.setA_m_pw(msgMap.get("a_m_pw"));
 
-        if(map != null) {
-            AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) map.get("adminMemberDto");
+        adminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
+
+        if(adminMemberDto != null) {
+            AdminMemberDto loginedAdminMemberDto = adminMemberDto;
             session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
             session.setMaxInactiveInterval(60*30);
 
-            return map;
+            return adminMemberDto;
 
         }
         return null;
-    }*/
+    }
 
   /* @PostMapping("/member_modify_confirm")
    @ResponseBody
@@ -187,7 +192,7 @@ public class AdminMemberController {
         return nextPage;
     }*/
 
-    @PostMapping("/member_modify_confirm")
+/*    @PostMapping("/member_modify_confirm")
     public void memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto, HttpServletResponse response) throws IOException {
         log.info("[AdminMemberController] memberModifyConfirm()");
 
@@ -212,7 +217,7 @@ public class AdminMemberController {
             out.println("<script>alert(''); location.href = \"/admin/member/member_modify_form\";</script>");
             out.flush();
         }
-    }
+    }*/
 
     //회원 탈퇴
 /*    @GetMapping("/member_delete_confirm")
