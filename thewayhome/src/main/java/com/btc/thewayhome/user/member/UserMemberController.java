@@ -17,35 +17,81 @@ public class UserMemberController {
     @Autowired
     UserMemberService userMemberService;
 
+    //사용자 회원가입
     @GetMapping("/create_account_form")
     public String createAccountForm() {
         log.info("[UserMemberController] createAccountForm()");
 
-        String nextPage = "/member/user/create_account_form";
+        String nextPage = "/user/member/create_account_form";
 
         return nextPage;
 
     }
 
-    @GetMapping("/create_account_confirm")
+    @PostMapping("/create_account_confirm")
     public String createAccountConfirm(UserMemberDto userMemberDto) {
         log.info("[UserMemberController] createAccountConfirm()");
 
-        String nextPage = "redirect:/member/user/create_account_form";
+        String nextPage = "redirect:/user/member/create_account_form";
 
         int result = userMemberService.createAccountConfirm(userMemberDto);
         if(result > userMemberService.INSERT_FAIL_AT_DATABASE) {
-            nextPage = "/member/user/member_login_form";
+            nextPage = "/user/member/member_login_form";
 
         }
 
         return nextPage;
 
     }
-    @PostMapping("/user_delete_confirm")
-    public String userMemeberDeleteConfirm(HttpSession session) {
-        log.info("[UserMemberController] userMemeberDelete()");
 
+    //사용자 로그인
+    @GetMapping("/member_login_form")
+    public String memberLoginForm() {
+        log.info("[UserMemberController] memberLoginForm()");
+
+        String nextPage = "/user/member/member_login_form";
+
+        return nextPage;
+
+    }
+
+
+
+    @GetMapping ("/member_modify_form")
+    public String userMemeberModfiyForm() {
+        log.info("[UserMemberController] userMemeberModfiyForm()");
+
+        String nextPage = "/user/member/member_modify_form";
+
+        return nextPage;
+
+    }
+
+
+
+    @PostMapping ("/member_modify_confirm")
+    public String userMemeberModfiyConfirm(HttpSession session, UserMemberDto userMemberDto) {
+        log.info("[UserMemberController] userMemeberModfiyConfirm()");
+
+        String nextPage = "/user/member/member_modify_success";
+
+        UserMemberDto updateUserDto = userMemberService.userMemeberModifyConfirm(userMemberDto);
+
+        if(updateUserDto != null){
+            session.setAttribute("loginedUserMemberDto", updateUserDto);
+            session.setMaxInactiveInterval(60 * 30);
+        } else {
+            nextPage = "redirect:/user/member/member_modify_form";
+        }
+
+        return nextPage;
+
+    }
+
+
+    @GetMapping ("/member_delete_confirm")
+    public String userMemberDeleteConfirm(HttpSession session) {
+        log.info("[UserMemberController] userMemberDeleteConfirm()");
 
         String nextPage = "redirect:/user/member/member_logout_confirm";
 
