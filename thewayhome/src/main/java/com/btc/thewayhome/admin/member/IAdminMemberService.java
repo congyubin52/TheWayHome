@@ -11,7 +11,7 @@ public interface IAdminMemberService {
 
 //    public AdminMemberDto createAccountConfirm(AdminMemberDto adminMemberDto);
 
-    public List<AdminMemberDto> ShelterList(AdminMemberDto adminMemberDto);
+    public Map<String, Object> ShelterList();
 
     public Map<String, Object> searchShelterName(Map<String, String> msgMap);
 }

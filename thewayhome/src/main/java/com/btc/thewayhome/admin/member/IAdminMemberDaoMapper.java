@@ -12,9 +12,9 @@ public interface IAdminMemberDaoMapper {
 
     public void insertShelterInfo(ShelterInfoDto shelterInfoDto);
 
-    public List<AdminMemberDto> ShelterNumList(Map <String, String> shelterNumMap);
+    public List<AdminMemberDto> ShelterNumList();
 
-    public List<AdminMemberDto> ShelterInfoList(Map<String, String> shelterInfoMap);
+    public List<AdminMemberDto> ShelterInfoList();
 
     public boolean isAdminMember(String aMId, String sNo);
 

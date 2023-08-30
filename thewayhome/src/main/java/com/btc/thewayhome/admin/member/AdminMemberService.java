@@ -143,19 +143,23 @@ public class AdminMemberService implements IAdminMemberService {
 //        }
 //}
         @Override
-    public List<AdminMemberDto> ShelterList(AdminMemberDto adminMemberDto) {
+    public Map<String, Object> ShelterList() {
         log.info("[MemberService] ShelterNameJoin()");
 
-        Map<String, String> shelterNumMap = new HashMap<>();
-        shelterNumMap.put(adminMemberDto.getS_no(), adminMemberDto.getS_name());
+        Map<String, Object> msgMap = new HashMap<>();
 
-        Map<String, String> shelterInfoMap = new HashMap<>();
-            shelterInfoMap.put(adminMemberDto.getS_phone(), adminMemberDto.getS_address());
+        List<AdminMemberDto> shelterNumDtos = iAdminMemberDaoMapper.ShelterNumList();
+        List<AdminMemberDto> shleterInfoDtos = iAdminMemberDaoMapper.ShelterInfoList();
 
-        List<AdminMemberDto> shelterNumDtos = iAdminMemberDaoMapper.ShelterNumList(shelterNumMap);
-        List<AdminMemberDto> shleterInfoDtos = iAdminMemberDaoMapper.ShelterInfoList(shelterInfoMap);
+        msgMap.put("shelterNumDtos", shelterNumDtos);
+        msgMap.put("shleterInfoDtos", shleterInfoDtos);
 
-        return null;
+        log.info("shelterNumDtos!!!!" +  shelterNumDtos);
+        log.info("msgMap!!!!!!!!!!" + msgMap);
+
+
+
+        return msgMap;
     }
 
 

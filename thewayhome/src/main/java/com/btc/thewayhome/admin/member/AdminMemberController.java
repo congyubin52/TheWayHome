@@ -212,39 +212,37 @@ public class AdminMemberController {
     }
 
         @GetMapping("/create_account_form")
-        public String createAccountForm(AdminMemberDto adminMemberDto, Model model) {
+        public String createAccountForm() {
             log.info("createAccountForm()");
 
-            List<AdminMemberDto> shelterNameJoinDtos = adminMemberService.ShelterList(adminMemberDto);
-//            List<String> shelterNumLists =
+            String nextPage = "admin/member/create_account_form";
 
-            for(int i=0;i<shelterNameJoinDtos.size();i++){
-                System.out.println(shelterNameJoinDtos.get(i));
-            }
-
-            String nextPage = "/admin/member/create_account_form";
+//            Map<String, Object> msgMap = adminMemberService.ShelterList();
+//            model.addAttribute("shelterNumDtos", msgMap.get("shelterNumDtos"));
+//            model.addAttribute("shleterInfoDtos", msgMap.get("shleterInfoDtos"));
 
             return nextPage;
+
         }
 
-        @PostMapping ("/create_account_confirm")
-        public String createAccountConfirm(AdminMemberDto adminMemberDto, Model model){
-            log.info("createAccountConfirm()");
-
-            List<AdminMemberDto> shelterNameJoinDtos = adminMemberService.ShelterNameJoin(adminMemberDto);
-
-
-            log.info("[AdminMemberController] shelterNameJoinDto" + shelterNameJoinDtos);
-
-            String nextPage = "/admin/member/create_account_success";
-
-//            int result = adminMemberService.createAccountConfirm(adminMemberDto);
-//            if(result <= 0){
-//                nextPage = "/admin/member/create_account_fail";
-//            }
-
-            return nextPage;
-        }
+//        @PostMapping ("/create_account_confirm")
+//        public String createAccountConfirm(AdminMemberDto adminMemberDto, Model model){
+//            log.info("createAccountConfirm()");
+//
+////            List<AdminMemberDto> shelterNameJoinDtos = adminMemberService.ShelterNameJoin(adminMemberDto);
+//
+//
+////            log.info("[AdminMemberController] shelterNameJoinDto" + shelterNameJoinDtos);
+//
+//            String nextPage = "/admin/member/create_account_success";
+//
+////            int result = adminMemberService.createAccountConfirm(adminMemberDto);
+////            if(result <= 0){
+////                nextPage = "/admin/member/create_account_fail";
+////            }
+//
+//            return nextPage;
+//        }
 
         // 회원가입할 때 DB에 보호소명으로 조인된 테이블 데이터를 비동기로 출력을 위한 것
 //    @PostMapping("/searchShelterName")
