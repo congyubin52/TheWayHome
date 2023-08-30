@@ -66,6 +66,7 @@ public class SpringSecurityConfig {
 				.logoutSuccessUrl("/");
 		return http.build();
 	}
+
 	@Bean
 	@Order(2)
 	public SecurityFilterChain filterChainAdmin(HttpSecurity http) throws Exception {
