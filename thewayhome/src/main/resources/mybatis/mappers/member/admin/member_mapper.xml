@@ -15,7 +15,7 @@
         VALUES(#{s_name}, #{s_phone}, #{s_address}, NOW(), NOW())
     </insert>
 
-    <select id="ShelterNameJoin" parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
+    <select id="ShelterNumList" parameterType="String"
     resultType="com.btc.thewayhome.admin.member.AdminMemberDto">
         select a.s_name, a.s_no, b.s_phone, b.s_address
         from
@@ -23,6 +23,12 @@
         where a.#{s_name} = b.#{s_name};
     </select>
 
+
+    <select id="selectsSearchShelterName" parameterType="String" resultType="com.btc.thewayhome.admin.member.AdminMemberDto">
+        select a.s_no
+
+
+    </select>
 
 
 </mapper>

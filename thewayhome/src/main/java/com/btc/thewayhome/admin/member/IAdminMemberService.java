@@ -1,5 +1,8 @@
 package com.btc.thewayhome.admin.member;
 
+import java.util.List;
+import java.util.Map;
+
 public interface IAdminMemberService {
 
     public void shelterRegistNum(String result, ShelterNumDto shelterNumDto);
@@ -8,5 +11,7 @@ public interface IAdminMemberService {
 
 //    public AdminMemberDto createAccountConfirm(AdminMemberDto adminMemberDto);
 
-    public AdminMemberDto ShelterNameJoin(AdminMemberDto adminMemberDto);
+    public List<AdminMemberDto> ShelterList(AdminMemberDto adminMemberDto);
+
+    public Map<String, Object> searchShelterName(Map<String, String> msgMap);
 }

@@ -6,9 +6,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Controller
@@ -212,8 +212,15 @@ public class AdminMemberController {
     }
 
         @GetMapping("/create_account_form")
-        public String createAccountForm() {
+        public String createAccountForm(AdminMemberDto adminMemberDto, Model model) {
             log.info("createAccountForm()");
+
+            List<AdminMemberDto> shelterNameJoinDtos = adminMemberService.ShelterList(adminMemberDto);
+//            List<String> shelterNumLists =
+
+            for(int i=0;i<shelterNameJoinDtos.size();i++){
+                System.out.println(shelterNameJoinDtos.get(i));
+            }
 
             String nextPage = "/admin/member/create_account_form";
 
@@ -221,12 +228,13 @@ public class AdminMemberController {
         }
 
         @PostMapping ("/create_account_confirm")
-        public String createAccountConfirm(AdminMemberDto adminMemberDto){
+        public String createAccountConfirm(AdminMemberDto adminMemberDto, Model model){
             log.info("createAccountConfirm()");
 
-            AdminMemberDto shelterNameJoinDto = adminMemberService.ShelterNameJoin(adminMemberDto);
+            List<AdminMemberDto> shelterNameJoinDtos = adminMemberService.ShelterNameJoin(adminMemberDto);
 
-            log.info("[AdminMemberController] shelterNameJoinDto" + shelterNameJoinDto);
+
+            log.info("[AdminMemberController] shelterNameJoinDto" + shelterNameJoinDtos);
 
             String nextPage = "/admin/member/create_account_success";
 
@@ -237,6 +245,15 @@ public class AdminMemberController {
 
             return nextPage;
         }
+
+        // 회원가입할 때 DB에 보호소명으로 조인된 테이블 데이터를 비동기로 출력을 위한 것
+//    @PostMapping("/searchShelterName")
+//    @ResponseBody
+//    public Object searchShelterName(@RequestBody Map<String, String> msgMap){
+//        Map<String, Object> map = adminMemberService.searchShelterName(msgMap);
+//        List<String>
+//        return map;
+//    }
 
 
 

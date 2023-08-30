@@ -8,6 +8,10 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 @Log4j2
 public class AdminMemberService implements IAdminMemberService {
@@ -139,10 +143,33 @@ public class AdminMemberService implements IAdminMemberService {
 //        }
 //}
         @Override
-    public AdminMemberDto ShelterNameJoin(AdminMemberDto adminMemberDto) {
+    public List<AdminMemberDto> ShelterList(AdminMemberDto adminMemberDto) {
         log.info("[MemberService] ShelterNameJoin()");
 
-        AdminMemberDto shelterNameJoinDto = iAdminMemberDaoMapper.ShelterNameJoin(adminMemberDto);
-        return shelterNameJoinDto;
+        Map<String, String> shelterNumMap = new HashMap<>();
+        shelterNumMap.put(adminMemberDto.getS_no(), adminMemberDto.getS_name());
+
+        Map<String, String> shelterInfoMap = new HashMap<>();
+            shelterInfoMap.put(adminMemberDto.getS_phone(), adminMemberDto.getS_address());
+
+        List<AdminMemberDto> shelterNumDtos = iAdminMemberDaoMapper.ShelterNumList(shelterNumMap);
+        List<AdminMemberDto> shleterInfoDtos = iAdminMemberDaoMapper.ShelterInfoList(shelterInfoMap);
+
+        return null;
+    }
+
+
+    @Override
+    public Map<String, Object> searchShelterName(Map<String, String> msgMap){
+        log.info("[MemberService] ShelterNameJoin()");
+
+        Map<String, Object> map = new HashMap<>();
+
+       List<AdminMemberDto> adminMemberDtos = iAdminMemberDaoMapper.selectsSearchShelterName(msgMap.get("ShelterNo"));
+
+        map.put("adminMemberDtos", adminMemberDtos);
+
+        return map;
+
     }
 }
