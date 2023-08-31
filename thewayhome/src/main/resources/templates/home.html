@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="~{user/include/head_header_footer.html::head}">
+
 </head>
 <body>
 
@@ -9,8 +10,6 @@
 
 <section>
     <div id="section_wrap">
-
-
         <div id="carouselExampleCaptions" class="carousel slide mx-auto" style="max-width: 1800px;">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -54,6 +53,19 @@
 
 <footer th:replace="~{user/include/head_header_footer.html::footer}">
 </footer>
+
+<script th:inline="javascript">
+    let loginedUserMemberDto = [[${session.loginedUserMemberDto}]];
+    if (loginedUserMemberDto == null) {
+        let result = confirm("실패");
+        if (result) {
+            location.href = "/user/member/member_login_form";
+        }
+
+    } else {
+        alert("성공");
+    }
+</script>
 
 </body>
 </html>
