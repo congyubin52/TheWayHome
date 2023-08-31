@@ -1,5 +1,7 @@
 package com.btc.thewayhome.config;
 
+import com.btc.thewayhome.admin.member.AdminMemberDto;
+import com.btc.thewayhome.admin.member.IAdminMemberDaoMapper;
 import com.btc.thewayhome.user.member.IUserMemberDaoMapper;
 import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.DispatcherType;
@@ -25,20 +27,29 @@ public class SpringSecurityConfig {
 	@Autowired
 	IUserMemberDaoMapper iUserMemberDaoMapper;
 
+	@Autowired
+	IAdminMemberDaoMapper iAdminMemberDaoMapper;
+
+	@Autowired
+	MyUserDetailsService myUserDetailsService;
+
+	@Autowired
+	MyAdminDetailsService myAdminDetailsService;
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	@Order(2)
+	public SecurityFilterChain filterChainForUser(HttpSecurity http) throws Exception {
 		log.info("filterChain");
 
 		http.csrf().disable()
 				.cors().disable()
 				.authorizeHttpRequests(request -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
 								"/user/member/create_account_form", "/user/member/create_account_confirm").permitAll()   // Security 제외
 						.anyRequest().authenticated()
@@ -84,6 +95,68 @@ public class SpringSecurityConfig {
 
 						})
 				)
+				.userDetailsService(myUserDetailsService)
+				.sessionManagement()
+				.maximumSessions(1)
+				.maxSessionsPreventsLogin(false);
+
+		return http.build();
+	}
+
+	@Bean
+	@Order(1)
+	public SecurityFilterChain filterChainForAdmin(HttpSecurity http) throws Exception {
+		log.info("filterChainForAdmin");
+
+		http.csrf().disable()
+				.cors().disable()
+				.securityMatcher("/admin/**")
+				.authorizeHttpRequests(request -> request
+						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
+								"/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()   // Security 제외
+						.anyRequest().authenticated()
+				)
+				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
+						.loginPage("/admin/member/member_login_form")    // 로그인 시 폼 주소 설정
+						.loginProcessingUrl("/admin/member/member_login_confirm")
+						.usernameParameter("a_m_id")
+						.passwordParameter("a_m_pw")
+						.successHandler((request, response, authentication) -> {	// 로그인 성공시 이동 페이지 URI
+							log.info("successHandler!!");
+
+							AdminMemberDto adminMemberDto = new AdminMemberDto();
+							adminMemberDto.setA_m_id(authentication.getName());
+							AdminMemberDto loginedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
+
+							HttpSession session = request.getSession();
+							session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+							session.setMaxInactiveInterval(60 * 30);
+
+							log.info("--> {}", authentication.isAuthenticated());
+
+							response.sendRedirect("/admin/");
+
+						})
+						.failureHandler((request, response, exception) -> {
+							log.info("failureHandler!!");
+							response.sendRedirect("/admin/member/member_login_form");
+
+						})
+						.permitAll())
+				.logout(logout -> logout
+						.logoutUrl("/admin/member/member_logout_confirm")
+						.logoutSuccessHandler((request, response, authentication) -> {
+							log.info("logoutSuccessHandler!!");
+
+							HttpSession session = request.getSession();
+							session.invalidate();
+
+							response.sendRedirect("/admin/member/");
+
+						})
+				)
+				.userDetailsService(myAdminDetailsService)
 				.sessionManagement()
 				.maximumSessions(1)
 				.maxSessionsPreventsLogin(false);
