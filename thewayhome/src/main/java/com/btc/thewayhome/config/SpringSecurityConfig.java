@@ -75,7 +75,7 @@ public class SpringSecurityConfig {
 				)
 				.sessionManagement()
 				.maximumSessions(1)
-				.maxSessionsPreventsLogin(false);
+				.maxSessionsPreventsLogin(true);
 		return http.build();
 	}
 

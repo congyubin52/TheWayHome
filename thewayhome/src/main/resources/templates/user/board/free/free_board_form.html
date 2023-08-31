@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{user/include/head_header_footer.html::head}">
+
+<body>
+<header th:replace="~{user/include/head_header_footer.html::header}"></header>
+
+
+<nav th:replace="~{/include/header_nav_footer.html::nav}">
+
+</nav>
+
+
+<section>
+    <div id="section_wrap">
+        <div class="word">
+            실종/목격 글 작성 페이지
+        </div>
+        <div class="blog_write_form">
+            <form th:action="@{/user/member/free_board_write_confirm}" name="free_board_write_confirm" method="post">
+                <select>
+                    <option value="0">-- 실종/목격 선택하시오 --</option>
+                    <option value="1">-- 실종 --</option>
+                    <option value="2">-- 목격 --</option>
+                </select>
+                <input type="text" name="b_title" placeholder="INPUT title"><br>
+                <textarea id="editor" name="b_body" ></textarea>
+                <input id="submitBtn" type="button" value="write">&nbsp;&nbsp;
+                <input type="reset" value="reset">
+            </form>
+        </div>
+
+
+    </div>
+</section>
+
+
+<footer th:replace="~{user/include/head_header_footer.html::footer}"></footer>
+
+<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+<script>
+
+    ClassicEditor.create(document.querySelector('#editor'),{
+        language: "ko",
+    }).then(editor =>{
+        $('#submitBtn').click(function() {
+            writePost(editor);
+        });
+
+
+    })
+
+</script>
+
+</body>
+</html>

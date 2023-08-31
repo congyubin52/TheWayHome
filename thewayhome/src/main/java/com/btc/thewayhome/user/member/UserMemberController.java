@@ -85,7 +85,7 @@ public class UserMemberController {
         String nextPage = "redirect:/user/member/member_modify_form";
 //        String nextPage = "/user/member/member_modify_success";
 
-        UserMemberDto updateUserDto = userMemberService.userMemeberModifyConfirm(userMemberDto);
+        UserMemberDto updateUserDto = userMemberService.userMemberModifyConfirm(userMemberDto);
 
         if(updateUserDto != null){
             session.setAttribute("loginedUserMemberDto", updateUserDto);
@@ -126,7 +126,7 @@ public class UserMemberController {
 //        String nextPage = "/user/member/member_password_modify_success";
 
 
-        UserMemberDto updateUserDto = userMemberService.userMemeberPasswordModifyConfirm(userMemberDto, currentPw, changePw);
+        UserMemberDto updateUserDto = userMemberService.userMemberPasswordModifyConfirm(userMemberDto, currentPw, changePw);
 
         if(updateUserDto != null){
             session.setAttribute("loginedUserMemberDto", updateUserDto);
@@ -153,7 +153,7 @@ public class UserMemberController {
 
         UserMemberDto loginedUserMemberDto =
                 (UserMemberDto) session.getAttribute("loginedUserMemberDto");
-        int result = userMemberService.userMemeberDeleteConfirm(loginedUserMemberDto.getU_m_no());
+        int result = userMemberService.userMemberDeleteConfirm(loginedUserMemberDto.getU_m_no());
 
         if (result <= 0){
             response.setContentType("text/html; charset=euc-kr");

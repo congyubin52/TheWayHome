@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{user/include/head_header_footer.html::head}">
+
+<body>
+<header th:replace="~{user/include/head_header_footer.html::header}"></header>
+
+<section>
+    <div id="section_wrap">
+        <div class="word">
+            실종/목격 게시판
+        </div>
+        <div class="container text-center" style="width: 1800px">
+            <div class="row">
+                <div class="row">
+                    <div class="col d-flex">
+                        글쓰기
+                    </div>
+                    <div class="col">
+                        <div class="row ml-auto">
+                            <div class="col">
+                                실종/목격
+                            </div>
+                            <div class="col">
+                                축종
+                            </div>
+                            <div class="col">
+                                지역
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col" th:each="petsDto : ${petsDtos}">
+                        <a><img th:src="${session.petsDto}"></a>
+                    </div>
+                    <div class="col">
+                        Column2
+                    </div>
+                    <div class="col">
+                        Column3
+                    </div>
+                    <div class="col">
+                        Column4
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Column5
+                    </div>
+                    <div class="col">
+                        Column6
+                    </div>
+                    <div class="col">
+                        Column7
+                    </div>
+                    <div class="col">
+                        Column8
+                    </div>
+                </div>
+            </div>
+            <!--        <table>-->
+            <!--            <thead>-->
+            <!--            <tr th:each="petsDto : ${petsDtos}">-->
+            <!--                <th><a><img th:src="${#}"></a></th>-->
+            <!--            </tr>-->
+            <!--            </thead>-->
+            <!--            <tbody>-->
+            <!--            <tr th:each="blogDto : ${blogDtos}">-->
+            <!--                <td th:text="품종"></td>-->
+            <!--                <td th:text="지역"></td>-->
+            <!--                <td th:text="작성일"></td>-->
+            <!--                <td th:text="조회수"></td>-->
+            <!--            </tr>-->
+            <!--            </tbody>-->
+            <!--        </table>-->
+
+
+        </div>
+    </div>
+
+</section>
+
+<footer th:replace="~{user/include/head_header_footer.html::footer}"></footer>
+
+</body>
+</html>
