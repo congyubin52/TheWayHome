@@ -134,7 +134,7 @@ public class AdminMemberService implements IAdminMemberService {
         log.info("----------------->{}", shelterNameMap.get("word").toString());
         Map<String, Object> map = new HashMap<>();
 
-        List<ShelterSearchDto> shelterSearchDtos = iAdminMemberDaoMapper.selectSearchShelterName(shelterNameMap.get("word"));
+        List<ShelterSearchDto> shelterSearchDtos = iAdminMemberDaoMapper.selectSearchShelterName(shelterNameMap.get("word").toString());
 
         map.put("shelterSearchDtos", shelterSearchDtos);
 //        log.info("shelterSearchDtos+++++++", shelterSearchDtos.get(0));

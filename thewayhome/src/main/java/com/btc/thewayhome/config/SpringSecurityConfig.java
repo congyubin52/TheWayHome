@@ -84,12 +84,6 @@ public class SpringSecurityConfig {
 
 							response.sendRedirect("/");
 
-						})
-				)
-				.sessionManagement()
-				.maximumSessions(1)
-				.maxSessionsPreventsLogin(false);
-
 		return http.build();
 	}
 
