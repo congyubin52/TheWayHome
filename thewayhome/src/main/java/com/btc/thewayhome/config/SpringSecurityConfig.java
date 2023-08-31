@@ -36,12 +36,15 @@ public class SpringSecurityConfig {
 				.cors().disable()
 				.authorizeHttpRequests(request -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
 								"/user/member/create_account_form", "/user/member/create_account_confirm").permitAll()   // Security 제외
 						.anyRequest().authenticated()
 				)
 				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
-						.loginPage("/user/member/member_login_form")    // 로그인 시 폼 주소 설정
+						.loginPage(
+								"/user/member/member_login_form"
+						)    // 로그인 시 폼 주소 설정
 						.loginProcessingUrl("/user/member/member_login_confirm")
 						.usernameParameter("u_m_id")
 						.passwordParameter("u_m_pw")
@@ -50,8 +53,7 @@ public class SpringSecurityConfig {
 
 							UserMemberDto userMemberDto = new UserMemberDto();
 							userMemberDto.setU_m_id(authentication.getName());
-							UserMemberDto loginedUserMemberDto = iUserMemberDaoMapper.selectUserMemberForLogin(userMemberDto);
-
+							UserMemberDto loginedUserMemberDto = iUserMemberDaoMapper.selectUserForLogin(userMemberDto);
 
 							HttpSession session = request.getSession();
 							session.setAttribute("loginedUserMemberDto", loginedUserMemberDto);
@@ -59,18 +61,12 @@ public class SpringSecurityConfig {
 
 							log.info("--> {}", authentication.isAuthenticated());
 
-//							response.sendRedirect("/");
+							response.sendRedirect("/");
 
 						})
 						.failureHandler((request, response, exception) -> {
 							log.info("failureHandler!!");
-
-							log.info("--> {}", exception.getMessage());
-
-							HttpSession session = request.getSession();
-							session.invalidate();
-
-//							response.sendRedirect("/user/member/member_login_form");
+							response.sendRedirect("/user/member/member_login_form");
 
 						})
 						.permitAll())
