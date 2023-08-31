@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="~{user/include/head_header_footer.html::head}">
+<head th:replace="~{/admin/include/admin_header_footer.html::head}">
+
+    <!--    <link rel="stylesheet" th:href="@{/css/common.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/css/header_footer.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/css/home.css}">-->
 
 </head>
 <body>
 
-<header th:replace="~{user/include/head_header_footer.html::header}">
+<header th:replace="~{/admin/include/admin_header_footer.html::header}">
 </header>
 
 <section>
-
     <div id="section_wrap">
         <div id="carouselExampleCaptions" class="carousel slide mx-auto" style="max-width: 1800px;">
             <div class="carousel-indicators">
@@ -52,19 +55,8 @@
     </div>
 </section>
 
-<footer th:replace="~{user/include/head_header_footer.html::footer}">
+<footer th:replace="~{/admin/include/admin_header_footer.html::footer}">
 </footer>
-
-<!--<script th:inline="javascript">-->
-<!--    let loginedUserMemberDto = [[${session.loginedUserMemberDto}]];-->
-<!--    if (loginedUserMemberDto == null) {-->
-<!--        alert("실패");-->
-<!--        location.href = "/user/member/member_login_form";-->
-
-<!--    } else {-->
-<!--        alert("성공");-->
-<!--    }-->
-<!--</script>-->
 
 </body>
 </html>

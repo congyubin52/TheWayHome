@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
+</head>
+<body>
+    <header th:replace="~{/include/admin/admin_header_footer.html::header}">
+    </header>
+    <nav th:replace="~{/include/admin/admin_header_footer.html::nav}">
+    </nav>
+
+    <section>
+        <div id="section_wrap">
+
+            <div class="word">
+                CREATE ACCOUNT FAIL
+            </div>
+        </div>
+`
+            <div class="go_create_account_form">
+                <a th:href="@{/member/create_account_form}">회원가입</a>
+            </div>
+        </div>
+    </section>
+
+    <footer th:replace="~{/include/admin/admin_header_footer.html::footer}">
+    </footer>
+</body>
+</html>

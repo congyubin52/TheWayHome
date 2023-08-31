@@ -24,17 +24,14 @@
 <!--    </select>-->
 
 
-    <select id="ShelterNumList"  resultType="com.btc.thewayhome.admin.member.ShelterNumDto">
-        select * from tbl_shelterNum
-
-
-    </select>
-
-    <select id="ShelterInfoList"  resultType="com.btc.thewayhome.admin.member.ShelterInfoDto">
-        select * from tbl_shelterInfo
-
+    <select id="selectSearchShelterName" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
+        SELECT s_name
+        FROM tbl_shelterNum
+        WHERE s_name LIKE CONCAT('%', #{ShelterName}, '%')
+        ORDER BY s_name ASC
 
     </select>
+
 
 
 </mapper>
