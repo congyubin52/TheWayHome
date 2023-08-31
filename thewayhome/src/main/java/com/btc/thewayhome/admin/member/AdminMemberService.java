@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -169,7 +170,8 @@ public class AdminMemberService implements IAdminMemberService {
 
         Map<String, Object> map = new HashMap<>();
 
-        int result = iAdminMemberDaoMapper.deleteAccount(a_m_no);
+        int result = -1;
+        result = iAdminMemberDaoMapper.deleteAccount(a_m_no);
 
         switch (result) {
             case -1:
@@ -192,5 +194,22 @@ public class AdminMemberService implements IAdminMemberService {
 
     }
 
+    // 관리자 정보 리스트
+    @Override
+    public List<AdminMemberDto> searchAdminList() {
+        log.info("[AdminMemberService] searchAdminList()");
+
+        return iAdminMemberDaoMapper.selectAdminForApproval();
+
     }
+
+    //관리자 승인 처리
+    public void memberApprovalConfirm(int a_m_no) {
+        log.info("[AdminMemberService] memberApprovalConfirm()");
+        System.out.println("a_m_no: " + a_m_no);
+
+        iAdminMemberDaoMapper.updateAdminForApporoval(a_m_no);
+
+    }
+}
 

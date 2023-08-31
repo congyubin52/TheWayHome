@@ -1,5 +1,6 @@
 package com.btc.thewayhome.admin.member;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IAdminMemberService {
@@ -18,5 +19,11 @@ public interface IAdminMemberService {
     //회원 탈퇴
     //public int memberDeleteConfirm(int a_m_no);
     public Map<String, Object> memberDeleteConfirm(int a_m_no);
+
+    //관리자 정보 리스트
+    public List<AdminMemberDto> searchAdminList();
+
+    //사용자 승인 처리
+    public void memberApprovalConfirm(int a_m_no);
 
 }

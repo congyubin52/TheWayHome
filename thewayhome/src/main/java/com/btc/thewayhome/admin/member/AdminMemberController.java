@@ -1,5 +1,6 @@
 package com.btc.thewayhome.admin.member;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 import static java.lang.System.out;
@@ -88,8 +90,6 @@ public class AdminMemberController {
     public Object memberLoginConfirm(@RequestBody Map<String, String> msgMap, HttpSession session, Model model) {
         log.info("[AdminMemberController] memberLoginConfirm()");
 
-        // String nextPage = "redirect:/"; 쏴리
-
         Map<String, Object> map = adminMemberService.loginConfirm(msgMap);
 
         AdminMemberDto loginedAdminMemberDto = null;
@@ -102,7 +102,6 @@ public class AdminMemberController {
         }
 
         model.addAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
-
 
         return null;
 
@@ -219,29 +218,8 @@ public class AdminMemberController {
         }
     }*/
 
+
     //회원 탈퇴
-/*    @GetMapping("/member_delete_confirm")
-    public String memberDeleteConfirm(HttpSession session, HttpServletResponse response) throws IOException {
-        log.info("[AdminMemberController] memberDeleteConfirm()");
-        response.setContentType("text/html; charset=euc-kr");
-        PrintWriter out = response.getWriter();
-
-        String nextPage = "redirect:/admin";
-
-        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
-
-        int result = adminMemberService.memberDeleteConfirm(loginedAdminMemberDto.getA_m_no());
-
-        if(result<=0) {
-            out.println("<script>alert('삭제 실패'); location.href = \"/admin/member/member_modify_form\";</script>");
-            out.flush();
-
-        }
-
-        return nextPage;
-
-    }*/
-
     @PostMapping("/member_delete_confirm")
     @ResponseBody
     public Map<String, Object> memberDeleteConfirm(@RequestBody Map<String, String> msgMap, HttpSession session){
@@ -254,6 +232,42 @@ public class AdminMemberController {
 
         }
         return map;
+    }
+
+    //관리자 정보 리스트
+    @GetMapping("/search_admin_list")
+    public String searchAdminList(Model model, HttpSession session) {
+        log.info("[AdminMemberController] searchAdminList()");
+
+        List<AdminMemberDto> adminMemberDtos = adminMemberService.searchAdminList();
+
+        model.addAttribute("adminMemberDtos", adminMemberDtos);
+
+        String nextPage = "/admin/member/search_admin_list";
+
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
+        if(loginedAdminMemberDto == null) {
+            return "redirect:/admin";
+
+        }
+
+        return nextPage;
+
+    }
+
+    //(로그인을 위한) 관리자 승인 처리
+    @GetMapping("/member_approval_confirm")
+//    public String memberApprovalConfirm(Model model, @RequestParam("a_m_no") int a_m_no) {
+    public void memberApprovalConfirm(Model model, HttpServletRequest request) {
+        log.info("[AdminMemberController] memberApprovalConfirm()");
+
+//        String nextPage = "redirect:/admin/member/search_admin_list";
+        out.println("a_m_no--------->" + request.getParameter("a_m_no"));
+        adminMemberService.memberApprovalConfirm(Integer.parseInt(request.getParameter("a_m_no")));
+
+//        return nextPage;
+
     }
 
 }
