@@ -1,36 +1,19 @@
 package com.btc.thewayhome.admin.member;
 
-import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
-import java.util.Map;
-
-@Mapper
 public interface IAdminMemberDaoMapper {
 
-    //회원가입 - 중복체크
-    public boolean isAdmin(String a_m_id);
+    public int insertShelterNum(ShelterNumDto shelterNumDto);
 
-    //회원가입 - 계정생성
-    public void insertNewAccount(AdminMemberDto adminMemberDto);
+    public void insertShelterInfo(ShelterInfoDto shelterInfoDto);
 
-    //로그인
-    public AdminMemberDto selectAdminForLogin(Map<String, String> msgMap);
+    public List<AdminMemberDto> ShelterNumList();
 
-    //회원 정보 수정
-    public int updateAccount(AdminMemberDto adminMemberDto);
-    // public int updateAccount(Map<String, String> msgMap);
+    public List<AdminMemberDto> ShelterInfoList();
 
-    //회원 정보 수정 - 최신화
-    public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
-    //public Map<String,Object> getLatestAccountInfo(Map<String, String> msgMap);
+    public boolean isAdminMember(String aMId, String sNo);
 
-    //회원탈퇴
-    public int deleteAccount(int a_m_no);
+    public List<AdminMemberDto> selectsSearchShelterName(String ShelterNo);
 
-    //관리자 정보 리스트
-    public List<AdminMemberDto> selectAdminForApproval();
 
-    //관리자 승인 처리
-    public void updateAdminForApporoval(int a_m_no);
+
 }

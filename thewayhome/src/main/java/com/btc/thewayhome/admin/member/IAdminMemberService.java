@@ -26,4 +26,14 @@ public interface IAdminMemberService {
     //사용자 승인 처리
     public void memberApprovalConfirm(int a_m_no);
 
+
+    public void shelterRegistNum(String result, ShelterNumDto shelterNumDto);
+
+    public void shelterRegistInfo(String result, ShelterInfoDto shelterInfoDto);
+
+//    public AdminMemberDto createAccountConfirm(AdminMemberDto adminMemberDto);
+
+    public Map<String, Object> ShelterList();
+
+    public Map<String, Object> searchShelterName(Map<String, String> msgMap);
 }
