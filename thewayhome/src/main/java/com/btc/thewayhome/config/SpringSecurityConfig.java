@@ -29,9 +29,8 @@ public class SpringSecurityConfig {
 	}
 
 	@Bean
-	@Order(1)
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		log.info("UserFilterChain");
+		log.info("filterChain");
 
 		http.csrf().disable()
 				.cors().disable()
@@ -41,8 +40,8 @@ public class SpringSecurityConfig {
 								"/user/member/create_account_form", "/user/member/create_account_confirm").permitAll()   // Security 제외
 						.anyRequest().authenticated()
 				)
-				.formLogin(login -> login                           	// 로그인 시 폼(form)을 이용
-						.loginPage("/user/member/member_login_form")    // 로그인시 폼 주소 설정
+				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
+						.loginPage("/user/member/member_login_form")    // 로그인 시 폼 주소 설정
 						.loginProcessingUrl("/user/member/member_login_confirm")
 						.usernameParameter("u_m_id")
 						.passwordParameter("u_m_pw")
@@ -53,11 +52,25 @@ public class SpringSecurityConfig {
 							userMemberDto.setU_m_id(authentication.getName());
 							UserMemberDto loginedUserMemberDto = iUserMemberDaoMapper.selectUserMemberForLogin(userMemberDto);
 
+
 							HttpSession session = request.getSession();
 							session.setAttribute("loginedUserMemberDto", loginedUserMemberDto);
 							session.setMaxInactiveInterval(60 * 30);
 
-							response.sendRedirect("/");
+							log.info("--> {}", authentication.isAuthenticated());
+
+//							response.sendRedirect("/");
+
+						})
+						.failureHandler((request, response, exception) -> {
+							log.info("failureHandler!!");
+
+							log.info("--> {}", exception.getMessage());
+
+							HttpSession session = request.getSession();
+							session.invalidate();
+
+//							response.sendRedirect("/user/member/member_login_form");
 
 						})
 						.permitAll())
@@ -76,34 +89,8 @@ public class SpringSecurityConfig {
 				.sessionManagement()
 				.maximumSessions(1)
 				.maxSessionsPreventsLogin(false);
+
 		return http.build();
 	}
-
-	@Bean
-	@Order(2)
-	public SecurityFilterChain filterChainAdmin(HttpSecurity http) throws Exception {
-		log.info("filterChain");
-
-		http.csrf().disable()
-				.cors().disable()
-				.authorizeHttpRequests(request -> request
-						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-								"/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()   // Security 제외
-						.anyRequest().authenticated()
-				)
-				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
-						.loginPage("/admin/member/member_login_form")            // 로그인시 폼 주소 설정
-						.loginProcessingUrl("/admin/member/member_login_confirm")
-						.usernameParameter("a_m_id")
-						.passwordParameter("a_m_pw")
-						.defaultSuccessUrl("/", true)
-						.permitAll())
-				.logout()
-				.logoutUrl("/admin/member/member_logout_confirm")
-				.logoutSuccessUrl("/");
-		return http.build();
-	}
-
 
 }

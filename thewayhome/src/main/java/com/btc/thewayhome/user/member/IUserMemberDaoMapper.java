@@ -21,5 +21,5 @@ public interface IUserMemberDaoMapper {
 
     public UserMemberDto selectUserMemberForLogin(UserMemberDto userMemberDto);
 
-    public UserMemberDto selectUserForLogin(Map<String, String> msgMap);
+    public UserMemberDto selectUserForLogin(UserMemberDto userMemberDto);
 }

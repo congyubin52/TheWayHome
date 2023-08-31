@@ -1,16 +1,17 @@
 package com.btc.thewayhome.user.member;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 @Controller
@@ -33,14 +34,16 @@ public class UserMemberController {
     }
 
     @PostMapping("/create_account_confirm")
-    public String createAccountConfirm(UserMemberDto userMemberDto) {
+    public String createAccountConfirm(UserMemberDto userMemberDto, Model model) {
         log.info("[UserMemberController] createAccountConfirm()");
 
         String nextPage = "redirect:/user/member/create_account_form";
 
         int result = userMemberService.createAccountConfirm(userMemberDto);
         if(result > userMemberService.INSERT_FAIL_AT_DATABASE) {
-            nextPage = "/user/member/member_login_form";
+
+            model.addAttribute("u_m_id", userMemberDto.getU_m_id());
+            nextPage = "/user/member/create_account_success";
 
         }
 
@@ -48,16 +51,38 @@ public class UserMemberController {
 
     }
 
-    //사용자 로그인
+    /*
+        사용자 로그인
+     */
     @GetMapping("/member_login_form")
     public String memberLoginForm() {
         log.info("[UserMemberController] memberLoginForm()");
 
-        String nextPage = "/user/member/member_login_form";
+        String nextPage = "user/member/member_login_form";
 
         return nextPage;
 
     }
+
+//    @PostMapping("/member_login_confirm")
+//    @ResponseBody
+//    public Object  memberLoginConfirm(@RequestBody Map<String,String> msgMap, HttpSession session, Model model) {
+//        log.info("[UserMemberController] memberLoginConfirm()");
+//
+//        log.info("userMemberDto : " + msgMap.get("u_m_id"));
+//        log.info("userMemberDto : " + msgMap.get("u_m_pw"));
+//
+////        HashMap<String, Object> map = new HashMap<>();
+////        map.put("result","hello");
+//
+//        Map<String, Object> map =  userMemberService.memberLoginConfirm(msgMap);
+//
+//        log.info("id : " + msgMap.get("u_m_id"));
+//        log.info("pw : " + msgMap.get("u_m_pw"));
+//
+//        return map;
+//
+//    }
 
 
     /*

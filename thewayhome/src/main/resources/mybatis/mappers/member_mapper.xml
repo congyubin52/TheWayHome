@@ -44,10 +44,8 @@
             tbl_member_user
         WHERE
             u_m_id = #{u_m_id}
-          AND
-            u_m_pw = #{u_m_pw}
-          AND
-            use_yn = 'Y';
+        AND
+            use_yn = 'Y'
     </select>
 
     <update id="deleteUserMember" parameterType="Integer">
