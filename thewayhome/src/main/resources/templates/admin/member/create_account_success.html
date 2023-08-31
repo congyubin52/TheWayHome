@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title th:replace="~{/include/title.html::title}"></title>  <!-- 경로를 가져올때는 문법 구조가-->
+
+<!--    <link rel="stylesheet" th:href="@{/css/common.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/create_account_form.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/header_nav_footer.css}">-->
+
+</head>
+<body>
+
+<!--<header th:replace="~{/include/header_nav_footer.html::header}">-->
+
+</header>
+
+
+<!--<nav th:replace="~{/include/header_nav_footer.html::nav}">-->
+
+</nav>
+
+
+<section>
+    <div id="section_wrap">
+        <div class="word">
+            CREATE ACCOUNT SUCCESS!!
+        </div>
+
+        <div class="go_login_form">
+            <a th:href="@{/admin/member/member_login_form}">login</a>
+        </div>
+
+    </div>
+</section>
+
+
+<!--<footer th:replace="~{/include/header_nav_footer.html::footer}">-->
+
+</footer>
+
+
+</body>
+</html>

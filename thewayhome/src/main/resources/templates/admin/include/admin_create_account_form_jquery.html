@@ -1,0 +1,21 @@
+<script th:fragment="js" type="text/javascript">
+    $(document).ready(function () {
+        console.log("DOUCMENT READY!!");
+
+        init_events();
+
+    });
+
+    function init_events() {
+        console.log('init_events() CALLED!!');
+
+        $(document).on('keyup', '#autocomplete_input_s_name', function(e) {
+            console.log('autocomplete_input_s_name CHANGED HANDLER!!');
+
+            let txt = $(this).val();
+            console.log('txt: ' + txt);
+
+        });
+
+    }
+</script>

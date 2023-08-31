@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <!--  <title th:replace="~{/include/title.html::title}"></title>  &lt;!&ndash; 경로를 가져올때는 문법 구조가&ndash;&gt;-->
+
+    <!--  <link rel="stylesheet" th:href="@{/css/common.css}">-->
+    <!--  <link rel="stylesheet" th:href="@{/css/create_account_form.css}">-->
+    <!--  <link rel="stylesheet" th:href="@{/css/header_nav_footer.css}">-->
+
+    <script th:src="@{/js/admin/admin_create_account_form_js.js}" type="text/javascript"></script>
+
+    <script th:replace="~{/admin/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
+<!--    <script th:replace="~{/admin/include/use_console.html::js}" type="text/javascript"></script>-->
+    <script th:replace="~{/admin/include/admin_create_account_form_jquery.html::js}" type="text/javascript"></script>
+
+
 </head>
 <body>
+
+<!--<header th:replace="~{/include/header_nav_footer.html::header}">-->
+
+</header>
+
+
+<!--<nav th:replace="~{/include/header_nav_footer.html::nav}">-->
+
+</nav>
+
+
+<section>
+    <div id="section_wrap">
+        <div class="word">
+            <!-- CREATE ACCOUNT FORM-->
+
+        </div>
+        <div class="create_account_form">
+
+            <form th:action="@{/admin/member/create_account_confirm}" name="create_account_form" ,method="post">
+                <input type="text" name="a_m_id" placeholder="INPUT ID">
+                <input type="password" name="a_m_pw" placeholder="INPUT PW">
+                <input type="text" id="autocomplete_input_s_name" name="s_name" placeholder="INPUT SHELTER NAME">
+                <input type="text" id="autocomplete_input_s_no" name="s_no" placeholder="INPUT SHELTER NUMBER">
+                <input type="text" id="autocomplete_input_s_address" name="s_address" placeholder="INPUT SHELTER ADDRESS">
+                <input type="text" id="autocomplete_input_s_phone" name="s_phone" placeholder="INPUT SHELTER PHONE">
+                <input type="button" value="create account" onclick="createAccountForm();">
+                <input type="reset" value="reset">
+            </form>
+        </div>
+
+        <div class="go_login_form">
+            <a th:href="@{/member/member_login_form}">Already have an account? login</a>
+        </div>
+
+    </div>
+</section>
+
+
+<!--<footer th:replace="~{/include/header_nav_footer.html::footer}">-->
+
+</footer>
+
 
 </body>
 </html>
