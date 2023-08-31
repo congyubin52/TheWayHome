@@ -12,10 +12,61 @@
         $(document).on('keyup', '#autocomplete_input_s_name', function(e) {
             console.log('autocomplete_input_s_name CHANGED HANDLER!!');
 
-            let txt = $(this).val();
-            console.log('txt: ' + txt);
-
+            let word = $(this).val();
+            console.log('word: ' + word);
+            ajax_searchShelterName(word);
+            // if(word == ''){
+            //     $('#autocomplete_input_s_name').css('display', 'none');
+            // } else {
+            //     $('#autocomplete_input_s_name').css('display', 'block');
+            //     ajax_searchShelterName(word);
+            // }
         });
+
+        function ajax_searchShelterName(word){
+            console.log('ajax_searchShelterName() CALLED!!');
+
+            let formData = new FormData();
+            formData.append("word", word);
+            console.log(formData.get("word"));
+
+            // let shelterNameDto = {
+            //     'ShelterName' : word,
+            // };
+
+
+            $.ajax({
+                url: '/admin/member/searchShelterName',
+                method: 'POST',
+                // data: JSON.stringify(shelterNameDto),
+                // contentType: 'application/json; charset=utf-8',
+                // dataType:'json',
+                contentType: 'application/x-www-form-urlencoded',
+                processData: false,
+                data: formData,
+                success: function(data){
+                    console.log("AJAX SUCCESS - ajax_searchShelterName()");
+
+                    let shelterSearchDtos = data.shelterSearchDtos;
+                    $('#section_wrap .create_account_form .shelter_search_name ul').children().remove();
+                    //  remove 시키는 이유 -> 새로 불러올때마다 친구들 지우고 다시 목록에 뿌려줘야하기 때문에.
+                    for(let i = 0; i < shelterSearchDtos.length; i++){
+                        let appendTag = "<li>";
+                        appendTag += "<a href='#none' >" + shelterSearchDtos[i].s_name + "</a>";
+                        appendTag += "</li>";
+
+                        $('#section_wrap .create_account_form .shelter_search_name ul').append(appendTag);
+                    }
+
+                },
+                error: function(data){
+                    console.log("AJAX ERROR - ajax_searchShelterName()");
+                }
+
+            });
+
+        }
+
 
     }
 </script>
