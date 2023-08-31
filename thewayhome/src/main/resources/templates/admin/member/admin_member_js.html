@@ -1,0 +1,206 @@
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+        console.log("DOCUMENT READY!!");
+
+        init_events();
+
+    });
+
+    function init_events() {
+    //로그인
+    $(document).on('click', '#section_wrap input[value="로그인"]', function(e) {
+        console.log('button CLICK HANDLER!!');
+
+        let form = document.member_login_form;
+        if (form.a_m_id.value == '') {
+            alert('아이디를 입력해주세요.');
+            form.a_m_id.focus();
+
+        } else if (form.a_m_pw.value == '') {
+            alert('비밀번호를 입력해주세요.');
+            form.a_m_pw.focus();
+
+        } else {
+            let a_m_id = $('#section_wrap input[name="a_m_id"]').val();
+            let a_m_pw = $('#section_wrap input[name="a_m_pw"]').val();
+            ajax_login_confirm(a_m_id, a_m_pw);
+        }
+
+    });
+
+    //정보수정
+    $(document).on('click', '#section_wrap input[value="회원정보 수정"]', function(e) {
+      console.log('button CLICK HANDLER!!');
+
+       let form = document.member_modify_form;
+       if (form.a_m_pw.value == '') {
+          alert('비밀번호를 입력해주세요.');
+          form.a_m_pw.focus();
+
+        } else {
+            let a_m_no = $('#section_wrap input[name="a_m_no"]').val();
+            let a_m_id = $('#section_wrap input[name="a_m_id"]').val();
+            let a_m_pw = $('#section_wrap input[name="a_m_pw"]').val();
+
+            ajax_modify_confirm(a_m_no, a_m_id, a_m_pw);
+            }
+        });
+
+        //회원탈퇴
+        $('#section_wrap div.go_delete_confirm a').click(function () {
+            console.log('button CLICK HANDLER!!');
+
+            let result = confirm('정말 탈퇴하시겠습니까?');
+
+            if(result)
+                ajax_delete_confirm();
+
+        });
+
+        //관리자 승인 처리
+        $('#search_admin_list div.approval a').click(function () {
+            console.log('button CLICK HANDLER!!');
+
+            let result = confirm('상태를 변경하시겠습니까?');
+
+            if(result)
+                ajax_approval_confirm(a_m_no);
+
+        });
+
+
+    }
+
+    /*
+     * AJAX START
+     */
+
+    //로그인 ajax
+    function ajax_login_confirm(a_m_id, a_m_pw) {
+        console.log('ajax_login_confirm() CALLED!!');
+
+        let msgDto = {
+            'a_m_id': a_m_id,
+            'a_m_pw': a_m_pw,
+        };
+
+        $.ajax({
+            url: '/admin/member/member_login_confirm',
+            type: 'POST',
+            data: JSON.stringify(msgDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(data) {
+                console.log('AJAX SUCCESS - ajax_login_confirm()');
+                location.href = "/admin"
+
+            },
+            error: function(data) {
+                console.log('AJAX ERROR - ajax_login_confirm()');
+                alert('실패');
+                /*location.href = "/admin/member/member_login_form"*/
+            }
+        });
+    }
+
+    //회원정보 수정
+    function ajax_modify_confirm(a_m_no, a_m_id, a_m_pw) {
+        console.log('ajax_modify_confirm() CALLED!!');
+
+        console.log("----------->", a_m_no, a_m_id, a_m_pw);
+
+        let msgDto = {
+            'a_m_no': a_m_no,
+            'a_m_id': a_m_id,
+            'a_m_pw': a_m_pw,
+        };
+
+        $.ajax({
+            url: '/admin/member/member_modify_confirm',
+            type: 'POST',
+            data: JSON.stringify(msgDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+                console.log('AJAX SUCCESS - ajax_login_confirm()');
+                alert('성공');
+
+                location.href = "/admin"
+
+            },
+            error: function (data) {
+                console.log('AJAX ERROR - ajax_login_confirm()');
+                alert('실패');
+
+                location.href = "/admin/member/member_modify_form"
+
+            }
+        });
+    }
+
+    //회원탈퇴
+    function ajax_delete_confirm(a_m_no) {
+    console.log('ajax_delete_confirm() CALLED!!');
+
+    let msg = {
+        'a_m_no': [[${session.loginedAdminMemberDto}]].a_m_no,
+    };
+    $.ajax({
+        url:			'/admin/member/member_delete_confirm',
+        type:			'POST',
+        data: 			JSON.stringify(msg),
+        contentType:	'application/json; chartset=utf-8;',
+        dataType:		'json',
+        success: function(data) {
+            console.log('AJAX SUCCESS - ajax_delete_confirm()');
+
+            if (data.result >= 1) {
+                alert('계정이 삭제되었습니다.');
+                location.href = "/admin";
+            }
+
+        },
+        error: function(data) {
+            console.log('AJAX ERROR - ajax_delete_confirm()');
+            alert('계정이 삭제되지 않았습니다. 다시 시도해주세요.');
+
+        }
+    });
+    }
+
+    //관리자 승인 처리
+    function ajax_approval_confirm(a_m_no) {
+        console.log('ajax_approval_confirm() CALLED!!');
+
+        let msg = {
+            'a_m_no': [[${dto}]].a_m_no,
+        };
+        $.ajax({
+            url:			'/admin/member/member_approval_confirm',
+            type:			'GET',
+            data: 			JSON.stringify(msg),
+            contentType:	'application/json; chartset=utf-8;',
+            dataType:		'json',
+            success: function(data) {
+                console.log('AJAX SUCCESS - ajax_approval_confirm()');
+
+                if (data.result >= 1) {
+                    alert('상태가 변경되었습니다.');
+                    location.href = "/admin";
+                }
+
+            },
+            error: function(data) {
+                console.log('AJAX ERROR - ajax_approval_confirm()');
+                alert('문제가 발생했습니다. 다시 시도해주세요.');
+
+            }
+        });
+    }
+
+    /*
+     * AJAX END
+     */
+
+</script>

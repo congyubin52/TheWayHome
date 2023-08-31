@@ -1,8 +1,7 @@
 package com.btc.thewayhome.config;
 
-import com.btc.thewayhome.user.member.IUserMemberDaoMapper;
-import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.DispatcherType;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +13,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Log4j2
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-	@Autowired
-	IUserMemberDaoMapper iUserMemberDaoMapper;
+	/*@Autowired
+	IUserMemberDaoMapper iUserMemberDaoMapper;*/
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -29,6 +30,16 @@ public class SpringSecurityConfig {
 	}
 
 	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+		http.csrf().disable()
+				.formLogin().disable();
+
+
+		return http.build();
+	}
+
+	/*@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		log.info("filterChain");
 
@@ -85,7 +96,11 @@ public class SpringSecurityConfig {
 							response.sendRedirect("/");
 
 		return http.build();
-	}
+	}*/
+
+
 
 
 }
+
+
