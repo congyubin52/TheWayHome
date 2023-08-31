@@ -25,6 +25,13 @@ public class AdminMemberController {
     @Autowired
     AdminMemberService adminMemberService;
 
+    @GetMapping("/member_login_form")
+    public String loginForm() {
+        String nextpage = "";
+
+        return nextpage;
+    }
+
     // 보호소 api db에 삽입
     @RequestMapping("/")
     public Object shelterRegistNum() {
@@ -225,6 +232,15 @@ public class AdminMemberController {
 
         }
 
+        @PostMapping("/searchShelterName")
+        @ResponseBody
+        public Object searchShelterName(@RequestParam Map<String, String> shelterNameMap){
+            log.info("searchShelterName()");
+            Map<String, Object> map = adminMemberService.searchShelterName(shelterNameMap);
+
+            return map;
+        }
+
 //        @PostMapping ("/create_account_confirm")
 //        public String createAccountConfirm(AdminMemberDto adminMemberDto, Model model){
 //            log.info("createAccountConfirm()");
@@ -244,33 +260,12 @@ public class AdminMemberController {
 //            return nextPage;
 //        }
 
-        // 회원가입할 때 DB에 보호소명으로 조인된 테이블 데이터를 비동기로 출력을 위한 것
-//    @PostMapping("/searchShelterName")
-//    @ResponseBody
-//    public Object searchShelterName(@RequestBody Map<String, String> msgMap){
-//        Map<String, Object> map = adminMemberService.searchShelterName(msgMap);
-//        List<String>
-//        return map;
-//    }
 
 
 
 
-//    @RequestMapping("/admin_member_confirm")
-//    public Object shelterRegistInfo(){
-//        log.info("shelterRegistInfo()");
-//        StringBuilder result = new StringBuilder();
-//
-//    }
 
 
-//    @GetMapping("/create_account_form")
-//    public String createAccountForm(){
-//        log.info("createAccountForm()");
-//
-//        String nextPage = "/member/member/create_account_form";
-//
-//        return nextPage;
-//
-//    }
+
+
 }

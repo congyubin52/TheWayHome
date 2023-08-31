@@ -13,5 +13,5 @@ public interface IAdminMemberService {
 
     public Map<String, Object> ShelterList();
 
-    public Map<String, Object> searchShelterName(Map<String, String> msgMap);
+    public Map<String, Object> searchShelterName(Map<String, String> shelterNameMap);
 }

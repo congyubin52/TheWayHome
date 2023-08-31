@@ -18,7 +18,7 @@ public interface IAdminMemberDaoMapper {
 
     public boolean isAdminMember(String aMId, String sNo);
 
-    public List<AdminMemberDto> selectsSearchShelterName(String ShelterNo);
+    public List<ShelterSearchDto> selectSearchShelterName(String ShelterName);
 
 
 

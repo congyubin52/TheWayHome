@@ -106,42 +106,7 @@ public class AdminMemberService implements IAdminMemberService {
 
     }
 
-//    @Override
-//    public AdminMemberDto createAccountConfirm(AdminMemberDto adminMemberDto) {
-//        log.info("createAccountConfirm()");
-//
-//        System.out.println("[MemberService] createAccountConfirm");
-//
-//        boolean isAdminMember = iAdminMemberDaoMapper.isAdminMember(adminMemberDto.getA_m_id(), adminMemberDto.getS_no());
 
-
-//        if (!isAdminMember) {
-//
-//            int result = iAdminMemberDaoMapper.insertMember(adminMemberDto);
-//
-//            switch (result) {
-//                case -1:
-//                    System.out.println("[MemberService] DATABASE COMMUNICATION TROUBLE");
-//                    break;
-//
-//                case 0:
-//                    System.out.println("[MemberService] INSERT FAIL AT DATABASE");
-//                    break;
-//
-//                case 1:
-//                    System.out.println("[MemberService] INSERT SUCCESS AT DATABASE");
-//                    break;
-//
-//            }
-//
-//            return result;
-//        } else {
-//            return 0;
-//        }
-//
-
-//        }
-//}
         @Override
     public Map<String, Object> ShelterList() {
         log.info("[MemberService] ShelterNameJoin()");
@@ -164,16 +129,15 @@ public class AdminMemberService implements IAdminMemberService {
 
 
     @Override
-    public Map<String, Object> searchShelterName(Map<String, String> msgMap){
-        log.info("[MemberService] ShelterNameJoin()");
-
+    public Map<String, Object> searchShelterName(Map<String, String> shelterNameMap){
+        log.info("[AdminMemberService] searchShelterName()");
+        log.info("----------------->{}", shelterNameMap.get("word").toString());
         Map<String, Object> map = new HashMap<>();
 
-       List<AdminMemberDto> adminMemberDtos = iAdminMemberDaoMapper.selectsSearchShelterName(msgMap.get("ShelterNo"));
+        List<ShelterSearchDto> shelterSearchDtos = iAdminMemberDaoMapper.selectSearchShelterName(shelterNameMap.get("word"));
 
-        map.put("adminMemberDtos", adminMemberDtos);
-
+        map.put("shelterSearchDtos", shelterSearchDtos);
+//        log.info("shelterSearchDtos+++++++", shelterSearchDtos.get(0));
         return map;
-
     }
 }
