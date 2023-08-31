@@ -1,5 +1,7 @@
 package com.btc.thewayhome.config;
 
+import com.btc.thewayhome.user.member.IUserMemberDaoMapper;
+import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,8 +23,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-	/*@Autowired
-	IUserMemberDaoMapper iUserMemberDaoMapper;*/
+	@Autowired
+	IUserMemberDaoMapper iUserMemberDaoMapper;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -30,16 +32,6 @@ public class SpringSecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-		http.csrf().disable()
-				.formLogin().disable();
-
-
-		return http.build();
-	}
-
-	/*@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		log.info("filterChain");
 
@@ -102,7 +94,7 @@ public class SpringSecurityConfig {
 				.maxSessionsPreventsLogin(false);
 
 		return http.build();
-	}*/
+	}
 
 
 
