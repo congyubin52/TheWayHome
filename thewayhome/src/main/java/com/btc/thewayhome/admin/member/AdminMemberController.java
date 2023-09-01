@@ -228,6 +228,15 @@ public class AdminMemberController {
 
     }
 
+        @PostMapping("/searchShelterName")
+        @ResponseBody
+        public Object searchShelterName(@RequestParam Map<String, String> shelterNameMap){
+            log.info("searchShelterName()");
+            Map<String, Object> map = adminMemberService.searchShelterName(shelterNameMap);
+
+            return map;
+        }
+
 //        @PostMapping ("/create_account_confirm")
 //        public String createAccountConfirm(AdminMemberDto adminMemberDto, Model model){
 //            log.info("createAccountConfirm()");

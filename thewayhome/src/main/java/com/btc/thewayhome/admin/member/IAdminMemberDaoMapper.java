@@ -18,7 +18,7 @@ public interface IAdminMemberDaoMapper {
 
     public boolean isAdminMember(String aMId, String sNo);
 
-    public List<AdminMemberDto> selectsSearchShelterName(String ShelterNo);
+    public List<ShelterSearchDto> selectSearchShelterName(String ShelterName);
 
     //회원가입 - 중복체크
     public boolean isAdmin(String a_m_id);
@@ -27,7 +27,7 @@ public interface IAdminMemberDaoMapper {
     public void insertNewAccount(AdminMemberDto adminMemberDto);
 
     //로그인
-    public AdminMemberDto selectAdminForLogin(Map<String, String> msgMap);
+    public AdminMemberDto selectAdminForLogin(AdminMemberDto adminMemberDto);
 
     //회원 정보 수정
     public int updateAccount(AdminMemberDto adminMemberDto);
