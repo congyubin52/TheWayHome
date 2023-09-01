@@ -114,7 +114,12 @@ public class SpringSecurityConfig {
 				.authorizeHttpRequests(request -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-								"/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()
+								"/admin/member/",
+								"/admin/member/searchShelterName",
+								"/admin/member/searchShelterNo",
+								"/admin/member/searchShelterAddress",
+								"/admin/member/searchShelterPhone",
+								"/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()   // Security 제외
 						.anyRequest().authenticated()
 				)
 				.formLogin(login -> login
