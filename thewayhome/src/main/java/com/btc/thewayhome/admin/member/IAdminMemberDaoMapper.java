@@ -28,7 +28,7 @@ public interface IAdminMemberDaoMapper {
     public int insertNewAccount(AdminMemberDto adminMemberDto);
 
     //로그인
-    public AdminMemberDto selectAdminForLogin(Map<String, String> msgMap);
+    public AdminMemberDto selectAdminForLogin(AdminMemberDto adminMemberDto);
 
     //회원 정보 수정
     public int updateAccount(AdminMemberDto adminMemberDto);

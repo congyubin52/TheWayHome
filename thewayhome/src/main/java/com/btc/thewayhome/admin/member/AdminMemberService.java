@@ -220,7 +220,7 @@ public class AdminMemberService implements IAdminMemberService {
         log.info("[AdminMemberService] loginConfirm()");
 
         Map<String, Object> map = new HashMap<>();
-        AdminMemberDto adminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(msgMap);
+        AdminMemberDto adminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(new AdminMemberDto());
 
         if (adminMemberDto != null) {
             map.put("adminMemberDto", adminMemberDto);
@@ -230,7 +230,6 @@ public class AdminMemberService implements IAdminMemberService {
             return null;
 
         }
-
 
 //        if(adminMemberDto != null && passwordEncoder.matches(adminMemberDto.getA_m_pw(), msgMap.get("a_m_pw"))) {
 //            map.put("adminMemberDto", adminMemberDto);
