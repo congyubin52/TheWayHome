@@ -4,6 +4,7 @@
 
 <mapper namespace="com.btc.thewayhome.user.member.IUserMemberDaoMapper">
 
+    <!--아이디 중복 검사-->
     <select id="isMember" parameterType="String" resultType="Boolean">
 
         SELECT
@@ -14,6 +15,7 @@
 
     </select>
 
+    <!--회원가입 유저 정보 입력-->
     <insert id="insertUserMember" parameterType="com.btc.thewayhome.user.member.UserMemberDto" >
 
         INSERT INTO
@@ -24,6 +26,7 @@
 
     </insert>
 
+    <!--로그인-->
     <select id="selectUserForLogin"
             parameterType="com.btc.thewayhome.user.member.UserMemberDto"
             resultType="com.btc.thewayhome.user.member.UserMemberDto">
@@ -37,17 +40,7 @@
             use_yn = 'Y'
     </select>
 
-    <update id="deleteUserMember" parameterType="Integer">
-
-        UPDATE
-            tbl_member_user
-        SET
-            use_yn = 'N',
-            u_m_mod_date = NOW()
-        WHERE
-            u_m_no = #{u_m_no}
-    </update>
-
+    <!--회원 정보 수정-->
     <update id="updateUserMember" parameterType="com.btc.thewayhome.user.member.UserMemberDto">
 
         UPDATE
@@ -61,6 +54,7 @@
             u_m_no = #{u_m_no}
     </update>
 
+    <!--비밀 번호 변경-->
     <update id="updateUserMemberPassword" parameterType="com.btc.thewayhome.user.member.UserMemberDto">
 
 UPDATE
@@ -73,6 +67,7 @@ UPDATE
 
     </update>
 
+    <!--회원 정보 최신화-->
     <select id="getLatestMemberInfo"
             parameterType="com.btc.thewayhome.user.member.UserMemberDto"
             resultType="com.btc.thewayhome.user.member.UserMemberDto">
@@ -83,5 +78,17 @@ UPDATE
         WHERE
             u_m_no = #{u_m_no}
     </select>
+
+    <!--계정 삭제-->
+    <update id="deleteUserMember" parameterType="Integer">
+
+        UPDATE
+            tbl_member_user
+        SET
+            use_yn = 'N',
+            u_m_mod_date = NOW()
+        WHERE
+            u_m_no = #{u_m_no}
+    </update>
 
 </mapper>

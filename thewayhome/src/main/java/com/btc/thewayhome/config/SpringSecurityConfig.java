@@ -46,13 +46,13 @@ public class SpringSecurityConfig {
 	public SecurityFilterChain filterChainForUser(HttpSecurity http) throws Exception {
 		log.info("filterChain");
 
-		http.csrf().disable()
-				.cors().disable()
+		http.csrf().disable()	//CSRF 보호 기능 비활성화
+				.cors().disable()	//CORS 설정 비활성화
 				.authorizeHttpRequests(request -> request
-						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()		//HTTP 요청 인증 설정
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-								"/user/member/create_account_form", "/user/member/create_account_confirm").permitAll()   // Security 제외
-						.anyRequest().authenticated()
+								"/user/member/create_account_form", "/user/member/create_account_confirm").permitAll()   // Security 제외 이 안에 해당하는 경로들은 주소 창에 모두 허용
+						.anyRequest().authenticated()	//위에 있는 경로 외 요청은 전부 인증 필요
 				)
 				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
 						.loginPage(
@@ -61,7 +61,7 @@ public class SpringSecurityConfig {
 						.loginProcessingUrl("/user/member/member_login_confirm")
 						.usernameParameter("u_m_id")
 						.passwordParameter("u_m_pw")
-						.successHandler((request, response, authentication) -> {	// 로그인 성공시 이동 페이지 URI
+						.successHandler((request, response, authentication) -> {	// 로그인 성공 시(추가 구현 예정 ex) 로그인 페이지로 오기전에 있던 페이지로 다시 보내는 거)
 							log.info("successHandler!!");
 
 							UserMemberDto userMemberDto = new UserMemberDto();
@@ -77,7 +77,7 @@ public class SpringSecurityConfig {
 							response.sendRedirect("/");
 
 						})
-						.failureHandler((request, response, exception) -> {
+						.failureHandler((request, response, exception) -> {		//로그인 실패 시(추가 구현 예정 ex) 아이디 혹은 비밀번호를 다시 확인해주세요 문구 띄우는 거)
 							log.info("failureHandler!!");
 							response.sendRedirect("/user/member/member_login_form");
 
@@ -89,13 +89,13 @@ public class SpringSecurityConfig {
 							log.info("logoutSuccessHandler!!");
 
 							HttpSession session = request.getSession();
-							session.invalidate();
+							session.invalidate();	//세션 데이터 삭제
 
 							response.sendRedirect("/");
 
 						})
 				)
-				.userDetailsService(myUserDetailsService)
+				.userDetailsService(myUserDetailsService)	//사용자 정보 들고옴
 				.sessionManagement()
 				.maximumSessions(1)
 				.maxSessionsPreventsLogin(false);
@@ -110,19 +110,19 @@ public class SpringSecurityConfig {
 
 		http.csrf().disable()
 				.cors().disable()
-				.securityMatcher("/admin/**")
+				.securityMatcher("/admin/**")		//"/admin/**" 경로 보안 설정
 				.authorizeHttpRequests(request -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-								"/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()   // Security 제외
+								"/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()
 						.anyRequest().authenticated()
 				)
-				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
-						.loginPage("/admin/member/member_login_form")    // 로그인 시 폼 주소 설정
+				.formLogin(login -> login
+						.loginPage("/admin/member/member_login_form")
 						.loginProcessingUrl("/admin/member/member_login_confirm")
 						.usernameParameter("a_m_id")
 						.passwordParameter("a_m_pw")
-						.successHandler((request, response, authentication) -> {	// 로그인 성공시 이동 페이지 URI
+						.successHandler((request, response, authentication) -> {
 							log.info("successHandler!!");
 
 							AdminMemberDto adminMemberDto = new AdminMemberDto();
@@ -152,7 +152,7 @@ public class SpringSecurityConfig {
 							HttpSession session = request.getSession();
 							session.invalidate();
 
-							response.sendRedirect("/admin/member/");
+							response.sendRedirect("/admin/");
 
 						})
 				)
