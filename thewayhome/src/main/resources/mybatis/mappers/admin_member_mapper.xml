@@ -15,13 +15,6 @@
         VALUES(#{s_name}, #{s_phone}, #{s_address}, NOW(), NOW())
     </insert>
 
-<!--    <select id="ShelterNumList" parameterType="String"-->
-<!--    resultType="com.btc.thewayhome.admin.member.AdminMemberDto">-->
-<!--        select a.s_name, a.s_no, b.s_phone, b.s_address-->
-<!--        from-->
-<!--            db_thewayhome.tbl_shelterNum a natural join db_thewayhome.tbl_shelterInfo b-->
-<!--        where a.#{s_name} = b.#{s_name};-->
-<!--    </select>-->
 
 
     <select id="selectSearchShelterName" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
@@ -31,6 +24,47 @@
         ORDER BY s_name ASC
 
     </select>
+
+    <select id="selectSearchShelterNo" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
+        SELECT s_no
+        FROM tbl_shelterNum
+        WHERE s_no LIKE CONCAT('%', #{ShelterNo}, '%')
+        ORDER BY s_no ASC
+
+    </select>
+
+    <select id="selectSearchShelterAddress" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
+        SELECT s_address
+        FROM tbl_shelterInfo
+        WHERE s_address LIKE CONCAT('%', #{ShelterAddress}, '%')
+        ORDER BY s_address ASC
+
+    </select>
+
+    <select id="selectSearchShelterPhone" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
+        SELECT s_phone
+        FROM tbl_shelterInfo
+        WHERE s_phone LIKE CONCAT('%', #{ShelterPhone}, '%')
+        ORDER BY s_phone ASC
+
+    </select>
+
+    <select id="isAdmin" parameterType="java.util.Map" resultType="boolean">
+        SELECT COUNT(*)
+        FROM your_table_name
+        WHERE a_m_id = #{a_m_id}
+          AND s_no = #{s_no}
+    </select>
+
+
+    <insert id="insertNewAccount" parameterType="com.btc.thewayhome.admin.member.AdminMemberDto" >
+
+        INSERT INTO
+            tbl_member_admin(a_m_id, a_m_pw, s_no, s_name, s_address, s_phone, a_m_reg_date, a_m_mod_date)
+        VALUES
+            (#{a_m_id}, #{a_m_pw}, #{s_name}, #{s_address}, #{s_phone}, NOW(),NOW())
+
+    </insert>
 
 
 

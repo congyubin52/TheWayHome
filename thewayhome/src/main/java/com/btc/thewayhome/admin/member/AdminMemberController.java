@@ -1,5 +1,6 @@
 package com.btc.thewayhome.admin.member;
 
+import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -227,33 +228,58 @@ public class AdminMemberController {
 
     }
 
-        @PostMapping("/searchShelterName")
-        @ResponseBody
-        public Object searchShelterName(@RequestParam Map<String, String> shelterNameMap){
-            log.info("searchShelterName()");
-            Map<String, Object> map = adminMemberService.searchShelterName(shelterNameMap);
+    @PostMapping("/searchShelterName")
+    @ResponseBody
+    public Object searchShelterName(@RequestParam Map<String, String> shelterNameMap) {
+        log.info("searchShelterName()");
+        Map<String, Object> map = adminMemberService.searchShelterName(shelterNameMap);
 
-            return map;
+        return map;
+    }
+
+    @PostMapping("/searchShelterNo")
+    @ResponseBody
+    public Object searchShelterNo(@RequestParam Map<String, String> shelterNoMap) {
+        log.info("searchShelterNo()");
+        Map<String, Object> map = adminMemberService.searchShelterNo(shelterNoMap);
+
+        return map;
+    }
+
+    @PostMapping("/searchShelterAddress")
+    @ResponseBody
+    public Object searchShelterAddress(@RequestParam Map<String, String> shelterAddressMap) {
+        log.info("searchShelterAddress()");
+        Map<String, Object> map = adminMemberService.searchShelterAddress(shelterAddressMap);
+
+        return map;
+    }
+
+    @PostMapping("/searchShelterPhone")
+    @ResponseBody
+    public Object searchShelterPhone(@RequestParam Map<String, String> shelterPhoneMap) {
+        log.info("searchShelterPhone()");
+        Map<String, Object> map = adminMemberService.searchShelterPhone(shelterPhoneMap);
+
+        return map;
+    }
+
+    @PostMapping("/create_account_confirm")
+    public String createAccountConfirm(AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberController] createAccountConfirm()");
+
+        String nextPage = "redirect:/admin/member/create_account_form";
+
+        int result = adminMemberService.createAccountConfirm(adminMemberDto);
+        if(result > adminMemberService.INSERT_FAIL_AT_DATABASE) {
+
+            nextPage = "/admin/member/create_account_success";
+
         }
 
-//        @PostMapping ("/create_account_confirm")
-//        public String createAccountConfirm(AdminMemberDto adminMemberDto, Model model){
-//            log.info("createAccountConfirm()");
-//
-////            List<AdminMemberDto> shelterNameJoinDtos = adminMemberService.ShelterNameJoin(adminMemberDto);
-//
-//
-////            log.info("[AdminMemberController] shelterNameJoinDto" + shelterNameJoinDtos);
-//
-//            String nextPage = "/admin/member/create_account_success";
-//
-////            int result = adminMemberService.createAccountConfirm(adminMemberDto);
-////            if(result <= 0){
-////                nextPage = "/admin/member/create_account_fail";
-////            }
-//
-//            return nextPage;
-//        }
+        return nextPage;
+
+    }
 
     // 회원가입할 때 DB에 보호소명으로 조인된 테이블 데이터를 비동기로 출력을 위한 것
 //    @PostMapping("/searchShelterName")
@@ -263,9 +289,6 @@ public class AdminMemberController {
 //        List<String>
 //        return map;
 //    }
-
-
-
 
 
     // 로그인
@@ -484,8 +507,6 @@ public class AdminMemberController {
 //        return nextPage;
 
     }
-
-
 
 
 }

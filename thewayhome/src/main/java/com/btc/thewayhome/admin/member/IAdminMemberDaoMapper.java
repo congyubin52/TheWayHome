@@ -12,19 +12,20 @@ public interface IAdminMemberDaoMapper {
 
     public void insertShelterInfo(ShelterInfoDto shelterInfoDto);
 
-    public List<AdminMemberDto> ShelterNumList();
-
-    public List<AdminMemberDto> ShelterInfoList();
-
-    public boolean isAdminMember(String aMId, String sNo);
 
     public List<ShelterSearchDto> selectSearchShelterName(String ShelterName);
 
+    public List<ShelterSearchDto> selectSearchShelterNo(String ShelterNo);
+
+    public List<ShelterSearchDto> selectSearchShelterAddress(String ShelterAddress);
+
+    public List<ShelterSearchDto> selectSearchShelterPhone(String ShelterPhone);
+
     //회원가입 - 중복체크
-    public boolean isAdmin(String a_m_id);
+    public boolean isAdmin(Map<String, String> isAdminMap);
 
     //회원가입 - 계정생성
-    public void insertNewAccount(AdminMemberDto adminMemberDto);
+    public int insertNewAccount(AdminMemberDto adminMemberDto);
 
     //로그인
     public AdminMemberDto selectAdminForLogin(Map<String, String> msgMap);
@@ -45,5 +46,6 @@ public interface IAdminMemberDaoMapper {
 
     //관리자 승인 처리
     public void updateAdminForApporoval(int a_m_no);
+
 
 }
