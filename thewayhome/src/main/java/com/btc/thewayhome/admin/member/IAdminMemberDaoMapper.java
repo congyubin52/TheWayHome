@@ -18,8 +18,32 @@ public interface IAdminMemberDaoMapper {
 
     public boolean isAdminMember(String aMId, String sNo);
 
-    public List<AdminMemberDto> selectsSearchShelterName(String ShelterNo);
+    public List<ShelterSearchDto> selectSearchShelterName(String ShelterName);
 
+    //회원가입 - 중복체크
+    public boolean isAdmin(String a_m_id);
 
+    //회원가입 - 계정생성
+    public void insertNewAccount(AdminMemberDto adminMemberDto);
+
+    //로그인
+    public AdminMemberDto selectAdminForLogin(AdminMemberDto adminMemberDto);
+
+    //회원 정보 수정
+    public int updateAccount(AdminMemberDto adminMemberDto);
+    // public int updateAccount(Map<String, String> msgMap);
+
+    //회원 정보 수정 - 최신화
+    public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
+    //public Map<String,Object> getLatestAccountInfo(Map<String, String> msgMap);
+
+    //회원탈퇴
+    public int deleteAccount(int a_m_no);
+
+    //관리자 정보 리스트
+    public List<AdminMemberDto> selectAdminForApproval();
+
+    //관리자 승인 처리
+    public void updateAdminForApporoval(int a_m_no);
 
 }

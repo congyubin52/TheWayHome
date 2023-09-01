@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/common.css}">
+<!--    <link rel="stylesheet" th:href="@{/css/admin/member_login_form.css}">-->
+
+    <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
+    <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
+    <script th:src="@{/js/admin/member_login_form_js.js}" type="text/javascript"></script>
+
+<!--
+    <script th:src="@{/js/admin/member_login_form_js.js}" type="text/javascript"></script>
+-->
+</head>
+<body>
+    <header th:replace="~{/admin/include/admin_header_footer.html::header}">
+    </header>
+
+    <section>
+        <div id="section_wrap">
+
+            <div class="word">
+                LOGIN FORM
+            </div>
+
+            <div id="member_login_form">
+                <form th:action="@{/admin/member/member_login_confirm}" name="member_login_form" method="post">
+                    <input type="text" name="a_m_id" placeholder="아이디를 입력하세요.">
+                    <input type="password" name="a_m_pw" placeholder="비밀번호를 입력하세요.">
+                    <input type="button" value="로그인" onclick="memberLoginForm();">
+                </form>
+            </div>
+
+        </div>
+
+            <div class="go_create_account_form">
+                <a th:href="@{/admin/member/create_account_form}">회원가입</a>
+            </div>
+        </div>
+    </section>
+
+    <footer th:replace="~{/admin/include/admin_header_footer.html::footer}">
+    </footer>
+
+</body>
+</html>

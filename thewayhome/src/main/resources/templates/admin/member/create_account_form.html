@@ -20,12 +20,12 @@
 
 <!--<header th:replace="~{/include/header_nav_footer.html::header}">-->
 
-</header>
+<!--</header>-->
 
 
 <!--<nav th:replace="~{/include/header_nav_footer.html::nav}">-->
 
-</nav>
+<!--</nav>-->
 
 
 <section>
@@ -37,9 +37,20 @@
         <div class="create_account_form">
 
             <form th:action="@{/admin/member/create_account_confirm}" name="create_account_form" ,method="post">
+                <div>
                 <input type="text" name="a_m_id" placeholder="INPUT ID">
+                </div>
+                <div>
                 <input type="password" name="a_m_pw" placeholder="INPUT PW">
+                    </div>
+                <div>
                 <input type="text" id="autocomplete_input_s_name" name="s_name" placeholder="INPUT SHELTER NAME">
+                </div>
+                <div class="shelter_search_name">
+                    <ul>
+
+                    </ul>
+                </div>
                 <input type="text" id="autocomplete_input_s_no" name="s_no" placeholder="INPUT SHELTER NUMBER">
                 <input type="text" id="autocomplete_input_s_address" name="s_address" placeholder="INPUT SHELTER ADDRESS">
                 <input type="text" id="autocomplete_input_s_phone" name="s_phone" placeholder="INPUT SHELTER PHONE">
