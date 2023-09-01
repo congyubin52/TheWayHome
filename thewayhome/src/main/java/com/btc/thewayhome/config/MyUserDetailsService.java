@@ -25,18 +25,10 @@ public class MyUserDetailsService implements UserDetailsService {
         log.info("userName: " + username);
 
         UserMemberDto userMemberDto = new UserMemberDto();
+        //Service에서 Dto로 넘겨주니 타입 안 맞으니까 넣어서
         userMemberDto.setU_m_id(username);
 
         UserMemberDto selectedUserMemberDto = iUserMemberDaoMapper.selectUserForLogin(userMemberDto);
-
-//        if (selectedUserMemberDto == null) {
-//            throw new UsernameNotFoundException("사용자 정보가 일치하지 않습니다.");
-//
-//        } else {
-//            log.info("id: " + selectedUserMemberDto.getU_m_id());
-//            log.info("pw: " + selectedUserMemberDto.getU_m_pw());
-//
-//        }
 
         return User.builder()
                 .username(selectedUserMemberDto.getU_m_id())

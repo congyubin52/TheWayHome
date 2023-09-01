@@ -4,34 +4,108 @@
 
 <mapper namespace="com.btc.thewayhome.admin.member.IAdminMemberDaoMapper">
 
-    <insert id="insertShelterNum" parameterType="com.btc.thewayhome.admin.member.ShelterNumDto">
-        INSERT INTO tbl_shelterNum(s_no, s_name)
-        VALUES(#{s_no}, #{s_name})
+    <select id="isAdmin"
+            parameterType="String"
+            resultType="Boolean">
+
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_member_admin
+        WHERE
+            a_m_id = #{a_m_id}
+    </select>
+
+    <insert id="insertNewAccount"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto">
+
+        INSERT INTO
+            tbl_member_admin(a_m_id, a_m_pw, s_no, s_name, s_address, a_m_reg_date, a_m_mod_date)
+        VALUES
+            (#{a_m_id}, #{a_m_pw}, #{s_no}, #{s_name}, #{s_address}, NOW(), NOW());
+        WHERE
+
+
     </insert>
 
+    <!--로그인-->
+    <select id="selectAdminForLogin"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
+            resultType="com.btc.thewayhome.admin.member.AdminMemberDto">
 
-    <insert id="insertShelterInfo" parameterType="com.btc.thewayhome.admin.member.ShelterInfoDto">
-        INSERT INTO tbl_shelterInfo(s_name, s_phone, s_address, s_reg_date, s_mod_date)
-        VALUES(#{s_name}, #{s_phone}, #{s_address}, NOW(), NOW())
-    </insert>
-
-<!--    <select id="ShelterNumList" parameterType="String"-->
-<!--    resultType="com.btc.thewayhome.admin.member.AdminMemberDto">-->
-<!--        select a.s_name, a.s_no, b.s_phone, b.s_address-->
-<!--        from-->
-<!--            db_thewayhome.tbl_shelterNum a natural join db_thewayhome.tbl_shelterInfo b-->
-<!--        where a.#{s_name} = b.#{s_name};-->
-<!--    </select>-->
-
-
-    <select id="selectSearchShelterName" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
-        SELECT s_name
-        FROM tbl_shelterNum
-        WHERE s_name LIKE CONCAT('%', #{ShelterName}, '%')
-        ORDER BY s_name ASC
+        SELECT
+            *
+        FROM
+            tbl_member_admin
+        WHERE
+            a_m_id = #{a_m_id}
+          AND
+            a_m_approval = 1
+          AND
+            use_yn = 'Y'
 
     </select>
 
+    <!--정보 변경-->
+    <update id="updateAccount"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto">
 
+        UPDATE
+            tbl_member_admin
+        SET
+            a_m_pw = #{a_m_pw},
+            a_m_mod_date = NOW()
+        WHERE
+            a_m_no = #{a_m_no}
+
+    </update>
+
+    <!--정보 변경 - 최신화-->
+    <select id="getLatestAccountInfo"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
+            resultType="com.btc.thewayhome.admin.member.AdminMemberDto">
+        SELECT
+            *
+        FROM
+            tbl_member_admin
+        WHERE
+            a_m_no = #{a_m_no}
+    </select>
+
+    <!--회원 탈퇴-->
+    <update id="deleteAccount"
+            parameterType="Integer">
+
+        UPDATE
+            tbl_member_admin
+        SET
+            use_yn = 'N',
+            a_m_mod_date = NOW()
+        where
+            a_m_no = #{a_m_no}
+
+    </update>
+
+    <!--관리자 정보 리스트-->
+    <select id="selectAdminForApproval"
+            resultType="com.btc.thewayhome.admin.member.AdminMemberDto">
+        SELECT
+            *
+        FROM
+            tbl_member_admin
+    </select>
+
+    <!--관리자 승인 처리-->
+    <update id="updateAdminForApporoval" parameterType="Integer">
+        UPDATE tbl_member_admin
+        SET
+            a_m_approval = CASE
+                               WHEN a_m_approval = '1' THEN '0'
+                               WHEN a_m_approval = '0' THEN '1'
+                END,
+            a_m_mod_date = NOW()
+        WHERE
+            a_m_no = #{a_m_no}
+    </update>
 
 </mapper>

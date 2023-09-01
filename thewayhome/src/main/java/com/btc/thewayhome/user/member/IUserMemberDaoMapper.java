@@ -19,7 +19,5 @@ public interface IUserMemberDaoMapper {
 
     public int deleteUserMember(int u_m_no);
 
-    public UserMemberDto selectUserMemberForLogin(UserMemberDto userMemberDto);
-
     public UserMemberDto selectUserForLogin(UserMemberDto userMemberDto);
 }

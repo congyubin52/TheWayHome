@@ -108,7 +108,7 @@ public class UserMemberService implements IUserMemberService {
     public UserMemberDto userMemberPasswordModifyConfirm(UserMemberDto userMemberDto, String currentPw, String changePw) {
         log.info("[UserMemberService] userMemeberPasswordModifyConfirm()");
 
-        UserMemberDto idVerifiedMemberDto = iUserMemberDaoMapper.selectUserMemberForLogin(userMemberDto);
+        UserMemberDto idVerifiedMemberDto = iUserMemberDaoMapper.selectUserForLogin(userMemberDto);
 
         if (idVerifiedMemberDto != null && !passwordEncoder.matches(passwordEncoder.encode(userMemberDto.getU_m_pw()),
                 idVerifiedMemberDto.getU_m_pw())) {
