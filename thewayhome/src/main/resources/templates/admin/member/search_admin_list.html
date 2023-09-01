@@ -41,22 +41,26 @@
                     </thead>
                     <tbody>
                         <tr th:each="dto: ${adminMemberDtos}">
-                            <td th:text="${dto.a_m_no}"></td>
-                            <td th:text="${dto.a_m_id}"></td>
-                            <td th:text="${dto.s_no}"></td>
-                            <td th:text="${dto.s_name}"></td>
-                            <td th:text="${dto.s_address}"></td>
+                            <td class="a_m_no" th:text="${dto.a_m_no}"></td>
+                            <td class="a_m_id" th:text="${dto.a_m_id}"></td>
+                            <td class="s_no" th:text="${dto.s_no}"></td>
+                            <td class="s_name" th:text="${dto.s_name}"></td>
+                            <td class="s_address" th:text="${dto.s_address}"></td>
                             <!--<td id="approval">
                                 <a th:href="@{/admin/member/member_approval_confirm}" th:text="${dto.a_m_approval}"></a>
                             </td>-->
                             <td>
-                                <div class="approval">
-                                    <th:block th:switch="${dto.a_m_approval}">
-                                    <a th:case="0" th:href="@{/admin/member/member_approval_confirm(a_m_no=${dto.a_m_no})}">승인대기</a>
-                                    <a th:case="1" th:href="@{/admin/member/member_approval_confirm(a_m_no=${dto.a_m_no})}">승인완료</a>
+                                <th:block th:switch="${dto.a_m_approval}">
+                                    <div class="approval">
+
+<!--                                    <a th:case="0" th:href="@{/admin/member/member_approval_confirm(a_m_no=${dto.a_m_no})}">승인대기</a>
+                                    <a th:case="1" th:href="@{/admin/member/member_approval_confirm(a_m_no=${dto.a_m_no})}">승인완료</a>-->
+
+                                        <a href = '#none' >승인대기</a>
                                     <!--<span th:case="1">승인완료</span>-->
-                                    </th:block>
-                                </div>
+
+                                    </div>
+                                </th:block>
                             </td>
                             <td th:text="${dto.a_m_reg_date}"></td>
                         </tr>

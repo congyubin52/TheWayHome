@@ -59,13 +59,20 @@
         });
 
         //관리자 승인 처리
-        $('#search_admin_list div.approval a').click(function () {
+        $('#search_admin_list div.approval a').click(function (e) {
             console.log('button CLICK HANDLER!!');
 
             let result = confirm('상태를 변경하시겠습니까?');
 
+            let a_m_no = $('#search_admin_list table tbody tr .a_m_no').text();
+            let a_m_id = $('#search_admin_list table tbody tr .a_m_id').text();
+            let s_no = $('#search_admin_list table tbody tr .s_no').text();
+            let s_name = $('#search_admin_list table tbody tr .s_name').text();
+            let s_address = $('#search_admin_list table tbody tr .s_address').text();
+
+
             if(result)
-                ajax_approval_confirm(a_m_no);
+                ajax_approval_confirm(a_m_no, a_m_id, s_no, s_name, s_address);
 
         });
 
@@ -170,24 +177,50 @@
     }
 
     //관리자 승인 처리
-    function ajax_approval_confirm(a_m_no) {
+    function ajax_approval_confirm(a_m_no, a_m_id, s_no, s_name, s_address) {
         console.log('ajax_approval_confirm() CALLED!!');
 
-        let msg = {
-            'a_m_no': [[${dto}]].a_m_no,
-        };
+        let formdata = new FormData();
+        formdata.append("a_m_no", a_m_no)
+        formdata.append("a_m_id", a_m_id)
+        formdata.append("s_no", s_no)
+        formdata.append("s_name", s_name)
+        formdata.append("s_address", s_address)
+
+        // let msg = {
+        //     'a_m_no': a_m_no,
+        //     'a_m_id': a_m_id,
+        //     's_no': s_no,
+        //     's_name': s_name,
+        //     's_address': s_address,
+        // };
         $.ajax({
             url:			'/admin/member/member_approval_confirm',
-            type:			'GET',
-            data: 			JSON.stringify(msg),
-            contentType:	'application/json; chartset=utf-8;',
-            dataType:		'json',
+            method:			'POST',
+            processData: false,
+            contentType: false,
+            data: formdata,
+            // data: 			JSON.stringify(msg),
+            // contentType:	'application/json; chartset=utf-8;',
+            // dataType:		'json',
             success: function(data) {
                 console.log('AJAX SUCCESS - ajax_approval_confirm()');
 
-                if (data.result >= 1) {
-                    alert('상태가 변경되었습니다.');
-                    location.href = "/admin";
+                let adminMemberDtos = data.adminMemberDtos;
+                console.log("adminMemberDtos " + adminMemberDtos)
+                for (let i = 0; i < adminMemberDtos.length; i++) {
+
+                    if (adminMemberDtos[i].a_approval == 0) {
+
+                        let appendTag = "<a href = '#none' >" + 승인대기 + "</a>";
+
+                    } else {
+
+                        let appendTag = "<a href = '#none' >" + 승인완료 + "</a>";
+
+                    }
+
+                    $("#search_admin_list tbody tr td.approval").append(appendTag);
                 }
 
             },
@@ -196,6 +229,7 @@
                 alert('문제가 발생했습니다. 다시 시도해주세요.');
 
             }
+
         });
     }
 

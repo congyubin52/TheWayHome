@@ -24,7 +24,7 @@ public interface IAdminMemberService {
     public List<AdminMemberDto> searchAdminList();
 
     //사용자 승인 처리
-    public void memberApprovalConfirm(int a_m_no);
+    public List<AdminMemberDto> memberApprovalConfirm(int a_m_no);
 
 
     public void shelterRegistNum(String result, ShelterNumDto shelterNumDto);
@@ -36,4 +36,8 @@ public interface IAdminMemberService {
     public Map<String, Object> ShelterList();
 
     public Map<String, Object> searchShelterName(Map<String, String> msgMap);
+
+    public List<AdminMemberDto> searchAdminInfo(Map<String, String> msgMap);
+
+
 }

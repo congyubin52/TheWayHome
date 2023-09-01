@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -426,7 +427,7 @@ public class AdminMemberController {
 
 
     //회원 탈퇴
-    @PostMapping("/member_delete_confirm")
+    @GetMapping("/member_delete_confirm")
     @ResponseBody
     public Map<String, Object> memberDeleteConfirm(@RequestBody Map<String, String> msgMap, HttpSession session) {
         log.info("[AdminMemberController] memberDeleteConfirm()");
@@ -463,20 +464,38 @@ public class AdminMemberController {
     }
 
     //(로그인을 위한) 관리자 승인 처리
-    @GetMapping("/member_approval_confirm")
+    @PostMapping("/member_approval_confirm")
+    @ResponseBody
 //    public String memberApprovalConfirm(Model model, @RequestParam("a_m_no") int a_m_no) {
-    public void memberApprovalConfirm(Model model, HttpServletRequest request) {
+    public Map<String, Object> memberApprovalConfirm(Model model, @RequestParam Map<String, String> msgMap) {
         log.info("[AdminMemberController] memberApprovalConfirm()");
 
-//        String nextPage = "redirect:/admin/member/search_admin_list";
-        System.out.println("a_m_no--------->" + request.getParameter("a_m_no"));
-        adminMemberService.memberApprovalConfirm(Integer.parseInt(request.getParameter("a_m_no")));
+        Map<String, Object> map = new HashMap<>();
 
-//        return nextPage;
+        log.info(msgMap.get("a_m_no"));
+        log.info(msgMap.get("a_m_id"));
+        log.info(msgMap.get("s_no"));
+        log.info(msgMap.get("s_name"));
+        log.info(msgMap.get("s_address"));
 
+//       String nextPage = "redirect:/admin/member/search_admin_list";
+//       log.info("a_m_no--------->" + request.getParameter("a_m_no"));
+//       adminMemberService.memberApprovalConfirm(Integer.parseInt(request.getParameter("a_m_no")));
+//       int result = adminMemberService.memberApprovalConfirm(Integer.parseInt(msgMap.get("a_m_no")));
+         List<AdminMemberDto> adminMemberDtos = adminMemberService.memberApprovalConfirm(msgMap.get("a_m_no"));
+
+        /*if(result >= 0) {
+            log.info("msgMap no: " + msgMap.get("a_m_id"))0909090;
+            List<AdminMemberDto> adminMemberDtos = adminMemberService.searchAdminInfo(msgMap);
+
+            log.info("adminMemberDtos", adminMemberDtos.get(0));
+            map.put("adminMemberDtos", adminMemberDtos);
+            return map;
+
+        }
+            return null;
+    }*/
+return null;
     }
-
-
-
 
 }

@@ -44,6 +44,7 @@ public interface IAdminMemberDaoMapper {
     public List<AdminMemberDto> selectAdminForApproval();
 
     //관리자 승인 처리
-    public void updateAdminForApporoval(int a_m_no);
+    public List updateAdminForApporoval(int a_m_no);
 
+    public List<AdminMemberDto> searchAdminInfoForApproval(Map<String, String> msgMap);
 }

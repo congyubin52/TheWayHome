@@ -363,12 +363,20 @@ public class AdminMemberService implements IAdminMemberService {
     }
 
     //관리자 승인 처리
-    public void memberApprovalConfirm(int a_m_no) {
+    public List<AdminMemberDto> memberApprovalConfirm(int a_m_no) {
         log.info("[AdminMemberService] memberApprovalConfirm()");
         System.out.println("a_m_no: " + a_m_no);
 
-        iAdminMemberDaoMapper.updateAdminForApporoval(a_m_no);
+        return iAdminMemberDaoMapper.updateAdminForApporoval(a_m_no);
 
     }
 
+    public List<AdminMemberDto> searchAdminInfo(Map<String, String> msgMap) {
+        log.info("[AdminMemberService] searchAdminInfo()");
+        log.info("msgMap no" + msgMap.get("a_m_no"));
+
+        List<AdminMemberDto> adminMemberDtos = iAdminMemberDaoMapper.searchAdminInfoForApproval(msgMap);
+        return adminMemberDtos;
+
+    }
 }

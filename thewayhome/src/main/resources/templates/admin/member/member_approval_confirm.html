@@ -1,79 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
 
-    <link rel="stylesheet" th:href="@{/css/admin/common.css}">
-<!--    <link rel="stylesheet" th:href="@{/css/admin/member_login_form.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/admin/common.css}">-->
+<!--&lt;!&ndash;    <link rel="stylesheet" th:href="@{/css/admin/member_login_form.css}">&ndash;&gt;-->
 
-    <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
-    <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
-    <!--<script th:replace="~{/admin/member/admin_member_js.html::js}" type="text/javascript"></script>-->
+<!--    <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>-->
+<!--    <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>-->
+<!--&lt;!&ndash;    <script th:replace="~{/admin/member/admin_member_js.html::js}" type="text/javascript"></script>&ndash;&gt;-->
 
-<!--
-    <script th:src="@{/js/admin/member_login_form_js.js}" type="text/javascript"></script>
--->
-</head>
-<body>
-    <header th:replace="~{/admin/include/admin_header_footer.html::header}">
-    </header>
+<!--&lt;!&ndash;-->
+<!--    <script th:src="@{/js/admin/member_login_form_js.js}" type="text/javascript"></script>-->
+<!--&ndash;&gt;-->
+<!--</head>-->
+<!--<body>-->
+<!--    <header th:replace="~{/admin/include/admin_header_footer.html::header}">-->
+<!--    </header>-->
 
-    <section>
-        <div id="section_wrap">
+<!--    <section>-->
+<!--        <div id="section_wrap">-->
 
-            <div class="word">
-                관리자 승인 리스트
-            </div>
+<!--            <div class="word">-->
+<!--                관리자 승인 리스트-->
+<!--            </div>-->
 
-            <div id="search_admin_list">
-               <ul>
-                   <li>
-                       <table>
-                           <tr>
-                               <td>번호</td>
-                               <td th:text="${adminMemberDtos?.a_m_no}"></td>
-                           </tr>
-                           <tr>
-                               <td>아이디</td>
-                               <td th:text="${session.loginedAdminMemberDto.a_m_id}"></td>
-                           </tr>
-                           <tr>
-                               <td>고유번호</td>
-                               <td th:text="${adminMemberDtos.s_no}"></td>
-                           </tr>
-                           <tr>
-                               <td>보호소명</td>
-                               <td th:text="${adminMemberDtos.s_name}"></td>
-                           </tr>
-                           <tr>
-                               <td>주소</td>
-                               <td th:text="${adminMemberDtos.s_address}"></td>
-                           </tr>
-                           <tr>
-                               <th:block th:if="${adminMemberDtos.a_m_approval} == 1">
-                                   <span>승인완료</span>
-                               </th:block>
-                               <th:block th:if="${adminMemberDtos.a_m_approval} != 1">
-                                   <span>승인대기</span>
-                               </th:block>
-                           </tr>
-                           <tr>
-                               <td>등록일</td>
-                               <td th:text="${adminMemberDtos.a_m_reg_date}"></td>
-                           </tr>
-                       </table>
-                   </li>
-               </ul>
-            </div>
+<!--            <div id="search_admin_list">-->
+<!--               <ul>-->
+<!--                   <li>-->
+<!--                       <table>-->
+<!--                           <tr>-->
+<!--                               <td>번호</td>-->
+<!--                               <td th:text="${adminMemberDtos?.a_m_no}"></td>-->
+<!--                           </tr>-->
+<!--                           <tr>-->
+<!--                               <td>아이디</td>-->
+<!--                               <td th:text="${adminMemberDtos?.a_m_id}"></td>-->
+<!--                           </tr>-->
+<!--                           <tr>-->
+<!--                               <td>고유번호</td>-->
+<!--                               <td th:text="${adminMemberDtos?.s_no}"></td>-->
+<!--                           </tr>-->
+<!--                           <tr>-->
+<!--                               <td>보호소명</td>-->
+<!--                               <td th:text="${adminMemberDtos?.s_name}"></td>-->
+<!--                           </tr>-->
+<!--                           <tr>-->
+<!--                               <td>주소</td>-->
+<!--                               <td th:text="${adminMemberDtos?.s_address}"></td>-->
+<!--                           </tr>-->
+<!--                           <tr>-->
+<!--&lt;!&ndash;                               <th:block th:if="${adminMemberDtos?.a_m_approval} == 1">&ndash;&gt;-->
+<!--&lt;!&ndash;                                   <span>승인완료</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                               </th:block>&ndash;&gt;-->
+<!--&lt;!&ndash;                               <th:block th:if="${adminMemberDtos?.a_m_approval} != 1">&ndash;&gt;-->
+<!--&lt;!&ndash;                                   <span>승인대기</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                               </th:block>&ndash;&gt;-->
+<!--                               <td class="approval">-->
 
-        </div>
+<!--                               </td>-->
+<!--                           </tr>-->
+<!--                           <tr>-->
+<!--                               <td>등록일</td>-->
+<!--                               <td th:text="${adminMemberDtos?.a_m_reg_date}"></td>-->
+<!--                           </tr>-->
+<!--                       </table>-->
+<!--                   </li>-->
+<!--               </ul>-->
+<!--            </div>-->
 
-        </div>
-    </section>
+<!--        </div>-->
 
-    <footer th:replace="~{/admin/include/admin_header_footer.html::footer}">
-    </footer>
+<!--        </div>-->
+<!--    </section>-->
 
-</body>
-</html>
+<!--    <footer th:replace="~{/admin/include/admin_header_footer.html::footer}">-->
+<!--    </footer>-->
+
+<!--</body>-->
+<!--</html>-->
