@@ -7,11 +7,11 @@ import java.util.Map;
 
 public interface IUserMemberService {
 
-    public UserMemberDto userMemeberModifyConfirm(UserMemberDto userMemberDto);
+    public UserMemberDto userMemberModifyConfirm(UserMemberDto userMemberDto);
 
-    public UserMemberDto userMemeberPasswordModifyConfirm(UserMemberDto userMemberDto, String currentPw, String changePw);
+    public UserMemberDto userMemberPasswordModifyConfirm(UserMemberDto userMemberDto, String currentPw, String changePw);
 
-    public int userMemeberDeleteConfirm(int uMNo);
+    public int userMemberDeleteConfirm(int uMNo);
 
 
     public int createAccountConfirm(UserMemberDto userMemberDto);

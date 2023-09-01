@@ -85,14 +85,14 @@ public class UserMemberService implements IUserMemberService {
 //        }
     }
 
-    public int userMemeberDeleteConfirm(int u_m_no) {
+    public int userMemberDeleteConfirm(int u_m_no) {
         log.info("[UserMemberService] userMemeberDeleteConfirm()");
 
         return iUserMemberDaoMapper.deleteUserMember(u_m_no);
 
     }
 
-    public UserMemberDto userMemeberModifyConfirm(UserMemberDto userMemberDto) {
+    public UserMemberDto userMemberModifyConfirm(UserMemberDto userMemberDto) {
         log.info("[UserMemberService] userMemeberModifyConfirm()");
 
         int result = iUserMemberDaoMapper.updateUserMember(userMemberDto);
@@ -105,7 +105,7 @@ public class UserMemberService implements IUserMemberService {
 
     }
 
-    public UserMemberDto userMemeberPasswordModifyConfirm(UserMemberDto userMemberDto, String currentPw, String changePw) {
+    public UserMemberDto userMemberPasswordModifyConfirm(UserMemberDto userMemberDto, String currentPw, String changePw) {
         log.info("[UserMemberService] userMemeberPasswordModifyConfirm()");
 
         UserMemberDto idVerifiedMemberDto = iUserMemberDaoMapper.selectUserMemberForLogin(userMemberDto);

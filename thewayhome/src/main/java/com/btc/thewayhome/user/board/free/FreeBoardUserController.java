@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class FreeBoardUserController {
 
-@GetMapping({"","/", "/free"})
-    public String freeListUp() {
-    log.info("[FreeBoardUserController] freeListUp()");
+@GetMapping({"","/"})
+    public String freeBoardHome() {
+    log.info("[FreeBoardUserController] freeBoardHome()");
 
-    String nextPage = "/user/board/free/free_board_list";
+//    String nextPage = "/user/board/free/free_board_list";
 
-    return nextPage;
+    return "/user/board/free/free_board_list";
+
+
 
 
 }
