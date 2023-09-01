@@ -35,7 +35,7 @@
                                 <div class="col m-3"><a th:href="@{/user/pets/shelter_list}" class="text-dark" style="text-decoration: none; font-size: 24px; font-weight: bold;">보호소</a></div>
                                 <div class="col m-3" th:if="${session.loginedUserMemberDto != null}"><a th:href="@{/user/member/member_logout_confirm}" class="text-dark" style="text-decoration: none; font-size: 24px; font-weight: bold;">로그아웃</a></div>
                                 <div class="w-100"></div>
-                                <div class="col m-3"><a th:href="@{/user/board/review_board_form}" class="text-dark" style="text-decoration: none; font-size: 24px; font-weight: bold;">후기게시판</a></div>
+                                <div class="col m-3"><a th:href="@{/user/board/review_board}" class="text-dark" style="text-decoration: none; font-size: 24px; font-weight: bold;">후기게시판</a></div>
                                 <div class="col"></div>
                             </div>
                             <img th:src="@{/img/TheWayHome_logo.png}" alt="modal_footer_img" class="d-block w-50"style="max-height: 380px; margin-left: 500px;">

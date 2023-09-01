@@ -1,4 +1,12 @@
 package com.btc.thewayhome.user.board.review;
 
-public class ReviewBoardUserService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ReviewBoardUserService implements IReviewBoardUserService{
+
+//    @Autowired
+//    IReviewBoardUserDaoMapper iReviewBoardUserDaoMapper;
+
 }
