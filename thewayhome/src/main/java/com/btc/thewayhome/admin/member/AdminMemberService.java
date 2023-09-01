@@ -30,7 +30,6 @@ public class AdminMemberService implements IAdminMemberService {
     @Override
     public void shelterRegistNum(String result, ShelterNumDto shelterNumDto) {
         log.info("shelterRegist()");
-        System.out.println("result----------> " + result);
 
 
         try {
@@ -47,6 +46,8 @@ public class AdminMemberService implements IAdminMemberService {
             JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
 
             JSONArray array = (JSONArray) items.get("item"); // item is a JSONArray inside items
+
+            System.out.println("배열 내 완전 제거 후 데이터==========>" + array);
 
 
             for (int i = 0; i < array.size(); i++) {

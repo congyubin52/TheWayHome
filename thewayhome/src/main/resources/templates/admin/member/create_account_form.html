@@ -18,9 +18,8 @@
 </head>
 <body>
 
-<!--<header th:replace="~{/include/header_nav_footer.html::header}">-->
-
-<!--</header>-->
+<header th:replace="~{/admin/include/admin_header_footer.html::header}">
+</header>
 
 
 <!--<nav th:replace="~{/include/header_nav_footer.html::nav}">-->
@@ -36,7 +35,7 @@
         </div>
         <div class="create_account_form">
 
-            <form th:action="@{/admin/member/create_account_confirm}" name="create_account_form" ,method="post">
+            <form th:action="@{/admin/member/create_account_confirm}" name="create_account_form" method="post">
                 <div>
                 <input type="text" name="a_m_id" placeholder="INPUT ID">
                 </div>
@@ -81,15 +80,14 @@
         </div>
 
         <div class="go_login_form">
-            <a th:href="@{/member/member_login_form}">Already have an account? login</a>
+            <a th:href="@{/admin/member/member_login_form}">Already have an account? login</a>
         </div>
 
     </div>
 </section>
 
 
-<!--<footer th:replace="~{/include/header_nav_footer.html::footer}">-->
-
+<footer th:replace="~{/admin/include/admin_header_footer.html::footer}">
 </footer>
 
 
