@@ -33,7 +33,7 @@ public class MyUserDetailsService implements UserDetailsService {
         return User.builder()
                 .username(selectedUserMemberDto.getU_m_id())
                 .password(selectedUserMemberDto.getU_m_pw())
-                .roles("USER")
+                .roles("USER")  //권한 사용 하지 않아서 필요 없음
                 .build();
     }
 }

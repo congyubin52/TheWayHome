@@ -22,7 +22,9 @@ public class UserMemberController {
     @Autowired
     UserMemberService userMemberService;
 
-    //사용자 회원가입
+    /*
+        사용자 회원가입 form
+     */
     @GetMapping("/create_account_form")
     public String createAccountForm() {
         log.info("[UserMemberController] createAccountForm()");
@@ -33,6 +35,9 @@ public class UserMemberController {
 
     }
 
+    /*
+        사용자 회원가입 confirm
+     */
     @PostMapping("/create_account_confirm")
     public String createAccountConfirm(UserMemberDto userMemberDto, Model model) {
         log.info("[UserMemberController] createAccountConfirm()");
@@ -63,27 +68,6 @@ public class UserMemberController {
         return nextPage;
 
     }
-
-//    @PostMapping("/member_login_confirm")
-//    @ResponseBody
-//    public Object  memberLoginConfirm(@RequestBody Map<String,String> msgMap, HttpSession session, Model model) {
-//        log.info("[UserMemberController] memberLoginConfirm()");
-//
-//        log.info("userMemberDto : " + msgMap.get("u_m_id"));
-//        log.info("userMemberDto : " + msgMap.get("u_m_pw"));
-//
-////        HashMap<String, Object> map = new HashMap<>();
-////        map.put("result","hello");
-//
-//        Map<String, Object> map =  userMemberService.memberLoginConfirm(msgMap);
-//
-//        log.info("id : " + msgMap.get("u_m_id"));
-//        log.info("pw : " + msgMap.get("u_m_pw"));
-//
-//        return map;
-//
-//    }
-
 
     /*
         사용자 계정 수정 Form (비밀번호 제외)
