@@ -1,6 +1,7 @@
 package com.btc.thewayhome.admin.member;
 
 import com.btc.thewayhome.admin.pets.PetsAdminService;
+import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
+@Log4j2
 @Service
 public class GetAreaData {
 
@@ -193,12 +195,10 @@ public class GetAreaData {
 
 
                         responseString = response.toString();
-                        System.out.println("responseString===================>responseString" + responseString);
 
                         JSONParser jsonParser = new JSONParser();
                         JSONObject jsonObj = (JSONObject) jsonParser.parse(responseString);
 
-                        System.out.println("service ------------------------------------> " + jsonObj);
 
                         JSONObject parseResponse = (JSONObject) jsonObj.get("response");
                         JSONObject parseBody = (JSONObject) parseResponse.get("body");
@@ -220,7 +220,7 @@ public class GetAreaData {
                             }
                         }
 
-                        System.out.println("보호소명만 저장된 리스트 : " + shelterNameLists);
+                        log.info("보호소명만 저장된 리스트 : " + shelterNameLists);
 
                     }
                 } catch (Exception e) {
