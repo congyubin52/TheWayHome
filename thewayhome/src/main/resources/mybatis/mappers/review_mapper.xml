@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.thewayhome.user.board.review.IReviewBoardUserDaoMapper">
+
+    <insert id="insertWriteReview" parameterType="com.btc.thewayhome.user.board.review.ReviewBoardUserDto">
+
+        INSERT INTO
+            tbl_board(u_m_id, b_category, b_image, b_title, b_content, b_tag, b_reg_date, b_mod_date)
+        VALUES
+            (#{u_m_id}, #{b_category}, #{b_image}, #{b_title}, #{b_content}, #{b_tag}, NOW(), NOW())
+
+    </insert>
+
+    <select id="selectReviewForBNo" parameterType="com.btc.thewayhome.user.board.review.ReviewBoardUserDto" resultType="com.btc.thewayhome.user.board.review.ReviewBoardUserDto">
+
+        SELECT
+            *
+        FROM
+            tbl_board
+        WHERE
+            b_no = #{b_no}
+
+    </select>
+
+</mapper>

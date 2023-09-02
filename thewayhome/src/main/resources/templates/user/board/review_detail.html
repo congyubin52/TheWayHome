@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{user/include/head_header_footer.html::head}">
+
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/js/user/write_review_form_js.js}" type="text/javascript"></script>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+
+<style>
+    .ck-editor__editable { height: 400px; }
+</style>
+
+<header th:replace="~{user/include/head_header_footer.html::header}">
+</header>
+
+<section>
+    <!--제목-->
+    <div class="w-25 bg-success p-1 mt-4 mx-auto text-center text-light" style="border-radius: 5px;">
+        <span th:text="${selectReviewDto.b_title}" style="font-size: 24px; font-weight: bold"></span>
+    </div>
+
+    <!--본문-->
+    <div class="w-25 p-1 mt-4 mx-auto text-center">
+        <span th:text="${selectReviewDto.b_title}"></span>
+    </div>
+
+    <!--해당 게시글이 로그인 중인 자신의 게시글인 경우에만 나타나는 수정 버튼-->
+    <a th:if="${'loginedUserMemberDto' != null}" class="btn btn-outline-success ms-3" th:href="@{/user/board/review_modify_form(b_no=${1})}" style="text-decoration: none;">수정</a>
+
+</section>
+
+<footer th:replace="~{user/include/head_header_footer.html::footer}">
+</footer>
+
+</body>
+</html>
