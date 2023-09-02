@@ -27,62 +27,79 @@ public class AdminMemberService implements IAdminMemberService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+//    @Override
+//    public void shelterRegistNum(String result, ShelterNumDto shelterNumDto) {
+//        log.info("shelterRegist()");
+//
+//
+////        try {
+////
+////            String responseString = result.toString();
+////            JSONParser jsonParser = new JSONParser();
+////            JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
+////
+////            System.out.println("service ------------------------------------> " + jsonObj);
+////
+////            JSONObject parseResponse = (JSONObject) jsonObj.get("response");
+////            JSONObject parseBody = (JSONObject) parseResponse.get("body");
+////
+////            JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
+////
+////            JSONArray array = (JSONArray) items.get("item"); // item is a JSONArray inside items
+////
+////            System.out.println("배열 내 완전 제거 후 데이터==========>" + array);
+////
+////
+////            for (int i = 0; i < array.size(); i++) {
+////                JSONObject jObj = (JSONObject) array.get(i);
+////                shelterNumDto.setS_no(jObj.get("careRegNo").toString());
+////                shelterNumDto.setS_name(jObj.get("careNm").toString());
+////                System.out.println("s_no!!!!!!!!!!!!!!!!! " + shelterNumDto.getS_no());
+////                System.out.println("s_name!!!!!!!!!!!!!!!!! " + shelterNumDto.getS_name());
+////                iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
+////            }
+////            Object item = items.get("item");
+////
+////            if (item instanceof JSONArray) {
+////                JSONArray array = (JSONArray) item; // item is a JSONArray
+////
+////                for (int i = 0; i < array.size(); i++) {
+////                    JSONObject jObj = (JSONObject) array.get(i);
+////                    shelterNumDto.setS_no(jObj.get("careRegNo").toString());
+////                    shelterNumDto.setS_name(jObj.get("careNm").toString());
+////                    iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
+////                }
+////            } else if (item instanceof JSONObject) {
+////                JSONObject jObj = (JSONObject) item; // item is a single JSONObject
+////                shelterNumDto.setS_no(jObj.get("careRegNo").toString());
+////                shelterNumDto.setS_name(jObj.get("careNm").toString());
+////                iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
+////            }
+////        } catch (ParseException e) {
+////            e.printStackTrace();
+////        }
+//
+//
+//    }
+
+
     @Override
-    public void shelterRegistNum(String result, ShelterNumDto shelterNumDto) {
-        log.info("shelterRegist()");
-
-
-        try {
-
-            //String responseString = result.toString();
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
-
-            System.out.println("service ------------------------------------> " + jsonObj);
-
-            JSONObject parseResponse = (JSONObject) jsonObj.get("response");
-            JSONObject parseBody = (JSONObject) parseResponse.get("body");
-
-            JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
-
-            JSONArray array = (JSONArray) items.get("item"); // item is a JSONArray inside items
-
-            System.out.println("배열 내 완전 제거 후 데이터==========>" + array);
-
-
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject jObj = (JSONObject) array.get(i);
-                shelterNumDto.setS_no(jObj.get("careRegNo").toString());
-                shelterNumDto.setS_name(jObj.get("careNm").toString());
-                System.out.println("s_no!!!!!!!!!!!!!!!!! " + shelterNumDto.getS_no());
-                System.out.println("s_name!!!!!!!!!!!!!!!!! " + shelterNumDto.getS_name());
-                iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
-            }
-//            Object item = items.get("item");
-//
-//            if (item instanceof JSONArray) {
-//                JSONArray array = (JSONArray) item; // item is a JSONArray
-//
-//                for (int i = 0; i < array.size(); i++) {
-//                    JSONObject jObj = (JSONObject) array.get(i);
-//                    shelterNumDto.setS_no(jObj.get("careRegNo").toString());
-//                    shelterNumDto.setS_name(jObj.get("careNm").toString());
-//                    iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
-//                }
-//            } else if (item instanceof JSONObject) {
-//                JSONObject jObj = (JSONObject) item; // item is a single JSONObject
-//                shelterNumDto.setS_no(jObj.get("careRegNo").toString());
-//                shelterNumDto.setS_name(jObj.get("careNm").toString());
-//                iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
-//            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public void shelterRegistNum(List<String> shelterNumLists, List<String> shelterNameLists, ShelterNumDto shelterNumDto) {
+        log.info("shelterRegistNum()");
+        for(int i = 0; i < shelterNumLists.size(); i++){
+            shelterNumDto.setS_no(shelterNumLists.get(i));
+            shelterNumDto.setS_name(shelterNameLists.get(i));
+            iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
         }
+
+//        for(int i = 0; i < shelterNameLists.size(); i++){
+//            shelterNumDto.setS_name(shelterNameLists.get(i));
+//            iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
+//        }
 
 
     }
 
-    @Override
     public void shelterRegistInfo(String result, ShelterInfoDto shelterInfoDto) {
         log.info("shelterRegistInfo()");
 
@@ -356,6 +373,7 @@ public class AdminMemberService implements IAdminMemberService {
         iAdminMemberDaoMapper.updateAdminForApporoval(a_m_no);
 
     }
+
 
 
 }
