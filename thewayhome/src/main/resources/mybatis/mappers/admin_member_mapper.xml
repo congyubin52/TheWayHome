@@ -28,6 +28,23 @@
 
     </insert>
 
+<!--    &lt;!&ndash;로그인&ndash;&gt;-->
+<!--    <select id="selectAdminForLogin"-->
+<!--            parameterType="String"-->
+<!--            resultType="com.btc.thewayhome.admin.member.AdminMemberDto">-->
+
+<!--        SELECT-->
+<!--            *-->
+<!--        FROM-->
+<!--            tbl_member_admin-->
+<!--        WHERE-->
+<!--            a_m_id = #{a_m_id}-->
+<!--          AND-->
+<!--            a_m_approval = '1'-->
+<!--          AND-->
+<!--            use_yn = 'Y'-->
+
+<!--    </select>-->
     <!--로그인-->
     <select id="selectAdminForLogin"
             parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
@@ -40,7 +57,7 @@
         WHERE
             a_m_id = #{a_m_id}
           AND
-            a_m_approval = 1
+            a_m_approval = '1' OR a_m_approval = '2'
           AND
             use_yn = 'Y'
 
@@ -106,6 +123,33 @@
             a_m_mod_date = NOW()
         WHERE
             a_m_no = #{a_m_no}
+
     </update>
+
+<!--    <select id="searchAdminInfoForApproval"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto">
+
+        select
+            *
+        from
+            tbl_member_admin
+        where
+            a_m_no = #{a_m_no}
+
+    </select>-->
+
+    <!--(로그인을 위한) 관리자 승인 처리 - a_m_approval 값을 받기 위함-->
+    <select id="selectAdminForApprovalFromNo"
+            parameterType="Integer"
+            resultType="String">
+
+        select
+            a_m_approval
+        from
+            tbl_member_admin
+        where
+            a_m_no = #{a_m_no}
+
+    </select>
 
 </mapper>

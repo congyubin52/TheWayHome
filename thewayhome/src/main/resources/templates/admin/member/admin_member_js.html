@@ -8,43 +8,43 @@
     });
 
     function init_events() {
-    //로그인
-    $(document).on('click', '#section_wrap input[value="로그인"]', function(e) {
-        console.log('button CLICK HANDLER!!');
+        //로그인
+        $(document).on('click', '#section_wrap input[value="로그인"]', function(e) {
+            console.log('button CLICK HANDLER!!');
 
-        let form = document.member_login_form;
-        if (form.a_m_id.value == '') {
-            alert('아이디를 입력해주세요.');
-            form.a_m_id.focus();
+            let form = document.member_login_form;
+            if (form.a_m_id.value == '') {
+                alert('아이디를 입력해주세요.');
+                form.a_m_id.focus();
 
-        } else if (form.a_m_pw.value == '') {
-            alert('비밀번호를 입력해주세요.');
-            form.a_m_pw.focus();
+            } else if (form.a_m_pw.value == '') {
+                alert('비밀번호를 입력해주세요.');
+                form.a_m_pw.focus();
 
-        } else {
-            let a_m_id = $('#section_wrap input[name="a_m_id"]').val();
-            let a_m_pw = $('#section_wrap input[name="a_m_pw"]').val();
-            ajax_login_confirm(a_m_id, a_m_pw);
-        }
-
-    });
-
-    //정보수정
-    $(document).on('click', '#section_wrap input[value="회원정보 수정"]', function(e) {
-      console.log('button CLICK HANDLER!!');
-
-       let form = document.member_modify_form;
-       if (form.a_m_pw.value == '') {
-          alert('비밀번호를 입력해주세요.');
-          form.a_m_pw.focus();
-
-        } else {
-            let a_m_no = $('#section_wrap input[name="a_m_no"]').val();
-            let a_m_id = $('#section_wrap input[name="a_m_id"]').val();
-            let a_m_pw = $('#section_wrap input[name="a_m_pw"]').val();
-
-            ajax_modify_confirm(a_m_no, a_m_id, a_m_pw);
+            } else {
+                let a_m_id = $('#section_wrap input[name="a_m_id"]').val();
+                let a_m_pw = $('#section_wrap input[name="a_m_pw"]').val();
+                ajax_login_confirm(a_m_id, a_m_pw);
             }
+
+        });
+
+        //정보수정
+        $(document).on('click', '#section_wrap input[value="회원정보 수정"]', function(e) {
+          console.log('button CLICK HANDLER!!');
+
+           let form = document.member_modify_form;
+           if (form.a_m_pw.value == '') {
+              alert('비밀번호를 입력해주세요.');
+              form.a_m_pw.focus();
+
+            } else {
+                let a_m_no = $('#section_wrap input[name="a_m_no"]').val();
+                let a_m_id = $('#section_wrap input[name="a_m_id"]').val();
+                let a_m_pw = $('#section_wrap input[name="a_m_pw"]').val();
+
+                ajax_modify_confirm(a_m_no, a_m_id, a_m_pw);
+           }
         });
 
         //회원탈퇴
@@ -58,26 +58,32 @@
 
         });
 
-        //관리자 승인 처리
-        $('#search_admin_list div.approval a').click(function (e) {
-            console.log('button CLICK HANDLER!!');
+        // 관리자 승인 처리
+        let aNoList = document.querySelectorAll('td.a_m_no');
+        // let a_m_no = $('#search_admin_list table tbody tr.').data("no");
+        let idList = document.querySelectorAll('td.a_m_id');
+        let sNoList = document.querySelectorAll('td.s_no');
+        let sNameList = document.querySelectorAll('td.s_name');
+        let sAddrList = document.querySelectorAll('td.s_address');
+        let aBtns = document.querySelectorAll('a.approval');
 
-            let result = confirm('상태를 변경하시겠습니까?');
+        $(document).on('click', '#search_admin_list tbody td.btn_approval', function(e) {
+            console.log("btn_approval CLICK HANDLER");
 
-            let a_m_no = $('#search_admin_list table tbody tr .a_m_no').text();
-            let a_m_id = $('#search_admin_list table tbody tr .a_m_id').text();
-            let s_no = $('#search_admin_list table tbody tr .s_no').text();
-            let s_name = $('#search_admin_list table tbody tr .s_name').text();
-            let s_address = $('#search_admin_list table tbody tr .s_address').text();
+            confirm('상태를 변경하시겠습니까?')
 
-
-            if(result)
-                ajax_approval_confirm(a_m_no, a_m_id, s_no, s_name, s_address);
+            let no = $(this).parent().attr('id');
+            ajax_approval_confirm(no);
+            //ajax_approval_confirm(no, aNoList[i].textContent, idList[i].textContent, sNoList[i].textContent, sNameList[i].textContent, sAddrList[i].textContent);
 
         });
 
+        // 관리자 승인 처리
+/*        $('#search_admin_list div.approval a').click(function (e) {
+            console.log('button CLICK HANDLER!!');
 
-    }
+
+        })*/
 
     /*
      * AJAX START
@@ -111,7 +117,7 @@
         });
     }
 
-    //회원정보 수정
+    //회원정보 수정 ajax
     function ajax_modify_confirm(a_m_no, a_m_id, a_m_pw) {
         console.log('ajax_modify_confirm() CALLED!!');
 
@@ -146,7 +152,7 @@
         });
     }
 
-    //회원탈퇴
+    //회원탈퇴 ajax
     function ajax_delete_confirm(a_m_no) {
     console.log('ajax_delete_confirm() CALLED!!');
 
@@ -176,61 +182,35 @@
     });
     }
 
-    //관리자 승인 처리
-    function ajax_approval_confirm(a_m_no, a_m_id, s_no, s_name, s_address) {
+    //관리자 승인 처리 ajax
+        function ajax_approval_confirm(a_m_no) {
         console.log('ajax_approval_confirm() CALLED!!');
 
         let formdata = new FormData();
         formdata.append("a_m_no", a_m_no)
-        formdata.append("a_m_id", a_m_id)
-        formdata.append("s_no", s_no)
-        formdata.append("s_name", s_name)
-        formdata.append("s_address", s_address)
 
-        // let msg = {
-        //     'a_m_no': a_m_no,
-        //     'a_m_id': a_m_id,
-        //     's_no': s_no,
-        //     's_name': s_name,
-        //     's_address': s_address,
-        // };
         $.ajax({
-            url:			'/admin/member/member_approval_confirm',
-            method:			'POST',
+            url: '/admin/member/member_approval_confirm',
+            method: 'POST',
             processData: false,
             contentType: false,
             data: formdata,
-            // data: 			JSON.stringify(msg),
-            // contentType:	'application/json; chartset=utf-8;',
-            // dataType:		'json',
-            success: function(data) {
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_approval_confirm()');
-
-                let adminMemberDtos = data.adminMemberDtos;
-                console.log("adminMemberDtos " + adminMemberDtos)
-                for (let i = 0; i < adminMemberDtos.length; i++) {
-
-                    if (adminMemberDtos[i].a_approval == 0) {
-
-                        let appendTag = "<a href = '#none' >" + 승인대기 + "</a>";
-
-                    } else {
-
-                        let appendTag = "<a href = '#none' >" + 승인완료 + "</a>";
-
-                    }
-
-                    $("#search_admin_list tbody tr td.approval").append(appendTag);
+                if (data.result == 0) {
+                    $("#" + a_m_no + ' td.btn_approval a.approval').text("승인대기");
+                } else {
+                    $("#" + a_m_no + ' td.btn_approval a.approval').text("승인완료");
                 }
-
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_approval_confirm()');
                 alert('문제가 발생했습니다. 다시 시도해주세요.');
 
             }
 
         });
+        }
     }
 
     /*

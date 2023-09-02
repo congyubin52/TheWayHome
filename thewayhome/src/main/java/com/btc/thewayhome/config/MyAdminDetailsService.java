@@ -31,7 +31,9 @@ public class MyAdminDetailsService implements UserDetailsService {
 
         log.info("adminMemberDto.setA_m_id(adminname)------> {}", adminMemberDto.getA_m_id());
 
+
         AdminMemberDto selectedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
+//        AdminMemberDto selectedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto.getA_m_id().toString());
 
 //        if (selectedUserMemberDto == null) {
 //            throw new UsernameNotFoundException("사용자 정보가 일치하지 않습니다.");

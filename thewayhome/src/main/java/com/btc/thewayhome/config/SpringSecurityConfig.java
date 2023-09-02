@@ -153,7 +153,7 @@ public class SpringSecurityConfig {
 							HttpSession session = request.getSession();
 							session.invalidate();
 
-							response.sendRedirect("/admin/member/");
+							response.sendRedirect("/admin/");
 
 						})
 				)

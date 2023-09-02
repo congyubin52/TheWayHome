@@ -14,9 +14,6 @@
     <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
     <script th:src="@{/js/admin/member_login_form_js.js}" type="text/javascript"></script>
 
-<!--
-    <script th:src="@{/js/admin/member_login_form_js.js}" type="text/javascript"></script>
--->
 </head>
 
 <body class="text-center">
@@ -48,7 +45,7 @@
                     <br>
 <!--                            <div class="d-grid gap-2">-->
                                 <div class="text-center mb-4">
-                        <input type="button" value="로그인" class="btn btn-primary btn-xs" style="width:40%">
+                        <input type="button" value="로그인" class="btn btn-primary btn-xs" style="width:40%" onclick="memberLoginForm();">
 <!--                        <input type="reset" value="초기화" class="btn btn-dark" style="width:40%">-->
                                 </div>
 <!--                            </div>-->

@@ -16,24 +16,50 @@
         </div>
         <div></div>
     </div>
-    <div id="header_wrap" th:if="${session.loginedAdminMemberDto == null}">
+    <th:block th:if="${session.loginedAdminMemberDto == null}">
+    <div id="header_wrap">
         <a th:href="@{/admin}">홈</a>
         <a th:href="@{/admin/member/create_account_form}">회원가입</a>
 
         <a th:href="@{/admin/member/member_login_form}">로그인</a>
     </div>
+    </th:block>
     <div>
         <a th:href="@{/}">유저모드</a>
     </div>
-    <div id="header_wrap" th:unless="${session.loginedAdminMemberDto == null}">
+    <!--로그인 세션이 존재하면서 position이 super계정인 어드민-->
+    <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval == '2'}">
+    <div id="header_wrap">
         <a th:href="@{/admin}">홈</a>&nbsp;&nbsp;
         <a th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
         <a th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>&nbsp;&nbsp;
+        <div>
+            <a th:href="@{/admin/member/search_admin_list}">관리자 리스트</a>
+            <a th:href="@{/user/pets/shelter_list}">보호소</a>
+        </div>
     </div>
-    <div>
-        <a th:href="@{/admin/member/search_admin_list}">사용자 리스트</a>
-    </div>
+    </th:block>
+
+    <!--로그인 세션이 존재하지만, position이 super계정이 아닌 어드민-->
+    <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval != '2'}">
+        <div>
+        <a th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
+        <a th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>&nbsp;&nbsp;
+        <a th:href="@{/user/pets/shelter_list}">보호소</a>
+
+        </div>
+    </th:block>
+
 </header>
+
+<nav id="nav_wrap">
+    <th:block th:if="${session.loginedAdminMemberDto == null}">
+    <div>
+        <a th:href="@{/user/pets/shelter_list}">보호소</a>
+    </div>
+    </th:block>
+
+</nav>
 
 <footer th:fragment="footer">
     <div id="footer_wrap" class="bg-dark sticky-bottom">

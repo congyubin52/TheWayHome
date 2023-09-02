@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>보호소</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/common.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/admin/member_login_form.css}">-->
+
+    <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
+    <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
+
+</head>
+<style>
+    .basic_info p {
+        display: inline-block;
+        margin-right: 20px; /* 각 정보 사이의 간격 조절 */
+    }
+
+    .basic_info p:last-child {
+        margin-right: 0; /* 마지막 정보 뒤에는 간격 제거 */
+    }
+</style>
+<body>
+<header th:replace="~{/admin/include/admin_header_footer.html::header}">
+</header>
+
+<section>
+    <div id="section_wrap">
+
+        <div class="word">
+            보호 동물
+        </div>
+
+        <div id="pet_list_detail">
+            <div class="img">
+                <img th:src="@{/img/temp1.png}" style="display:block; width:50%;" class="mx-auto" onclick="window.open(this.src)">
+            </div>
+            <div class="kind">
+                <!--<p>" [" + <span th:text="${petAdminDto.an_no}"></span> "+]" </p>
+                <p>" [" + <span th:text="${petAdminDto.an_no}"></span> "+]" </p>-->
+                <p>
+                    <span>[개]</span>
+                    <span>말티즈</span>
+                </p>
+            </div>
+            <div class="basic_info">
+                    <p> 성별: &nbsp; <span>수컷</span> | </p>
+                    <p> 색상: &nbsp; <span>바둑이</span> | </p>
+                    <p> 출생: &nbsp; <span>2023</span> (년생) | </p>
+                    <p> 몸무게:&nbsp;  <span>수컷</span> 0.5(Kg)</p>
+            </div>
+            <br>
+            <br>
+            <div class="detail_info">
+                <p>공고번호: <span th:text="${petsAdminDto.an_n_no}"></span> </p>
+                <p>공고기간: <span>2023-09-02 ~ 2023-09-18</span> </p>
+                <p>발견장소: <span>전남</span> </p>
+                <p>특이사항: <span>순함</span> </p>
+                <p>보호센터: <span>임시보호센터</span> </p>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</section>
+
+<footer th:replace="~{/admin/include/admin_header_footer.html::footer}">
+</footer>
+
+</body>
+</html>

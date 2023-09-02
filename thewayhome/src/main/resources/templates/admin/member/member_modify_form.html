@@ -44,6 +44,22 @@
                         <input type="password" name="a_m_pw" value="******" class="form-control" id="floatingPassword"  >
                         <label for="floatingPassword">Password</label>
                     </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="s_no" th:value="${session.loginedAdminMemberDto.s_no}" class="form-control" id="floatingSNo"  >
+                        <label for="floatingSNo">고유번호</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="s_name" th:value="${session.loginedAdminMemberDto.s_name}" class="form-control" id="floatingSName"  >
+                        <label for="floatingSName">name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="s_address" th:value="${session.loginedAdminMemberDto.s_address}" class="form-control" id="floatingSAddress"  >
+                        <label for="floatingSAddress">Address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="s_phone" th:value="${session.loginedAdminMemberDto.s_phone}" class="form-control" id="floatingSPhone"  >
+                        <label for="floatingSPhone">Phone</label>
+                    </div>
                     <div class="text-center mb-4">
                     <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%">
                     </div>

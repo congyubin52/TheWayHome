@@ -265,10 +265,6 @@ public class AdminMemberController {
 //        return map;
 //    }
 
-
-
-
-
     // 로그인
     @GetMapping("/member_login_form")
     public String memberLoginForm() {
@@ -280,27 +276,27 @@ public class AdminMemberController {
 
     }
 
-//    @PostMapping("/member_login_confirm")
-//
-//    public int memberLoginConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
-//        log.info("[AdminMemberController] memberLoginConfirm()");
-//
-//        // String nextPage = "redirect:/"; 쏴리
-//
-//        AdminMemberDto loginedAdminMemberDto = adminMemberService.loginConfirm(adminMemberDto);
-//
-//        if(loginedAdminMemberDto != null) {
-//            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
-//            session.setMaxInactiveInterval(60 * 30);
-//            return 1;
-//        }
-//            log.info("loginedAdminMemberDto" + loginedAdminMemberDto.getA_m_id());
-//
-//        return 0;
-//
-//    }
+ /*   @PostMapping("/member_login_confirm")
 
-    @PostMapping("/member_login_confirm")
+    public int memberLoginConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
+        log.info("[AdminMemberController] memberLoginConfirm()");
+
+        // String nextPage = "redirect:/"; 쏴리
+
+        AdminMemberDto loginedAdminMemberDto = adminMemberService.loginConfirm(adminMemberDto);
+
+        if(loginedAdminMemberDto != null) {
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60 * 30);
+            return 1;
+        }
+            log.info("loginedAdminMemberDto" + loginedAdminMemberDto.getA_m_id());
+
+        return 0;
+
+    }*/
+
+   /* @PostMapping("/member_login_confirm")
     @ResponseBody
     public Object memberLoginConfirm(@RequestBody Map<String, String> msgMap, HttpSession session, Model model) {
         log.info("[AdminMemberController] memberLoginConfirm()");
@@ -320,7 +316,7 @@ public class AdminMemberController {
 
         return null;
 
-    }
+    }*/
 
     //로그아웃
     @GetMapping("/member_logout_comfirm")
@@ -475,36 +471,13 @@ public class AdminMemberController {
     //(로그인을 위한) 관리자 승인 처리
     @PostMapping("/member_approval_confirm")
     @ResponseBody
-//    public String memberApprovalConfirm(Model model, @RequestParam("a_m_no") int a_m_no) {
-    public Map<String, Object> memberApprovalConfirm(Model model, @RequestParam Map<String, String> msgMap) {
+    public Object memberApprovalConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] memberApprovalConfirm()");
 
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = adminMemberService.memberApprovalConfirm(adminMemberDto.getA_m_no());
 
-        log.info(msgMap.get("a_m_no"));
-        log.info(msgMap.get("a_m_id"));
-        log.info(msgMap.get("s_no"));
-        log.info(msgMap.get("s_name"));
-        log.info(msgMap.get("s_address"));
+        return map;
 
-//       String nextPage = "redirect:/admin/member/search_admin_list";
-//       log.info("a_m_no--------->" + request.getParameter("a_m_no"));
-//       adminMemberService.memberApprovalConfirm(Integer.parseInt(request.getParameter("a_m_no")));
-//       int result = adminMemberService.memberApprovalConfirm(Integer.parseInt(msgMap.get("a_m_no")));
-         List<AdminMemberDto> adminMemberDtos = adminMemberService.memberApprovalConfirm(msgMap.get("a_m_no"));
-
-        /*if(result >= 0) {
-            log.info("msgMap no: " + msgMap.get("a_m_id"))0909090;
-            List<AdminMemberDto> adminMemberDtos = adminMemberService.searchAdminInfo(msgMap);
-
-            log.info("adminMemberDtos", adminMemberDtos.get(0));
-            map.put("adminMemberDtos", adminMemberDtos);
-            return map;
-
-        }
-            return null;
-    }*/
-return null;
     }
 
 }
