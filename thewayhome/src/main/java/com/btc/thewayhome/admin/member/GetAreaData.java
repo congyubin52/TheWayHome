@@ -1,7 +1,7 @@
 package com.btc.thewayhome.admin.member;
 
-import com.btc.thewayhome.admin.pets.PetsAdminController;
 import com.btc.thewayhome.admin.pets.PetsAdminService;
+import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
+@Log4j2
 @Service
 public class GetAreaData {
 
@@ -28,11 +29,11 @@ public class GetAreaData {
         List<String> result = new ArrayList<>();
         String responseString = "";
         String orgCd = "";
-//        String uprCd = "";
         String sigunguCd = "";
         List<String> orgCdList = new ArrayList<>();
         List<String> uprCdList = new ArrayList<>();
         List<String> sigunguCdList = new ArrayList<>();
+        List<String> shelterCdList = new ArrayList<>();
         ShelterNumDto shelterNumDto = new ShelterNumDto();
 
 
@@ -87,7 +88,6 @@ public class GetAreaData {
         // result 리스트에 "orgCd" 값들이 저장되어 있음 ---------> [6110000, 6260000, 6270000, 6280000, 6290000]
         Map<String, Object> resultMap = new HashMap<>();
 
-        StringBuilder sigungu = new StringBuilder();
         for (int i = 0; i < orgCdList.size(); i++) {
             try {
                 List<String> kindCollectList = new ArrayList<>();
@@ -116,28 +116,21 @@ public class GetAreaData {
 
 
                 responseString = response.toString();
-//                    System.out.println("response : " + response);
-//                    System.out.println("response : " + response);
 
-//                    System.out.println("responseString : " + responseString);
 
                 JSONParser jsonParser = new JSONParser();
-                JSONObject jsonObj = (JSONObject) jsonParser.parse(responseString); // JSON 문자열 responseString을 파싱하여 JSONObject로 변환하는 코드
+                JSONObject jsonObj = (JSONObject) jsonParser.parse(responseString);
+                // JSON 문자열 responseString을 파싱하여 JSONObject로 변환하는 코드
                 JSONObject parseResponse = (JSONObject) jsonObj.get("response");
                 JSONObject parseBody = (JSONObject) parseResponse.get("body");
                 JSONObject items = (JSONObject) parseBody.get("items"); // parseBody라는 JSONObject에서 "items"라는 키를 사용하여 또 다른 JSONObject를 추출하는 코드
-//                    System.out.println("items : " + items);
+
 
                 JSONArray array = (JSONArray) items.get("item"); // items라는 JSONObject에서 "item"이라는 키를 사용하여 JSONArray를 추출하는 코드
 
                 for (int j = 0; j < array.toArray().length; j++) { // JSONArray를 Java 배열로 변환한 후, 해당 배열의 길이(크기)를 반환하는 코드
                     JSONObject jObj = (JSONObject) array.get(j);
-//                        uprCd = jObj.get("uprCd").toString(); // 상위 시도 코드
-                    sigunguCd = jObj.get("orgCd").toString(); // 시군구 코드
-//                        System.out.println("orgCd : " + orgCdList.get(j));
-//                        System.out.println("uprCd : " + uprCdList.get(i));
-                    //sigunguCdList.add(jObj.get("orgCd").toString());
-                    kindCollectList.add(jObj.get("orgCd").toString());
+                    kindCollectList.add(jObj.get("orgCd").toString()); // 시도 코드에 맞게 시 군구 코드 모은 리스트
                 }
                 resultMap.put(orgCdList.get(i), kindCollectList); // map의 키에 시도코드의 리스트의 값들을 넣어준다.
                 // value에는 시도코드에 따른 시군구 코드의 list를 넣어준다.
@@ -147,7 +140,7 @@ public class GetAreaData {
             }
         } // try 반복문 끝
 
-//        System.out.println("resultMap!!!!!!!!!!" + resultMap);
+
         System.out.println("sigungu!!!!---------> " + sigunguCdList); // 시군구 코드 출력
         System.out.println("orgCdList!!!!---------> " + orgCdList); // 시군구 코드 출력
 
@@ -164,101 +157,82 @@ public class GetAreaData {
         System.out.println("keyList!!!!" + keyList);
 
 
-//        int h = 0;
-//        for (int k = 0; k < orgCdList.size(); k++) {
-//            for(String)
-//            for (int j = 0; j < sigunguCdList.size(); j++) {
-//                String uprCd = orgCdList.get(k);
-        //String orgsigunguCd = sigunguCdList.get(h);
-//                String orgsigunguCd = sigunguCdList.get(i).;
-        //h++;
+        List<String> shelterNumLists = new ArrayList<>();
+        List<String> shelterNameLists = new ArrayList<>();
 
-//                System.out.println("uprCd=======>" + uprCd);
-//                System.out.println("orgsigunguCd=====>" + orgsigunguCd);
 
         for (int q = 0; q < keyList.size(); q++) {
             Object arr = resultMap.get(keyList.get(q));
-            List<String> array =(List<String>) arr;
+            List<String> mapValueArray = (List<String>) arr;
 
-            for (int k = 0; k < array.size(); k++) {
-                System.out.println("keyList(i)!!!!!!!!!!!!!!!!" + keyList.get(q));
-                System.out.println("!!!!!!!!!!!!++++++++++++++++" + array.get(k));
+            for (int k = 0; k < mapValueArray.size(); k++) {
 
-//    System.out.println("arr---->" + arr.length);
                 try {
                     String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/shelter?" +
                             "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
                             "&upr_cd=" + keyList.get(q) +
-                            "&org_cd=" + array.get(k) +
+                            "&org_cd=" + mapValueArray.get(k) +
                             "&_type=json" +
                             "&pageNo=1" +
                             "&numOfRows=5";
-
+                    System.out.println(">>url: " + apiUrl);
                     URL url = new URL(apiUrl);
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setRequestMethod("GET");
-                    BufferedReader br;
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(); // url 객체를 사용하여 HTTP 연결을 엽니다.
+                    urlConnection.setRequestMethod("GET"); // HTTP 요청 메서드를 설정합니다. 이 경우 "GET" 메서드를 사용하여 서버로부터 데이터를 가져옵니다.
+                    BufferedReader br; // 문자열을 읽어들이는 BufferedReader 객체를 선언합니다.
 
-                    br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
-                    String returnLine;
-                    StringBuilder response = new StringBuilder();
+                    if (apiUrl != null) {
+                        br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+                        // urlConnection을 통해 서버로부터 데이터를 읽어들일 InputStream을 생성
+                        String returnLine; // String returnLine;: 문자열 데이터를 한 줄씩 읽어들일 변수를 선언합니다.
+                        StringBuilder response = new StringBuilder();
 
-                    while ((returnLine = br.readLine()) != null) {
-                        result.add(returnLine);
-                        response.append(returnLine);
+                        while ((returnLine = br.readLine()) != null) {
+                            result.add(returnLine);
+                            response.append(returnLine);
+                        }
+                        urlConnection.disconnect();
+
+
+                        responseString = response.toString();
+
+                        JSONParser jsonParser = new JSONParser();
+                        JSONObject jsonObj = (JSONObject) jsonParser.parse(responseString);
+
+
+                        JSONObject parseResponse = (JSONObject) jsonObj.get("response");
+                        JSONObject parseBody = (JSONObject) parseResponse.get("body");
+
+                        JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
+                        if (items != null) {
+
+
+                            JSONArray array = (JSONArray) items.get("item"); // item is a JSONArray inside items}
+
+                            if (array != null) {
+                                for (int i = 0; i < array.size(); i++) {
+                                    JSONObject jObj = (JSONObject) array.get(i);
+
+                                    shelterNumLists.add(jObj.get("careRegNo").toString());
+                                    shelterNameLists.add(jObj.get("careNm").toString());
+
+                                }
+                            }
+                        }
+
+                        log.info("보호소명만 저장된 리스트 : " + shelterNameLists);
+
                     }
-                    urlConnection.disconnect();
-                    responseString = response.toString();
-
                 } catch (Exception e) {
                     e.printStackTrace();
 
                 }
-                System.out.println("responseString===================>responseString" + responseString);
-
-
-                adminMemberService.shelterRegistNum(responseString, shelterNumDto);
             }
-
         }
-//
-//            }
-//            }
-//        ShelterInfoDto shelterInfoDto = new ShelterInfoDto();
-//
-//        try {
-//            String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?" +
-//                    "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
-//                    "&_type=json" +
-//                    "&pageNo=1" +
-//                    "&numOfRows=100";
-////            System.out.println(">>url: " + apiUrl);
-//            URL url = new URL(apiUrl);
-//            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setRequestMethod("GET");
-//            BufferedReader br;
-//
-//            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
-//            String returnLine;
-//            StringBuilder response = new StringBuilder();
-//
-//            while ((returnLine = br.readLine()) != null) {
-//                result.add(returnLine);
-//                response.append(returnLine);
-//            }
-//            urlConnection.disconnect();
-//            responseString = response.toString();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        adminMemberService.shelterRegistInfo(responseString, shelterInfoDto);
-//
-//
-//        petsAdminService.getPetsData();
+
+        adminMemberService.shelterRegistNum(shelterNumLists, shelterNameLists, shelterNumDto);
 
 
     }
-
 
 }
