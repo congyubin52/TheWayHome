@@ -1,8 +1,8 @@
-document.getElementById("menuButton").addEventListener("click", function() {
-    var menuContainer = document.getElementById("menuContainer");
-    if (menuContainer.style.display === "none") {
-        menuContainer.style.display = "block";
-    } else {
-        menuContainer.style.display = "none";
-    }
+$(document).ready(function () {
+    $('#openModalBtn').click(function () {
+        $('#myModal').modal('show');
+    });
+    $('#closeModalBtn').click(function () {
+    $('#myModal').modal('hide');
+    });
 });

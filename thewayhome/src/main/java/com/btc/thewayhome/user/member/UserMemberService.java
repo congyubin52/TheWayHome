@@ -55,43 +55,6 @@ public class UserMemberService implements IUserMemberService {
         }
     }
 
-    @Override
-    public Map<String, Object> memberLoginConfirm(Map<String, String> msgMap) {
-        log.info("[UserMemberService] memberLoginConfirm()");
-
-        log.info("ID --------------> {}", msgMap.get("u_m_id"));
-        log.info("PW --------------> {}", msgMap.get("u_m_pw"));
-
-        UserMemberDto dto = new UserMemberDto();
-        dto.setU_m_id(msgMap.get("u_m_id"));
-        dto.setU_m_pw(msgMap.get("u_m_pw"));
-
-        Map<String, Object> map = new HashMap<>();
-        UserMemberDto userMemberDto = iUserMemberDaoMapper.selectUserForLogin(dto);
-
-        map.put("result", userMemberDto);
-
-        return map;
-
-
-//
-//        if (userMemberDto != null) {
-//            map.put("userMemberDto", userMemberDto);
-//            return map;
-//
-//        } else {
-//            return null;
-//
-//        }
-    }
-
-    public int userMemeberDeleteConfirm(int u_m_no) {
-        log.info("[UserMemberService] userMemeberDeleteConfirm()");
-
-        return iUserMemberDaoMapper.deleteUserMember(u_m_no);
-
-    }
-
     public UserMemberDto userMemeberModifyConfirm(UserMemberDto userMemberDto) {
         log.info("[UserMemberService] userMemeberModifyConfirm()");
 
@@ -124,6 +87,13 @@ public class UserMemberService implements IUserMemberService {
             System.out.println("service false tp1");
             return null;
         }
+    }
+
+    public int userMemeberDeleteConfirm(int u_m_no) {
+        log.info("[UserMemberService] userMemeberDeleteConfirm()");
+
+        return iUserMemberDaoMapper.deleteUserMember(u_m_no);
+
     }
 
 }
