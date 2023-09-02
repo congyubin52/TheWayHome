@@ -1,5 +1,6 @@
 package com.btc.thewayhome.user.board.free;
 
+import com.btc.thewayhome.user.board.free.util.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +26,9 @@ public class FreeBoardUserController {
     @Autowired
     FreeBoardUserService freeBoardUserService;
 
+    @Autowired
+    UploadFileService uploadFileService;
+
 
 
     /*
@@ -41,35 +45,42 @@ public class FreeBoardUserController {
       실종/목격 게시판 글 작성 Form
    */
     @GetMapping({"free_board_form"})
-    public String freeBoardWriteForm() {
+    public String freeBoardWriteForm(HttpSession session) {
         log.info("freeBoardWriteForm()");
 
-        return "/user/board/free/free_board_form";
+        String nextPage = "/user/board/free/free_board_form";
+
+        if(session.getAttribute("loginedUserMemberDto") == null){
+            nextPage = "/user/member/member_login_form";
+        }
+
+        return nextPage;
     }
 
     /*
       실종/목격 게시판 글 작성 Confirm
    */
     @PostMapping({"/free_board_write_confirm"})
-    @ResponseBody
-    public Map<String, Object> freeBoardWriteConfirm(HttpSession session, FreeBoardUserDto freeBoardUserDto, MultipartRequest request) {
+    public String freeBoardWriteConfirm(HttpSession session, FreeBoardUserDto freeBoardUserDto, @RequestParam("file") MultipartFile file) {
         log.info("freeBoardWriteConfirm()");
 
         UserMemberDto loginedUserMemberDto = (UserMemberDto) session.getAttribute("loginedUserMemberDto");
 
-        log.info(freeBoardUserDto.getB_title());
-        log.info(loginedUserMemberDto.getU_m_id());
-        log.info(request);
+        String nextPage = "/user/board/free/free_board_list";
 
-//        try {
-//
-//            int result = freeBoardUserService.freeBoardWriteConfirm(loginedUserMemberDto.getU_m_id() , freeBoardUserDto, request);
-//
-//        } catch(IOException e) {
-//            e.printStackTrace();
-//        }
+        // SAVE FILE
+        String saveFileName = uploadFileService.upload(file);
 
-        return null;
+        int result = freeBoardUserService.freeBoardWriteConfirm(loginedUserMemberDto.getU_m_id(), saveFileName, freeBoardUserDto);
+        if(result > 0){
+            log.info("DB UPLOAD SUCCESS");
+            return nextPage;
+        } else {
+            log.info("DB UPLOAD FAIL");
+            nextPage = "/";
+            return nextPage;
+        }
+
     }
 
 

@@ -8,9 +8,9 @@
             parameterType="com.btc.thewayhome.user.board.free.FreeBoardUserDto">
 
         INSERT INTO
-            tbl_board(u_m_id, b_category, b_image, b_title, b_content, b_reg_date, b_mod_date)
+            tbl_board(u_m_id, b_category, b_title, b_content, b_reg_date, b_mod_date)
         VALUES
-            (#{u_m_id}, #{b_category}, #{b_image}, #{b_title}, #{b_content}, NOW(),NOW())
+            (#{u_m_id}, #{b_category}, #{b_title}, #{b_content}, NOW(),NOW())
     </insert>
 
 </mapper>

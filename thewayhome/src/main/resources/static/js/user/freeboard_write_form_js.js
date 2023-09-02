@@ -16,9 +16,9 @@ function writePost(editor) {
         alert('INPUT content');
         form.b_content.focus();
 
-    } else if(form.b_select.value == "0") {
+    } else if(form.b_category.value == "0") {
         alert("실종/목격을 선택해야 합니다.");
-        form.b_select.focus();
+        form.b_category.focus();
     } else {
         form.submit();
 

@@ -1,5 +1,6 @@
 package com.btc.thewayhome.user.board.free;
 
+import com.btc.thewayhome.user.board.free.image.ImageService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,15 @@ public class FreeBoardUserService implements IFreeBoardUserService {
     @Autowired
     IFreeBoardUserDaoMapper iFreeBoardUserDaoMapper;
 
-    public int freeBoardWriteConfirm(String u_m_id , FreeBoardUserDto freeBoardUserDto) {
+    @Autowired
+    ImageService imageService;
+
+    public int freeBoardWriteConfirm(String u_m_id, String b_image, FreeBoardUserDto freeBoardUserDto) {
         log.info("freeBoardWriteConfirm()");
         freeBoardUserDto.setU_m_id(u_m_id);
+        freeBoardUserDto.setB_image(b_image);
 
-
-
-//        freeBoardUserDto.setB_image(uniqueName + fileExtension);
-
-        iFreeBoardUserDaoMapper.insertFreeBoardContent(freeBoardUserDto);
-
-        return 0;
+        return iFreeBoardUserDaoMapper.insertFreeBoardContent(freeBoardUserDto);
     }
 
 }
