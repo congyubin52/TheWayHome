@@ -35,7 +35,10 @@
                 <option value="area2">광주광역시</option>
             </select>
         </div>
+
         <div id="pet_list">
+
+
             <table>
                 <thead>
                 <tr>
@@ -48,10 +51,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="dto: ${petsAdminDtos}">
+                    <input  type="hidden" name="s_no" th:value="${dto.s_no}">
                     <td class="an_no" th:text="${dto.an_no}"></td>
                     <td class="an_k_kind" th:text="${dto.an_k_kind}"></td>
-                    <td class="an_n_no" >
-                        <a th:href="@{/user/pets/pets_list_detail}" th:text="${dto.an_n_no}"></a>
+                    <td class="an_n_no">
+                        <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}" th:text="${dto.an_n_no}"></a>
                     </td>
                     <td class="an_n_end" th:text="${dto.an_n_end}"></td>
                     <td class="an_p_s_state" th:text="${dto.an_p_s_state}"></td>

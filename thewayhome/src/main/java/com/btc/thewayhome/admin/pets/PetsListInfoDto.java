@@ -10,5 +10,7 @@ public class PetsListInfoDto {
     private int an_n_no;
     private String an_n_end;
     private String an_p_s_state;
+    private String s_no;
+    private String s_name;
 
 }

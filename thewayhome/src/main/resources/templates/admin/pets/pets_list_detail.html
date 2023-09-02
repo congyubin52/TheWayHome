@@ -45,21 +45,31 @@
                 </p>
             </div>
             <div class="basic_info">
-                    <p> 성별: &nbsp; <span>수컷</span> | </p>
-                    <p> 색상: &nbsp; <span>바둑이</span> | </p>
-                    <p> 출생: &nbsp; <span>2023</span> (년생) | </p>
-                    <p> 몸무게:&nbsp;  <span>수컷</span> 0.5(Kg)</p>
+                    <input name="an_no" type="hidden" th:value="${petsAdminDto.an_no}">
+                    <input name="an_no" type="hidden" th:value="${petsAdminDto.s_no}">
+                    <p> 성별: &nbsp; <span th:text="${petsAdminDto.an_g_gender}"></span> | </p>
+                    <p> 색상: &nbsp; <span th:text="${petsAdminDto.an_c_color}"></span> | </p>
+                    <p> 출생: &nbsp; <span th:text="${petsAdminDto.an_age}"></span> (년생) | </p>
+                    <p> 몸무게:&nbsp;  <span th:text="${petsAdminDto.an_weight}"></span> (Kg)</p>
             </div>
             <br>
             <br>
             <div class="detail_info">
-                <p>공고번호: <span th:text="${petsAdminDto.an_n_no}"></span> </p>
-                <p>공고기간: <span>2023-09-02 ~ 2023-09-18</span> </p>
-                <p>발견장소: <span>전남</span> </p>
-                <p>특이사항: <span>순함</span> </p>
-                <p>보호센터: <span>임시보호센터</span> </p>
+                <p>공고번호: <span th:text="${petsAdminDto.an_n_notice_no}"></span> </p>
+                <p>공고기간:
+                    <span th:text="${petsAdminDto.an_n_start}"></span>
+                    <span> ~ </span>
+                    <span th:text="${petsAdminDto.an_n_end}"></span>
+                </p>
+                <p>발견장소: <span th:text="${petsAdminDto.an_happen_place}"></span> </p>
+                <p>특이사항: <span th:text="${petsAdminDto.an_special_mark}"></span> </p>
+                <p>보호센터: <span th:text="${petsAdminDto.s_name}"></span> </p>
             </div>
         </div>
+    </div>
+
+    <div class="go_pets_list">
+        <a th:href="@{/user/pets/pets_list(s_no=${petsAdminDto.s_no})}">목록</a>
     </div>
 
     </div>

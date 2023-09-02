@@ -21,6 +21,8 @@
             tbl_shelterInfo i
         ON
             n.s_name = i.s_name
+        ORDER BY
+            s_no ASC;
     </select>
 
     <!--보호 동물 리스트(보호소 리스트 상세 페이지)-->
@@ -30,24 +32,24 @@
 
         SELECT
             a.an_no,
+            sn.s_no,
+            sn.s_name,
             ak.an_k_kind,
-            a.an_n_no,
+            n.an_n_no,
             n.an_n_end,
             aps.an_p_s_state
-        FROM
-            tbl_animal a
-                JOIN
-                    tbl_animal_kind ak ON a.an_k_no = ak.an_k_no
-                JOIN
-                    tbl_notice n ON a.an_n_no = n.an_n_no
-                JOIN
-                    tbl_animal_process_state aps ON a.an_p_s_no = aps.an_p_no
-
-
+        FROM tbl_animal AS a
+                 JOIN tbl_animal_kind AS ak ON a.an_k_no = ak.an_k_no
+                 JOIN tbl_notice AS n ON a.an_n_no = n.an_n_no
+                 JOIN tbl_animal_process_state AS aps ON a.an_p_s_no = aps.an_p_s_no
+                 JOIN tbl_shelterNum AS sn ON a.s_no = sn.s_no
+        WHERE
+            sn.s_no = #{sn.s_no}
     </select>
 
     <!--보호 동물 상세 페이지 - 조회수-->
-    <update id="updatePetsListDetailHits" parameterType="Integer">
+    <update id="updatePetsListDetailHits"
+            parameterType="Integer">
         update
             tbl_animal
         set
@@ -56,13 +58,28 @@
             an_no = #{an_no}
     </update>
 
-    <select id="selectPetsListDetail" parameterType="Integer" resultType="com.btc.thewayhome.admin.pets.PetsAdminDto">
-        select
-            *
-        from
-            tbl_animal
+    <select id="selectPetsListDetail"
+            parameterType="Integer"
+            resultType="com.btc.thewayhome.admin.pets.PetsAdminDto">
+        SELECT
+            a.an_no,
+            ag.an_g_gender,
+            ac.an_c_color,
+            a.an_age,
+            a.an_weight,
+            n.an_n_notice_no,
+            n.an_n_start,
+            n.an_n_end,
+            a.an_happen_place,
+            a.an_special_mark,
+            s.s_name
+        FROM tbl_animal AS a
+                 INNER JOIN tbl_animal_gender AS ag ON a.an_g_no = ag.an_g_no
+                 INNER JOIN tbl_animal_color AS ac ON a.an_c_no = ac.an_c_no
+                 INNER JOIN tbl_notice AS n ON a.an_n_no = n.an_n_no
+                 INNER JOIN tbl_shelter AS s ON a.s_no = s.s_no
         where
-            an_no = #{an_no}
+            a.an_no = #{an_no}
     </select>
 
 </mapper>

@@ -101,7 +101,7 @@
         WHERE
             a_m_id = #{a_m_id}
           AND
-            a_m_approval = '1' OR a_m_approval = '2'
+            (a_m_approval = '1' OR a_m_approval = '2')
           AND
             use_yn = 'Y'
 

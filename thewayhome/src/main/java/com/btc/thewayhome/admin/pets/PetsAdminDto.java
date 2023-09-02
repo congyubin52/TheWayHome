@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class PetsAdminDto {
 
-    private int an_no;
+    private Object an_no;
     private String use_yn;
     private String an_thumbnail;
     private String an_happen_date;
@@ -20,9 +20,17 @@ public class PetsAdminDto {
     private int an_g_no;
     private int an_ne_no;
     private String an_special_mark;
-    private int s_no;
+    private String s_no;
     private int an_o_no;
     private String an_reg_date;
     private String an_mod_date;
     private String an_hit;
+
+    private String an_g_gender ;
+    private String an_c_color;
+    private String an_n_notice_no;
+    private String an_n_start;
+    private String an_n_end;
+    private String s_name;
+
 }

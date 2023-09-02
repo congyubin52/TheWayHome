@@ -31,6 +31,7 @@
         </div>
 
         <div id="shelter_list">
+            <form th:action="@{/user/pets/pets_list}" name="shelter_list" method="post">
             <table>
                 <thead>
                 <tr>
@@ -44,8 +45,8 @@
                 <tbody>
                 <tr th:each="dto: ${shelterListInfoDtos}">
                     <td class="s_no" th:text="${dto.s_no}"></td>
-                    <td class="s_name" >
-                        <a th:href="@{/user/pets/pets_list}" th:text="${dto.s_name}"></a>
+                    <td class="s_name">
+                        <a th:href="@{/user/pets/pets_list(s_no=${dto.s_no})}" th:text="${dto.s_name}"></a>
                     </td>
                     <td class="s_address" th:text="${dto.s_address}"></td>
                     <td class="s_phone" th:text="${dto.s_phone}"></td>
@@ -53,6 +54,7 @@
                 </tr>
                 </tbody>
             </table>
+            </form>
         </div>
     </div>
 
