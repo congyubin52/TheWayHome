@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.thewayhome.user.board.free.IFreeBoardUserDaoMapper">
+
+    <insert id="insertFreeBoardContent"
+            parameterType="com.btc.thewayhome.user.board.free.FreeBoardUserDto">
+
+        INSERT INTO
+            tbl_board(u_m_id, b_category, b_image, b_title, b_content, b_reg_date, b_mod_date)
+        VALUES
+            (#{u_m_id}, #{b_category}, #{b_image}, #{b_title}, #{b_content}, NOW(),NOW())
+    </insert>
+
+</mapper>
