@@ -11,6 +11,8 @@
         VALUES(#{s_no}, #{s_name})
     </insert>
 
+
+
     <!--보호소 이름, 전화번호, 주소 DB에 삽입-->
     <insert id="insertShelterInfo" parameterType="com.btc.thewayhome.admin.member.ShelterInfoDto">
         INSERT INTO tbl_shelterInfo(s_name, s_phone, s_address, s_reg_date, s_mod_date)
