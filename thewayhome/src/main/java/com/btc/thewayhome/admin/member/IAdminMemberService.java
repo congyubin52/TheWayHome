@@ -33,7 +33,11 @@ public interface IAdminMemberService {
 
 //    public AdminMemberDto createAccountConfirm(AdminMemberDto adminMemberDto);
 
-    public Map<String, Object> ShelterList();
-
     public Map<String, Object> searchShelterName(Map<String, String> shelterNameMap);
+
+    public Map<String, Object> searchShelterNo(Map<String, String> shelterNoMap);
+
+    public Map<String, Object> searchShelterAddress(Map<String, String> shelterAddressMap);
+
+    public Map<String, Object> searchShelterPhone(Map<String, String> shelterPhoneMap);
 }

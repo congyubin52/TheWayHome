@@ -30,7 +30,6 @@ public class AdminMemberService implements IAdminMemberService {
     @Override
     public void shelterRegistNum(String result, ShelterNumDto shelterNumDto) {
         log.info("shelterRegist()");
-        System.out.println("result----------> " + result);
 
 
         try {
@@ -47,6 +46,8 @@ public class AdminMemberService implements IAdminMemberService {
             JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
 
             JSONArray array = (JSONArray) items.get("item"); // item is a JSONArray inside items
+
+            System.out.println("배열 내 완전 제거 후 데이터==========>" + array);
 
 
             for (int i = 0; i < array.size(); i++) {
@@ -81,7 +82,6 @@ public class AdminMemberService implements IAdminMemberService {
 
     }
 
-
     @Override
     public void shelterRegistInfo(String result, ShelterInfoDto shelterInfoDto) {
         log.info("shelterRegistInfo()");
@@ -115,29 +115,8 @@ public class AdminMemberService implements IAdminMemberService {
     }
 
 
-        @Override
-    public Map<String, Object> ShelterList() {
-        log.info("[MemberService] ShelterNameJoin()");
-
-        Map<String, Object> msgMap = new HashMap<>();
-
-        List<AdminMemberDto> shelterNumDtos = iAdminMemberDaoMapper.ShelterNumList();
-        List<AdminMemberDto> shleterInfoDtos = iAdminMemberDaoMapper.ShelterInfoList();
-
-        msgMap.put("shelterNumDtos", shelterNumDtos);
-        msgMap.put("shleterInfoDtos", shleterInfoDtos);
-
-        log.info("shelterNumDtos!!!!" +  shelterNumDtos);
-        log.info("msgMap!!!!!!!!!!" + msgMap);
-
-
-
-        return msgMap;
-    }
-
-
     @Override
-    public Map<String, Object> searchShelterName(Map<String, String> shelterNameMap){
+    public Map<String, Object> searchShelterName(Map<String, String> shelterNameMap) {
         log.info("[AdminMemberService] searchShelterName()");
         log.info("----------------->{}", shelterNameMap.get("word").toString());
         Map<String, Object> map = new HashMap<>();
@@ -145,30 +124,74 @@ public class AdminMemberService implements IAdminMemberService {
         List<ShelterSearchDto> shelterSearchDtos = iAdminMemberDaoMapper.selectSearchShelterName(shelterNameMap.get("word").toString());
 
         map.put("shelterSearchDtos", shelterSearchDtos);
-//        log.info("shelterSearchDtos+++++++", shelterSearchDtos.get(0));
+
         return map;
     }
+
+    @Override
+    public Map<String, Object> searchShelterNo(Map<String, String> shelterNoMap) {
+        log.info("[AdminMemberService] searchShelterNo()");
+        log.info("----------------->{}", shelterNoMap.get("word").toString());
+        Map<String, Object> map = new HashMap<>();
+
+        List<ShelterSearchDto> shelterSearchDtos = iAdminMemberDaoMapper.selectSearchShelterNo(shelterNoMap.get("word").toString());
+
+        map.put("shelterSearchDtos", shelterSearchDtos);
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> searchShelterAddress(Map<String, String> shelterAddressMap) {
+        log.info("[AdminMemberService] searchShelterAddress()");
+        log.info("----------------->{}", shelterAddressMap.get("word").toString());
+        Map<String, Object> map = new HashMap<>();
+
+        List<ShelterSearchDto> shelterSearchDtos = iAdminMemberDaoMapper.selectSearchShelterAddress(shelterAddressMap.get("word").toString());
+
+        map.put("shelterSearchDtos", shelterSearchDtos);
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> searchShelterPhone(Map<String, String> shelterPhoneMap) {
+        log.info("[AdminMemberService] searchShelterPhone()");
+        log.info("----------------->{}", shelterPhoneMap.get("word").toString());
+        Map<String, Object> map = new HashMap<>();
+
+        List<ShelterSearchDto> shelterSearchDtos = iAdminMemberDaoMapper.selectSearchShelterPhone(shelterPhoneMap.get("word").toString());
+
+        map.put("shelterSearchDtos", shelterSearchDtos);
+
+        return map;
+    }
+
 
     //회원가입
     @Override
     public int createAccountConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] createAccountConfirm()");
 
+        // 회원을담기
+        Map<String, String> isAdminMap = new HashMap<>();
+
+        isAdminMap.put("adminMemberDto.getA_m_id()", adminMemberDto.getA_m_id());
+        isAdminMap.put("adminMemberDto.getS_no()", adminMemberDto.getS_no());
+
+        log.info(isAdminMap);
+
+
         //회원 유효성 검사
-        boolean isAdmin = iAdminMemberDaoMapper.isAdmin(adminMemberDto.getA_m_id());
+        boolean isAdmin = iAdminMemberDaoMapper.isAdmin(isAdminMap);
 
         if (!isAdmin) {
             adminMemberDto.setA_m_pw(passwordEncoder.encode(adminMemberDto.getA_m_pw()));
 
-            int result = DATABASE_COMMUNICATION_TROUBLE;
+//            int result = DATABASE_COMMUNICATION_TROUBLE;
+            // 회원가입
+            int result = iAdminMemberDaoMapper.insertNewAccount(adminMemberDto);
 
-            try {
-                iAdminMemberDaoMapper.insertNewAccount(adminMemberDto);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
 
             switch (result) {
                 case DATABASE_COMMUNICATION_TROUBLE:
@@ -234,7 +257,7 @@ public class AdminMemberService implements IAdminMemberService {
 
         int result = iAdminMemberDaoMapper.updateAccount(adminMemberDto);
 
-        if(result > 0) {
+        if (result > 0) {
             log.info("[AdminMemberService] result success");
             return iAdminMemberDaoMapper.getLatestAccountInfo(adminMemberDto);
         } else {
@@ -333,5 +356,6 @@ public class AdminMemberService implements IAdminMemberService {
         iAdminMemberDaoMapper.updateAdminForApporoval(a_m_no);
 
     }
+
 
 }
