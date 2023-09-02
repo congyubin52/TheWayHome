@@ -19,6 +19,17 @@ public class PetsAdminController {
     @Autowired
     PetsAdminService petsAdminService;
 
+
+    @RequestMapping("/pets_form")
+    public String petsForm(){
+        log.info("petsForm()");
+
+        String nextPage = "/admin/pets/pets_form";
+
+        return nextPage;
+    }
+
+
     /*
      *  사용자(USER)에게 보이는 페이지
      */
@@ -35,7 +46,7 @@ public class PetsAdminController {
 
         return nextPage;
     }
-    
+
     //보호 동물 전체 리스트(보호소 리스트 상세 페이지)
     @GetMapping("/pets_list")
     public String petsList(Model model) {

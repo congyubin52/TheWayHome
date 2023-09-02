@@ -2,7 +2,10 @@ package com.btc.thewayhome.admin.pets;
 
 import java.util.List;
 
+import com.btc.thewayhome.admin.member.ShelterInfoDto;
+
 public interface IPetsAdminService {
+    public void petsRegistInfo(String responseString, PetsAdminDto petsAdminDto);
 
     ////보호동물 리스트
     public List<ShelterListInfoDto> searchShelterList();

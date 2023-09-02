@@ -4,27 +4,71 @@
 
 <mapper namespace="com.btc.thewayhome.admin.member.IAdminMemberDaoMapper">
 
-    <select id="isAdmin"
-            parameterType="String"
-            resultType="Boolean">
 
-        SELECT
-            COUNT(*)
-        FROM
-            tbl_member_admin
-        WHERE
-            a_m_id = #{a_m_id}
+    <!--보호소 번호, 이름 DB에 삽입-->
+    <insert id="insertShelterNum" parameterType="com.btc.thewayhome.admin.member.ShelterNumDto">
+        INSERT INTO tbl_shelterNum(s_no, s_name)
+        VALUES(#{s_no}, #{s_name})
+    </insert>
+
+    <!--보호소 이름, 전화번호, 주소 DB에 삽입-->
+    <insert id="insertShelterInfo" parameterType="com.btc.thewayhome.admin.member.ShelterInfoDto">
+        INSERT INTO tbl_shelterInfo(s_name, s_phone, s_address, s_reg_date, s_mod_date)
+        VALUES(#{s_name}, #{s_phone}, #{s_address}, NOW(), NOW())
+    </insert>
+
+
+    <!-- 회원가입시 DB에 있는 보호소 이름 출력  -->
+    <select id="selectSearchShelterName" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
+        SELECT s_name
+        FROM tbl_shelterNum
+        WHERE s_name LIKE CONCAT('%', #{ShelterName}, '%')
+        ORDER BY s_name ASC
+
     </select>
 
-    <insert id="insertNewAccount"
-            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto">
+    <!-- 회원가입시 DB에 있는 보호소 번호 출력  -->
+    <select id="selectSearchShelterNo" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
+        SELECT s_no
+        FROM tbl_shelterNum
+        WHERE s_no LIKE CONCAT('%', #{ShelterNo}, '%')
+        ORDER BY s_no ASC
+
+    </select>
+
+    <!-- 회원가입시 DB에 있는 보호소 주소 출력  -->
+    <select id="selectSearchShelterAddress" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
+        SELECT s_address
+        FROM tbl_shelterInfo
+        WHERE s_address LIKE CONCAT('%', #{ShelterAddress}, '%')
+        ORDER BY s_address ASC
+
+    </select>
+
+    <!-- 회원가입시 DB에 있는 보호소 전화번호 출력  -->
+    <select id="selectSearchShelterPhone" parameterType="String" resultType="com.btc.thewayhome.admin.member.ShelterSearchDto">
+        SELECT s_phone
+        FROM tbl_shelterInfo
+        WHERE s_phone LIKE CONCAT('%', #{ShelterPhone}, '%')
+        ORDER BY s_phone ASC
+
+    </select>
+
+    <!-- 회원가입 시 ID와 보호소 번호로 중복 체크   -->
+    <select id="isAdmin" parameterType="java.util.Map" resultType="boolean">
+        SELECT COUNT(*)
+        FROM tbl_member_admin
+        WHERE a_m_id = #{a_m_id}
+          AND s_no = #{s_no}
+    </select>
+
+    <!-- admin 회원가입 하기  -->
+    <insert id="insertNewAccount" parameterType="com.btc.thewayhome.admin.member.AdminMemberDto" >
 
         INSERT INTO
-            tbl_member_admin(a_m_id, a_m_pw, s_no, s_name, s_address, a_m_reg_date, a_m_mod_date)
+            tbl_member_admin(a_m_id, a_m_pw, s_no, s_name, s_address, s_phone, a_m_reg_date, a_m_mod_date)
         VALUES
-            (#{a_m_id}, #{a_m_pw}, #{s_no}, #{s_name}, #{s_address}, NOW(), NOW());
-        WHERE
-
+            (#{a_m_id}, #{a_m_pw}, #{s_no}, #{s_name}, #{s_address}, #{s_phone}, NOW(), NOW())
 
     </insert>
 

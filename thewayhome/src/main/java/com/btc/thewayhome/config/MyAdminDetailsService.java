@@ -20,34 +20,22 @@ public class MyAdminDetailsService implements UserDetailsService {
     IAdminMemberDaoMapper iAdminMemberDaoMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String adminname) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String adminName) throws UsernameNotFoundException {
         log.info("loadUserByUsername()");
 
-        log.info("adminname: " + adminname);
+        log.info("adminname: " + adminName);
 
         AdminMemberDto adminMemberDto = new AdminMemberDto();
-        //Service에서 Dto로 넘겨주니 타입 안 맞으니까 넣어서
-        adminMemberDto.setA_m_id(adminname);
-
-        log.info("adminMemberDto.setA_m_id(adminname)------> {}", adminMemberDto.getA_m_id());
+        adminMemberDto.setA_m_id(adminName);
 
 
         AdminMemberDto selectedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
 //        AdminMemberDto selectedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto.getA_m_id().toString());
 
-//        if (selectedUserMemberDto == null) {
-//            throw new UsernameNotFoundException("사용자 정보가 일치하지 않습니다.");
-//
-//        } else {
-//            log.info("id: " + selectedUserMemberDto.getU_m_id());
-//            log.info("pw: " + selectedUserMemberDto.getU_m_pw());
-//
-//        }
-
         return User.builder()
                 .username(selectedAdminMemberDto.getA_m_id())
                 .password(selectedAdminMemberDto.getA_m_pw())
-                .roles("ADMIN")
+                .roles("ADMIN")     //권한 사용 하지 않아서 필요 없음
                 .build();
     }
 }
