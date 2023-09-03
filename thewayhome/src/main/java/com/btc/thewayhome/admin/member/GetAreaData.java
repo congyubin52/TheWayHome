@@ -1,7 +1,6 @@
 package com.btc.thewayhome.admin.member;
 
-import com.btc.thewayhome.admin.pets.PetsAdminController;
-import com.btc.thewayhome.admin.pets.PetsAdminService;
+import com.btc.thewayhome.admin.pets.user.PetsUserService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,7 +20,7 @@ public class GetAreaData {
     AdminMemberService adminMemberService;
 
     @Autowired
-    PetsAdminService petsAdminService;
+    PetsUserService petsAdminService;
 
     public void getData() {
 

@@ -1,4 +1,4 @@
-package com.btc.thewayhome.admin.pets;
+package com.btc.thewayhome.admin.pets.admin;
 
 import lombok.Data;
 
@@ -29,6 +29,7 @@ public class PetsAdminDto {
     private String an_g_gender ;
     private String an_c_color;
     private String an_n_notice_no;
+    private String an_k_kind;
     private String an_n_start;
     private String an_n_end;
     private String s_name;

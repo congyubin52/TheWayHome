@@ -1,8 +1,7 @@
 package com.btc.thewayhome.admin.member;
 
-import com.btc.thewayhome.admin.pets.PetsAdminController;
-import com.btc.thewayhome.admin.pets.PetsAdminDto;
-import com.btc.thewayhome.admin.pets.PetsAdminService;
+import com.btc.thewayhome.admin.pets.user.PetsUserDto;
+import com.btc.thewayhome.admin.pets.user.PetsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class GetPetsData {
 
     @Autowired
-    PetsAdminService petsAdminService;
+    PetsUserService petsAdminService;
 
     @Autowired
     AdminMemberService adminMemberService;
@@ -28,7 +27,7 @@ public class GetPetsData {
         String responseString = "";
 
         ShelterInfoDto shelterInfoDto = new ShelterInfoDto();
-        PetsAdminDto petsAdminDto = new PetsAdminDto();
+        PetsUserDto petsAdminDto = new PetsUserDto();
 
         try {
             String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?" +

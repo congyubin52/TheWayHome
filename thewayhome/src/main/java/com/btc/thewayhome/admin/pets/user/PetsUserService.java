@@ -1,26 +1,24 @@
-package com.btc.thewayhome.admin.pets;
+package com.btc.thewayhome.admin.pets.user;
 
-import com.btc.thewayhome.admin.member.ShelterInfoDto;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Log4j2
 @Service
-public class PetsAdminService implements IPetsAdminService{
+public class PetsUserService implements IPetsUserService {
 
     @Autowired
-    IPetsAdminDaoMapper iPetsAdminDaoMapper;
+    IPetsUserDaoMapper iPetsUserDaoMapper;
 
     @Override
-    public void petsRegistInfo(String responseString, PetsAdminDto petsAdminDto) {
+    public void petsRegistInfo(String responseString, PetsUserDto petsAdminDto) {
         try {
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObj = (JSONObject) jsonParser.parse(responseString);
@@ -48,49 +46,44 @@ public class PetsAdminService implements IPetsAdminService{
 
     //보호소 리스트
     @Override
-    public List<ShelterListInfoDto> searchShelterList() {
+    public List<UserShelterListInfoDto> searchShelterList() {
         log.info("searchShelterList()");
 
-        return iPetsAdminDaoMapper.selectShelter();
+        return iPetsUserDaoMapper.selectShelter();
 
 
     }
 
     //보호 동물 리스트(보호소 리스트 상세 페이지)
     @Override
-    public List<PetsAdminDto> searchPetsList(String s_no) {
+    public List<PetsUserDto> searchPetsList(String s_no) {
         log.info("searchShelterList()");
 
-//        List<PetsAdminDto> petsAdminDtos = iPetsAdminDaoMapper.selectPets(petsAdminDto.getS_no());
-        List<PetsAdminDto> petsAdminDtos = iPetsAdminDaoMapper.selectPets(s_no);
+        List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectPets(s_no);
         log.info("s_no------->{}", s_no);
 
-        return petsAdminDtos;
+        return petsUserDtos;
     }
 
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     @Override
-    public PetsAdminDto searchPetsListDetail(int an_no) {
+    public PetsUserDto searchPetsListDetail(int an_no) {
         log.info("searchPetsListDetail()");
 
 
         //조회수
-//        int result = iPetsAdminDaoMapper.updatePetsListDetailHits(petsAdminDto.getAn_no());
-        int result = iPetsAdminDaoMapper.updatePetsListDetailHits(an_no);
-
-//      PetsAdminDto petsAdminDto = null;
+        int result = iPetsUserDaoMapper.updatePetsListDetailHits(an_no);
 
         if(result > 0) {
-            PetsAdminDto petsAdminDto = iPetsAdminDaoMapper.selectPetsListDetail(an_no);
-//            petsAdminDto = iPetsAdminDaoMapper.selectPetsListDetail(petsAdminDto.getAn_no());
+            PetsUserDto petsUserDto = iPetsUserDaoMapper.selectPetsListDetail(an_no);
 
             log.info("an_no------------>",an_no);
             log.info("an_no------------>",an_no);
 
-            if(petsAdminDto != null) {
+            if(petsUserDto != null) {
                 log.info("searchPetsListDetail SUCCESS!!");
 
-                return petsAdminDto;
+                return petsUserDto;
 
             } else {
                 log.info("searchPetsListDetail FAIL!!");
@@ -102,7 +95,6 @@ public class PetsAdminService implements IPetsAdminService{
             return null;
 
         }
-//        return iPetsAdminDaoMapper.selectPetsListDetail(an_no);
     }
 
 }

@@ -2,12 +2,12 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.btc.thewayhome.admin.pets.admin.IPetsAdminDaoMapper">
+<mapper namespace="com.btc.thewayhome.admin.pets.user.IPetsUserDaoMapper">
 
     <!--보호소 리스트-->
     <select id="selectShelter"
-            parameterType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto"
-            resultType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto">
+            parameterType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto"
+            resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
 
         SELECT
             n.s_no,
@@ -27,8 +27,8 @@
 
     <!--보호 동물 리스트(보호소 리스트 상세 페이지)-->
     <select id="selectPets"
-            parameterType="com.btc.thewayhome.admin.pets.admin.AdminPetsListInfoDto"
-            resultType="com.btc.thewayhome.admin.pets.admin.AdminPetsListInfoDto">
+            parameterType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto"
+            resultType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto">
 
         SELECT
             a.an_no,
@@ -61,7 +61,7 @@
 
     <select id="selectPetsListDetail"
             parameterType="Integer"
-            resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
+            resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
         SELECT
             a.an_no,
             ag.an_g_gender,

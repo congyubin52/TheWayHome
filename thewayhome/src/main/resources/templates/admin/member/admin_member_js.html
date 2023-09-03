@@ -66,6 +66,7 @@
         let sNameList = document.querySelectorAll('td.s_name');
         let sAddrList = document.querySelectorAll('td.s_address');
         let aBtns = document.querySelectorAll('a.approval');
+        // let aBtns = document.querySelectorAll('a.btn btn-primary');
 
         $(document).on('click', '#search_admin_list tbody td.btn_approval', function(e) {
             console.log("btn_approval CLICK HANDLER");
@@ -199,8 +200,10 @@
                 console.log('AJAX SUCCESS - ajax_approval_confirm()');
                 if (data.result == 0) {
                     $("#" + a_m_no + ' td.btn_approval a.approval').text("승인대기");
+                    // $("#" + a_m_no + ' td.btn_approval a.btn btn-primary').text("승인대기");
                 } else {
                     $("#" + a_m_no + ' td.btn_approval a.approval').text("승인완료");
+                    // $("#" + a_m_no + ' td.btn_approval a.btn btn-primary').text("승인완료");
                 }
             },
             error: function (data) {

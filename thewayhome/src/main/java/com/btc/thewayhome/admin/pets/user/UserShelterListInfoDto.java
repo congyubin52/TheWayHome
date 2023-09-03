@@ -1,9 +1,9 @@
-package com.btc.thewayhome.admin.pets;
+package com.btc.thewayhome.admin.pets.user;
 
 import lombok.Data;
 
 @Data
-public class ShelterListInfoDto {
+public class UserShelterListInfoDto {
 
     private String s_no;
     private String s_name;
