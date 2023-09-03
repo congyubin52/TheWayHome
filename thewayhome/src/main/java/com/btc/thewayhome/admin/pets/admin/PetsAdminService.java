@@ -1,5 +1,6 @@
 package com.btc.thewayhome.admin.pets.admin;
 
+import com.btc.thewayhome.admin.member.AdminMemberDto;
 import com.btc.thewayhome.admin.pets.user.PetsUserDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,23 @@ public class PetsAdminService implements IPetsAdminService{
 
     //보호소 전체 리스트
     @Override
-    public List<AdminShelterListInfoDto> searchShelterList() {
+    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto) {
         log.info("searchShelterList()");
 
-        return iPetsAdminDaoMapper.selectShelter();
+        boolean isSuper = iPetsAdminDaoMapper.isAdminMember(loginedAdminMemberDto.getA_m_approval());
+        
+        List<AdminShelterListInfoDto> adminShelterListInfoDtos;
+        
+        if(isSuper) {
+            // SUPER ADMIN인 경우
+            adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelterSuper();
+
+        } else {
+            // 일반 ADMIN인 경우
+            adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelter();
+        }
+
+        return adminShelterListInfoDtos;
 
     }
 
@@ -36,7 +50,7 @@ public class PetsAdminService implements IPetsAdminService{
 
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     @Override
-    public PetsAdminDto searchPetsListDetail(int an_no) {
+    public PetsAdminDto searchPetsListDetail(String an_no) {
         log.info("searchPetsListDetail()");
 
         //조회수

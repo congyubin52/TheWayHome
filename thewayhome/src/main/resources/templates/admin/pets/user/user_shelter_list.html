@@ -49,7 +49,8 @@
                     </thead>
                     <tbody>
                     <tr th:each="dto: ${UsershelterListInfoDtos}">
-                        <td class="s_no" th:text="${dto.s_no}"></td>
+                        <input name="s_no" type="hidden" th:value="${dto.s_no}">
+<!--                        <td class="s_no" th:text="${dto.s_no}"></td>-->
                         <td class="s_name">
                             <a th:href="@{/user/pets/pets_list(s_no=${dto.s_no})}" th:text="${dto.s_name}" class="text-decoration-none text-dark"></a>
                         </td>

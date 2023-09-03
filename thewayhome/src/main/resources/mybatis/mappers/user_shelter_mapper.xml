@@ -16,9 +16,9 @@
             i.s_phone,
             i.s_reg_date
         FROM
-            tbl_shelterNum n
+            tbl_shelter_num n
         INNER JOIN
-            tbl_shelterInfo i
+            tbl_shelter_info i
         ON
             n.s_name = i.s_name
         ORDER BY
@@ -43,14 +43,14 @@
                  JOIN tbl_animal_kind AS ak ON a.an_k_no = ak.an_k_no
                  JOIN tbl_notice AS n ON a.an_n_no = n.an_n_no
                  JOIN tbl_animal_process_state AS aps ON a.an_p_s_no = aps.an_p_s_no
-                 JOIN tbl_shelterNum AS sn ON a.s_no = sn.s_no
+                 JOIN tbl_shelter_num AS sn ON a.s_no = sn.s_no
         WHERE
             sn.s_no = #{sn.s_no}
     </select>
 
     <!--보호 동물 상세 페이지 - 조회수-->
     <update id="updatePetsListDetailHits"
-            parameterType="Integer">
+            parameterType="String">
         update
             tbl_animal
         set
@@ -60,7 +60,7 @@
     </update>
 
     <select id="selectPetsListDetail"
-            parameterType="Integer"
+            parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
         SELECT
             a.an_no,

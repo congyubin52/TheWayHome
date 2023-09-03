@@ -65,16 +65,25 @@
                     <!-- 사이드바 -->
                     <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" style="padding: 30px;">
                         <div class="position-sticky">
-                            <ul class="nav flex-column" >
+                            <ul class="nav flex-column">
                                 <li class="nav-item" style="margin-bottom: 25px;">
-                                    <a class="nav-link active text-white" href="#" style="font-size: 16px; font-size: 20px;">
+                                    <a class="nav-link active text-white" href="#accountSubMenu" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accountSubMenu" style="font-size: 16px; font-size: 20px;">
                                         계정 관리
                                     </a>
+                                    <div class="collapse" id="accountSubMenu">
+                                        <a class="nav-link text-white" th:href="@{/admin/member/member_modify_form}">관리자 정보 수정</a>
+                                        <a class="nav-link text-white" th:href="@{/admin/member/admin_change_password}">비밀번호 변경</a>
+                                        <a class="nav-link text-white" th:href="@{/admin/member/admin_posts_page}">내가 쓴 게시물</a>
+                                    </div>
                                 </li>
-                                <li class="nav-item" style="margin-bottom: 25px; font-size: 20px;" >
-                                    <a class="nav-link text-white" href="#">
+                                <li class="nav-item" style="margin-bottom:25px;">
+                                    <a class="nav-link text-white" href="#shelterSubMenu" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accountSubMenu" style="font-size: 16px; font-size: 20px;">
                                         보호소 게시판
                                     </a>
+                                    <div class="collapse" id="shelterSubMenu">
+                                        <a class="nav-link text-white" th:href="@{/admin/pets/pets_list}">보호동물 조회</a>
+                                        <a class="nav-link text-white" th:href="@{/admin/member/pets_regist}">보호동물 등록</a>
+                                    </div>
                                 </li>
                                 <li class="nav-item" style="margin-bottom: 25px; font-size: 20px;">
                                     <a class="nav-link text-white" href="#">
@@ -89,6 +98,8 @@
                             </ul>
                         </div>
                     </nav>
+
+
 
                     <!-- 메인 컨텐츠 -->
                     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -118,12 +129,15 @@
                                     <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
                                         <h2 style="margin-bottom: 20px;">보호소 섹션</h2>
                                         <!-- 보호소 섹션 내용 -->
+                                        <th:block th:if="${session.loginedAdminMemberDto != null}">
                                         <p>
                                             <a th:href="@{/admin/pets/shelter_list}" class="text-decoration-none text-dark">보호소 리스트</a>
                                         </p>
+
                                         <p>
                                             <a th:href="@{/admin/pets/pets_list}" class="text-decoration-none text-dark">보호동물 리스트</a>
                                         </p>
+                                        </th:block>
                                         <p>
                                             <a th:href="@{/admin/pets/pets_regist}" class="text-decoration-none text-dark">보호동물 등록</a>
                                         </p>

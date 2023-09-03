@@ -370,4 +370,15 @@ public class AdminMemberController {
 
     }
 
+    //마이 페이지
+    @GetMapping("/admin_account_page")
+    public String myPage() {
+        log.info("[AdminMemberController] adminAccountPage()");
+
+        String nextPage = "admin/member/admin_account_page";
+
+        return nextPage;
+
+    }
+
 }
