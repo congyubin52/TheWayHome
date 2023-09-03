@@ -67,7 +67,7 @@ public class PetsUserService implements IPetsUserService {
 
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     @Override
-    public PetsUserDto searchPetsListDetail(int an_no) {
+    public PetsUserDto searchPetsListDetail(String an_no) {
         log.info("searchPetsListDetail()");
 
 

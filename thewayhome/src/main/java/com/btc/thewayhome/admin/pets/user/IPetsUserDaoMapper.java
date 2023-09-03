@@ -13,8 +13,8 @@ public interface IPetsUserDaoMapper {
     public List<PetsUserDto> selectPets(String s_no);
 
     //보호 동물 상세 페이지 - 조회수
-    public int updatePetsListDetailHits(int an_no);
+    public int updatePetsListDetailHits(String an_no);
 
     //보호 동물 상세 페이지
-    public PetsUserDto selectPetsListDetail(int an_no);
+    public PetsUserDto selectPetsListDetail(String an_no);
 }

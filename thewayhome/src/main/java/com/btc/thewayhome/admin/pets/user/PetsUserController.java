@@ -65,7 +65,7 @@ public class PetsUserController {
 
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     @GetMapping("/pets_list_detail")
-    public String petsListDetail(Model model, PetsUserDto petsUserDto, HttpSession session, @RequestParam("an_no") int an_no) {
+    public String petsListDetail(Model model, PetsUserDto petsUserDto, HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petsListDetail()");
         log.info("petsUserDto.getAn_no={}", petsUserDto.getAn_no());
         log.info("petsUserDto.getAn_no={}", an_no);

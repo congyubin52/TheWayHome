@@ -43,9 +43,9 @@
             i.s_phone,
             i.s_reg_date
         FROM
-            tbl_shelter_num n
-                INNER JOIN
-            tbl_shelter_info i
+                tbl_shelter_num n
+            INNER JOIN
+                tbl_shelter_info i
             ON
                 n.s_name = i.s_name
         ORDER BY
@@ -181,7 +181,8 @@
             an_happen_place,
             an_special_mark,
             s_name
-        FROM tbl_animal_api
+        FROM
+            tbl_animal_api
         WHERE
             an_no = #{an_no}
     </select>

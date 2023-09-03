@@ -1,0 +1,17 @@
+
+
+/* 폼 요소 간 간격 조정 */
+.blog_write_form br {
+  margin-bottom: 10px;
+}
+
+/* CkEditor */
+.ck.ck-editor {
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.ck-editor__editable {
+	height: 40vh;
+}

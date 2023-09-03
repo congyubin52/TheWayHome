@@ -214,7 +214,7 @@ public class AdminMemberService implements IAdminMemberService {
 
     }
 
-//    // 로그인
+    // 로그인
 //    @Override
 //    public Map<String, Object> loginConfirm(Map<String, String> msgMap) {
 //        log.info("[AdminMemberService] loginConfirm()");
@@ -306,37 +306,6 @@ public class AdminMemberService implements IAdminMemberService {
         }
         return null;
     }*/
-
-    //회원 탈퇴
-//    @Override
-//    public Map<String, Object> memberDeleteConfirm(int a_m_no) {
-//        log.info("[AdminMemberService] memberDeleteConfirm()");
-//
-//        Map<String, Object> map = new HashMap<>();
-//
-//        int result = -1;
-//        result = iAdminMemberDaoMapper.deleteAccount(a_m_no);
-//
-//        switch (result) {
-//            case -1:
-//                log.info("DATABASE COMMUNICATION ERROR!!");
-//                break;
-//
-//            case 0:
-//                log.info("DATABASE DELETE FAIL!!");
-//                break;
-//
-//            case 1:
-//                log.info("DATABASE DELETE SUCCESS!!");
-//                break;
-//
-//        }
-//
-//        map.put("result", result);
-//
-//        return map;
-//
-//    }
 
     //회원 탈퇴
     @Override

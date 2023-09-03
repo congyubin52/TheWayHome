@@ -29,6 +29,8 @@ public interface IAdminMemberService {
 
     public void shelterRegistNum(String result, ShelterNumDto shelterNumDto);
 
+//    public void shelterRegistNum(List<String> shelterNumLists, List<String> shelterNameLists, ShelterNumDto shelterNumDto);
+
     public void shelterRegistInfo(String result, ShelterInfoDto shelterInfoDto);
 
 //    public AdminMemberDto createAccountConfirm(AdminMemberDto adminMemberDto);

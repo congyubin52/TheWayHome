@@ -5,7 +5,7 @@
 <mapper namespace="com.btc.thewayhome.admin.pets.user.IPetsUserDaoMapper">
 
     <!--보호소 리스트-->
-    <select id="selectShelter"
+    <!--<select id="selectShelter"
             parameterType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto"
             resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
 
@@ -23,6 +23,24 @@
             n.s_name = i.s_name
         ORDER BY
             s_no ASC;
+    </select>-->
+
+    <select id="selectShelter"
+            resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
+        SELECT
+            n.s_no,
+            n.s_name,
+            i.s_address,
+            i.s_phone,
+            i.s_reg_date
+        FROM
+                tbl_shelter_num n
+            INNER JOIN
+                tbl_shelter_info i
+            ON
+                n.s_name = i.s_name
+        ORDER BY
+            s_no ASC
     </select>
 
     <!--보호 동물 리스트(보호소 리스트 상세 페이지)-->
@@ -33,33 +51,33 @@
         SELECT
             a.an_no,
             sn.s_no,
-            sn.s_name,
-            ak.an_k_kind,
-            n.an_n_no,
-            n.an_n_start,
-            n.an_n_end,
-            aps.an_p_s_state
-        FROM tbl_animal AS a
-                 JOIN tbl_animal_kind AS ak ON a.an_k_no = ak.an_k_no
-                 JOIN tbl_notice AS n ON a.an_n_no = n.an_n_no
-                 JOIN tbl_animal_process_state AS aps ON a.an_p_s_no = aps.an_p_s_no
-                 JOIN tbl_shelter_num AS sn ON a.s_no = sn.s_no
+            a.s_name,
+            a.an_k_kind,
+            a.an_n_notice_no,
+            a.an_n_start,
+            a.an_n_end,
+            a.an_p_s_state
+        FROM tbl_animal_api AS a
+            JOIN
+                tbl_shelter_num AS sn
+            ON
+                a.s_name = sn.s_name
         WHERE
-            sn.s_no = #{sn.s_no}
+            sn.s_no = #{s_no}
     </select>
 
     <!--보호 동물 상세 페이지 - 조회수-->
     <update id="updatePetsListDetailHits"
             parameterType="String">
         update
-            tbl_animal
+            tbl_animal_api
         set
             an_hit = an_hit + 1
         where
             an_no = #{an_no}
     </update>
 
-    <select id="selectPetsListDetail"
+    <!--<select id="selectPetsListDetail"
             parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
         SELECT
@@ -83,6 +101,28 @@
                  INNER JOIN tbl_animal_kind AS ak ON a.an_k_no = ak.an_k_no
         where
             a.an_no = #{an_no}
+    </select>-->
+
+    <select id="selectPetsListDetail"
+            parameterType="String"
+            resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
+        SELECT
+            an_no,
+            an_g_gender,
+            an_c_color,
+            an_age,
+            an_weight,
+            an_k_kind,
+            an_n_notice_no,
+            an_n_start,
+            an_n_end,
+            an_happen_place,
+            an_special_mark,
+            s_name
+        FROM
+            tbl_animal_api
+        WHERE
+            an_no = #{an_no}
     </select>
 
 </mapper>

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserPetsListInfoDto {
 
-    private int an_no;
+    private String an_no;
     private String an_k_kind;
     private int an_n_no;
     private String an_n_start;

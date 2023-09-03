@@ -42,7 +42,7 @@ public class AdminMemberController {
         log.info("shelterRegistNum()");
 
         getAreaData.getData();
-        getPetsData.getpets();
+//        getPetsData.getpets();
 
             return null;
         }

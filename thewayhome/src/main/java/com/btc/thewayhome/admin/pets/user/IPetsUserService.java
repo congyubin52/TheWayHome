@@ -12,5 +12,5 @@ public interface IPetsUserService {
     public List<PetsUserDto> searchPetsList(String s_no);
 
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
-    public PetsUserDto searchPetsListDetail(int an_no);
+    public PetsUserDto searchPetsListDetail(String an_no);
 }

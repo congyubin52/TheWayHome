@@ -47,7 +47,6 @@
             </div>
             <div class="col-md-6 mb-4">
                 <p>
-                    <span>[개]</span>
                     <span th:text="${petsUserDto.an_k_kind}"></span>
                 </p>
                 <div class="basic_info" style="display: inline-block;">
@@ -55,8 +54,8 @@
                     <input name="an_no" type="hidden" th:value="${petsUserDto.s_no}">
                     <p style="display: inline-block;"> 성별: <span th:text="${petsUserDto.an_g_gender}"></span> | </p>
                     <p style="display: inline-block;"> 색상: <span th:text="${petsUserDto.an_c_color}"></span> | </p>
-                    <p style="display: inline-block;"> 출생: <span th:text="${petsUserDto.an_age}"></span> (년생) | </p>
-                    <p style="display: inline-block;"> 몸무게: <span th:text="${petsUserDto.an_weight}"></span> (Kg)</p>
+                    <p style="display: inline-block;"> 출생: <span th:text="${petsUserDto.an_age}"></span> | </p>
+                    <p style="display: inline-block;"> 몸무게: <span th:text="${petsUserDto.an_weight}"></span></p>
                 </div>
 
 
