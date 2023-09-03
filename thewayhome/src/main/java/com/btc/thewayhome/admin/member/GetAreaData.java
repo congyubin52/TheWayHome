@@ -42,7 +42,7 @@ public class GetAreaData {
                     "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
                     "&_type=json" +
                     "&pageNo=1" +
-                    "&numOfRows=5";
+                    "&numOfRows=17";
             System.out.println(">>url: " + apiUrl);
             URL url = new URL(apiUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -96,7 +96,7 @@ public class GetAreaData {
                         "&upr_cd=" + orgCdList.get(i) +
                         "&_type=json" +
                         "&pageNo=1" +
-                        "&numOfRows=5";
+                        "&numOfRows=10";
                 System.out.println(">>url: " + apiUrl);
                 URL url = new URL(apiUrl);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -123,18 +123,22 @@ public class GetAreaData {
                 // JSON 문자열 responseString을 파싱하여 JSONObject로 변환하는 코드
                 JSONObject parseResponse = (JSONObject) jsonObj.get("response");
                 JSONObject parseBody = (JSONObject) parseResponse.get("body");
+
                 JSONObject items = (JSONObject) parseBody.get("items"); // parseBody라는 JSONObject에서 "items"라는 키를 사용하여 또 다른 JSONObject를 추출하는 코드
+                if (items != null) {
 
+                    JSONArray array = (JSONArray) items.get("item"); // items라는 JSONObject에서 "item"이라는 키를 사용하여 JSONArray를 추출하는 코드
 
-                JSONArray array = (JSONArray) items.get("item"); // items라는 JSONObject에서 "item"이라는 키를 사용하여 JSONArray를 추출하는 코드
-
-                for (int j = 0; j < array.toArray().length; j++) { // JSONArray를 Java 배열로 변환한 후, 해당 배열의 길이(크기)를 반환하는 코드
-                    JSONObject jObj = (JSONObject) array.get(j);
-                    kindCollectList.add(jObj.get("orgCd").toString()); // 시도 코드에 맞게 시 군구 코드 모은 리스트
+                    if (array != null) {
+                        for (int j = 0; j < array.toArray().length; j++) { // JSONArray를 Java 배열로 변환한 후, 해당 배열의 길이(크기)를 반환하는 코드
+                            JSONObject jObj = (JSONObject) array.get(j);
+                            kindCollectList.add(jObj.get("orgCd").toString()); // 시도 코드에 맞게 시 군구 코드 모은 리스트
+                        }
+                        resultMap.put(orgCdList.get(i), kindCollectList); // map의 키에 시도코드의 리스트의 값들을 넣어준다.
+                        // value에는 시도코드에 따른 시군구 코드의 list를 넣어준다.
+                        System.out.println("resultMap!!!!!!!!!!" + resultMap.get(orgCdList.get(i)));
+                    }
                 }
-                resultMap.put(orgCdList.get(i), kindCollectList); // map의 키에 시도코드의 리스트의 값들을 넣어준다.
-                // value에는 시도코드에 따른 시군구 코드의 list를 넣어준다.
-                System.out.println("resultMap!!!!!!!!!!" + resultMap.get(orgCdList.get(i)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -174,7 +178,7 @@ public class GetAreaData {
                             "&org_cd=" + mapValueArray.get(k) +
                             "&_type=json" +
                             "&pageNo=1" +
-                            "&numOfRows=5";
+                            "&numOfRows=10";
                     System.out.println(">>url: " + apiUrl);
                     URL url = new URL(apiUrl);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(); // url 객체를 사용하여 HTTP 연결을 엽니다.
@@ -231,7 +235,6 @@ public class GetAreaData {
         }
 
         adminMemberService.shelterRegistNum(shelterNumLists, shelterNameLists, shelterNumDto);
-
 
     }
 
