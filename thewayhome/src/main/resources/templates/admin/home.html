@@ -2,6 +2,13 @@
 <html>
 <head th:replace="~{/admin/include/admin_header_footer.html::head}">
 
+    <meta charset="UTF-8">
+    <!--    <title th:replace="~{/include/title.html::title}"></title>-->
+    <title>집으로 가는 길</title>
+    <link rel="stylesheet" th:href="@{/css/admin/common.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
     <!--    <link rel="stylesheet" th:href="@{/css/common.css}">-->
     <!--    <link rel="stylesheet" th:href="@{/css/header_footer.css}">-->
     <!--    <link rel="stylesheet" th:href="@{/css/home.css}">-->
@@ -53,19 +60,104 @@
             </button>
         </div>-->
 
-            <ul>
-                <li>
-                    <div></div>
-                    <div></div>
-                </li>
-                <li>
-                    <div></div>
-                    <div></div>
-                </li>
-            </ul>
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- 사이드바 -->
+                    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" style="padding: 30px;">
+                        <div class="position-sticky">
+                            <ul class="nav flex-column" >
+                                <li class="nav-item" style="margin-bottom: 25px;">
+                                    <a class="nav-link active text-white" href="#" style="font-size: 16px; font-size: 20px;">
+                                        계정 관리
+                                    </a>
+                                </li>
+                                <li class="nav-item" style="margin-bottom: 25px; font-size: 20px;" >
+                                    <a class="nav-link text-white" href="#">
+                                        보호소 게시판
+                                    </a>
+                                </li>
+                                <li class="nav-item" style="margin-bottom: 25px; font-size: 20px;">
+                                    <a class="nav-link text-white" href="#">
+                                        실종/제보 게시판
+                                    </a>
+                                </li>
+                                <li class="nav-item" style="margin-bottom: 25px; font-size: 20px;">
+                                    <a class="nav-link text-white" href="#">
+                                        입양 후기 게시판
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
 
+                    <!-- 메인 컨텐츠 -->
+                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                        <div class="container">
+                            <div class="row my-4"> <!-- 위아래 간격을 추가 -->
+                                <div class="col-md-6 d-flex">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
+                                        <h2 style="margin-bottom: 20px;">관리자 계정 관리</h2>
+                                        <!-- 관리자 섹션 내용 -->
+                                        <p>
+                                        <a th:href="@{/admin/member/create_account_form}" class="text-decoration-none text-dark">관리자 계정 생성</a>
+                                        </p>
+                                        <p>
+                                        <a th:href="@{/admin/member/member_modify_form}" class="text-decoration-none text-dark">관리자 계정 수정</a>
+                                        </p>
+                                        <p>
+                                        <a th:href="@{/admin/member/member_delete_confirm}" class="text-decoration-none text-dark">관리자 계정 탈퇴</a>
+                                        </p>
+                                        <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval == '2'}">
+                                        <p>
+                                        <a th:href="@{/admin/member/search_admin_list}" class="text-decoration-none text-dark">관리자 계정 리스트</a>
+                                        </p>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
+                                        <h2 style="margin-bottom: 20px;">보호소 섹션</h2>
+                                        <!-- 보호소 섹션 내용 -->
+                                        <p>
+                                            <a th:href="@{/admin/pets/shelter_list}" class="text-decoration-none text-dark">보호소 리스트</a>
+                                        </p>
+                                        <p>
+                                            <a th:href="@{/admin/pets/pets_list}" class="text-decoration-none text-dark">보호동물 리스트</a>
+                                        </p>
+                                        <p>
+                                            <a th:href="@{/admin/pets/pets_regist}" class="text-decoration-none text-dark">보호동물 등록</a>
+                                        </p>
+                                        <p>
+                                            <a th:href="@{/admin/pets/pets_regist}" class="text-decoration-none text-dark">보호동물 수정</a>
+                                        </p>
+                                        <p>
+                                            <a th:href="@{/admin/pets/pets_regist}" class="text-decoration-none text-dark">보호동물 삭제</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-4"> <!-- 위아래 간격을 추가 -->
+                                <div class="col-md-6 d-flex">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
+                                        <h2 style="margin-bottom: 20px;">실종 게시판 섹션</h2>
+                                        <!-- 실종 게시판 섹션 내용 -->
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
+                                        <h2 style="margin-bottom: 20px;">후기 게시판 섹션</h2>
+                                        <!-- 후기 게시판 섹션 내용 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+</body>
 
 <footer th:replace="~{/admin/include/admin_header_footer.html::footer}">
 </footer>

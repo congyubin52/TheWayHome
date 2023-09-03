@@ -39,8 +39,8 @@ public interface IAdminMemberDaoMapper {
     public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
     //public Map<String,Object> getLatestAccountInfo(Map<String, String> msgMap);
 
-    //회원탈퇴
-    public int deleteAccount(int a_m_no);
+    //
+    public int deleteAdmin(int a_m_no);
 
     //관리자 정보 리스트
     public List<AdminMemberDto> selectAdminForApproval();
@@ -51,4 +51,5 @@ public interface IAdminMemberDaoMapper {
     public int updateAdminForApporoval(int a_m_no);
 
     public List<AdminMemberDto> searchAdminInfoForApproval(Map<String, String> msgMap);
+
 }

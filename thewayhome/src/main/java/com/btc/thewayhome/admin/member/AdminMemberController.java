@@ -292,7 +292,7 @@ public class AdminMemberController {
 
 
     //회원 탈퇴
-    @GetMapping("/member_delete_confirm")
+/*    @GetMapping("/member_delete_confirm")
     @ResponseBody
     public Map<String, Object> memberDeleteConfirm(@RequestBody Map<String, String> msgMap, HttpSession session) {
         log.info("[AdminMemberController] memberDeleteConfirm()");
@@ -304,6 +304,36 @@ public class AdminMemberController {
 
         }
         return map;
+    }*/
+
+    @GetMapping("/member_delete_confirm")
+    public String memberDeleteConfirm(HttpSession session) {
+        log.info("[AdminMemberController] memberDeleteConfirm()");
+
+        String nextPage = "redirect:/admin";
+
+        //로그인되어있는 사람만 삭제를 할 수 있기 때문에 확인하기 위해서 세션 정보 들고와줌
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto)session.getAttribute("loginedAdminMemberDto");
+        System.out.println("---------->" + loginedAdminMemberDto);
+
+        //분기 태우기
+        if(loginedAdminMemberDto == null) {	//로그인 되어있지 않다면
+
+            return "redirect:/admin";
+
+        }
+
+        int result = adminMemberService.memberDeleteConfirm(loginedAdminMemberDto.getA_m_no());
+        if(result > 0) { //admin 멤버 삭제시
+            session.removeAttribute("loginedAdminMemberDto");	//세션 날려줘야 함
+
+        } else {
+            nextPage = "admin/delete_fail";
+
+        }
+
+        return nextPage;
+
     }
 
     //관리자 정보 리스트

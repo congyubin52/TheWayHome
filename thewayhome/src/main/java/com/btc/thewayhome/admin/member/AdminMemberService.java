@@ -308,34 +308,42 @@ public class AdminMemberService implements IAdminMemberService {
     }*/
 
     //회원 탈퇴
+//    @Override
+//    public Map<String, Object> memberDeleteConfirm(int a_m_no) {
+//        log.info("[AdminMemberService] memberDeleteConfirm()");
+//
+//        Map<String, Object> map = new HashMap<>();
+//
+//        int result = -1;
+//        result = iAdminMemberDaoMapper.deleteAccount(a_m_no);
+//
+//        switch (result) {
+//            case -1:
+//                log.info("DATABASE COMMUNICATION ERROR!!");
+//                break;
+//
+//            case 0:
+//                log.info("DATABASE DELETE FAIL!!");
+//                break;
+//
+//            case 1:
+//                log.info("DATABASE DELETE SUCCESS!!");
+//                break;
+//
+//        }
+//
+//        map.put("result", result);
+//
+//        return map;
+//
+//    }
+
+    //회원 탈퇴
     @Override
-    public Map<String, Object> memberDeleteConfirm(int a_m_no) {
-        log.info("[AdminMemberService] memberDeleteConfirm()");
+    public int memberDeleteConfirm(int am_no) {
+        log.info("deleteConfirm()");
 
-        Map<String, Object> map = new HashMap<>();
-
-        int result = -1;
-        result = iAdminMemberDaoMapper.deleteAccount(a_m_no);
-
-        switch (result) {
-            case -1:
-                log.info("DATABASE COMMUNICATION ERROR!!");
-                break;
-
-            case 0:
-                log.info("DATABASE DELETE FAIL!!");
-                break;
-
-            case 1:
-                log.info("DATABASE DELETE SUCCESS!!");
-                break;
-
-        }
-
-        map.put("result", result);
-
-        return map;
-
+        return iAdminMemberDaoMapper.deleteAdmin(am_no);
     }
 
     // 관리자 정보 리스트
@@ -368,6 +376,8 @@ public class AdminMemberService implements IAdminMemberService {
         return map;
 
     }
+
+
 
 
 
