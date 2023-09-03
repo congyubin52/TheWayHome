@@ -7,9 +7,9 @@
     <insert id="insertWriteReview" parameterType="com.btc.thewayhome.user.board.review.ReviewBoardUserDto">
 
         INSERT INTO
-            tbl_board(u_m_id, b_category, b_image, b_title, b_content, b_tag, b_reg_date, b_mod_date)
+            tbl_review_board(u_m_id, r_b_image, r_b_title, r_b_content, r_b_reg_date, r_b_mod_date)
         VALUES
-            (#{u_m_id}, #{b_category}, #{b_image}, #{b_title}, #{b_content}, #{b_tag}, NOW(), NOW())
+            (#{u_m_id}, #{r_b_image}, #{r_b_title}, #{r_b_content}, NOW(), NOW())
 
     </insert>
 
@@ -18,10 +18,32 @@
         SELECT
             *
         FROM
-            tbl_board
+            tbl_review_board
         WHERE
-            b_no = #{b_no}
+            r_b_no = #{r_b_no}
 
     </select>
+
+    <select id="selectReviewAll" resultType="hashmap">
+
+        SELECT
+            *
+        FROM
+            tbl_review_board
+        WHERE
+            use_yn = "Y"
+
+    </select>
+
+    <update id="updateHits" parameterType="Integer">
+
+        UPDATE
+            tbl_review_board
+        SET
+            r_b_hits = r_b_hits + 1
+        WHERE
+            r_b_no = #{r_b_no} AND use_yn = "Y"
+
+    </update>
 
 </mapper>
