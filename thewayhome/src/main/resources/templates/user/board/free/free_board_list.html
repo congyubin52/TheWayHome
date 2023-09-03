@@ -31,39 +31,33 @@
                         </div>
                     </div>
                 </div>
-                </div>
-                <div class="row">
-                    <div class="col" >
-                        Column1
-<!--                        <a><img th:src="/img/temp1.png"></a>-->
-                    </div>
-                    <div class="col">
-                        Column2
-                    </div>
-                    <div class="col">
-                        Column3
-                    </div>
-                    <div class="col">
-                        Column4
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        Column5
-                    </div>
-                    <div class="col">
-                        Column6
-                    </div>
-                    <div class="col">
-                        Column7
-                    </div>
-                    <div class="col">
-                        Column8
+            </div>
+            <!-- Page Features-->
+            <div class="row gx-lg-5">
+                <div class="col-lg-6 col-xxl-4 mb-5" th:each="freeBoardUserDto : ${freeBoardUserDtos}">
+                    <div class="card bg-success-subtle border-0 h-100">
+                        <div class="card-body p-2 p-lg-5 pt-0 pt-lg-0">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4">
+                                <i class="bi bi-collection"></i></div>
+                            <a th:href="@{/user/board/(fb_no=${freeBoardUserDto.fb_no})}">
+                                <img th:src="@{'/UploadImg/'+ ${freeBoardUserDto.fb_image}}" alt="img" class="d-block w-100 mb-4" style="max-height: 600px;">
+                            </a>
+                            <a href="#none" class="text-dark" style="text-decoration: none;">
+                                <h3 class="fs-4 fw-bold" th:text="${freeBoardUserDto.fb_title}"></h3>
+                            </a>
+                            <div class="mt-2">
+                                <img th:src="@{/img/user.png}">
+                                <span class="mr-0" style="text-align: center;" th:text="${freeBoardUserDto.u_m_id}"></span>
+                                <br/>
+                                <img th:src="@{/img/eye.png}">
+                                <span class="mb-0" style="text-align: center;" >조회수</span><br/>
+                                <img th:src="@{/img/calendar-days.png}">
+                                작성일 : <span class="mb-0" style="text-align: center;" th:text="${freeBoardUserDto.fb_reg_date}"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 

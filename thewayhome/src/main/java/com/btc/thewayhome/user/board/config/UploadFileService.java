@@ -1,4 +1,4 @@
-package com.btc.thewayhome.user.board.free.util;
+package com.btc.thewayhome.user.board.config;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +18,7 @@ public class UploadFileService {
 		// File 저장
 		String fileOriName = file.getOriginalFilename(); // 사용자가 던진 진짜 파일 이름 -> abc.jpg
 		String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length()); // 확장자 구하기
-		String uploadDir = "c:\\library\\upload\\";
+		String uploadDir = "c:\\localImage\\";
 				
 		UUID uuid = UUID.randomUUID();
 		String uniqueName = uuid.toString().replace("-", "");
