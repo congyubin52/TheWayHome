@@ -3,7 +3,7 @@ package com.btc.thewayhome.admin.pets;
 import lombok.Data;
 
 @Data
-public class PetsAdminDto {
+public class PetsApiDto {
 
     private String an_no;
     private String an_thumbnail;
@@ -27,6 +27,5 @@ public class PetsAdminDto {
     private String an_o_organization;
     private String an_o_charge;
     private String an_o_charge_tel;
-
 
 }

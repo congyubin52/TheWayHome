@@ -168,9 +168,6 @@
         $.ajax({
             url: '/admin/member/searchShelterNo',
             method: 'POST',
-            // data: JSON.stringify(shelterNameDto),
-            // contentType: 'application/json; charset=utf-8',
-            // dataType:'json',
             contentType: false,
             processData: false,
             data: formData,
@@ -203,17 +200,11 @@
         formData.append("word", word);
         console.log(formData.get("word"));
 
-        // let shelterNameDto = {
-        //     'ShelterName' : word,
-        // };
 
 
         $.ajax({
             url: '/admin/member/searchShelterAddress',
             method: 'POST',
-            // data: JSON.stringify(shelterNameDto),
-            // contentType: 'application/json; charset=utf-8',
-            // dataType:'json',
             contentType: false,
             processData: false,
             data: formData,
@@ -246,17 +237,10 @@
         formData.append("word", word);
         console.log(formData.get("word"));
 
-        // let shelterNameDto = {
-        //     'ShelterName' : word,
-        // };
-
-
         $.ajax({
             url: '/admin/member/searchShelterPhone',
             method: 'POST',
-            // data: JSON.stringify(shelterNameDto),
-            // contentType: 'application/json; charset=utf-8',
-            // dataType:'json',
+
             contentType: false,
             processData: false,
             data: formData,
@@ -281,24 +265,4 @@
 
         })
     };
-
-
-
-
-    //
-    // function send_to_input(statusItem){
-    //     console.log("send_to_input()")
-    //     $("#autocomplete_input_s_name").attr('value',statusItem);
-    // }
-
-    // $(document).on('click', '#section_wrap .create_account_form ul li a', function(e) {
-    //     e.preventDefault();
-    //
-    //     let selectedValue = $(this).text(); // 클릭한 <a> 요소의 텍스트 값 가져오기
-    //     $('#autocomplete_input_s_name').val(selectedValue); // <input> 요소에 값을 설정하기
-    //     $('#autocomplete_input_s_name').val(selectedValue); // <input> 요소에 값을 설정하기
-    //     $('#autocomplete_input_s_name').val(selectedValue); // <input> 요소에 값을 설정하기
-    //     $('#autocomplete_input_s_name').val(selectedValue); // <input> 요소에 값을 설정하기
-    //
-    // });
 </script>
