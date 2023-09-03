@@ -8,7 +8,8 @@ import java.util.UUID;
 
 @Service
 public class UploadFileService {
-	
+
+
 	public String upload(MultipartFile file) {
 		System.out.println("[UploadFileService] upload()");
 		

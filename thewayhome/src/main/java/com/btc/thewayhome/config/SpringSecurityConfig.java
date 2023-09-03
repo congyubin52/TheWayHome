@@ -51,7 +51,9 @@ public class SpringSecurityConfig {
 				.authorizeHttpRequests(request -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()		//HTTP 요청 인증 설정
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-								"/user/member/create_account_form", "/user/member/create_account_confirm").permitAll()   // Security 제외 이 안에 해당하는 경로들은 주소 창에 모두 허용
+								"/user/member/create_account_form",
+								"/user/member/create_account_confirm",
+								"/user/board/free_board").permitAll()   // Security 제외 이 안에 해당하는 경로들은 주소 창에 모두 허용
 						.anyRequest().authenticated()	//위에 있는 경로 외 요청은 전부 인증 필요
 				)
 				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
