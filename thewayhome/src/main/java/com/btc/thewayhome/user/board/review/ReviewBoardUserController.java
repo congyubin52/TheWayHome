@@ -78,14 +78,14 @@ public class ReviewBoardUserController {
 
         String nextPage = "redirect:/user/board/review_board";
 
+        String saveFileName = "noImage";
+
         if(!file.isEmpty()) {
             //SAVE FILE
-            String saveFileName = uploadFileService.upload(file);
-
-            if(saveFileName != null)
-                reviewBoardUserDto.setR_b_image(saveFileName);
-
+            saveFileName = uploadFileService.upload(file);
         }
+
+        reviewBoardUserDto.setR_b_image(saveFileName);
 
         UserMemberDto loginedUserMemberDto = (UserMemberDto) session.getAttribute("loginedUserMemberDto");
         reviewBoardUserDto.setU_m_id(loginedUserMemberDto.getU_m_id());

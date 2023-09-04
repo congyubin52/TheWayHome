@@ -29,14 +29,16 @@
                 <div class="card bg-success-subtle border-0 h-100">
                     <div class="card-body p-2 p-lg-5 pt-0 pt-lg-0">
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-collection"></i></div>
+                        <div th:if="${reviewDto.r_b_image != 'noImage'}">
                             <a th:href="@{/user/board/review_detail(r_b_no=${reviewDto.r_b_no})}">
-                                <img th:if="${reviewDto.r_b_image != null}" th:src="@{'/UploadImg/' + ${reviewDto.r_b_image}}" alt="img" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover;">
+                                <img th:src="@{'/UploadImg/' + ${reviewDto.r_b_image}}" alt="img" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover;">
                             </a>
-<!--                        <div th:unless="${reviewDto.r_b_image != null}" >-->
-<!--                            <a th:href="@{/user/board/review_detail(r_b_no=${reviewDto.r_b_no})}">-->
-<!--                                이미지 없음-->
-<!--                            </a>-->
-<!--                        </div>-->
+                        </div>
+                        <div th:unless="${reviewDto.r_b_image != 'noImage'}">
+                            <a th:href="@{/user/board/review_detail(r_b_no=${reviewDto.r_b_no})}">
+                                <img th:src="@{/img/no_img.png}" alt="img" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover;">
+                            </a>
+                        </div>
                         <a href="#none" class="text-dark" style="text-decoration: none;">
                             <h3 class="fs-4 fw-bold" th:text="${reviewDto.r_b_title}"></h3>
                         </a>
