@@ -72,8 +72,21 @@ public class PetsAdminController {
 
         return nextPage;
 
+    }
+
+
+    // 보호 동물 등록 페이지()
+    @RequestMapping("/admin_regist_pets")
+    public String createRegistPetsForm() {
+        log.info("createRegistPetsForm()");
+
+        String nextPage = "admin/pets/admin/admin_regist_pets_form";
+
+        return nextPage;
 
     }
+
+
 
 
 

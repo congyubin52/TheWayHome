@@ -38,7 +38,27 @@ public class PetsAdminService implements IPetsAdminService{
                 petsApiDto.setAn_thumbnail(jObj.get("filename").toString());
                 petsApiDto.setAn_happen_date(jObj.get("happenDt").toString());
                 petsApiDto.setAn_happen_place(jObj.get("happenPlace").toString());
-                petsApiDto.setAn_k_kind(jObj.get("kindCd").toString());
+
+                String kindCd = jObj.get("kindCd").toString();
+//                petsApiDto.setAn_k_kind(jObj.get("kindCd").toString());
+                String[] splitKindCd = kindCd.split(" ");
+                if (splitKindCd.length > 0) {
+                    petsApiDto.setAn_an_kind(splitKindCd[0]);
+                    if(splitKindCd.length > 1){
+                        StringBuilder an_k_kind = new StringBuilder();
+                        for (int j = 1; j < splitKindCd.length; j++) {
+                            if (j > 1) {
+                                an_k_kind.append(" "); // 중간에 공백 추가
+                            }
+                            an_k_kind.append(splitKindCd[j]); // 나머지 한 글자를 이어붙임
+                        }
+                        petsApiDto.setAn_k_kind(an_k_kind.toString());
+                    }
+                }
+
+                log.info(petsApiDto.getAn_k_kind());
+                log.info(petsApiDto.getAn_an_kind());
+
                 petsApiDto.setAn_color(jObj.get("colorCd").toString());
                 petsApiDto.setAn_age(jObj.get("age").toString());
                 petsApiDto.setAn_weight(jObj.get("weight").toString());
@@ -53,9 +73,9 @@ public class PetsAdminService implements IPetsAdminService{
                 petsApiDto.setS_name(jObj.get("careNm").toString());
                 petsApiDto.setS_phone(jObj.get("careTel").toString());
                 petsApiDto.setS_address(jObj.get("careAddr").toString());
-                petsApiDto.setAn_o_organization(jObj.get("orgNm").toString());
-                petsApiDto.setAn_o_charge(jObj.get("chargeNm").toString());
-                petsApiDto.setAn_o_charge_tel(jObj.get("officetel").toString());
+//                petsApiDto.setAn_o_organization(jObj.get("orgNm").toString());
+//                petsApiDto.setAn_o_charge(jObj.get("chargeNm").toString());
+//                petsApiDto.setAn_o_charge_tel(jObj.get("officetel").toString());
                 iPetsAdminDaoMapper.insertPetsInfo(petsApiDto);
 
             }

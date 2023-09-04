@@ -10,6 +10,7 @@
                                    an_thumbnail,
                                    an_happen_date,
                                    an_happen_place,
+                                   an_an_kind,
                                    an_k_kind,
                                    an_color,
                                    an_age,
@@ -25,15 +26,15 @@
                                    s_name,
                                    s_phone,
                                    s_address,
-                                   an_o_organization,
-                                   an_o_charge,
-                                   an_o_charge_tel)
+                                   an_reg_date,
+                                   an_mod_date)
 
 
         VALUES (#{an_no},
                 #{an_thumbnail},
                 #{an_happen_date},
                 #{an_happen_place},
+                #{an_an_kind},
                 #{an_k_kind},
                 #{an_color},
                 #{an_age},
@@ -49,9 +50,8 @@
                 #{s_name},
                 #{s_phone},
                 #{s_address},
-                #{an_o_organization},
-                #{an_o_charge},
-                #{an_o_charge_tel}
+                NOW(),
+                NOW()
                )
     </insert>
 
