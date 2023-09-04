@@ -33,8 +33,8 @@ public class GetPetsData {
             String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?" +
                     "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
                     "&_type=json" +
-                    "&pageNo=2" +
-                    "&numOfRows=1000";
+                    "&pageNo=4" +
+                    "&numOfRows=100";
 //            System.out.println(">>url: " + apiUrl);
             URL url = new URL(apiUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

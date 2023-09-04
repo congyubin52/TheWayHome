@@ -63,6 +63,21 @@ public class PetsUserController {
 
     }
 
+    //보호 동물 전체 리스트(보호소 리스트 상세 페이지xx)
+    @GetMapping("/all_pets_list")
+    public String allPetsList(Model model) {
+        log.info("allPetsList()");
+
+        List<PetsUserDto> petsUserDtos = petsUserService.searchAllPetsList();
+
+        model.addAttribute("petsUserDtos", petsUserDtos);
+
+        String nextPage = "admin/pets/user/user_pets_list";
+
+        return nextPage;
+
+    }
+
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     @GetMapping("/pets_list_detail")
     public String petsListDetail(Model model, PetsUserDto petsUserDto, HttpSession session, @RequestParam("an_no") String an_no) {
