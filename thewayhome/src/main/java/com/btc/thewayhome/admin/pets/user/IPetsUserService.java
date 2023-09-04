@@ -16,4 +16,7 @@ public interface IPetsUserService {
 
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     public PetsUserDto searchPetsListDetail(String an_no);
+
+    //보호소 검색 엔진
+    public List<UserShelterListInfoDto> sheltersearchBoxConfirm(UserShelterListInfoDto userShelterListInfoDto);
 }

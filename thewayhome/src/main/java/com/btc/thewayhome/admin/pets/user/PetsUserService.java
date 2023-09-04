@@ -81,31 +81,17 @@ public class PetsUserService implements IPetsUserService {
     public PetsUserDto searchPetsListDetail(String an_no) {
         log.info("searchPetsListDetail()");
 
-
-        //조회수
-        int result = iPetsUserDaoMapper.updatePetsListDetailHits(an_no);
-
-        if(result > 0) {
             PetsUserDto petsUserDto = iPetsUserDaoMapper.selectPetsListDetail(an_no);
 
-            log.info("an_no------------>",an_no);
-            log.info("an_no------------>",an_no);
-
-            if(petsUserDto != null) {
-                log.info("searchPetsListDetail SUCCESS!!");
-
-                return petsUserDto;
-
-            } else {
-                log.info("searchPetsListDetail FAIL!!");
-
-                return null;
-
-            }
-        } else {
-            return null;
+            return petsUserDto;
 
         }
-    }
 
+    //보호소 검색엔진
+    @Override
+    public List<UserShelterListInfoDto> sheltersearchBoxConfirm(UserShelterListInfoDto userShelterListInfoDto) {
+        log.info("searchPetsListDetail()");
+
+        return iPetsUserDaoMapper.shelterSelectBoxSBySearch(userShelterListInfoDto);
+    }
 }

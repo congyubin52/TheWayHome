@@ -19,4 +19,6 @@ public interface IPetsAdminService {
 
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     public PetsAdminDto searchPetsListDetail(String an_no);
+
+    int petsDeleteConfirm(PetsAdminDto petsAdminDto);
 }

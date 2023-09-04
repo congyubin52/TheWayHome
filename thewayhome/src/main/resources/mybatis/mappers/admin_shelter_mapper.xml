@@ -157,7 +157,6 @@
             ad.s_no,
             an.s_name,
             an.an_k_kind,
-            an.an_n_notice_no,
             an.an_n_start,
             an.an_n_end,
             an.an_p_s_state
@@ -173,7 +172,7 @@
 
     <!--보호 동물 리스트 - 보호동물 리스트 눌렀을 때 보호동물 불러오기 -->
     <select id="selectAllPets"
-            parameterType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
             resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
 
         SELECT
@@ -182,7 +181,29 @@
             sn.s_no,
             a.s_name,
             a.an_k_kind,
-            a.an_n_notice_no,
+            a.an_n_start,
+            a.an_n_end,
+            a.an_p_s_state
+        FROM
+            tbl_animal_api AS a
+            JOIN
+                tbl_shelter_num AS sn
+            ON
+                a.s_name = sn.s_name
+        where sn.s_no= ${s_no}
+    </select>
+
+    <!--보호 동물 리스트 - 보호동물 리스트 눌렀을 때 보호동물 불러오기 -->
+    <select id="selectAllPetsSuper"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
+            resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
+
+        SELECT
+            a.an_no,
+            a.an_thumbnail,
+            sn.s_no,
+            a.s_name,
+            a.an_k_kind,
             a.an_n_start,
             a.an_n_end,
             a.an_p_s_state
@@ -260,7 +281,6 @@
             an_age,
             an_weight,
             an_k_kind,
-            an_n_notice_no,
             an_n_start,
             an_n_end,
             an_happen_place,
@@ -271,5 +291,28 @@
         WHERE
             an_no = #{an_no}
     </select>
+
+    <!--회원 탈퇴-->
+    <update id="deletePets"
+            parameterType="String">
+        UPDATE
+            tbl_animal_api
+        SET
+            use_yn = 'N',
+            an_mod_date = NOW()
+        WHERE
+            an_no = #{an_no}
+    </update>
+<!--
+    <select id="selectPetsForDelete"
+            parameterType="Integer"
+            resultType="String">
+        select
+            an_no
+        from
+            tbl_member_admin
+        where
+            an_no = #{an_no}
+    </select>-->
 
 </mapper>
