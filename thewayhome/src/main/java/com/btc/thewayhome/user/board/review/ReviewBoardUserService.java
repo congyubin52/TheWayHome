@@ -58,5 +58,12 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
         return map;
     }
 
+    @Override
+    public int reviewDeleteConfirm(int rBNo) {
+        log.info("[ReviewBoardUserService] reviewDeleteConfirm()");
+
+        return iReviewBoardUserDaoMapper.reviewUseNForBNo(rBNo);
+    }
+
 
 }

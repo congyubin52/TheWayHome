@@ -10,4 +10,6 @@ public interface IReviewBoardUserService {
     ReviewBoardUserDto reviewDetailPage(int r_b_no);
 
     Map<String, Object> reviewBoardList();
+
+    int reviewDeleteConfirm(int rBNo);
 }

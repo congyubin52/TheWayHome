@@ -2,6 +2,7 @@ package com.btc.thewayhome.user.board.review;
 
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -130,6 +133,32 @@ public class ReviewBoardUserController {
         ReviewBoardUserDto selectReviewDto = reviewBoardUserService.reviewDetailPage(r_b_no);
 
         model.addAttribute("selectReviewDto", selectReviewDto);
+
+        return nextPage;
+    }
+
+    @GetMapping("/review_delete_confirm")
+    public String reviewDeleteConfirm(@RequestParam("r_b_no") int r_b_no, HttpServletResponse response) throws IOException {
+        log.info("reviewDeleteConfirm()");
+
+        log.info(">>>>>>>>>>>>>>>r_b_no {}", r_b_no);
+
+        String nextPage = "redirect:/user/board/review_board";
+
+        int result = reviewBoardUserService.reviewDeleteConfirm(r_b_no);
+
+        if (result <= 0) {
+            response.setContentType("text/html; charset=euc-kr");
+            PrintWriter out = response.getWriter();
+            out.println("<script>");
+            out.println("alert('게시글 삭제에 실패했습니다.');");
+            out.println("history.back();");
+            out.println("</script>");
+            out.flush();
+
+            nextPage = "/user/board/review/review_detail";
+
+        }
 
         return nextPage;
     }
