@@ -39,9 +39,13 @@
                         <div class="card-body p-2 p-lg-5 pt-0 pt-lg-0">
                             <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4">
                                 <i class="bi bi-collection"></i></div>
-                            <a th:href="@{/user/board/(fb_no=${freeBoardUserDto.fb_no})}">
-                                <img th:src="@{'/UploadImg/'+ ${freeBoardUserDto.fb_image}}" alt="img" class="d-block w-100 mb-4" style="max-height: 600px;">
+                            <a th:if="${freeBoardUserDto.fb_image} == 'no_image'" th:href="@{/user/board/(fb_no=${freeBoardUserDto.fb_no})}">
+                                <img th:src="@{/img/no_img.png}" alt="img" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover;">
                             </a>
+                            <a th:unless="${freeBoardUserDto.fb_image} == 'no_image'" th:href="@{/user/board/(fb_no=${freeBoardUserDto.fb_no})}">
+                                <img th:src="@{'/UploadImg/'+ ${freeBoardUserDto.fb_image}}" alt="img" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover;">
+                            </a>
+
                             <a href="#none" class="text-dark" style="text-decoration: none;">
                                 <h3 class="fs-4 fw-bold" th:text="${freeBoardUserDto.fb_title}"></h3>
                             </a>
