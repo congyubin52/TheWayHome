@@ -1,4 +1,4 @@
-package com.btc.thewayhome.admin.pets;
+package com.btc.thewayhome.admin.pets.admin;
 
 import lombok.Data;
 

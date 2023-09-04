@@ -1,9 +1,7 @@
 package com.btc.thewayhome.admin.member;
 
-import com.btc.thewayhome.admin.pets.PetsAdminController;
-import com.btc.thewayhome.admin.pets.PetsAdminDto;
-import com.btc.thewayhome.admin.pets.PetsAdminService;
-import com.btc.thewayhome.admin.pets.PetsApiDto;
+import com.btc.thewayhome.admin.pets.admin.PetsAdminService;
+import com.btc.thewayhome.admin.pets.admin.PetsApiDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

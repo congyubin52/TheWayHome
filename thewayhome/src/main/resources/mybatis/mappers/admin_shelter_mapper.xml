@@ -4,6 +4,57 @@
 
 <mapper namespace="com.btc.thewayhome.admin.pets.admin.IPetsAdminDaoMapper">
 
+    <!--  pet API DB에 삽입-->
+    <insert id="insertPetsInfo" parameterType="com.btc.thewayhome.admin.pets.admin.PetsApiDto">
+        INSERT INTO tbl_animal_api(an_no,
+                                   an_thumbnail,
+                                   an_happen_date,
+                                   an_happen_place,
+                                   an_k_kind,
+                                   an_color,
+                                   an_age,
+                                   an_weight,
+                                   an_n_notice_no,
+                                   an_n_start,
+                                   an_n_end,
+                                   an_image,
+                                   an_p_s_state,
+                                   an_g_gender,
+                                   an_ne_neuter,
+                                   an_special_mark,
+                                   s_name,
+                                   s_phone,
+                                   s_address,
+                                   an_o_organization,
+                                   an_o_charge,
+                                   an_o_charge_tel)
+
+
+        VALUES (#{an_no},
+                #{an_thumbnail},
+                #{an_happen_date},
+                #{an_happen_place},
+                #{an_k_kind},
+                #{an_color},
+                #{an_age},
+                #{an_weight},
+                #{an_n_notice_no},
+                #{an_n_start},
+                #{an_n_end},
+                #{an_image},
+                #{an_p_s_state},
+                #{an_g_gender},
+                #{an_ne_neuter},
+                #{an_special_mark},
+                #{s_name},
+                #{s_phone},
+                #{s_address},
+                #{an_o_organization},
+                #{an_o_charge},
+                #{an_o_charge_tel}
+               )
+    </insert>
+
     <!--보호소 리스트 - 관리자-->
     <select id="selectShelter"
             parameterType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto"

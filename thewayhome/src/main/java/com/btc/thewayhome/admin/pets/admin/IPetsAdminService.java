@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IPetsAdminService {
 
+    public void petsRegistInfo(String responseString, PetsApiDto petsApiDto);
+
     //보호소 리스트
     public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto);
 

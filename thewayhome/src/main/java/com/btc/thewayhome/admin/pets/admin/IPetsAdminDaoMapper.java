@@ -7,6 +7,8 @@ import java.util.List;
 @Mapper
 public interface IPetsAdminDaoMapper {
 
+    public void insertPetsInfo(PetsApiDto petsApiDto);
+
     //보호소 전체 리스트 - 관리자
     public List<AdminShelterListInfoDto> selectShelter();
     //보호소 전체 리스트 - super인 경우
