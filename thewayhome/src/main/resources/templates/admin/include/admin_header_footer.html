@@ -6,37 +6,78 @@
 
 </head>
 
-<header th:fragment="header">
-    <div id="header_wrap" class="p-2 bg-dark text-white d-flex justify-content-between align-items-center">
-        <div style="margin-left: 30px;">
-            <a href="#none"><img class="img-fluid" style="max-width: 130px;" th:src="@{/img/menu_button.png}"></a>
-        </div>
-        <div class="text-center flex-grow-1" style="margin-right: 100px;">
-            <a th:href="@{/admin}"><img class="img-fluid" style="max-width: 130px;" th:src="@{/img/TheWayHome_logo.png}"></a>
-        </div>
-        <div></div>
-    </div>
-    <div id="header_wrap" th:if="${session.loginedAdminMemberDto == null}">
-        <a th:href="@{/admin}">홈</a>
-        <a th:href="@{/admin/member/create_account_form}">회원가입</a>
+<!--<header class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">-->
+<header class="navbar navbar-expand-lg navbar-dark bg-white" th:fragment="header">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/admin}"><img src="/img/TheWayHome_logo.png" alt="로고" class="img-fluid" style="max-width: 150px; margin-left: 60px;" ></a>
 
-        <a th:href="@{/admin/member/member_login_form}">로그인</a>
-    </div>
-    <div>
-        <a th:href="@{/}">유저모드</a>
-    </div>
-    <div id="header_wrap" th:unless="${session.loginedAdminMemberDto == null}">
-        <a th:href="@{/admin}">홈</a>&nbsp;&nbsp;
-        <a th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
-        <a th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>&nbsp;&nbsp;
-    </div>
-    <div>
-        <a th:href="@{/admin/member/search_admin_list}">사용자 리스트</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <th:block th:if="${session.loginedAdminMemberDto == null}">
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin}">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/member/create_account_form}">회원가입</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/member/member_login_form}">로그인</a>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval == '2'}">
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin}">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/member/search_admin_list}">관리자 리스트</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/pets/shelter_list}">보호소</a>
+                    </li>-->
+                </th:block>
+                <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval != '2'}">
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin}">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a class="nav-link text-black" th:href="@{/admin/pets/shelter_list}">보호소</a>
+                    </li>-->
+                </th:block>
+            </ul>
+        </div>
     </div>
 </header>
 
-<footer th:fragment="footer">
-    <div id="footer_wrap" class="bg-dark sticky-bottom">
-    <p class="p-4 text-center">Copyright ©OFFICE Corp.All Rights Reserved.</p>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav">
+    <div class="container">
+        <ul class="navbar-nav mx-auto">
+            <th:block th:if="${session.loginedAdminMemberDto == null}">
+                <!--<li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/pets/shelter_list}">보호소</a>
+                </li>-->
+            </th:block>
+        </ul>
+    </div>
+</nav>
+
+<footer class="bg-dark text-white" th:fragment="footer">
+    <div class="container py-4">
+        <p class="text-center">Copyright ©OFFICE Corp. All Rights Reserved.</p>
+    </div>
 </footer>
