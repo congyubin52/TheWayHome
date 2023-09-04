@@ -2,6 +2,7 @@ package com.btc.thewayhome.user.board.free;
 
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +41,6 @@ public class FreeBoardUserController {
     public String freeBoardHome() {
         log.info("freeBoardHome()");
 
-//        return "/user/board/free/free_board_list";
         return "redirect:/user/board/free_board_list";
     }
 
@@ -86,8 +88,14 @@ public class FreeBoardUserController {
 
         String nextPage = "redirect:/user/board/";
 
+
+        String saveFileName = "noImage";
+
         // SAVE FILE
-        String saveFileName = uploadFileService.upload(file);
+        if(!file.isEmpty()) {
+            //SAVE FILE
+            saveFileName = uploadFileService.upload(file);
+        }
 
         int result = freeBoardUserService.freeBoardWriteConfirm(loginedUserMemberDto.getU_m_id(), saveFileName, freeBoardUserDto);
         if(result > 0){
@@ -101,8 +109,10 @@ public class FreeBoardUserController {
     }
 
     @GetMapping("/free_board_detail")
-    public String freeBoardDetail(@RequestParam("fb_no") int fb_no, FreeBoardUserDto freeBoardUserDto, Model model) {
+    public String freeBoardDetail(@RequestParam("fb_no") int fb_no, FreeBoardUserDto freeBoardUserDto, Model model, HttpSession session) {
         log.info("freeBoardDetail()");
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserMemberDto");
 
         String nextPage = "user/board/free/free_board_detail";
 
@@ -110,11 +120,52 @@ public class FreeBoardUserController {
 
         FreeBoardUserDto freeBoardDetailDto = (FreeBoardUserDto) map.get("freeBoardDetailDto");
         model.addAttribute("freeBoardDetailDto", freeBoardDetailDto);
+        model.addAttribute("loginedUserDto", loginedUserDto);
 
         return nextPage;
 
-
     }
+
+    @GetMapping("/free_board_modify_form")
+    public String freeBoardModify(FreeBoardUserDto freeBoardUserDto, Model model){
+        log.info("freeBoardModify");
+
+        String nextPage = "user/board/free/free_board_modify_form";
+
+        freeBoardUserDto = freeBoardUserService.freeBoardModify(freeBoardUserDto);
+
+        model.addAttribute("freeBoardUserDto", freeBoardUserDto);
+
+        return nextPage;
+    }
+
+    @GetMapping("/free_board_delete_confirm")
+    public String freeBoardDelete(@RequestParam("fb_no") int fb_no, HttpServletResponse response) throws IOException {
+        log.info("freeBoardModify");
+
+        String nextPage = "redirect:/user/board/";
+
+        int result = freeBoardUserService.freeBoardDelete(fb_no);
+
+        if(result > 0){
+            log.info("DELETE SUCCESS");
+
+        } else {
+            log.info("DELETE FAIL");
+            PrintWriter out = response.getWriter();
+            out.println("<script>");
+            out.println("alert('게시글 삭제에 실패했습니다.');");
+            out.println("history.back();");
+            out.println("</script>");
+            out.flush();
+
+            nextPage = "/user/board/free/free_board_list";
+
+        }
+
+        return nextPage;
+    }
+
 
 
 
