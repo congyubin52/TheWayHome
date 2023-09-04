@@ -8,10 +8,15 @@ import java.util.Map;
 @Mapper
 public interface IAdminMemberDaoMapper {
 
+    // 보호소 중복 체크
+    public boolean isShelterNameForNum(ShelterNumDto shelterNumDto);
+
     public int insertShelterNum(ShelterNumDto shelterNumDto);
 
-    public void insertShelterInfo(ShelterInfoDto shelterInfoDto);
+    // 보호소 이름 중복 체크
+    public boolean isShelterNameForInfo(ShelterInfoDto shelterInfoDto);
 
+    public void insertShelterInfo(ShelterInfoDto shelterInfoDto);
 
     public List<ShelterSearchDto> selectSearchShelterName(String ShelterName);
 
@@ -51,5 +56,6 @@ public interface IAdminMemberDaoMapper {
     public int updateAdminForApporoval(int a_m_no);
 
     public List<AdminMemberDto> searchAdminInfoForApproval(Map<String, String> msgMap);
+
 
 }

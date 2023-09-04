@@ -28,58 +28,24 @@ public class AdminMemberService implements IAdminMemberService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void shelterRegistNum(String result, ShelterNumDto shelterNumDto) {
-        log.info("shelterRegist()");
+    public void shelterRegistNum(List<String> shelterNumLists, List<String> shelterNameLists, ShelterNumDto shelterNumDto) {
+        log.info("shelterRegistNum()");
 
 
-        try {
 
-            //String responseString = result.toString();
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
+        for(int i = 0; i < shelterNumLists.size(); i++){
+            shelterNumDto.setS_no(shelterNumLists.get(i));
+            shelterNumDto.setS_name(shelterNameLists.get(i));
 
-            System.out.println("service ------------------------------------> " + jsonObj);
+            boolean isShelterNameForNum = iAdminMemberDaoMapper.isShelterNameForNum(shelterNumDto);
 
-            JSONObject parseResponse = (JSONObject) jsonObj.get("response");
-            JSONObject parseBody = (JSONObject) parseResponse.get("body");
-
-            JSONObject items = (JSONObject) parseBody.get("items"); // items is a JSONObject
-
-            JSONArray array = (JSONArray) items.get("item"); // item is a JSONArray inside items
-
-            System.out.println("배열 내 완전 제거 후 데이터==========>" + array);
-
-
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject jObj = (JSONObject) array.get(i);
-                shelterNumDto.setS_no(jObj.get("careRegNo").toString());
-                shelterNumDto.setS_name(jObj.get("careNm").toString());
-                System.out.println("s_no!!!!!!!!!!!!!!!!! " + shelterNumDto.getS_no());
-                System.out.println("s_name!!!!!!!!!!!!!!!!! " + shelterNumDto.getS_name());
+            if (!isShelterNameForNum) {
+                // 중복되는 값이 있으면 못 들어가게 한다.
                 iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
             }
-//            Object item = items.get("item");
-//
-//            if (item instanceof JSONArray) {
-//                JSONArray array = (JSONArray) item; // item is a JSONArray
-//
-//                for (int i = 0; i < array.size(); i++) {
-//                    JSONObject jObj = (JSONObject) array.get(i);
-//                    shelterNumDto.setS_no(jObj.get("careRegNo").toString());
-//                    shelterNumDto.setS_name(jObj.get("careNm").toString());
-//                    iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
-//                }
-//            } else if (item instanceof JSONObject) {
-//                JSONObject jObj = (JSONObject) item; // item is a single JSONObject
-//                shelterNumDto.setS_no(jObj.get("careRegNo").toString());
-//                shelterNumDto.setS_name(jObj.get("careNm").toString());
-//                iAdminMemberDaoMapper.insertShelterNum(shelterNumDto);
-//            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+
         }
-
-
     }
 
     @Override
@@ -102,11 +68,15 @@ public class AdminMemberService implements IAdminMemberService {
                 shelterInfoDto.setS_name(jObj.get("careNm").toString());
                 shelterInfoDto.setS_phone(jObj.get("careTel").toString());
                 shelterInfoDto.setS_address(jObj.get("careAddr").toString());
-                iAdminMemberDaoMapper.insertShelterInfo(shelterInfoDto);
 
+
+                boolean isShelterNameForInfo = iAdminMemberDaoMapper.isShelterNameForInfo(shelterInfoDto);
+
+                if (!isShelterNameForInfo) {
+                    // 중복되는 값이 있으면 못 들어가게 한다.
+                    iAdminMemberDaoMapper.insertShelterInfo(shelterInfoDto);
+                }
             }
-
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -175,8 +145,8 @@ public class AdminMemberService implements IAdminMemberService {
         // 회원을담기
         Map<String, String> isAdminMap = new HashMap<>();
 
-        isAdminMap.put("adminMemberDto.getA_m_id()", adminMemberDto.getA_m_id());
-        isAdminMap.put("adminMemberDto.getS_no()", adminMemberDto.getS_no());
+        isAdminMap.put("a_m_id", adminMemberDto.getA_m_id());
+        isAdminMap.put("s_no", adminMemberDto.getS_no());
 
         log.info(isAdminMap);
 
@@ -209,7 +179,7 @@ public class AdminMemberService implements IAdminMemberService {
             return result;
         } else {
             return INSERT_FAIL_AT_DATABASE;
-
+            // 중복된 값이 있습니다
         }
 
     }
