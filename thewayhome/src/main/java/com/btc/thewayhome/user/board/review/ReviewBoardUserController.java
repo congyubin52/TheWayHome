@@ -1,6 +1,6 @@
 package com.btc.thewayhome.user.board.review;
 
-import com.btc.thewayhome.user.board.free.util.UploadFileService;
+import com.btc.thewayhome.user.board.config.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;

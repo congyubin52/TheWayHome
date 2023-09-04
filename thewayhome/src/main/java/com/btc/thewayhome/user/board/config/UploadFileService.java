@@ -1,4 +1,4 @@
-package com.btc.thewayhome.user.board.free.util;
+package com.btc.thewayhome.user.board.config;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
