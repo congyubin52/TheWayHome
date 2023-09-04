@@ -8,15 +8,15 @@ function writePost(editor) {
 
     let form = document.free_board_write_confirm;
 
-    if (form.b_title.value == '') {
+    if (form.fb_title.value == '') {
         alert('INPUT title');
-        form.b_title.focus();
+        form.fb_title.focus();
 
     } else if (editor.getData() == '') {
         alert('INPUT content');
-        form.b_content.focus();
+        form.fb_content.focus();
 
-    } else if(form.b_category.value == "0") {
+    } else if(form.fb_category.value == "0") {
         alert("실종/목격을 선택해야 합니다.");
         form.b_category.focus();
     } else {
