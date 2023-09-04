@@ -56,7 +56,8 @@ public class SpringSecurityConfig {
                                 "/user/member/create_account_confirm",
 								"/user/board/review_board",
                                 "/user/board/review_detail",
-								"/user/board/free_board").permitAll()
+								"/user/board/free_board",
+								"/UploadImg/**").permitAll()
 						.anyRequest().authenticated()	//위에 있는 경로 외 요청은 전부 인증 필요
 				)
 				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용

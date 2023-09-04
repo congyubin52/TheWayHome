@@ -16,4 +16,6 @@ public interface IReviewBoardUserDaoMapper {
     public List<ReviewBoardUserDto> selectReviewAll();
 
     public int updateHits(int rBNo);
+
+    public int reviewUseNForBNo(int rBNo);
 }
