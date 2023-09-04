@@ -50,6 +50,7 @@
 
         SELECT
             a.an_no,
+            a.an_thumbnail,
             sn.s_no,
             a.s_name,
             a.an_k_kind,
@@ -65,6 +66,30 @@
         WHERE
             sn.s_no = #{s_no}
     </select>
+
+
+    <!--보호 동물 리스트(보호소 리스트 상세 페이지xx)-->
+    <select id="selectAllPets"
+            parameterType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto"
+            resultType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto">
+
+        SELECT
+            a.an_no,
+            a.an_thumbnail,
+            sn.s_no,
+            a.s_name,
+            a.an_k_kind,
+            a.an_n_notice_no,
+            a.an_n_start,
+            a.an_n_end,
+            a.an_p_s_state
+        FROM tbl_animal_api AS a
+                 JOIN
+             tbl_shelter_num AS sn
+             ON
+                 a.s_name = sn.s_name
+    </select>
+
 
     <!--보호 동물 상세 페이지 - 조회수-->
     <update id="updatePetsListDetailHits"
@@ -108,6 +133,7 @@
             resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
         SELECT
             an_no,
+            an_image,
             an_g_gender,
             an_c_color,
             an_age,
