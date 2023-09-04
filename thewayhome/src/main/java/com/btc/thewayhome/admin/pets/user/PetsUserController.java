@@ -103,6 +103,7 @@ public class PetsUserController {
     @GetMapping("/search_box_for_shelter")
     public String searchBoxForShelter(UserShelterListInfoDto userShelterListInfoDto, Model model) {
         log.info("searchBoxForShelter()");
+        log.info("searchBoxForShelter()");
 
         String nextPage = "admin/pets/user/shelter_list";
 
