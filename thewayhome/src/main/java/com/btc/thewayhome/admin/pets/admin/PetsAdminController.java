@@ -1,6 +1,8 @@
 package com.btc.thewayhome.admin.pets.admin;
 
+
 import com.btc.thewayhome.admin.member.AdminMemberDto;
+import com.btc.thewayhome.user.board.config.UploadFileService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +21,9 @@ public class PetsAdminController {
 
     @Autowired
     PetsAdminService petsAdminService;
+
+    @Autowired
+    UploadFileService uploadFileService;
 
     /*
      * 관리자(ADMIN)에게 보이는 페이지
@@ -98,14 +104,48 @@ public class PetsAdminController {
 
 
     // 보호 동물 등록 페이지()
-    @RequestMapping("/admin_regist_pets")
-    public String createRegistPetsForm() {
+    @RequestMapping("/admin_regist_pets_form")
+    public String createRegistPetsForm(HttpSession session) {
         log.info("createRegistPetsForm()");
 
-        String nextPage = "admin/pets/admin/admin_regist_pets_form";
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
+        String nextPage = "redirect:/admin/member/member_login_form";
+
+        if(loginedAdminMemberDto != null) {
+
+            nextPage = "admin/pets/admin/admin_regist_pets_form";
+        }
 
         return nextPage;
 
+    }
+
+    // 보호 동물 등록 성공 or 실패
+    @RequestMapping("/admin_regist_pets_confirm")
+    public String petsRegistConfirm(PetsApiDto petsApiDto, @RequestParam("file") MultipartFile file,
+                                    @RequestParam("an_no") String an_no){
+        log.info("createRegistConfirm()");
+
+        // 파일을 바로 쓸수는 없고 객체로 만들어서 써야한다.
+        // SAVE FILE (바이너리 파일을 서버로 저장하는 방법)
+        String saveFileName = uploadFileService.upload(file);
+        petsApiDto.setAn_no(an_no);
+        String nextPage = "admin/pets/admin/admin_regist_pets_success";
+
+        if(saveFileName != null){
+            petsApiDto.setAn_thumbnail(saveFileName);
+            petsApiDto.setAn_image(saveFileName);
+
+            int result = petsAdminService.petsRegistConfirm(petsApiDto);
+
+            if(result <= 0){
+                nextPage = "admin/pets/admin/admin_regist_pets_fail";
+            }
+
+        }
+
+        return nextPage;
     }
 
 

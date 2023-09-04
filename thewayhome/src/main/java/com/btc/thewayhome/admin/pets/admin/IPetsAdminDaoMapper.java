@@ -31,4 +31,6 @@ public interface IPetsAdminDaoMapper {
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     PetsAdminDto selectPetsListDetail(String an_no);
 
+    // admin이 보호 동물 등록
+    public int registPets(PetsApiDto petsApiDto);
 }

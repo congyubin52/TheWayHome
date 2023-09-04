@@ -15,7 +15,6 @@ public class PetsApiDto {
     private String an_color;
     private String an_age;
     private String an_weight;
-    private String an_n_notice_no;
     private String an_n_start;
     private String an_n_end;
     private String an_image;

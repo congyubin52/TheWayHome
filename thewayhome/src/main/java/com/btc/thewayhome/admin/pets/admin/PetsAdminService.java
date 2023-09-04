@@ -16,6 +16,9 @@ import java.util.List;
 @Service
 public class PetsAdminService implements IPetsAdminService{
 
+    final static public int PETS_REGISTER_SUCCESS = 1;		// 신규 도서 등록 성공
+    final static public int PETS_REGISTER_FAIL = -1;
+
     @Autowired
     IPetsAdminDaoMapper iPetsAdminDaoMapper;
 
@@ -63,7 +66,6 @@ public class PetsAdminService implements IPetsAdminService{
                 petsApiDto.setAn_color(jObj.get("colorCd").toString());
                 petsApiDto.setAn_age(jObj.get("age").toString());
                 petsApiDto.setAn_weight(jObj.get("weight").toString());
-                petsApiDto.setAn_n_notice_no(jObj.get("noticeNo").toString());
                 petsApiDto.setAn_n_start(jObj.get("noticeSdt").toString());
                 petsApiDto.setAn_n_end(jObj.get("noticeEdt").toString());
                 petsApiDto.setAn_image(jObj.get("popfile").toString());
@@ -211,5 +213,17 @@ public class PetsAdminService implements IPetsAdminService{
 
     }
 
+    // 보호 동물 등록
+    @Override
+    public int petsRegistConfirm(PetsApiDto petsApiDto) {
+        log.info("petsRegistConfirm()");
+
+        int result = iPetsAdminDaoMapper.registPets(petsApiDto);
+        if(result > 0){
+            return PETS_REGISTER_SUCCESS;
+        } else {
+            return PETS_REGISTER_FAIL;
+        }
+    }
 
 }
