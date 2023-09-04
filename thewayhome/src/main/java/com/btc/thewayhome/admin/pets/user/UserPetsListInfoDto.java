@@ -13,5 +13,6 @@ public class UserPetsListInfoDto {
     private String an_p_s_state;
     private String s_no;
     private String s_name;
+    private String an_thumbnail;
 
 }

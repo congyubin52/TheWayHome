@@ -56,7 +56,7 @@ public class SpringSecurityConfig {
                                 "/user/member/create_account_confirm",
 								"/user/board/review_board",
                                 "/user/board/review_detail",
-								"/user/board",
+								"/user/board/",
 								"/user/board/free_board_list",
 								"/user/board/free_board_detail",
 								"/UploadImg/**").permitAll()

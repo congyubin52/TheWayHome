@@ -65,6 +65,17 @@ public class PetsUserService implements IPetsUserService {
         return petsUserDtos;
     }
 
+    //보호 동물 리스트 - 보호소를 통해 가는 페이지xxx
+    @Override
+    public List<PetsUserDto> searchAllPetsList() {
+        log.info("searchAllPetsList()");
+
+        List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectAllPets();
+
+        return petsUserDtos;
+
+    }
+
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     @Override
     public PetsUserDto searchPetsListDetail(String an_no) {

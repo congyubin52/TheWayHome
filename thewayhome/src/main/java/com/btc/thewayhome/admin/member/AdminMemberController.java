@@ -41,7 +41,7 @@ public class AdminMemberController {
     public Object shelterRegistNum() {
         log.info("shelterRegistNum()");
 
-        getAreaData.getData();
+//        getAreaData.getData();
         getPetsData.getpets();
 
             return null;

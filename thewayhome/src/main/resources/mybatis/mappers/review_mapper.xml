@@ -46,4 +46,15 @@
 
     </update>
 
+    <update id="reviewUseNForBNo" parameterType="Integer">
+
+        UPDATE
+            tbl_review_board
+        SET
+            use_yn = "N"
+        WHERE
+            r_b_no = #{r_b_no}
+
+    </update>
+
 </mapper>
