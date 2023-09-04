@@ -16,3 +16,13 @@ function reviewModifyConfirm(editor) {
     }
 
 }
+function deleteReviewConfirm(r_b_no) {
+    console.log('deleteReviewConfirm() CALLED!!');
+
+    let rb_no = r_b_no;
+    if (confirm("계정을 삭제하시겠습니까?")) {
+        window.location.href = "/user/board/review_delete_confirm?r_b_no=" + rb_no;
+    }
+
+}
+

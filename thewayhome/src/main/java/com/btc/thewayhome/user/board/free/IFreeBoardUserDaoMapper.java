@@ -13,4 +13,6 @@ public interface IFreeBoardUserDaoMapper {
     public int updateHits(int fb_no);
 
     public FreeBoardUserDto selectContent(FreeBoardUserDto freeBoardUserDto);
+
+    public int deleteFreeBoard(int fb_no);
 }

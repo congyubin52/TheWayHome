@@ -29,6 +29,8 @@
         SET
             fb_hits = fb_hits + 1
         WHERE
+            fb_no = #{fb_no}
+        AND
             use_yn = 'Y'
 
     </update>
@@ -47,5 +49,17 @@
 
 
     </select>
+
+    <update id="deleteFreeBoard" parameterType="Integer" >
+
+        UPDATE
+            tbl_free_board
+        SET
+            use_yn = 'N'
+        WHERE
+            fb_no = #{fb_no}
+
+    </update>
+
 
 </mapper>
