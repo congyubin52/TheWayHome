@@ -33,6 +33,8 @@ public interface IPetsAdminDaoMapper {
     public PetsAdminDto selectPetsListDetail(String an_no);
 
 
+    // admin이 보호 동물 등록
+    public int registPets(PetsApiDto petsApiDto);
     public int deletePets(String an_no);
 
     public int selectPetsForDelete(String an_no);

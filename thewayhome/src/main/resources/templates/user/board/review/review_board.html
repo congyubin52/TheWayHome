@@ -38,7 +38,7 @@
                         <a href="#none" class="text-dark" style="text-decoration: none;">
                             <h3 class="fs-4 fw-bold" th:text="${reviewDto.r_b_title}"></h3>
                         </a>
-                        <div class="mt-2">
+                        <div class="mb-4">
                             <img th:src="@{/img/user.png}">
                             <span class="mr-0" style="text-align: center;" th:text="${reviewDto.u_m_id}"></span>
                             <br/>
@@ -46,12 +46,11 @@
                             <span class="mb-0" style="text-align: center;" th:text="${reviewDto.r_b_hits}"></span>
 
                             <img th:src="@{/img/calendar-days.png}">
-                            <span class="mb-0" style="text-align: center;" th:text="${reviewDto.r_b_reg_date}"></span>
+                            <span class="mb-1" style="text-align: center;" th:text="${reviewDto.r_b_reg_date}"></span>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 

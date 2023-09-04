@@ -162,12 +162,16 @@ public class UserMemberController {
         UserMemberDto loginedUserMemberDto =
                 (UserMemberDto) session.getAttribute("loginedUserMemberDto");
         int result = userMemberService.userMemberDeleteConfirm(loginedUserMemberDto.getU_m_no());
-
         if (result <= 0){
             response.setContentType("text/html; charset=euc-kr");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('계정 삭제 실패 했습니다.');</script>");
+            out.println("<script>");
+            out.println("alert('계정 삭제에 실패했습니다.');");
+            out.println("history.back();");
+            out.println("</script>");
             out.flush();
+
+            nextPage = "/user/member/member_modify_form";
         }
 
 

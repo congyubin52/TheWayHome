@@ -13,7 +13,6 @@ public class PetsAdminDto {
     private String an_c_color;
     private String an_age;
     private String an_weight;
-    private String an_n_notice_no;
     private String an_n_no;
     private String an_n_start;
     private String an_n_end;

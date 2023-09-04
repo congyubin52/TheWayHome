@@ -20,5 +20,8 @@ public interface IPetsAdminService {
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
     public PetsAdminDto searchPetsListDetail(String an_no);
 
+    // 보호 동물 등록 하기(성공 or fail)
+    public int petsRegistConfirm(PetsApiDto petsApiDto);
+
     int petsDeleteConfirm(PetsAdminDto petsAdminDto);
 }

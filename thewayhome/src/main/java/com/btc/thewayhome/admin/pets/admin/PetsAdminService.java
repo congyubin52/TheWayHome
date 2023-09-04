@@ -15,6 +15,9 @@ import java.util.List;
 @Service
 public class PetsAdminService implements IPetsAdminService{
 
+    final static public int PETS_REGISTER_SUCCESS = 1;		// 신규 도서 등록 성공
+    final static public int PETS_REGISTER_FAIL = -1;
+
     @Autowired
     IPetsAdminDaoMapper iPetsAdminDaoMapper;
 
@@ -38,11 +41,30 @@ public class PetsAdminService implements IPetsAdminService{
                 petsApiDto.setAn_thumbnail(jObj.get("filename").toString());
                 petsApiDto.setAn_happen_date(jObj.get("happenDt").toString());
                 petsApiDto.setAn_happen_place(jObj.get("happenPlace").toString());
-                petsApiDto.setAn_k_kind(jObj.get("kindCd").toString());
+
+                String kindCd = jObj.get("kindCd").toString();
+//                petsApiDto.setAn_k_kind(jObj.get("kindCd").toString());
+                String[] splitKindCd = kindCd.split(" ");
+                if (splitKindCd.length > 0) {
+                    petsApiDto.setAn_an_kind(splitKindCd[0]);
+                    if(splitKindCd.length > 1){
+                        StringBuilder an_k_kind = new StringBuilder();
+                        for (int j = 1; j < splitKindCd.length; j++) {
+                            if (j > 1) {
+                                an_k_kind.append(" "); // 중간에 공백 추가
+                            }
+                            an_k_kind.append(splitKindCd[j]); // 나머지 한 글자를 이어붙임
+                        }
+                        petsApiDto.setAn_k_kind(an_k_kind.toString());
+                    }
+                }
+
+                log.info(petsApiDto.getAn_k_kind());
+                log.info(petsApiDto.getAn_an_kind());
+
                 petsApiDto.setAn_color(jObj.get("colorCd").toString());
                 petsApiDto.setAn_age(jObj.get("age").toString());
                 petsApiDto.setAn_weight(jObj.get("weight").toString());
-                petsApiDto.setAn_n_notice_no(jObj.get("noticeNo").toString());
                 petsApiDto.setAn_n_start(jObj.get("noticeSdt").toString());
                 petsApiDto.setAn_n_end(jObj.get("noticeEdt").toString());
                 petsApiDto.setAn_image(jObj.get("popfile").toString());
@@ -53,9 +75,9 @@ public class PetsAdminService implements IPetsAdminService{
                 petsApiDto.setS_name(jObj.get("careNm").toString());
                 petsApiDto.setS_phone(jObj.get("careTel").toString());
                 petsApiDto.setS_address(jObj.get("careAddr").toString());
-                petsApiDto.setAn_o_organization(jObj.get("orgNm").toString());
-                petsApiDto.setAn_o_charge(jObj.get("chargeNm").toString());
-                petsApiDto.setAn_o_charge_tel(jObj.get("officetel").toString());
+//                petsApiDto.setAn_o_organization(jObj.get("orgNm").toString());
+//                petsApiDto.setAn_o_charge(jObj.get("chargeNm").toString());
+//                petsApiDto.setAn_o_charge_tel(jObj.get("officetel").toString());
                 iPetsAdminDaoMapper.insertPetsInfo(petsApiDto);
 
             }
@@ -190,6 +212,18 @@ public class PetsAdminService implements IPetsAdminService{
 
     }
 
+    // 보호 동물 등록
+    @Override
+    public int petsRegistConfirm(PetsApiDto petsApiDto) {
+        log.info("petsRegistConfirm()");
+
+        int result = iPetsAdminDaoMapper.registPets(petsApiDto);
+        if(result > 0){
+            return PETS_REGISTER_SUCCESS;
+        } else {
+            return PETS_REGISTER_FAIL;
+        }
+    }
 
     @Override
     public int petsDeleteConfirm(PetsAdminDto petsAdminDto) {

@@ -22,6 +22,7 @@ public class FreeBoardUserService implements IFreeBoardUserService {
     @Autowired
     ImageService imageService;
 
+    @Override
     public int freeBoardWriteConfirm(String u_m_id, String fb_image, FreeBoardUserDto freeBoardUserDto) {
         log.info("freeBoardWriteConfirm()");
 
@@ -32,7 +33,7 @@ public class FreeBoardUserService implements IFreeBoardUserService {
         return iFreeBoardUserDaoMapper.insertFreeBoardContent(freeBoardUserDto);
 
     }
-
+    @Override
     public Map<String, Object> getAllFreeBoard() {
         log.info("getAllFreeBoard()");
 
@@ -47,7 +48,7 @@ public class FreeBoardUserService implements IFreeBoardUserService {
         }
 
     }
-
+    @Override
     public Map<String, Object> freeBoardDetail(int fb_no, FreeBoardUserDto freeBoardUserDto) {
         log.info("freeBoardDetail()");
         Map<String, Object> map = new HashMap<>();
@@ -63,5 +64,17 @@ public class FreeBoardUserService implements IFreeBoardUserService {
         }
 
         return map;
+    }
+    @Override
+    public FreeBoardUserDto freeBoardModify(FreeBoardUserDto freeBoardUserDto) {
+        log.info("freeBoardModify()");
+
+        return iFreeBoardUserDaoMapper.selectContent(freeBoardUserDto);
+    }
+    @Override
+    public int freeBoardDelete(int fb_no) {
+        log.info("freeBoardDelete()");
+
+        return iFreeBoardUserDaoMapper.deleteFreeBoard(fb_no);
     }
 }
