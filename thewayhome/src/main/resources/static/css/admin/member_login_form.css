@@ -1,78 +1,52 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
+* { padding: 0; margin: 0; }
+
+html, body {
+    height: 100%;
+    background: #ffffff;
 }
 
-#section_wrap {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-.word {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+#container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 #member_login_form {
-    margin-top: 20px;
-}
-
-form {
-    display: grid;
-    gap: 10px;
-    justify-items: center; /* 가운데 정렬 */
-}
-
-/* 로그인 버튼과 초기화 버튼을 하나의 그리드로 묶어서 옆으로 배치 */
-.buttons-grid {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(2, auto); /* 너비 자동으로 설정 */
-    justify-items: center; /* 가운데 정렬 */
-}
-
-input[type="text"],
-input[type="password"] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-input[type="button"],
-input[type="reset"] {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* 버튼 호버 스타일 */
-input[type="button"]:hover,
-input[type="reset"]:hover {
-    background-color: #0056b3;
-}
-
-.go_create_account_form {
-    margin-top: 10px;
+    width: 300px;
     text-align: center;
+    background-color: #ffffff;
+}
+.input-form-box {
+    border: 0px solid #ff0000;
+    display: flex;
+    margin-bottom: 5px;
+}
+.input-form-box > span {
+    display: block;
+    text-align: left;
+    padding-top: 5px;
+    min-width: 65px;
+}
+.button-login-box {
+    margin: 10px 0;
+}
+#loginBoxTitle {
+    color:#000000;
+    font-weight: bold;
+    font-size: 32px;
+    text-transform: uppercase;
+    padding: 5px;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #270a09, #8ca6ce);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#inputBox {
+    margin: 10px;
 }
 
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
+#inputBox button {
+    padding: 3px 5px;
 }

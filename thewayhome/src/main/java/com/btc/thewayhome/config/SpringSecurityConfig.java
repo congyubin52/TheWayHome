@@ -5,6 +5,7 @@ import com.btc.thewayhome.admin.member.IAdminMemberDaoMapper;
 import com.btc.thewayhome.user.member.IUserMemberDaoMapper;
 import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.DispatcherType;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

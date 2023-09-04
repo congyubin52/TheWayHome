@@ -1,6 +1,7 @@
-package com.btc.thewayhome.admin.pets;
+package com.btc.thewayhome.admin.pets.admin;
 
-import com.btc.thewayhome.admin.member.ShelterInfoDto;
+import com.btc.thewayhome.admin.member.AdminMemberDto;
+import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -8,6 +9,9 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Log4j2
 @Service
 public class PetsAdminService implements IPetsAdminService{
 
@@ -60,5 +64,67 @@ public class PetsAdminService implements IPetsAdminService{
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    //보호소 전체 리스트
+    @Override
+    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto) {
+        log.info("searchShelterList()");
+
+        boolean isSuper = iPetsAdminDaoMapper.isAdminMember(loginedAdminMemberDto.getA_m_approval());
+        
+        List<AdminShelterListInfoDto> adminShelterListInfoDtos;
+        
+        if(isSuper) {
+            // SUPER ADMIN인 경우
+            adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelterSuper();
+
+        } else {
+            // 일반 ADMIN인 경우
+            adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelter();
+        }
+
+        return adminShelterListInfoDtos;
+
+    }
+
+    //보호 동물 전체 리스트(보호소 리스트 상세 페이지)
+    @Override
+    public List<PetsAdminDto> searchPetsList(String s_no) {
+        log.info("searchShelterList()");
+
+        List<PetsAdminDto> petsAdminDtos = iPetsAdminDaoMapper.selectPets(s_no);
+
+        return petsAdminDtos;
+
+    }
+
+    //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
+    @Override
+    public PetsAdminDto searchPetsListDetail(String an_no) {
+        log.info("searchPetsListDetail()");
+
+        //조회수
+        int result = iPetsAdminDaoMapper.updatePetsListDetailHits(an_no);
+
+        if(result > 0) {
+            PetsAdminDto petsAdminDto = iPetsAdminDaoMapper.selectPetsListDetail(an_no);
+
+            if(petsAdminDto != null) {
+                log.info("searchPetsListDetail SUCCESS!!");
+
+                return petsAdminDto;
+
+            } else {
+                log.info("searchPetsListDetail FAIL!!");
+
+                return null;
+
+            }
+        } else {
+            return null;
+
+        }
+
     }
 }

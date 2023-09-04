@@ -66,7 +66,6 @@
         FROM tbl_shelter_info
         WHERE s_phone LIKE CONCAT('%', #{ShelterPhone}, '%')
         ORDER BY s_phone ASC
-
     </select>
 
     <!-- 회원가입 시 ID와 보호소 번호로 중복 체크   -->
@@ -79,19 +78,33 @@
 
     <!-- admin 회원가입 하기  -->
     <insert id="insertNewAccount" parameterType="com.btc.thewayhome.admin.member.AdminMemberDto" >
-
         INSERT INTO
             tbl_member_admin(a_m_id, a_m_pw, s_no, s_name, s_address, s_phone, a_m_reg_date, a_m_mod_date)
         VALUES
             (#{a_m_id}, #{a_m_pw}, #{s_no}, #{s_name}, #{s_address}, #{s_phone}, NOW(), NOW())
-
     </insert>
 
+<!--    &lt;!&ndash;로그인&ndash;&gt;-->
+<!--    <select id="selectAdminForLogin"-->
+<!--            parameterType="String"-->
+<!--            resultType="com.btc.thewayhome.admin.member.AdminMemberDto">-->
+
+<!--        SELECT-->
+<!--            *-->
+<!--        FROM-->
+<!--            tbl_member_admin-->
+<!--        WHERE-->
+<!--            a_m_id = #{a_m_id}-->
+<!--          AND-->
+<!--            a_m_approval = '1'-->
+<!--          AND-->
+<!--            use_yn = 'Y'-->
+
+<!--    </select>-->
     <!--로그인-->
     <select id="selectAdminForLogin"
             parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
             resultType="com.btc.thewayhome.admin.member.AdminMemberDto">
-
         SELECT
             *
         FROM
@@ -99,16 +112,14 @@
         WHERE
             a_m_id = #{a_m_id}
           AND
-            a_m_approval = 1
+            (a_m_approval = '1' OR a_m_approval = '2')
           AND
             use_yn = 'Y'
-
     </select>
 
     <!--정보 변경-->
     <update id="updateAccount"
             parameterType="com.btc.thewayhome.admin.member.AdminMemberDto">
-
         UPDATE
             tbl_member_admin
         SET
@@ -116,7 +127,6 @@
             a_m_mod_date = NOW()
         WHERE
             a_m_no = #{a_m_no}
-
     </update>
 
     <!--정보 변경 - 최신화-->
@@ -132,9 +142,8 @@
     </select>
 
     <!--회원 탈퇴-->
-    <update id="deleteAccount"
+    <update id="deleteAdmin"
             parameterType="Integer">
-
         UPDATE
             tbl_member_admin
         SET
@@ -142,7 +151,6 @@
             a_m_mod_date = NOW()
         where
             a_m_no = #{a_m_no}
-
     </update>
 
     <!--관리자 정보 리스트-->
@@ -165,6 +173,31 @@
             a_m_mod_date = NOW()
         WHERE
             a_m_no = #{a_m_no}
+
     </update>
 
+<!--    <select id="searchAdminInfoForApproval"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto">
+
+        select
+            *
+        from
+            tbl_member_admin
+        where
+            a_m_no = #{a_m_no}
+
+    </select>-->
+
+    <!--(로그인을 위한) 관리자 승인 처리 - a_m_approval 값을 받기 위함-->
+    <select id="selectAdminForApprovalFromNo"
+            parameterType="Integer"
+            resultType="String">
+        select
+            a_m_approval
+        from
+            tbl_member_admin
+        where
+            a_m_no = #{a_m_no}
+    </select>
+    
 </mapper>

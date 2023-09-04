@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -135,27 +136,27 @@ public class AdminMemberController {
 
     }
 
-//    @PostMapping("/member_login_confirm")
-//
-//    public int memberLoginConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
-//        log.info("[AdminMemberController] memberLoginConfirm()");
-//
-//        // String nextPage = "redirect:/"; 쏴리
-//
-//        AdminMemberDto loginedAdminMemberDto = adminMemberService.loginConfirm(adminMemberDto);
-//
-//        if(loginedAdminMemberDto != null) {
-//            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
-//            session.setMaxInactiveInterval(60 * 30);
-//            return 1;
-//        }
-//            log.info("loginedAdminMemberDto" + loginedAdminMemberDto.getA_m_id());
-//
-//        return 0;
-//
-//    }
+ /*   @PostMapping("/member_login_confirm")
 
-    @PostMapping("/member_login_confirm")
+    public int memberLoginConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
+        log.info("[AdminMemberController] memberLoginConfirm()");
+
+        // String nextPage = "redirect:/"; 쏴리
+
+        AdminMemberDto loginedAdminMemberDto = adminMemberService.loginConfirm(adminMemberDto);
+
+        if(loginedAdminMemberDto != null) {
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60 * 30);
+            return 1;
+        }
+            log.info("loginedAdminMemberDto" + loginedAdminMemberDto.getA_m_id());
+
+        return 0;
+
+    }*/
+
+   /* @PostMapping("/member_login_confirm")
     @ResponseBody
     public Object memberLoginConfirm(@RequestBody Map<String, String> msgMap, HttpSession session, Model model) {
         log.info("[AdminMemberController] memberLoginConfirm()");
@@ -175,7 +176,7 @@ public class AdminMemberController {
 
         return null;
 
-    }
+    }*/
 
     //로그아웃
     @GetMapping("/member_logout_comfirm")
@@ -291,7 +292,7 @@ public class AdminMemberController {
 
 
     //회원 탈퇴
-    @PostMapping("/member_delete_confirm")
+/*    @GetMapping("/member_delete_confirm")
     @ResponseBody
     public Map<String, Object> memberDeleteConfirm(@RequestBody Map<String, String> msgMap, HttpSession session) {
         log.info("[AdminMemberController] memberDeleteConfirm()");
@@ -303,6 +304,36 @@ public class AdminMemberController {
 
         }
         return map;
+    }*/
+
+    @GetMapping("/member_delete_confirm")
+    public String memberDeleteConfirm(HttpSession session) {
+        log.info("[AdminMemberController] memberDeleteConfirm()");
+
+        String nextPage = "redirect:/admin";
+
+        //로그인되어있는 사람만 삭제를 할 수 있기 때문에 확인하기 위해서 세션 정보 들고와줌
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto)session.getAttribute("loginedAdminMemberDto");
+        System.out.println("---------->" + loginedAdminMemberDto);
+
+        //분기 태우기
+        if(loginedAdminMemberDto == null) {	//로그인 되어있지 않다면
+
+            return "redirect:/admin";
+
+        }
+
+        int result = adminMemberService.memberDeleteConfirm(loginedAdminMemberDto.getA_m_no());
+        if(result > 0) { //admin 멤버 삭제시
+            session.removeAttribute("loginedAdminMemberDto");	//세션 날려줘야 함
+
+        } else {
+            nextPage = "admin/delete_fail";
+
+        }
+
+        return nextPage;
+
     }
 
     //관리자 정보 리스트
@@ -328,18 +359,26 @@ public class AdminMemberController {
     }
 
     //(로그인을 위한) 관리자 승인 처리
-    @GetMapping("/member_approval_confirm")
-//    public String memberApprovalConfirm(Model model, @RequestParam("a_m_no") int a_m_no) {
-    public void memberApprovalConfirm(Model model, HttpServletRequest request) {
+    @PostMapping("/member_approval_confirm")
+    @ResponseBody
+    public Object memberApprovalConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] memberApprovalConfirm()");
 
-//        String nextPage = "redirect:/admin/member/search_admin_list";
-        System.out.println("a_m_no--------->" + request.getParameter("a_m_no"));
-        adminMemberService.memberApprovalConfirm(Integer.parseInt(request.getParameter("a_m_no")));
+        Map<String, Object> map = adminMemberService.memberApprovalConfirm(adminMemberDto.getA_m_no());
 
-//        return nextPage;
+        return map;
 
     }
 
+    //마이 페이지
+    @GetMapping("/admin_account_page")
+    public String myPage() {
+        log.info("[AdminMemberController] adminAccountPage()");
+
+        String nextPage = "admin/member/admin_account_page";
+
+        return nextPage;
+
+    }
 
 }

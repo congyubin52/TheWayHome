@@ -48,6 +48,7 @@ public class AdminMemberService implements IAdminMemberService {
         }
     }
 
+    @Override
     public void shelterRegistInfo(String result, ShelterInfoDto shelterInfoDto) {
         log.info("shelterRegistInfo()");
 
@@ -184,21 +185,21 @@ public class AdminMemberService implements IAdminMemberService {
     }
 
     // 로그인
-    @Override
-    public Map<String, Object> loginConfirm(Map<String, String> msgMap) {
-        log.info("[AdminMemberService] loginConfirm()");
-
-        Map<String, Object> map = new HashMap<>();
-        AdminMemberDto adminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(new AdminMemberDto());
-
-        if (adminMemberDto != null) {
-            map.put("adminMemberDto", adminMemberDto);
-            return map;
-
-        } else {
-            return null;
-
-        }
+//    @Override
+//    public Map<String, Object> loginConfirm(Map<String, String> msgMap) {
+//        log.info("[AdminMemberService] loginConfirm()");
+//
+//        Map<String, Object> map = new HashMap<>();
+//        AdminMemberDto adminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(new AdminMemberDto());
+//
+//        if (adminMemberDto != null) {
+//            map.put("adminMemberDto", adminMemberDto);
+//            return map;
+//
+//        } else {
+//            return null;
+//
+//        }
 
 //        if(adminMemberDto != null && passwordEncoder.matches(adminMemberDto.getA_m_pw(), msgMap.get("a_m_pw"))) {
 //            map.put("adminMemberDto", adminMemberDto);
@@ -216,7 +217,7 @@ public class AdminMemberService implements IAdminMemberService {
 
         }*/
 
-    }
+//    }
 
     //회원정보 수정
     @Override
@@ -278,33 +279,10 @@ public class AdminMemberService implements IAdminMemberService {
 
     //회원 탈퇴
     @Override
-    public Map<String, Object> memberDeleteConfirm(int a_m_no) {
-        log.info("[AdminMemberService] memberDeleteConfirm()");
+    public int memberDeleteConfirm(int am_no) {
+        log.info("deleteConfirm()");
 
-        Map<String, Object> map = new HashMap<>();
-
-        int result = -1;
-        result = iAdminMemberDaoMapper.deleteAccount(a_m_no);
-
-        switch (result) {
-            case -1:
-                log.info("DATABASE COMMUNICATION ERROR!!");
-                break;
-
-            case 0:
-                log.info("DATABASE DELETE FAIL!!");
-                break;
-
-            case 1:
-                log.info("DATABASE DELETE SUCCESS!!");
-                break;
-
-        }
-
-        map.put("result", result);
-
-        return map;
-
+        return iAdminMemberDaoMapper.deleteAdmin(am_no);
     }
 
     // 관리자 정보 리스트
@@ -316,15 +294,39 @@ public class AdminMemberService implements IAdminMemberService {
 
     }
 
-    //관리자 승인 처리
-    public void memberApprovalConfirm(int a_m_no) {
+    //(로그인을 위한)관리자 승인 처리
+    @Override
+    public Map<String, Object> memberApprovalConfirm(int a_m_no) {
         log.info("[AdminMemberService] memberApprovalConfirm()");
-        System.out.println("a_m_no: " + a_m_no);
 
-        iAdminMemberDaoMapper.updateAdminForApporoval(a_m_no);
+        Map<String, Object> map = new HashMap<>();
+
+        int result = -1;
+
+        // update되면 1, 안되면 0 => 문제: ajax에서 if(result > 0) 값 변경. 승인대기, 승인완료일 때 모두 변경해야 하는데 문제가 생김
+        result = iAdminMemberDaoMapper.updateAdminForApporoval(a_m_no);     // 0 , 1
+
+        //위의 문제점을 해결하기 위한 것. a_m_approval 값만 꺼내기 위함
+        if(result > 0)
+            result = Integer.parseInt(iAdminMemberDaoMapper.selectAdminForApprovalFromNo(a_m_no)) ;
+
+        map.put("result", result);
+
+        return map;
 
     }
 
 
+
+
+
+/*    public List<AdminMemberDto> searchAdminInfo(Map<String, String> msgMap) {
+        log.info("[AdminMemberService] searchAdminInfo()");
+        log.info("msgMap no" + msgMap.get("a_m_no"));
+
+        List<AdminMemberDto> adminMemberDtos = iAdminMemberDaoMapper.searchAdminInfoForApproval(msgMap);
+        return adminMemberDtos;
+
+    }*/
 
 }

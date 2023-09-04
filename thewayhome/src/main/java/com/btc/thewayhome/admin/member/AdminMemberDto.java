@@ -17,5 +17,6 @@ public class AdminMemberDto {
     private String a_m_approval;
     private String a_m_reg_date;
     private String a_m_mod_date;
+    private String s_reg_date;
 
 }
