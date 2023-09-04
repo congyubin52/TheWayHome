@@ -50,7 +50,7 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
         if(reviewBoardDtos == null) {
             log.info("reviewBoardDtos == null");
         } else {
-            log.info("널 아니따아ㅣㅏ어ㅏㅣㄹ머ㅏㄷ");
+            log.info("[ReviewBoardUserService] NOT NULL");
         }
 
         map.put("reviewBoardDtos", reviewBoardDtos);

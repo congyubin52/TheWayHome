@@ -47,7 +47,7 @@ public class ReviewBoardUserController {
         if(reviewBoardDtos == null) {
             log.info("reviewBoardDtos == null");
         } else {
-            log.info("reviewBoardDtos 안 null");
+            log.info("reviewBoardDtos NOT null");
 
             model.addAttribute("reviewBoardDtos", reviewBoardDtos);
         }
