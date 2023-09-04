@@ -26,7 +26,7 @@
                         </div>
                         <div>
                             <div class="row mb-5" style="margin-left: 240px;">
-                                <div class="col m-3"><a th:href="@{/user/board/free_board}" class="text-dark" style="text-decoration: none; font-size: 24px; font-weight: bold;">실종게시판</a></div>
+                                <div class="col m-3"><a th:href="@{/user/board}" class="text-dark" style="text-decoration: none; font-size: 24px; font-weight: bold;">실종게시판</a></div>
                                 <div class="col m-3" th:if="${session.loginedUserMemberDto != null}"><a th:href="@{/user/member/member_modify_form}" class="text-dark" style="text-decoration: none; font-size: 24px; font-weight: bold;">계정관리</a></div>
                                 <div class="col m-3" th:unless="${session.loginedUserMemberDto != null}"><a th:href="@{/user/member/create_account_form}" class="text-dark" style="text-decoration: none; font-size: 24px; font-weight: bold;">회원가입</a></div>
                                 <div class="w-100"></div>

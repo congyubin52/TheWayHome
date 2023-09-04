@@ -8,9 +8,44 @@
             parameterType="com.btc.thewayhome.user.board.free.FreeBoardUserDto">
 
         INSERT INTO
-            tbl_board(u_m_id, b_category, b_title, b_content, b_reg_date, b_mod_date)
+            tbl_free_board(u_m_id, fb_category, fb_title, fb_content, fb_image, fb_region, fb_kind, fb_color, fb_age, fb_weight, fb_gender, fb_neuter, fb_reg_date, fb_mod_date)
         VALUES
-            (#{u_m_id}, #{b_category}, #{b_title}, #{b_content}, NOW(),NOW())
+            (#{u_m_id}, #{fb_category}, #{fb_title}, #{fb_content}, #{fb_image}, #{fb_region}, #{fb_kind}, #{fb_color}, #{fb_age}, #{fb_weight}, #{fb_gender}, #{fb_neuter}, NOW(),NOW())
     </insert>
+
+    <select id="selectAllFreeBoard" resultType="hashmap">
+        SELECT
+            *
+        FROM
+            tbl_free_board
+        WHERE
+            use_yn = 'Y'
+    </select>
+
+    <update id="updateHits" parameterType="Integer">
+
+        UPDATE
+            tbl_free_board
+        SET
+            fb_hits = fb_hits + 1
+        WHERE
+            use_yn = 'Y'
+
+    </update>
+
+    <select id="selectContent"
+            parameterType="com.btc.thewayhome.user.board.free.FreeBoardUserDto"
+            resultType="com.btc.thewayhome.user.board.free.FreeBoardUserDto">
+        SELECT
+            *
+        FROM
+            tbl_free_board
+        WHERE
+            fb_no = #{fb_no}
+        AND
+            use_yn = 'Y'
+
+
+    </select>
 
 </mapper>
