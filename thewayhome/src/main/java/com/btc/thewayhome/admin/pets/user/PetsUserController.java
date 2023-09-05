@@ -82,11 +82,11 @@ public class PetsUserController {
     }
 
     //보호소 검색엔진
-    @GetMapping("/search_box_for_shelter")
+    @PostMapping("/search_box_for_shelter")
     public String searchBoxForShelter(UserShelterListInfoDto userShelterListInfoDto, Model model) {
         log.info("searchBoxForShelter()");
 
-        String nextPage = "admin/pets/user/shelter_list";
+        String nextPage = "admin/pets/user/user_shelter_list";
 
         List<UserShelterListInfoDto> userShelterListInfoDtos = petsUserService.sheltersearchBoxConfirm(userShelterListInfoDto);
         model.addAttribute("userShelterListInfoDtos", userShelterListInfoDtos);

@@ -24,5 +24,8 @@ public interface IPetsAdminService {
     public int petsRegistConfirm(PetsApiDto petsApiDto);
 
     // // 보호 동물 삭제
-    int petsDeleteConfirm(PetsAdminDto petsAdminDto);
+    public int petsDeleteConfirm(String an_no);
+
+    // 보호 동물 삭제
+//    int petsDeleteConfirm(String an_no);
 }

@@ -192,6 +192,8 @@
                 an.s_name = ad.s_name
         WHERE
             ad.s_no = #{s_no}
+        AND
+            an.use_yn = 'Y'
     </select>
 
     <!-- 보호 동물 리스트 - 메뉴바에서 보호동물 리스트 눌렀을 때 보호동물 불러오기 -->
@@ -215,6 +217,8 @@
                 a.s_name = sn.s_name
         where
             sn.s_no= ${s_no}
+          AND
+            a.use_yn = 'Y'
     </select>
 
     <!--보호 동물 리스트 - 보호동물 리스트 눌렀을 때 보호동물 불러오기 -->
@@ -236,6 +240,8 @@
             tbl_shelter_num AS sn
             ON
                 a.s_name = sn.s_name
+        WHERE
+                a.use_yn = 'Y'
     </select>
 
     <!-- 보호 동물 상세 페이지 -->

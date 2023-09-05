@@ -99,14 +99,14 @@ public class PetsAdminController {
     @RequestMapping("/admin_regist_pets_form")
     public String createRegistPetsForm(HttpSession session) {
         log.info("createRegistPetsForm()");
-        
+
         // loginedAdminMemberDto가 null인 경우, 로그인 페이지로 이동
         String nextPage = "redirect:/admin/member/member_login_form";
 
         // 보호 동물 등록 시 로그인 된 관리자만 사용하기 위함
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
-        if(loginedAdminMemberDto != null) {
+        if (loginedAdminMemberDto != null) {
             nextPage = "admin/pets/admin/admin_regist_pets_form";
 
         }
@@ -118,7 +118,7 @@ public class PetsAdminController {
     @RequestMapping("/admin_regist_pets_confirm")
     public String petsRegistConfirm(PetsApiDto petsApiDto,
                                     @RequestParam("file") MultipartFile file,
-                                    @RequestParam("an_no") String an_no){
+                                    @RequestParam("an_no") String an_no) {
         log.info("createRegistConfirm()");
 
         String nextPage = "admin/pets/admin/admin_regist_pets_success";
@@ -130,13 +130,13 @@ public class PetsAdminController {
 
         petsApiDto.setAn_no(an_no);
 
-        if(saveFileName != null){
+        if (saveFileName != null) {
             petsApiDto.setAn_thumbnail(saveFileName);
             petsApiDto.setAn_image(saveFileName);
 
             int result = petsAdminService.petsRegistConfirm(petsApiDto);
 
-            if(result <= 0){
+            if (result <= 0) {
                 nextPage = "admin/pets/admin/admin_regist_pets_fail";
 
             }
@@ -145,20 +145,29 @@ public class PetsAdminController {
         return nextPage;
     }
 
-}
 
     //보호동물 삭제
- /*   @GetMapping("/pet_delete_confirm")
+    /*@GetMapping("/pet_delete_confirm")
     @ResponseBody
-        public Object petDeleteConfirm(PetsAdminDto petsAdminDto) {
-            log.info("petDeleteConfirm()");
+    public Object petDeleteConfirm(PetsAdminDto petsAdminDto) {
+        log.info("petDeleteConfirm()");
 
-            Map<String, Object> map = petsAdminService.petsDeleteConfirm(Integer.parseInt(petsAdminDto.getAn_no()));
+        Map<String, Object> map = petsAdminService.petsDeleteConfirm(petsAdminDto.getAn_no());
 
-            log.info("an_no---=============>{}", petsAdminDto.getAn_no());
+        return map;
+    }*/
 
-            return map;
-        }*/
+    //회원 탈퇴
+    @PostMapping("/pet_delete_confirm")
+    public int petDeleteConfirm(@RequestParam("className") String className) {
+        log.info("petDeleteConfirm()");
+
+        int result = petsAdminService.petsDeleteConfirm(className);
+
+        return result;
+
+    }
+}
 
     /*@GetMapping("/pet_delete_confirm")
     public String petDeleteConfirm(HttpSession session) {

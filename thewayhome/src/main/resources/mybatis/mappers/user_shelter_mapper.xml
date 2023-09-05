@@ -161,7 +161,7 @@
             ON
                 n.s_name = i.s_name
         WHERE
-            n.s_name LIKE = #{s_name}
+            n.s_name like concat('%',#{s_name},'%')
         ORDER BY
             s_no ASC
     </select>

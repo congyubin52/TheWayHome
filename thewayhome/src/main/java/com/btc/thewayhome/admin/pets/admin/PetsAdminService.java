@@ -194,12 +194,12 @@ public class PetsAdminService implements IPetsAdminService{
 
     // 보호 동물 삭제
     @Override
-    public int petsDeleteConfirm(PetsAdminDto petsAdminDto) {
+    public int petsDeleteConfirm(String an_no) {
         log.info("petsDeleteConfirm()");
 
-        log.info("an_no----------------->{}", petsAdminDto.getAn_no());
+//        log.info("an_no----------------->{}", petsAdminDto.getAn_no());
 
-        return iPetsAdminDaoMapper.deletePets(petsAdminDto.getAn_no());
+        return iPetsAdminDaoMapper.deletePets(an_no);
 
     }
 
