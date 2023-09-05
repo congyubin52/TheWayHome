@@ -3,6 +3,7 @@ package com.btc.thewayhome.admin.member;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+// 회원가입시 필요한 데이터를 객체에 넣기위함
 @Data
 public class AdminMemberDto {
 

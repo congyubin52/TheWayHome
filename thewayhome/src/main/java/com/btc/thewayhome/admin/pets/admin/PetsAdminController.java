@@ -30,64 +30,55 @@ public class PetsAdminController {
     /*
      * 관리자(ADMIN)에게 보이는 페이지
      */
-
     //보호소 전체 리스트
     @GetMapping("/shelter_list")
-    public String shelterList(Model model, AdminMemberDto adminMemberDto, HttpSession session) {
+    public String shelterList(Model model, HttpSession session) {
         log.info("shelterList()");
-
-        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
-
-        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto);
-
-        log.info("---------------------->{}", adminShelterListInfoDtos);
-
-        model.addAttribute("adminShelterListInfoDtos", adminShelterListInfoDtos);
 
         String nextPage = "admin/pets/admin/admin_shelter_list";
 
+        // 로그인된 관리자 계정으로 볼 수 있도록 하기 위해 session에 담아놨던 정보 가지고 옴 
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
+        // 여러 개의 보호소들을 담아주기 위해 List 사용
+        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto);
+        model.addAttribute("adminShelterListInfoDtos", adminShelterListInfoDtos);
+
         return nextPage;
 
     }
 
-    //보호 동물 전체 리스트(보호소 리스트 상세 페이지) - SUPER
+    //보호 동물 리스트 -> 보호소 리스트에서 보호소명을 클릭 시 나타나는 페이지
     @GetMapping("/pets_list")
-    public String petsList(Model model, @RequestParam("s_no") String s_no, PetsAdminDto petsAdminDto) {
+    public String petsList(Model model, @RequestParam("s_no") String s_no) {
         log.info("petsList()");
-
-        List<PetsAdminDto> petsAdminDtos = petsAdminService.searchPetsList(s_no);
-
-        log.info("petsAdminDtos---------------->{}",petsAdminDtos);
-
-        model.addAttribute("petsAdminDtos", petsAdminDtos);
 
         String nextPage = "admin/pets/admin/admin_pets_list";
 
-
-
-        log.info("->>>>>>>>>>>>> " + petsAdminDtos.get(0).getAn_thumbnail());
+        List<PetsAdminDto> petsAdminDtos = petsAdminService.searchPetsList(s_no);
+        model.addAttribute("petsAdminDtos", petsAdminDtos);
 
         return nextPage;
 
     }
 
-    ////보호 동물 전체 리스트() - 일반 admin
+    //보호 동물 리스트 -> 메뉴바에서 보호동물 클릭 시 나타나는 페이지
     @GetMapping("/all_pets_list")
     public String allPetsList(Model model, HttpSession session) {
         log.info("allPetsList()");
+
+        String nextPage = "admin/pets/admin/admin_pets_list";
 
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
         List<PetsAdminDto> petsAdminDtos = petsAdminService.searchAllPetsList(loginedAdminMemberDto);
         model.addAttribute("petsAdminDtos", petsAdminDtos);
 
-        String nextPage = "admin/pets/admin/admin_pets_list";
-
         return nextPage;
 
     }
 
-    //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
+    //보호 동물 상세 페이지
     @GetMapping("/pets_list_detail")
     public String petsListDetail(Model model, PetsAdminDto petsAdminDto, HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petsListDetail()");
@@ -97,11 +88,7 @@ public class PetsAdminController {
         petsAdminDto = petsAdminService.searchPetsListDetail(an_no);
 
         session.setAttribute("petsAdminDto", petsAdminDto);
-
         model.addAttribute("petsAdminDto", petsAdminDto);
-        log.info("petsAdminDto-------->", petsAdminDto);
-
-        log.info("----------->{}", petsAdminDto.getAn_image());
 
         return nextPage;
 
@@ -112,31 +99,36 @@ public class PetsAdminController {
     @RequestMapping("/admin_regist_pets_form")
     public String createRegistPetsForm(HttpSession session) {
         log.info("createRegistPetsForm()");
-
-        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
-
+        
+        // loginedAdminMemberDto가 null인 경우, 로그인 페이지로 이동
         String nextPage = "redirect:/admin/member/member_login_form";
 
+        // 보호 동물 등록 시 로그인 된 관리자만 사용하기 위함
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
         if(loginedAdminMemberDto != null) {
-
             nextPage = "admin/pets/admin/admin_regist_pets_form";
-        }
 
+        }
         return nextPage;
 
     }
 
     // 보호 동물 등록 성공 or 실패
     @RequestMapping("/admin_regist_pets_confirm")
-    public String petsRegistConfirm(PetsApiDto petsApiDto, @RequestParam("file") MultipartFile file,
+    public String petsRegistConfirm(PetsApiDto petsApiDto,
+                                    @RequestParam("file") MultipartFile file,
                                     @RequestParam("an_no") String an_no){
         log.info("createRegistConfirm()");
+
+        String nextPage = "admin/pets/admin/admin_regist_pets_success";
+
 
         // 파일을 바로 쓸수는 없고 객체로 만들어서 써야한다.
         // SAVE FILE (바이너리 파일을 서버로 저장하는 방법)
         String saveFileName = uploadFileService.upload(file);
+
         petsApiDto.setAn_no(an_no);
-        String nextPage = "admin/pets/admin/admin_regist_pets_success";
 
         if(saveFileName != null){
             petsApiDto.setAn_thumbnail(saveFileName);
@@ -146,15 +138,14 @@ public class PetsAdminController {
 
             if(result <= 0){
                 nextPage = "admin/pets/admin/admin_regist_pets_fail";
+
             }
 
         }
-
         return nextPage;
     }
 
-
-    }
+}
 
     //보호동물 삭제
  /*   @GetMapping("/pet_delete_confirm")

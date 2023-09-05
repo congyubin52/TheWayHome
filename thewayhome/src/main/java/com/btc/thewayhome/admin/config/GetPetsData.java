@@ -1,7 +1,10 @@
-package com.btc.thewayhome.admin.member;
+package com.btc.thewayhome.admin.config;
 
+import com.btc.thewayhome.admin.member.AdminMemberService;
+import com.btc.thewayhome.admin.member.ShelterInfoDto;
 import com.btc.thewayhome.admin.pets.admin.PetsAdminService;
 import com.btc.thewayhome.admin.pets.admin.PetsApiDto;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+// 유기동물 API를 DB에 삽입
+@Log4j2
 @Service
 public class GetPetsData {
 
@@ -35,7 +40,7 @@ public class GetPetsData {
                     "&_type=json" +
                     "&pageNo=4" +
                     "&numOfRows=100";
-//            System.out.println(">>url: " + apiUrl);
+
             URL url = new URL(apiUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");

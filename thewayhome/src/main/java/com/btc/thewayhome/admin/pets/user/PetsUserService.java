@@ -50,22 +50,21 @@ public class PetsUserService implements IPetsUserService {
         log.info("searchShelterList()");
 
         return iPetsUserDaoMapper.selectShelter();
-
-
+        
     }
 
-    //보호 동물 리스트(보호소 리스트 상세 페이지)
+    //보호 동물 리스트 -> 보호소 리스트 상세 페이지에서 보호소명 클릭 시 나타나는 페이지
     @Override
     public List<PetsUserDto> searchPetsList(String s_no) {
         log.info("searchShelterList()");
 
         List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectPets(s_no);
-        log.info("s_no------->{}", s_no);
 
         return petsUserDtos;
+        
     }
 
-    //보호 동물 리스트 - 보호소를 통해 가는 페이지xxx
+    //보호 동물 리스트 - 메뉴바에서 보호 동물 클릭 시 나타나는 페이지
     @Override
     public List<PetsUserDto> searchAllPetsList() {
         log.info("searchAllPetsList()");
@@ -76,14 +75,14 @@ public class PetsUserService implements IPetsUserService {
 
     }
 
-    //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
+    //보호 동물 상세 페이지
     @Override
     public PetsUserDto searchPetsListDetail(String an_no) {
         log.info("searchPetsListDetail()");
 
-            PetsUserDto petsUserDto = iPetsUserDaoMapper.selectPetsListDetail(an_no);
+        PetsUserDto petsUserDto = iPetsUserDaoMapper.selectPetsListDetail(an_no);
 
-            return petsUserDto;
+        return petsUserDto;
 
         }
 
@@ -93,5 +92,6 @@ public class PetsUserService implements IPetsUserService {
         log.info("searchPetsListDetail()");
 
         return iPetsUserDaoMapper.shelterSelectBoxSBySearch(userShelterListInfoDto);
+
     }
 }

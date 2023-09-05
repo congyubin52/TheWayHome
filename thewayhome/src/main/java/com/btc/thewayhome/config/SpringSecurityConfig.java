@@ -118,7 +118,7 @@ public class SpringSecurityConfig {
 
 		http.csrf().disable()
 				.cors().disable()
-				.securityMatcher("/admin/**")		//"/admin/**" 경로 보안 설정
+				.securityMatcher("/admin/**")  // "/admin/**" 경로 보안 설정
 				.authorizeHttpRequests(request -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
