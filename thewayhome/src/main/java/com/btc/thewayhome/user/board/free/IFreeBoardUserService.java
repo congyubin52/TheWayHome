@@ -24,4 +24,7 @@ public interface IFreeBoardUserService {
     // 실종/목격 게시판 - 삭제
     public int freeBoardDelete(int fb_no);
 
+    // 실종/목격 게시판 - 수정 Confirm
+    public int freeBoardModifyConfirm(FreeBoardUserDto freeBoardUserDto);
+
 }

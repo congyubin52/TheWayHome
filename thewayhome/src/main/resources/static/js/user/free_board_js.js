@@ -11,11 +11,6 @@ function deleteFreeBoardConfirm(no) {
 // 실종/목격 게시판 - 삭제 확인 END
 
 // 실종/목격 게시판 - 작성 START
-$(document).ready(function(){
-    console.log('ready!!');
-
-});
-
 function writePost(editor) {
     console.log('freeBoardWrite() CALLED!!');
 
@@ -37,7 +32,34 @@ function writePost(editor) {
 
     }
 
-
-
 }
 // 실종/목격 게시판 - 작성 END
+
+function modifyConfirm(editor) {
+    console.log('modifyConfirm() CALLED!!');
+
+    let form = document.free_board_modify_confirm;
+
+     if (form.fb_title.value == '') {
+        alert('제목은 필수값 입니다.');
+        form.fb_title.focus();
+
+    } else if (editor.getData() == '') {
+        alert('내용은 필수값 입니다.');
+        form.fb_content.focus();
+
+    } else if(form.fb_category.value == "0") {
+        alert("실종/목격을 선택해야 합니다.");
+        form.fb_category.focus();
+    } else {
+        form.submit();
+
+    }
+
+}
+
+// 실종/목격 게시판 - 수정 Confirm START
+
+
+
+// 실종/목격 게시판 - 수정 Confirm END

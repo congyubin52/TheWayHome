@@ -21,4 +21,7 @@ public interface IFreeBoardUserDaoMapper {
 
     // 실종/목격 게시판 - 삭제
     public int deleteFreeBoard(int fb_no);
+
+    // 실종/목격 게시판 - 수정 Confirm
+    public int updateFreeboard(FreeBoardUserDto freeBoardUserDto);
 }

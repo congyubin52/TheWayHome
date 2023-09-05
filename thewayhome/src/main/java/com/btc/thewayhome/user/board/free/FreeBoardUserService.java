@@ -1,6 +1,7 @@
 package com.btc.thewayhome.user.board.free;
 
 import com.btc.thewayhome.user.board.config.ImageService;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Service
 public class FreeBoardUserService implements IFreeBoardUserService {
 
+    @Getter
     @Autowired
     IFreeBoardUserDaoMapper iFreeBoardUserDaoMapper;
 
@@ -81,5 +83,12 @@ public class FreeBoardUserService implements IFreeBoardUserService {
         log.info("freeBoardDelete()");
         return iFreeBoardUserDaoMapper.deleteFreeBoard(fb_no);
 
+    }
+
+    @Override
+    public int freeBoardModifyConfirm(FreeBoardUserDto freeBoardUserDto) {
+        log.info("freeBoardModifyConfirm()");
+
+        return  iFreeBoardUserDaoMapper.updateFreeboard(freeBoardUserDto);
     }
 }

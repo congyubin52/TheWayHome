@@ -23,7 +23,6 @@
     </select>
 
     <update id="updateHits" parameterType="Integer">
-
         UPDATE
             tbl_free_board
         SET
@@ -46,18 +45,54 @@
             fb_no = #{fb_no}
         AND
             use_yn = 'Y'
-
-
     </select>
 
-    <update id="deleteFreeBoard" parameterType="Integer" >
-
+    <update id="deleteFreeBoard"
+            parameterType="Integer" >
         UPDATE
             tbl_free_board
         SET
             use_yn = 'N'
         WHERE
             fb_no = #{fb_no}
+
+    </update>
+
+    <select id="selectImageByImageId"
+            parameterType="Long"
+            resultType="String">
+
+        SELECT
+            fb_image
+        FROM
+            tbl_free_board
+        WHERE
+            fb_image = #{fb_image}
+        AND
+            use_yn = 'Y'
+
+
+    </select>
+
+    <update id="updateFreeboard"
+            parameterType="com.btc.thewayhome.user.board.free.FreeBoardUserDto">
+        UPDATE
+            tbl_free_board
+        SET
+            fb_category = #{fb_category},
+            fb_title = #{fb_title},
+            fb_content = #{fb_content},
+            fb_region = #{fb_region},
+            fb_kind = #{fb_kind},
+            fb_color = #{fb_color},
+            fb_age = #{fb_age},
+            fb_weight = #{fb_weight},
+            fb_gender = #{fb_gender},
+            fb_neuter = #{fb_neuter},
+            fb_mod_date = NOW()
+        WHERE
+            fb_no = #{fb_no}
+
 
     </update>
 
