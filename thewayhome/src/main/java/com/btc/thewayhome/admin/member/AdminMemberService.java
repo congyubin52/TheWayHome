@@ -316,10 +316,6 @@ public class AdminMemberService implements IAdminMemberService {
 
     }
 
-
-
-
-
 /*    public List<AdminMemberDto> searchAdminInfo(Map<String, String> msgMap) {
         log.info("[AdminMemberService] searchAdminInfo()");
         log.info("msgMap no" + msgMap.get("a_m_no"));
