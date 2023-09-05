@@ -25,16 +25,19 @@
         <div class="word mt-3 mb-4">
             보호 동물 등록
         </div>
-        <div class="admin_regist_pets_form">
-            <form th:action="@{/admin/pets/admin_regist_pets_confirm}" name="admin_regist_pets_form"
+        <div class="admin_pets_regist_form">
+            <form th:action="@{/admin/pets/admin_pets_regist_confirm}" name="admin_pets_regist_form"
                   method="post" enctype="multipart/form-data">
 
-                <input type="hidden" name="a_m_id" th:value="${session.loginedAdminMemberDto.a_m_id}"
-                       readonly="readonly" disabled="disabled"><br>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="a_m_id" name="a_m_id" th:value="${session.loginedAdminMemberDto.a_m_id}"
+                           readonly="readonly" disabled="disabled">
+                    <label for="a_m_id">아이디</label>
+                </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="an_no" name="an_no" th:value="${randomValue}"
-                           readonly="readonly" disabled="disabled">
+                    <input type="hidden" class="form-control" id="an_no" name="an_no" th:value="${randomValue}"
+                           readonly="readonly">
                     <label for="an_no">유기번호</label>
                 </div>
 
@@ -113,15 +116,15 @@
                     </div>
                 </div>
 
-<!--                <div class="form-floating mb-3">-->
-<!--                    <input type="file" class="form-control" id="an_image" name="file">-->
-<!--                    <label for="an_image">본 게시물 사진 첨부(썸네일과 같은 사진 가능)</label>-->
-<!--                </div>-->
+                <!--                <div class="form-floating mb-3">-->
+                <!--                    <input type="file" class="form-control" id="an_image" name="file">-->
+                <!--                    <label for="an_image">본 게시물 사진 첨부(썸네일과 같은 사진 가능)</label>-->
+                <!--                </div>-->
 
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="an_p_s_state" name="an_p_s_state" value="보호중"
-                           readonly="readonly" disabled="disabled">
+                    <input type="hidden" class="form-control" id="an_p_s_state" name="an_p_s_state" value="보호중"
+                           readonly="readonly">
                     <label for="an_p_s_state">상태</label>
                 </div>
 
@@ -130,7 +133,7 @@
                     <select class="form-control" id="an_g_gender" name="an_g_gender">
                         <option value="">-- 성별 선택 --</option>
                         <option value="M">수컷</option>
-                        <option value="W">암컷</option>
+                        <option value="F">암컷</option>
                     </select>
                     <label for="an_g_gender">성별</label>
                 </div>
@@ -151,23 +154,29 @@
                     <label for="an_special_mark">특징</label>
                 </div>
 
+
+                <input type="hidden" name="s_no" th:value="${session.loginedAdminMemberDto.s_no}"
+                       readonly="readonly">
+
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="s_name" name="s_name" th:value="${session.loginedAdminMemberDto.s_name}"
-                           readonly="readonly" disabled="disabled">
-                    <label for="s_name">보호소 명</label>
+                    <input type="hidden" class="form-control" id="s_name" name="s_name"
+                           th:value="${session.loginedAdminMemberDto.s_name}"
+                           readonly="readonly">
+<!--                    <label for="s_name">보호소 명</label>-->
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="s_phone" name="s_phone" th:value="${session.loginedAdminMemberDto.s_phone}"
-                           readonly="readonly" disabled="disabled">
-                    <label for="s_phone">보호소 전화번호</label>
+                    <input type="hidden" class="form-control" id="s_phone" name="s_phone"
+                           th:value="${session.loginedAdminMemberDto.s_phone}"
+                           readonly="readonly">
+<!--                    <label for="s_phone">보호소 전화번호</label>-->
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="s_address" name="s_address"
+                    <input type="hidden" class="form-control" id="s_address" name="s_address"
                            th:value="${session.loginedAdminMemberDto.s_address}"
-                           readonly="readonly" disabled="disabled">
-                    <label for="s_address">보호소 주소</label>
+                           readonly="readonly">
+<!--                    <label for="s_address">보호소 주소</label>-->
                 </div>
 
                 <div class="text-center mb-4">
@@ -179,11 +188,11 @@
         </div>
     </div>
 
-<!--    <div class="text-center m-3">-->
-<!--        <div class="go_create_account_form">-->
-<!--            <a th:href="@{/admin/member/create_account_form}" style="text-decoration: none; color: black;">회원가입</a>-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--    <div class="text-center m-3">-->
+    <!--        <div class="go_create_account_form">-->
+    <!--            <a th:href="@{/admin/member/create_account_form}" style="text-decoration: none; color: black;">회원가입</a>-->
+    <!--        </div>-->
+    <!--    </div>-->
 </section>
 
 <footer th:replace="~{admin/include/admin_head_header_footer.html::footer}">

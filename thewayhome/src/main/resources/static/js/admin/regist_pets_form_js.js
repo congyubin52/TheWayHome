@@ -1,7 +1,7 @@
 function registPetsForm() {
     console.log('registPetsForm() CALLED!!');
 
-    let form = document.admin_regist_pets_form;
+    let form = document.admin_pets_regist_form;
     if (form.an_no.value == '') {
         alert('유기번호를 입력해주세요.');
         form.an_no.focus();

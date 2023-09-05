@@ -56,7 +56,18 @@
             <div class="col-md-3" th:each="dto: ${petsAdminDtos}">
                 <div class="card mb-4">
                     <a th:href="@{/admin/pets/pets_list_detail(an_no=${dto.an_no})}">
-                        <img th:src="${dto.an_thumbnail}" alt="Pet Image" class="d-block w-100 h-100 " style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+<!--                        <img th:src="@{'/UploadImg/'} + ${dto.an_thumbnail}" alt="Pet Image" class="d-block w-100 h-100 " style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"-->
+<!--                             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"-->
+<!--                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">-->
+                        <img th:if="${dto.an_thumbnail.contains('http://www.animal.go.kr/files/shelter/')}"
+                             th:src="${dto.an_thumbnail}" alt="Pet Image 2" class="d-block w-100 h-100"
+                             style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+                             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"
+                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+
+                        <img th:unless="${dto.an_thumbnail.contains('http://www.animal.go.kr/files/shelter/')}"
+                             th:src="@{'/UploadImg/'} + ${dto.an_thumbnail}" alt="Pet Image 1" class="d-block w-100 h-100"
+                             style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
                              onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"
                              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
                     </a>
@@ -71,7 +82,7 @@
 
                         <span class="an_n_end" th:text="${dto.an_n_start}"></span>
                         <span> ~ </span>
-                        <span class="an_n_end" th:text="${dto.an_n_end}"></span>
+                        <span class="an_n_end" id="" th:text="${dto.an_n_end}"></span>
                     </div>
                     <!--<div class="text-right">
                         <input type="button" value="삭제" onclick="deletePets" class="btn btn-sm btn-dark">

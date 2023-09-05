@@ -48,7 +48,7 @@ public class PetsAdminController {
 
     }
 
-    //보호 동물 리스트 -> 보호소 리스트에서 보호소명을 클릭 시 나타나는 페이지
+    // 보호 동물 리스트 -> 보호소 리스트에서 보호소명을 클릭 시 나타나는 페이지
     @GetMapping("/pets_list")
     public String petsList(Model model, @RequestParam("s_no") String s_no) {
         log.info("petsList()");
@@ -96,18 +96,19 @@ public class PetsAdminController {
 
 
     // 보호 동물 등록 페이지()
-    @RequestMapping("/admin_regist_pets_form")
+    @GetMapping("/admin_pets_regist_form")
     public String createRegistPetsForm(HttpSession session) {
         log.info("createRegistPetsForm()");
-        
+
         // loginedAdminMemberDto가 null인 경우, 로그인 페이지로 이동
         String nextPage = "redirect:/admin/member/member_login_form";
 
         // 보호 동물 등록 시 로그인 된 관리자만 사용하기 위함
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
-        if(loginedAdminMemberDto != null) {
-            nextPage = "admin/pets/admin/admin_regist_pets_form";
+        if (loginedAdminMemberDto != null) {
+
+            nextPage = "admin/pets/admin/admin_pets_regist_form";
 
         }
         return nextPage;
@@ -115,28 +116,27 @@ public class PetsAdminController {
     }
 
     // 보호 동물 등록 성공 or 실패
-    @RequestMapping("/admin_regist_pets_confirm")
+    @PostMapping("/admin_pets_regist_confirm")
     public String petsRegistConfirm(PetsApiDto petsApiDto,
                                     @RequestParam("file") MultipartFile file,
-                                    @RequestParam("an_no") String an_no){
+                                    HttpSession session) {
         log.info("createRegistConfirm()");
 
-        String nextPage = "admin/pets/admin/admin_regist_pets_success";
+        String nextPage = "admin/pets/admin/admin_pets_regist_success";
 
 
         // 파일을 바로 쓸수는 없고 객체로 만들어서 써야한다.
         // SAVE FILE (바이너리 파일을 서버로 저장하는 방법)
         String saveFileName = uploadFileService.upload(file);
 
-        petsApiDto.setAn_no(an_no);
 
-        if(saveFileName != null){
+        if (saveFileName != null) {
             petsApiDto.setAn_thumbnail(saveFileName);
             petsApiDto.setAn_image(saveFileName);
 
             int result = petsAdminService.petsRegistConfirm(petsApiDto);
 
-            if(result <= 0){
+            if (result <= 0) {
                 nextPage = "admin/pets/admin/admin_regist_pets_fail";
 
             }
@@ -145,9 +145,69 @@ public class PetsAdminController {
         return nextPage;
     }
 
+
+    // 보호 동물 수정
+    @GetMapping("/admin_modify_pets_form")
+    public String modifyPetsForm(HttpSession session,
+                                 @RequestParam("an_no") String an_no,
+                                 Model model) {
+        log.info("modifyPetsForm()");
+
+        // loginedAdminMemberDto가 null인 경우, 로그인 페이지로 이동
+        String nextPage = "admin/pets/admin/admin_pets_modify_form";
+
+
+        // 보호 동물 등록 시 로그인 된 관리자만 사용하기 위함
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
+        if (loginedAdminMemberDto == null) {
+            nextPage = "redirect:/admin/member/member_login_form";
+
+        } else{
+            PetsAdminDto petsAdminDto = petsAdminService.modifyPetsForm(an_no);
+            model.addAttribute("petsAdminDto", petsAdminDto);
+        }
+        return nextPage;
+
+    }
+
+    // 보호동물 등록한 것 수정
+    @PostMapping("/admin_pets_modify_confirm")
+    public String modifyPetsConfirm(PetsAdminDto petsAdminDto,
+                                    @RequestParam("file") MultipartFile file,
+                                    HttpSession session){
+        log.info("modifyPetsConfirm()");
+
+        String nextPage = "admin/pets/admin/admin_pets_modify_success";
+
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
+        if(loginedAdminMemberDto == null) {
+            nextPage = "redirect:/admin/member/member_login_form";
+        }
+            if(!file.getOriginalFilename().equals("")){
+                String saveFileName = uploadFileService.upload(file);
+
+                if(saveFileName != null){
+                    petsAdminDto.setAn_image(saveFileName);
+                    petsAdminDto.setAn_thumbnail(saveFileName);
+                }
+            }
+            int result = petsAdminService.modifyPetsConfirm(petsAdminDto);
+
+            log.info("------------>" + petsAdminDto.getAn_no());
+
+                if(result <= 0){
+                    nextPage = "redirect:admin/pets/admin/admin_pets_list";
+                }
+
+        return nextPage;
+
+    }
+
 }
 
-    //보호동물 삭제
+//보호동물 삭제
  /*   @GetMapping("/pet_delete_confirm")
     @ResponseBody
         public Object petDeleteConfirm(PetsAdminDto petsAdminDto) {
