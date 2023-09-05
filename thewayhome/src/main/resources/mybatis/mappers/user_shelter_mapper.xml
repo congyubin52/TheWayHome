@@ -54,7 +54,6 @@
             sn.s_no,
             a.s_name,
             a.an_k_kind,
-            a.an_n_notice_no,
             a.an_n_start,
             a.an_n_end,
             a.an_p_s_state
@@ -79,7 +78,6 @@
             sn.s_no,
             a.s_name,
             a.an_k_kind,
-            a.an_n_notice_no,
             a.an_n_start,
             a.an_n_end,
             a.an_p_s_state
@@ -92,7 +90,7 @@
 
 
     <!--보호 동물 상세 페이지 - 조회수-->
-    <update id="updatePetsListDetailHits"
+    <!--<update id="updatePetsListDetailHits"
             parameterType="String">
         update
             tbl_animal_api
@@ -100,7 +98,7 @@
             an_hit = an_hit + 1
         where
             an_no = #{an_no}
-    </update>
+    </update>-->
 
     <!--<select id="selectPetsListDetail"
             parameterType="String"
@@ -135,11 +133,10 @@
             an_no,
             an_image,
             an_g_gender,
-            an_c_color,
+            an_color,
             an_age,
             an_weight,
             an_k_kind,
-            an_n_notice_no,
             an_n_start,
             an_n_end,
             an_happen_place,
@@ -150,5 +147,24 @@
         WHERE
             an_no = #{an_no}
     </select>
+
+<!--    보호소 검색엔진-->
+    <select id="shelterSelectBoxSBySearch"
+            parameterType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto"
+            resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
+        SELECT
+            *
+        FROM
+            tbl_shelter_num n
+                INNER JOIN
+            tbl_shelter_info i
+            ON
+                n.s_name = i.s_name
+        WHERE
+            n.s_name LIKE = #{s_name}
+        ORDER BY
+            s_no ASC
+    </select>
+
 
 </mapper>

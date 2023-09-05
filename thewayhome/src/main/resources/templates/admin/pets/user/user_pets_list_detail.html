@@ -62,7 +62,6 @@
                 <br>
                 <br>
                 <div class="detail_info">
-                    <p>공고번호: <span th:text="${petsUserDto.an_n_notice_no}"></span> </p>
                     <p>공고기간:
                         <span th:text="${petsUserDto.an_n_start}"></span>
                         <span> ~ </span>
@@ -72,12 +71,14 @@
                     <p>특이사항: <span th:text="${petsUserDto.an_special_mark}"></span> </p>
                     <p>보호센터: <span th:text="${petsUserDto.s_name}"></span> </p>
                 </div>
+                <br>
+                <input type="button" value="입양 문의" onclick="adoptPets" class="btn btn-success">
             </div>
         </div>
     </div>
 
     <div class="go_pets_list text-center mt-5">
-        <a href="javascript:history.back();" class="btn btn-success">목록</a>
+        <a href="javascript:history.back();" class="btn btn-dark">목록</a>
 <!--        <a th:href="@{/user/pets/pets_list(s_no=${petsAdminDto.s_no})}" class="btn btn-success">목록</a>-->
         <br><br>
     </div>

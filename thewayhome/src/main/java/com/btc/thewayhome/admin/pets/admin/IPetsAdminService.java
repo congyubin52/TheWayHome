@@ -22,4 +22,6 @@ public interface IPetsAdminService {
 
     // 보호 동물 등록 하기(성공 or fail)
     public int petsRegistConfirm(PetsApiDto petsApiDto);
+
+    int petsDeleteConfirm(PetsAdminDto petsAdminDto);
 }

@@ -1,0 +1,99 @@
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+        console.log("DOCUMENT READY!!");
+
+        init_event();
+
+    });
+
+    function init_event() {
+        //회원탈퇴
+        $('#go_delete_pets_confirm').on('click', function () {
+            console.log('button CLICK HANDLER!!');
+
+            let result = confirm('정말 삭제하시겠습니까?');
+
+            if (result)
+                ajax_delete_pets_confirm(an_no);
+        });
+    // }
+    /*function init_event() {
+        $('#go_delete_pets_confirm').click(function () {
+            console.log('button CLICK HANDLER!!');
+
+            confirm('상태를 변경하시겠습니까?')
+
+            let an_no = $(this).parent().attr('id');
+            ajax_delete_pets_confirm(an_no);
+
+        });*/
+    }
+
+    /*
+     * AJAX START
+     */
+    //pets delete ajax
+   /* function ajax_delete_pets_confirm(an_no) {
+    console.log('ajax_delete_pets_confirm() CALLED!!');
+
+    let msg = {
+        'an_no': [[${dto}]].an_no,
+    };
+    $.ajax({
+        url:			'/admin/pets/pet_delete_confirm',
+        type:			'POST',
+        data: 			JSON.stringify(msg),
+        contentType:	'application/json; chartset=utf-8;',
+        dataType:		'json',
+        success: function(data) {
+            console.log('AJAX SUCCESS - ajax_delete_pets_confirm()');
+
+            if (data.result >= 1) {
+                alert('삭제가 완료되었습니다.');
+                // location.href = "/admin";
+            }
+
+        },
+        error: function(data) {
+            console.log('AJAX ERROR - ajax_delete_pets_confirm()');
+            alert('삭제가 완료되지 않았습니다. 다시 시도해주세요.');
+
+        }
+    });
+    }*/
+    function ajax_delete_pets_confirm(an_no) {
+        console.log('ajax_delete_pets_confirm() CALLED!!');
+
+        let formdata = new FormData();
+        formdata.append("an_no", an_no);
+
+        $.ajax({
+            url:			'/admin/pets/pet_delete_confirm',
+            type:			'POST',
+            processData: false,
+            contentType: false,
+            data: formdata,
+            success: function(data) {
+                console.log('AJAX SUCCESS - ajax_delete_pets_confirm()');
+
+                if (data.result >= 0) {
+                    alert('삭제가 완료되었습니다.');
+                    // location.href = "/admin";
+                }
+
+            },
+            error: function(data) {
+                console.log('AJAX ERROR - ajax_delete_pets_confirm()');
+                alert('삭제가 완료되지 않았습니다. 다시 시도해주세요.');
+
+            }
+        });
+    }
+
+
+    /*
+     * AJAX END
+     */
+
+</script>

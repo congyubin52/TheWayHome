@@ -8,11 +8,13 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @RequestMapping("/admin/pets")
@@ -30,7 +32,7 @@ public class PetsAdminController {
      */
 
     //보호소 전체 리스트
-    @RequestMapping("/shelter_list")
+    @GetMapping("/shelter_list")
     public String shelterList(Model model, AdminMemberDto adminMemberDto, HttpSession session) {
         log.info("shelterList()");
 
@@ -49,7 +51,7 @@ public class PetsAdminController {
     }
 
     //보호 동물 전체 리스트(보호소 리스트 상세 페이지) - SUPER
-    @RequestMapping("/pets_list")
+    @GetMapping("/pets_list")
     public String petsList(Model model, @RequestParam("s_no") String s_no, PetsAdminDto petsAdminDto) {
         log.info("petsList()");
 
@@ -61,6 +63,8 @@ public class PetsAdminController {
 
         String nextPage = "admin/pets/admin/admin_pets_list";
 
+
+
         log.info("->>>>>>>>>>>>> " + petsAdminDtos.get(0).getAn_thumbnail());
 
         return nextPage;
@@ -68,14 +72,13 @@ public class PetsAdminController {
     }
 
     ////보호 동물 전체 리스트() - 일반 admin
-    @RequestMapping("/all_pets_list")
+    @GetMapping("/all_pets_list")
     public String allPetsList(Model model, HttpSession session) {
         log.info("allPetsList()");
 
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
         List<PetsAdminDto> petsAdminDtos = petsAdminService.searchAllPetsList(loginedAdminMemberDto);
-
         model.addAttribute("petsAdminDtos", petsAdminDtos);
 
         String nextPage = "admin/pets/admin/admin_pets_list";
@@ -85,7 +88,7 @@ public class PetsAdminController {
     }
 
     //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
-    @RequestMapping("/pets_list_detail")
+    @GetMapping("/pets_list_detail")
     public String petsListDetail(Model model, PetsAdminDto petsAdminDto, HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petsListDetail()");
 
@@ -94,7 +97,9 @@ public class PetsAdminController {
         petsAdminDto = petsAdminService.searchPetsListDetail(an_no);
 
         session.setAttribute("petsAdminDto", petsAdminDto);
+
         model.addAttribute("petsAdminDto", petsAdminDto);
+        log.info("petsAdminDto-------->", petsAdminDto);
 
         log.info("----------->{}", petsAdminDto.getAn_image());
 
@@ -149,7 +154,49 @@ public class PetsAdminController {
     }
 
 
+    }
+
+    //보호동물 삭제
+ /*   @GetMapping("/pet_delete_confirm")
+    @ResponseBody
+        public Object petDeleteConfirm(PetsAdminDto petsAdminDto) {
+            log.info("petDeleteConfirm()");
+
+            Map<String, Object> map = petsAdminService.petsDeleteConfirm(Integer.parseInt(petsAdminDto.getAn_no()));
+
+            log.info("an_no---=============>{}", petsAdminDto.getAn_no());
+
+            return map;
+        }*/
+
+    /*@GetMapping("/pet_delete_confirm")
+    public String petDeleteConfirm(HttpSession session) {
+        log.info("petDeleteConfirm()");
+
+        String nextPage = "redirect:/admin/pets/admin/admin_pets_list_detail";
+
+        PetsAdminDto petsAdminDto = (PetsAdminDto) session.getAttribute("petsAdminDto");
+
+        log.info("petsAdminDto mo : " + petsAdminDto.getAn_no());
+
+        int result = petsAdminService.petsDeleteConfirm(petsAdminDto);
+
+        log.info("an_no----------------->{}", petsAdminDto.getAn_no());
+
+        if (result > 0) {
+            session.removeAttribute("petsAdminDto");
+
+        } else {
+//            nextPage = "admin/delete_fail";
+        }
+
+        return nextPage;
+
+    }*/
 
 
 
-}
+
+
+
+

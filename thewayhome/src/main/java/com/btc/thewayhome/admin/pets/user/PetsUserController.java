@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @RequestMapping("/user/pets")
@@ -93,6 +94,22 @@ public class PetsUserController {
         log.info(petsUserDto.getAn_no());
         session.setAttribute("petsUserDto", petsUserDto);
         model.addAttribute("petsUserDto", petsUserDto);
+
+        return nextPage;
+
+    }
+
+    //보호소 검색엔진
+    @GetMapping("/search_box_for_shelter")
+    public String searchBoxForShelter(UserShelterListInfoDto userShelterListInfoDto, Model model) {
+        log.info("searchBoxForShelter()");
+        log.info("searchBoxForShelter()");
+
+        String nextPage = "admin/pets/user/shelter_list";
+
+        List<UserShelterListInfoDto> userShelterListInfoDtos = petsUserService.sheltersearchBoxConfirm(userShelterListInfoDto);
+
+        model.addAttribute("userShelterListInfoDtos", userShelterListInfoDtos);
 
         return nextPage;
 

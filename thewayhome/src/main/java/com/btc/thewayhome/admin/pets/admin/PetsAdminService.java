@@ -9,7 +9,6 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -154,7 +153,7 @@ public class PetsAdminService implements IPetsAdminService{
 
         if(isAdmin) {
             // 일반 ADMIN인 경우
-            petsAdminDtos = iPetsAdminDaoMapper.selectAllPets();
+            petsAdminDtos = iPetsAdminDaoMapper.selectAllPets(loginedAdminMemberDto);
 
         } else {
             //super 계정 찾기
@@ -162,7 +161,7 @@ public class PetsAdminService implements IPetsAdminService{
 
             if (isSuper) {
                 // SUPER ADMIN인 경우
-                petsAdminDtos = iPetsAdminDaoMapper.selectAllPets();
+                petsAdminDtos = iPetsAdminDaoMapper.selectAllPetsSuper(loginedAdminMemberDto);
 
             } else {
                 return null;
@@ -224,6 +223,16 @@ public class PetsAdminService implements IPetsAdminService{
         } else {
             return PETS_REGISTER_FAIL;
         }
+    }
+
+    @Override
+    public int petsDeleteConfirm(PetsAdminDto petsAdminDto) {
+        log.info("petsDeleteConfirm()");
+
+        log.info("an_no----------------->{}", petsAdminDto.getAn_no());
+
+        return iPetsAdminDaoMapper.deletePets(petsAdminDto.getAn_no());
+
     }
 
 }

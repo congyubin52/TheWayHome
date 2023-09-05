@@ -21,5 +21,6 @@ public interface IPetsUserDaoMapper {
     //보호 동물 상세 페이지
     public PetsUserDto selectPetsListDetail(String an_no);
 
-
+    //보호소 검색 엔진
+    List<UserShelterListInfoDto> shelterSelectBoxSBySearch(UserShelterListInfoDto userShelterListInfoDto);
 }
