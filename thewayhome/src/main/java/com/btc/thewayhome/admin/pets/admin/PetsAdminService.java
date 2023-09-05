@@ -88,7 +88,7 @@ public class PetsAdminService implements IPetsAdminService{
         }
     }
 
-    //보호소 전체 리스트
+    //보호소 리스트 -> SUPER, 일반 ADMIN에 따라 나눔
     @Override
     public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto) {
         log.info("searchShelterList()");
@@ -96,19 +96,13 @@ public class PetsAdminService implements IPetsAdminService{
         //일반 admin 찾기
         boolean isAdmin = iPetsAdminDaoMapper.isAdminMemberBasic(loginedAdminMemberDto.getA_m_id(), loginedAdminMemberDto.getA_m_approval());
 
-        log.info("---------------------->" + loginedAdminMemberDto.getS_no());
-
-
         List<AdminShelterListInfoDto> adminShelterListInfoDtos;
-        
-        if(isAdmin) {
 
+        if(isAdmin) {
             log.info("isAdmin()");
+
             // 일반 ADMIN인 경우
             adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelter(loginedAdminMemberDto);
-
-            log.info(adminShelterListInfoDtos.size());
-
 
         } else {
             //super 계정 찾기
@@ -123,25 +117,24 @@ public class PetsAdminService implements IPetsAdminService{
                 return null;
 
             }
+
         }
         return adminShelterListInfoDtos;
 
     }
 
-    //보호 동물 전체 리스트(보호소 리스트 상세 페이지) - super
+    //보호 동물 리스트 - 보호소 리스트 상세 페이지
     @Override
     public List<PetsAdminDto> searchPetsList(String s_no) {
         log.info("searchShelterList()");
 
         List<PetsAdminDto> petsAdminDtos = iPetsAdminDaoMapper.selectPets(s_no);
 
-        log.info("->>>>>>>>>>>>> " + petsAdminDtos);
-
         return petsAdminDtos;
 
     }
 
-    //보호 동물 전체 리스트(보호소 리스트 상세 페이지) - 일반 admin
+    //보호 동물 리스트 - 메뉴바에서 보호 동물 클릭 시 나타나는 페이지
     @Override
     public List<PetsAdminDto> searchAllPetsList(AdminMemberDto loginedAdminMemberDto) {
         log.info("searchPetsListBasic()");
@@ -172,39 +165,10 @@ public class PetsAdminService implements IPetsAdminService{
 
     }
 
-    //보호 동물 상세 페이지(보호 동물 전체 리스트 클릭시)
-    /*@Override
-    public PetsAdminDto searchPetsListDetail(String an_no) {
-        log.info("searchPetsListDetail()");
-
-        //조회수
-        int result = iPetsAdminDaoMapper.updatePetsListDetailHits(an_no);
-
-        if(result > 0) {
-            PetsAdminDto petsAdminDto = iPetsAdminDaoMapper.selectPetsListDetail(an_no);
-
-            if(petsAdminDto != null) {
-                log.info("searchPetsListDetail SUCCESS!!");
-
-                return petsAdminDto;
-
-            } else {
-                log.info("searchPetsListDetail FAIL!!");
-
-                return null;
-
-            }
-        } else {
-            return null;
-
-        }
-
-    }
-*/
+    // 보호 동물 상세 페이지
     @Override
     public PetsAdminDto searchPetsListDetail(String an_no) {
         log.info("searchPetsListDetail()");
-
 
         PetsAdminDto petsAdminDto = iPetsAdminDaoMapper.selectPetsListDetail(an_no);
 
@@ -212,19 +176,23 @@ public class PetsAdminService implements IPetsAdminService{
 
     }
 
-    // 보호 동물 등록
+    // 보호 동물 등록 성공 or 실패 확인
     @Override
     public int petsRegistConfirm(PetsApiDto petsApiDto) {
         log.info("petsRegistConfirm()");
 
         int result = iPetsAdminDaoMapper.registPets(petsApiDto);
+
         if(result > 0){
             return PETS_REGISTER_SUCCESS;
+
         } else {
             return PETS_REGISTER_FAIL;
+
         }
     }
 
+    // 보호 동물 삭제
     @Override
     public int petsDeleteConfirm(PetsAdminDto petsAdminDto) {
         log.info("petsDeleteConfirm()");

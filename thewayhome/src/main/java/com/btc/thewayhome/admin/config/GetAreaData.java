@@ -1,5 +1,7 @@
-package com.btc.thewayhome.admin.member;
+package com.btc.thewayhome.admin.config;
 
+import com.btc.thewayhome.admin.member.AdminMemberService;
+import com.btc.thewayhome.admin.member.ShelterNumDto;
 import com.btc.thewayhome.admin.pets.admin.PetsAdminController;
 import com.btc.thewayhome.admin.pets.admin.PetsAdminService;
 import lombok.extern.log4j.Log4j2;
@@ -15,6 +17,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
+
+// 보호소 api를 불러오기 위해 시도 api와 시군구 api를 불러오는 클래스
 @Log4j2
 @Service
 public class GetAreaData {

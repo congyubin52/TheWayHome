@@ -2,6 +2,7 @@ package com.btc.thewayhome.admin.member;
 
 import lombok.Data;
 
+// 보호소 명과 보호소 전화번호 보호소 주소를 객체에 담기 위한 클래스
 @Data
 public class ShelterInfoDto {
 
