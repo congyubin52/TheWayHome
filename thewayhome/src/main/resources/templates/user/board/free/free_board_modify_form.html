@@ -54,7 +54,7 @@
                 <select class="form-select form-select-sm mb-1" name="fb_gender" th:value="${freeBoardUserDto.fb_gender}">
                     <option th:selected="${freeBoardUserDto.fb_gender} == '0'" value="0" >-- 성별 선택 --</option>
                     <option th:selected="${freeBoardUserDto.fb_gender} == 'M'" value="M" >-- 수컷 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_gender} == 'W'" value="W" >-- 암컷 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_gender} == 'W'" value="F" >-- 암컷 --</option>
                     <option th:selected="${freeBoardUserDto.fb_gender} == 'Q'" value="Q" >-- 미상 --</option>
                 </select><br>
                 <select class="form-select form-select-sm mb-1" name="fb_neuter" th:value="${freeBoardUserDto.fb_neuter}">

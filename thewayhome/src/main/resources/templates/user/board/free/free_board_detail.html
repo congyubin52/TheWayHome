@@ -39,6 +39,7 @@
             중성화 : <span th:text="${freeBoardDetailDto.fb_neuter}" />&nbsp;/
             나이   : <span th:text="${freeBoardDetailDto.fb_age}" />&nbsp;/
             몸무게 : <span th:text="${freeBoardDetailDto.fb_weight}" /> kg
+            지역   : <span th:text="${freeBoardDetailDto.fb_region}" />
 
             <!--내용-->
             <div class="m-5">
@@ -53,10 +54,9 @@
                 <a class="btn btn-outline-danger ms-3" th:href="@{/user/board/free_board_modify_form(fb_no=${freeBoardDetailDto.fb_no})}" style="text-decoration: none;">수정</a>
                 <a class="btn btn-outline-danger ms-3" style="text-decoration: none;" th:attr="onclick=|deleteFreeBoardConfirm('${freeBoardDetailDto.fb_no}')|">삭제</a>
             </div>
-            
+
             <input class="btn btn-outline-danger ms-3" type="button" value="목록" onclick="cancelButton();">
         </div>
-
     </div>
 
     <!--댓글-->
