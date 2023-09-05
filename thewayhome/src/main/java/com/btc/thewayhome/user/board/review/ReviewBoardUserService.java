@@ -14,25 +14,30 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
 
     @Autowired
     IReviewBoardUserDaoMapper iReviewBoardUserDaoMapper;
+
     @Override
-    public int writeReviewConfirm(ReviewBoardUserDto reviewBoardUserDto) {
-        log.info("[ReviewBoardUserService] writeReviewConfirm()");
+    public int writeReviewConfirm(String u_m_id, String r_b_image, ReviewBoardUserDto reviewBoardUserDto) {
+        log.info("writeReviewConfirm()");
+
+        reviewBoardUserDto.setU_m_id(u_m_id);
+        reviewBoardUserDto.setR_b_image(r_b_image);
 
         return iReviewBoardUserDaoMapper.insertWriteReview(reviewBoardUserDto);
+
     }
 
     @Override
     public ReviewBoardUserDto reviewDetailPage(int r_b_no) {
-        log.info("[ReviewBoardUserService] reviewDetailPage()");
+        log.info("reviewDetailPage()");
 
         int result = iReviewBoardUserDaoMapper.updateHits(r_b_no);
 
         if(result > 0) {
-            log.info("[ReviewBoardUserService] 조회수 업데이트 성공");
+            log.info("hits update success");
             return iReviewBoardUserDaoMapper.selectReviewForBNo(r_b_no);
 
         }else {
-            log.info("[ReviewBoardUserService] 조회수 업데이트 실패");
+            log.info("hits update fail");
             return null;
 
         }
@@ -41,28 +46,29 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
 
     @Override
     public Map<String, Object> reviewBoardList() {
-        log.info("[ReviewBoardUserService] reviewBoardList()");
+        log.info("reviewBoardList()");
 
         Map<String, Object> map = new HashMap<>();
-
         List<ReviewBoardUserDto> reviewBoardDtos = iReviewBoardUserDaoMapper.selectReviewAll();
 
         if(reviewBoardDtos == null) {
-            log.info("reviewBoardDtos == null");
+            log.info("NULL");
+            return null;
+
         } else {
-            log.info("[ReviewBoardUserService] NOT NULL");
+            log.info("NOT NULL");
+            map.put("reviewBoardDtos", reviewBoardDtos);
+            return map;
+
         }
 
-        map.put("reviewBoardDtos", reviewBoardDtos);
-
-        return map;
     }
 
     @Override
     public int reviewDeleteConfirm(int rBNo) {
-        log.info("[ReviewBoardUserService] reviewDeleteConfirm()");
-
+        log.info("reviewDeleteConfirm()");
         return iReviewBoardUserDaoMapper.reviewUseNForBNo(rBNo);
+
     }
 
 

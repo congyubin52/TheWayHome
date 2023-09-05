@@ -19,8 +19,9 @@ public class UserMemberService implements IUserMemberService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    // 사용자 계정 생성
     public int createAccountConfirm(UserMemberDto userMemberDto) {
-        log.info("[UserMemberService] createAccountConfirm()");
+        log.info("createAccountConfirm()");
 
         boolean isMember = iUserMemberDaoMapper.isMember(userMemberDto.getU_m_id());
 
@@ -32,40 +33,46 @@ public class UserMemberService implements IUserMemberService {
 
             switch (result) {
                 case DATABASE_COMMUNICATION_TROUBLE:
-                    System.out.println("[UserMemberService] DATABASE COMMUNICATION TROUBLE");
+                    log.info("DATABASE COMMUNICATION TROUBLE");
                     break;
 
                 case INSERT_FAIL_AT_DATABASE:
-                    System.out.println("[UserMemberService] INSERT FAIL AT DATABASE");
+                    log.info("INSERT FAIL AT DATABASE");
                     break;
 
                 case INSERT_SUCCESS_AT_DATABASE:
-                    System.out.println("[UserMemberService] INSERT SUCCESS AT DATABASE");
+                    log.info("INSERT SUCCESS AT DATABASE");
                     break;
-            }
 
+            }
             return result;
 
         } else {
             return 0;
+
         }
+
     }
 
+    // 사용자 계정 수정
     public UserMemberDto userMemberModifyConfirm(UserMemberDto userMemberDto) {
-        log.info("[UserMemberService] userMemberModifyConfirm()");
+        log.info("userMemberModifyConfirm()");
 
         int result = iUserMemberDaoMapper.updateUserMember(userMemberDto);
+
         if (result > 0) {
             return iUserMemberDaoMapper.getLatestMemberInfo(userMemberDto);
+
         } else {
             return null;
-        }
 
+        }
 
     }
 
+    // 사용자 비밀번호 변경
     public UserMemberDto userMemberPasswordModifyConfirm(UserMemberDto userMemberDto, String currentPw, String changePw) {
-        log.info("[UserMemberService] userMemberPasswordModifyConfirm()");
+        log.info("userMemberPasswordModifyConfirm()");
 
         UserMemberDto idVerifiedMemberDto = iUserMemberDaoMapper.selectUserForLogin(userMemberDto);
 
@@ -73,20 +80,26 @@ public class UserMemberService implements IUserMemberService {
                 idVerifiedMemberDto.getU_m_pw())) {
             userMemberDto.setU_m_pw(passwordEncoder.encode(changePw));
             int result = iUserMemberDaoMapper.updateUserMemberPassword(userMemberDto);
+
             if (result > 0){
                 return iUserMemberDaoMapper.getLatestMemberInfo(userMemberDto);
+
             } else{
                 System.out.println("service false tp2");
                 return null;
+
             }
         } else{
             System.out.println("service false tp1");
             return null;
+
         }
+
     }
 
+    //사용자 계정 삭제
     public int userMemberDeleteConfirm(int u_m_no) {
-        log.info("[UserMemberService] userMemeberDeleteConfirm()");
+        log.info("userMemeberDeleteConfirm()");
 
         return iUserMemberDaoMapper.deleteUserMember(u_m_no);
 

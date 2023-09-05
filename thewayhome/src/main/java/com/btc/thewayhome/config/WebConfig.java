@@ -16,6 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
+        // 상대 경로를 절대 경로로 변경
         registry.addResourceHandler("/UploadImg/**")
                 .addResourceLocations("file:///c://localImage/");
 

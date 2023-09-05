@@ -28,14 +28,12 @@ public class MyAdminDetailsService implements UserDetailsService {
         AdminMemberDto adminMemberDto = new AdminMemberDto();
         adminMemberDto.setA_m_id(adminName);
 
-
         AdminMemberDto selectedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
-//        AdminMemberDto selectedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto.getA_m_id().toString());
 
         return User.builder()
                 .username(selectedAdminMemberDto.getA_m_id())
                 .password(selectedAdminMemberDto.getA_m_pw())
-                .roles("ADMIN")     //권한 사용 하지 않아서 필요 없음
+                .roles("ADMIN")
                 .build();
     }
 }
