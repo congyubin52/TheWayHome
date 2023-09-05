@@ -7,7 +7,7 @@
 </head>
 
 <!--<header class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">-->
-<header class="navbar navbar-expand-lg navbar-dark bg-white" th:fragment="header">
+<header class="navbar navbar-expand-lg navbar-dark bg-black" th:fragment="header">
     <div class="container">
         <a class="navbar-brand" th:href="@{/admin}"><img src="/img/TheWayHome_logo.png" alt="로고" class="img-fluid" style="max-width: 150px; margin-left: 60px;" ></a>
 
@@ -19,24 +19,24 @@
             <ul class="navbar-nav ml-auto">
                 <th:block th:if="${session.loginedAdminMemberDto == null}">
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin}">홈</a>
+                        <a class="nav-link text-white" th:href="@{/admin}">홈</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin/member/create_account_form}">회원가입</a>
+                        <a class="nav-link text-white" th:href="@{/admin/member/create_account_form}">회원가입</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin/member/member_login_form}">로그인</a>
+                        <a class="nav-link text-white" th:href="@{/admin/member/member_login_form}">로그인</a>
                     </li>
                 </th:block>
                 <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval == '2'}">
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin}">홈</a>
+                        <a class="nav-link text-white" th:href="@{/admin}">홈</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
+                        <a class="nav-link text-white" th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>
+                        <a class="nav-link text-white" th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>
                     </li>
                     <!--<li class="nav-item">
                         <a class="nav-link text-black" th:href="@{/admin/member/search_admin_list}">관리자 리스트</a>
@@ -47,13 +47,13 @@
                 </th:block>
                 <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval != '2'}">
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin}">홈</a>
+                        <a class="nav-link text-white" th:href="@{/admin}">홈</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
+                        <a class="nav-link text-white" th:href="@{/admin/member/member_modify_form}">회원정보 수정</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black" th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>
+                        <a class="nav-link text-white" th:href="@{/admin/member/member_logout_comfirm}">로그아웃</a>
                     </li>
                     <!--<li class="nav-item">
                         <a class="nav-link text-black" th:href="@{/admin/pets/shelter_list}">보호소</a>

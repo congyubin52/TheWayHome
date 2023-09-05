@@ -7,10 +7,10 @@ import java.util.List;
 @Mapper
 public interface IPetsUserDaoMapper {
     //보호소 리스트
-    public List<UserShelterListInfoDto> selectShelter();
+    public List<UserShelterListInfoDto> selectShelter(String searchOption, String searchInput);
 
     //보호 동물 리스트(보호소 리스트 상세 페이지)
-    public List<PetsUserDto> selectPets(String s_no);
+    public List<PetsUserDto> selectPets(String s_no, String searchOption, String searchInput);
 
     //보호 동물 리스트(보호소 리스트 상세 페이지 xx)
     public List<PetsUserDto> selectAllPets();
@@ -22,5 +22,9 @@ public interface IPetsUserDaoMapper {
     public PetsUserDto selectPetsListDetail(String an_no);
 
     //보호소 검색 엔진
-    List<UserShelterListInfoDto> shelterSelectBoxSBySearch(UserShelterListInfoDto userShelterListInfoDto);
+    List<UserShelterListInfoDto> shelterSelectBoxBySearch(UserShelterListInfoDto userShelterListInfoDto);
+
+    //보호동물 검색 엔진
+    List<UserPetsListInfoDto> petsSelectBoxBySearch(UserPetsListInfoDto userPetsListInfoDto);
+
 }

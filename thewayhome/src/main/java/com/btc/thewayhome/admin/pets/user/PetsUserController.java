@@ -23,21 +23,32 @@ public class PetsUserController {
      */
     //보호소 전체 리스트
     @GetMapping("/shelter_list")
-    public String shelterList(Model model) {
+    public String shelterList(Model model,
+                              @RequestParam(required = false, value = "searchOption")String searchOption,
+                              @RequestParam(required = false, value = "sNameInput")String searchInput) {
         log.info("shelterList()");
+
+        log.info("searchOption " + searchOption);
+        log.info("searchInput " + searchInput);
 
         String nextPage = "admin/pets/user/user_shelter_list";
 
         // 전체 보호소 정보들을 List에 담기 위함
-        List<UserShelterListInfoDto> userShelterListInfoDtos = petsUserService.searchShelterList();
-        model.addAttribute("userShelterListInfoDtos", userShelterListInfoDtos);
+        List<UserShelterListInfoDto> userShelterListInfoDtos = petsUserService.searchShelterList(searchOption, searchInput);
+        if(userShelterListInfoDtos != null){
+            log.info("searchShelterList SUCCESS");
+            model.addAttribute("userShelterListInfoDtos", userShelterListInfoDtos);
+        } else {
+            log.info("searchShelterList FAIL");
+
+        }
 
         return nextPage;
         
     }
 
     //보호 동물 전체 리스트 -> 보호소 리스트 상세 페이지에서 보호소명 클릭 시 나타나는 페이지
-    @GetMapping("/pets_list")
+    /*@GetMapping("/pets_list")
     public String petsList(Model model, PetsUserDto petsUserDto, @RequestParam("s_no") String s_no) {
         log.info("petsList()");
 
@@ -46,6 +57,29 @@ public class PetsUserController {
         List<PetsUserDto> petsUserDtos = petsUserService.searchPetsList(s_no);
         model.addAttribute("petsUserDtos", petsUserDtos);
 
+        return nextPage;
+
+    }*/
+
+    @GetMapping("/pets_list")
+    public String petsList(Model model, PetsUserDto petsUserDto,
+                           @RequestParam("s_no") String s_no,
+                           @RequestParam(required = false, value = "searchOption")String searchOption,
+                           @RequestParam(required = false, value = "sNameInput")String searchInput) {
+        log.info("petsList()");
+
+        String nextPage = "admin/pets/user/user_pets_list";
+
+        List<PetsUserDto> petsUserDtos = petsUserService.searchPetsList(s_no, searchOption, searchInput);
+
+        if(petsUserDtos != null) {
+            log.info("searchPetsList SUCCESS");
+            model.addAttribute("petsUserDtos", petsUserDtos);
+
+        } else {
+            log.info("searchPetsList FAIL");
+
+        }
         return nextPage;
 
     }
@@ -82,14 +116,17 @@ public class PetsUserController {
     }
 
     //보호소 검색엔진
-    @PostMapping("/search_box_for_shelter")
-    public String searchBoxForShelter(UserShelterListInfoDto userShelterListInfoDto, Model model) {
+    @PostMapping("/search_box_for_pets")
+    public String searchBoxForPets(UserPetsListInfoDto userPetsListInfoDto, Model model) {
         log.info("searchBoxForShelter()");
 
-        String nextPage = "admin/pets/user/user_shelter_list";
+//        String nextPage = "admin/pets/user/user_pets_list";
+        String nextPage = "admin/pets/user/user_pets_list";
 
-        List<UserShelterListInfoDto> userShelterListInfoDtos = petsUserService.sheltersearchBoxConfirm(userShelterListInfoDto);
-        model.addAttribute("userShelterListInfoDtos", userShelterListInfoDtos);
+        List<UserPetsListInfoDto> userPetsListInfoDtos = petsUserService.petsSearchBoxConfirm(userPetsListInfoDto);
+        model.addAttribute("userPetsListInfoDtos", userPetsListInfoDtos);
+
+        log.info("userPetsListInfoDto----------->{}", userPetsListInfoDto.getAn_k_kind());
 
         return nextPage;
 

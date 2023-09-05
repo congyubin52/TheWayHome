@@ -22,48 +22,10 @@
 <section>
     <div id="section_wrap">
         <div id="carouselExampleCaptions" class="carousel slide mx-auto" style="max-width: 1800px;">
-            <!--<div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <a href="#none"><img th:src="@{/img/temp3.jpg}" class="d-block w-100" alt="temp3" style="max-height: 950px;"></a>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <a href="#none"><img th:src="@{/img/temp2.png}" class="d-block w-100" alt="temp2" style="max-height: 950px;"></a>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Some representative placeholder content for the second slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <a href="#none"> <img th:src="@{/img/temp1.png}" class="d-block w-100" alt="temp1" style="max-height: 950px;"></a>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>-->
-
             <div class="container-fluid">
                 <div class="row">
                     <!-- 사이드바 -->
-                    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" style="padding: 30px;">
+                    <!--<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar" style="padding: 30px;">
                         <div class="position-sticky">
                             <ul class="nav flex-column">
                                 <li class="nav-item" style="margin-bottom: 25px;">
@@ -98,20 +60,22 @@
                             </ul>
                         </div>
                     </nav>
-
+-->
 
 
                     <!-- 메인 컨텐츠 -->
                     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         <div class="container">
                             <div class="row my-4"> <!-- 위아래 간격을 추가 -->
-                                <div class="col-md-6 d-flex">
-                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 300px;">
                                         <h2 style="margin-bottom: 20px;">관리자 계정 관리</h2>
                                         <!-- 관리자 섹션 내용 -->
+                                        <th:block th:if="${session.loginedAdminMemberDto == null}">
                                         <p>
                                         <a th:href="@{/admin/member/create_account_form}" class="text-decoration-none text-dark">관리자 계정 생성</a>
                                         </p>
+                                        </th:block>
                                         <p>
                                         <a th:href="@{/admin/member/member_modify_form}" class="text-decoration-none text-dark">관리자 계정 수정</a>
                                         </p>
@@ -125,8 +89,8 @@
                                         </th:block>
                                     </div>
                                 </div>
-                                <div class="col-md-6 d-flex">
-                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 300px;">
                                         <h2 style="margin-bottom: 20px;">보호소 섹션</h2>
                                         <!-- 보호소 섹션 내용 -->
                                         <th:block th:if="${session.loginedAdminMemberDto != null}">
@@ -151,16 +115,22 @@
                                 </div>
                             </div>
                             <div class="row my-4"> <!-- 위아래 간격을 추가 -->
-                                <div class="col-md-6 d-flex">
-                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 300px;">
                                         <h2 style="margin-bottom: 20px;">실종 게시판 섹션</h2>
                                         <!-- 실종 게시판 섹션 내용 -->
+                                        <p>
+                                            <a th:href="@{/admin/pets/pets_regist}" class="text-decoration-none text-dark">실종 게시판 관리</a>
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="col-md-6 d-flex">
-                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px;">
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 300px;">
                                         <h2 style="margin-bottom: 20px;">후기 게시판 섹션</h2>
                                         <!-- 후기 게시판 섹션 내용 -->
+                                        <p>
+                                            <a th:href="@{/admin/pets/pets_regist}" class="text-decoration-none text-dark">후기 게시판 관리</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>

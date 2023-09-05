@@ -46,19 +46,28 @@ public class PetsUserService implements IPetsUserService {
 
     //보호소 리스트
     @Override
-    public List<UserShelterListInfoDto> searchShelterList() {
+    public List<UserShelterListInfoDto> searchShelterList(String searchOption, String searchInput) {
         log.info("searchShelterList()");
 
-        return iPetsUserDaoMapper.selectShelter();
+        log.info("searchInput "+ searchInput);
+
+        return iPetsUserDaoMapper.selectShelter(searchOption, searchInput);
+
+//        if(userShelterListInfoDtos != null) {
+//            iPetsUserDaoMapper.selectShelterForSearch();
+//
+//        }
+
+//        return userShelterListInfoDtos;
         
     }
 
     //보호 동물 리스트 -> 보호소 리스트 상세 페이지에서 보호소명 클릭 시 나타나는 페이지
     @Override
-    public List<PetsUserDto> searchPetsList(String s_no) {
+    public List<PetsUserDto> searchPetsList(String s_no, String searchOption, String searchInput) {
         log.info("searchShelterList()");
 
-        List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectPets(s_no);
+        List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectPets(s_no, searchOption, searchInput);
 
         return petsUserDtos;
         
@@ -86,12 +95,22 @@ public class PetsUserService implements IPetsUserService {
 
         }
 
-    //보호소 검색엔진
+    // 보호소 검색엔진
     @Override
-    public List<UserShelterListInfoDto> sheltersearchBoxConfirm(UserShelterListInfoDto userShelterListInfoDto) {
+    public List<UserShelterListInfoDto> shelterSearchBoxConfirm(UserShelterListInfoDto userShelterListInfoDto) {
         log.info("searchPetsListDetail()");
 
-        return iPetsUserDaoMapper.shelterSelectBoxSBySearch(userShelterListInfoDto);
+        List<UserShelterListInfoDto> userShelterListInfoDtos = iPetsUserDaoMapper.shelterSelectBoxBySearch(userShelterListInfoDto);
+
+        return userShelterListInfoDtos;
+
+    }
+
+    // 보호동물 검색엔진
+    public List<UserPetsListInfoDto> petsSearchBoxConfirm(UserPetsListInfoDto userPetsListInfoDto) {
+        log.info("petsSearchBoxConfirm()");
+
+        return iPetsUserDaoMapper.petsSelectBoxBySearch(userPetsListInfoDto);
 
     }
 }

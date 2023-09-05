@@ -29,11 +29,18 @@
         </div>
 
         <div class="search">
-            <form th:action="@{/user/pets/search_box_for_shelter}" method="post" name="search_box_shelter_form">
-                <input type="text" name="s_name" placeholder="검색어를 입력하세요">
-                <input type="button" value="검색" onclick="searchBoxShelterForm();">
-            </form>
+
+<!--            <form th:action="@{/user/pets/search_box_for_shelter}" method="post" name="search_box_shelter_form">-->
+                <select id="search_option" name="search_option">
+                    <option value="0">보호소명</option>
+                    <option value="1">주소</option>
+                </select>
+                <input type="text" name="s_name" id="s_name" placeholder="검색어를 입력하세요">
+                <input type="button" value="검색" th:attr="onclick=|searchBoxShelterConfirm(event)|">
+<!--            </form>-->
         </div>
+
+<!--        th:attr="onclick=|searchBoxShelterForm('${userShelterListInfoDto.s_name}')|">삭제</a>-->
 
 <!--        <div id="shelter_list" style="background-color: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px;">-->
         <div id="shelter_list"style="margin-bottom: 20px;">
