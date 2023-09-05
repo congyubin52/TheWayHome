@@ -1,5 +1,7 @@
 package com.btc.thewayhome.user.board.review;
 
+import com.btc.thewayhome.page.Criteria;
+import com.btc.thewayhome.page.PageMakerDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,11 +47,16 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
     }
 
     @Override
-    public Map<String, Object> reviewBoardList() {
+    public Map<String, Object> reviewBoardList(int pageNum, int amount) {
         log.info("reviewBoardList()");
 
         Map<String, Object> map = new HashMap<>();
-        List<ReviewBoardUserDto> reviewBoardDtos = iReviewBoardUserDaoMapper.selectReviewAll();
+
+        //페이지 네이션
+        Criteria criteria = new Criteria(pageNum, amount);
+        List<ReviewBoardUserDto> reviewBoardDtos = iReviewBoardUserDaoMapper.selectReviewAll(criteria.getSkip(), criteria.getAmount());
+        int totalCnt = iReviewBoardUserDaoMapper.getTotalCnt();
+        PageMakerDto pageMakerDto = new PageMakerDto(criteria, totalCnt);
 
         if(reviewBoardDtos == null) {
             log.info("NULL");
@@ -58,6 +65,7 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
         } else {
             log.info("NOT NULL");
             map.put("reviewBoardDtos", reviewBoardDtos);
+            map.put("pageMakerDto", pageMakerDto);
             return map;
 
         }

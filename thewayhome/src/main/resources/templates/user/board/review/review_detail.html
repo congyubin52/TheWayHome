@@ -45,9 +45,11 @@
 
         <div class="w-100 d-flex justify-content-end mt-3">
             <!--해당 게시글이 로그인 중인 자신의 게시글인 경우에만 나타나는 수정 버튼-->
-            <a th:if="${session.loginedUserMemberDto.getU_m_id() == selectReviewDto.u_m_id}" class="btn btn-outline-success ms-3" th:href="@{/user/board/review_modify_form(r_b_no=${selectReviewDto.r_b_no})}" style="text-decoration: none;">수정</a>
+            <div th:if="${session.loginedUserMemberDto != null && session.loginedUserMemberDto.getU_m_id() == selectReviewDto.u_m_id}">
+                <a class="btn btn-outline-success ms-3" th:href="@{/user/board/review_modify_form(r_b_no=${selectReviewDto.r_b_no})}" style="text-decoration: none;">수정</a>
+                <input class="btn btn-outline-success ms-3" type="button" value="삭제" th:attr="onclick=|deleteReviewConfirm('${selectReviewDto.r_b_no}')|">
+            </div>
             <input class="btn btn-outline-success ms-3" type="button" value="목록" onclick="cancelButton();">
-            <input th:if="${session.loginedUserMemberDto.getU_m_id() == selectReviewDto.u_m_id}" class="btn btn-outline-success ms-3" type="button" value="삭제" th:attr="onclick=|deleteReviewConfirm('${selectReviewDto.r_b_no}')|">
         </div>
 
     </div>
@@ -67,7 +69,6 @@
                 <a class="btn btn-outline-success" th:href="@{/user/member/member_login_form}">작성</a>
             </div>
     </div>
-
 
 </section>
 

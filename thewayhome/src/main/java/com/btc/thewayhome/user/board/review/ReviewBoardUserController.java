@@ -1,5 +1,7 @@
 package com.btc.thewayhome.user.board.review;
 
+import com.btc.thewayhome.page.PageDefine;
+import com.btc.thewayhome.page.PageMakerDto;
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpServletResponse;
@@ -8,10 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -32,14 +31,17 @@ public class ReviewBoardUserController {
 
     // 후기 게시판 페이지 이동
     @GetMapping("/review_board")
-    public String reviewBoardPage(Model model) {
+    public String reviewBoardPage(Model model,  @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
+                                  @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount){
         log.info("reviewBoardPage()");
 
         String nextPage = "/user/board/review/review_board";
 
         //서비스에서 Map으로 넘겨주기 때문에 Map 타입으로 받음
-        Map<String, Object> map = reviewBoardUserService.reviewBoardList();
+        Map<String, Object> map = reviewBoardUserService.reviewBoardList(pageNum, amount);
+
         List<ReviewBoardUserDto> reviewBoardDtos = (List<ReviewBoardUserDto>) map.get("reviewBoardDtos");
+        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
 
         if(reviewBoardDtos == null) {
             log.info("reviewBoardDtos IS NULL!!!");
@@ -47,6 +49,7 @@ public class ReviewBoardUserController {
         } else {
             log.info("reviewBoardDtos SELECT SUCCESS!!!");
             model.addAttribute("reviewBoardDtos", reviewBoardDtos);
+            model.addAttribute("pageMakerDto", pageMakerDto);
 
         }
         return nextPage;
@@ -103,6 +106,7 @@ public class ReviewBoardUserController {
         String nextPage = "/user/board/review/review_detail";
 
         ReviewBoardUserDto selectReviewDto = reviewBoardUserService.reviewDetailPage(r_b_no);
+
 
         model.addAttribute("selectReviewDto", selectReviewDto);
 
