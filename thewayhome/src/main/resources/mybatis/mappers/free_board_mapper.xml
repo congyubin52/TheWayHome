@@ -20,6 +20,20 @@
             tbl_free_board
         WHERE
             use_yn = 'Y'
+        ORDER BY
+            fb_no DESC
+            LIMIT
+            #{skip}, #{amount}
+    </select>
+
+    <!--후기 게시판 - 게시글 개수-->
+    <select id="getTotalCnt" resultType="Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_free_board
+        WHERE
+            use_yn = "Y"
     </select>
 
     <update id="updateHits" parameterType="Integer">

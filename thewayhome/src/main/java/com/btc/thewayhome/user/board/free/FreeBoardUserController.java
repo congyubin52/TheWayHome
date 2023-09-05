@@ -1,5 +1,7 @@
 package com.btc.thewayhome.user.board.free;
 
+import com.btc.thewayhome.page.PageDefine;
+import com.btc.thewayhome.page.PageMakerDto;
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.annotation.Resource;
@@ -40,14 +42,17 @@ public class FreeBoardUserController {
 
     // 실종/목격 게시판 리스트
     @GetMapping("/free_board_list")
-    public String freeBoardList(Model model){
+    public String freeBoardList(Model model,
+                                @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
+                                @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount){
         log.info("freeBoardList()");
 
         String nextPage = "/user/board/free/free_board_list";
 
         //서비스에서 Map으로 넘겨주기 때문에 Map 타입으로 받음
-        Map<String, Object> map = freeBoardUserService.getAllFreeBoard();
+        Map<String, Object> map = freeBoardUserService.getAllFreeBoard(pageNum, amount);
         List<FreeBoardUserDto> freeBoardUserDtos = (List<FreeBoardUserDto>) map.get("freeBoardUserDtos");
+        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
 
         if(freeBoardUserDtos == null){
             log.info("freeBoardUserDtos IS NULL!!!");
@@ -55,6 +60,7 @@ public class FreeBoardUserController {
         } else {
             log.info("freeBoardUserDtos SELECT SUCCESS!!!");
             model.addAttribute("freeBoardUserDtos", freeBoardUserDtos);
+            model.addAttribute("pageMakerDto", pageMakerDto);
 
         }
         return nextPage;
