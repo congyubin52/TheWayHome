@@ -6,6 +6,7 @@
 <body>
 
 <script th:src="@{/js/user/review_board_js.js}" type="text/javascript"></script>
+<script th:replace="~{/user/include/comment_js.html::js}" type="text/javascript"></script>
 
 <style>
     .ck-editor__editable { height: 400px; }
@@ -54,20 +55,48 @@
 
     </div>
 
-    <!--댓글-->
+    <!--댓글 - 로그인 후-->
     <div class="container w-100 px-lg-5 mt-4" th:if="${session.loginedUserMemberDto != null}">
-        <form th:action="@{/user/board/write_comment_confirm}" name="write_review_form" method="post">
-            <div class="mb-0"><input class="w-100 p-5 border border-secondarys rounded" type="text" name="r_b_title" placeholder="댓글을 작성하세요."></div>
+        <form name="write_comment_form">
+            <div class="mb-0">
+                <input type="hidden" name="u_m_id" th:value="${session.loginedUserMemberDto.getU_m_id()}">
+                <input type="hidden" name="b_type" value="2">
+                <input type="hidden" name="b_no" th:value="${selectReviewDto.r_b_no}">
+                <input class="w-100 p-4 border border-secondarys rounded" type="text" name="b_c_content" placeholder="댓글을 작성하세요.">
+            </div>
             <div class="d-flex justify-content-end mt-3 mb-3">
-                <input class="btn btn-outline-success" type="button" value="작성" id="submitBtn">
+                <input class="btn btn-outline-success" type="button" value="작성" id="commentBtn">
             </div>
         </form>
     </div>
+
+    <!--댓글 - 로그인 전-->
     <div class="container w-100 px-lg-5 mt-4" th:unless="${session.loginedUserMemberDto != null}">
-            <div class="mb-0"><input class="w-100 p-5 border border-secondarys rounded" disabled readonly placeholder="로그인 후 댓글을 작성할 수 있습니다."></div>
+            <div class="mb-0"><input class="w-100 p-3 border border-secondarys rounded" disabled readonly placeholder="로그인 후 댓글을 작성할 수 있습니다."></div>
             <div class="d-flex justify-content-end mt-3 mb-3">
                 <a class="btn btn-outline-success" th:href="@{/user/member/member_login_form}">작성</a>
             </div>
+    </div>
+
+    <div class="comment_list" id="comment_list">
+        <div class="container w-100 px-lg-5 mt-3 mb-3">
+            <div class="row d-flex justify-content-center">
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="user d-flex flex-row align-items-center">
+                            <span class="font-weight-bold"></span> &nbsp;&nbsp;
+                            <span></span>
+                        </div>
+                        <small><a class="text-dark" href='#none' style="text-decoration: none;">삭제</a></small>
+                    </div>
+                    <div class="action d-flex justify-content-between mt-2 align-items-center">
+                        <div class="reply">
+                            <small></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </section>
