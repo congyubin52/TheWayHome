@@ -2,6 +2,7 @@ package com.btc.thewayhome.user.board.review;
 
 import com.btc.thewayhome.page.PageDefine;
 import com.btc.thewayhome.page.PageMakerDto;
+import com.btc.thewayhome.user.board.comment.CommentDto;
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpServletResponse;
@@ -107,6 +108,7 @@ public class ReviewBoardUserController {
 
         ReviewBoardUserDto selectReviewDto = reviewBoardUserService.reviewDetailPage(r_b_no);
 
+        List<CommentDto> commentDtos = reviewBoardUserService.getCommentAll();
 
         model.addAttribute("selectReviewDto", selectReviewDto);
 

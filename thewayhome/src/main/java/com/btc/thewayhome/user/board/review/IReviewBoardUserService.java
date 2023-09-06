@@ -1,5 +1,8 @@
 package com.btc.thewayhome.user.board.review;
 
+import com.btc.thewayhome.user.board.comment.CommentDto;
+
+import java.util.List;
 import java.util.Map;
 
 public interface IReviewBoardUserService {
@@ -15,4 +18,6 @@ public interface IReviewBoardUserService {
 
     // 후기 게시판 - 삭제
     public int reviewDeleteConfirm(int rBNo);
+
+    public List<CommentDto> getCommentAll();
 }
