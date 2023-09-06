@@ -30,5 +30,5 @@ public interface IPetsAdminService {
     public int modifyPetsConfirm(PetsAdminDto petsAdminDto);
 
     // 보호 동물 삭제
-    int petsDeleteConfirm(PetsAdminDto petsAdminDto);
+    public int deletePetsConfirm(String an_no);
 }

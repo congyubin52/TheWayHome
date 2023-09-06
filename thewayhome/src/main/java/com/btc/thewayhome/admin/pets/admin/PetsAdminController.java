@@ -163,7 +163,7 @@ public class PetsAdminController {
         if (loginedAdminMemberDto == null) {
             nextPage = "redirect:/admin/member/member_login_form";
 
-        } else{
+        } else {
             PetsAdminDto petsAdminDto = petsAdminService.modifyPetsForm(an_no);
             model.addAttribute("petsAdminDto", petsAdminDto);
         }
@@ -175,76 +175,72 @@ public class PetsAdminController {
     @PostMapping("/admin_pets_modify_confirm")
     public String modifyPetsConfirm(PetsAdminDto petsAdminDto,
                                     @RequestParam("file") MultipartFile file,
-                                    HttpSession session){
+                                    HttpSession session) {
         log.info("modifyPetsConfirm()");
 
         String nextPage = "admin/pets/admin/admin_pets_modify_success";
 
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
-        if(loginedAdminMemberDto == null) {
+        if (loginedAdminMemberDto == null) {
             nextPage = "redirect:/admin/member/member_login_form";
         }
-            if(!file.getOriginalFilename().equals("")){
-                String saveFileName = uploadFileService.upload(file);
+        if (!file.getOriginalFilename().equals("")) {
+            String saveFileName = uploadFileService.upload(file);
 
-                if(saveFileName != null){
-                    petsAdminDto.setAn_image(saveFileName);
-                    petsAdminDto.setAn_thumbnail(saveFileName);
-                }
+            if (saveFileName != null) {
+                petsAdminDto.setAn_image(saveFileName);
+                petsAdminDto.setAn_thumbnail(saveFileName);
             }
-            int result = petsAdminService.modifyPetsConfirm(petsAdminDto);
+        }
+        int result = petsAdminService.modifyPetsConfirm(petsAdminDto);
 
-            log.info("------------>" + petsAdminDto.getAn_no());
+        log.info("------------>" + petsAdminDto.getAn_no());
 
-                if(result <= 0){
-                    nextPage = "redirect:admin/pets/admin/admin_pets_list";
-                }
+        if (result <= 0) {
+            nextPage = "redirect:admin/pets/admin/admin_pets_list";
+        }
 
         return nextPage;
 
     }
 
-}
 
-//보호동물 삭제
- /*   @GetMapping("/pet_delete_confirm")
-    @ResponseBody
-        public Object petDeleteConfirm(PetsAdminDto petsAdminDto) {
-            log.info("petDeleteConfirm()");
-
-            Map<String, Object> map = petsAdminService.petsDeleteConfirm(Integer.parseInt(petsAdminDto.getAn_no()));
-
-            log.info("an_no---=============>{}", petsAdminDto.getAn_no());
-
-            return map;
-        }*/
-
-    /*@GetMapping("/pet_delete_confirm")
-    public String petDeleteConfirm(HttpSession session) {
+    //보호동물 삭제
+//    @GetMapping("/pet_delete_confirm")
+//    @ResponseBody
+//    public String petDeleteConfirm(PetsAdminDto petsAdminDto) {
+//        log.info("petDeleteConfirm()");
+//
+//        Map<String, Object> map = petsAdminService.petsDeleteConfirm(Integer.parseInt(petsAdminDto.getAn_no()));
+//
+//        log.info("an_no---=============>{}", petsAdminDto.getAn_no());
+//
+//        return map;
+//    }
+//}
+    @GetMapping("/admin_delete_pet_confirm")
+    public String deletePetsConfirm(HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petDeleteConfirm()");
 
-        String nextPage = "redirect:/admin/pets/admin/admin_pets_list_detail";
+        String nextPage = "redirect:/admin/pets/admin/admin_pets_list";
 
-        PetsAdminDto petsAdminDto = (PetsAdminDto) session.getAttribute("petsAdminDto");
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
-        log.info("petsAdminDto mo : " + petsAdminDto.getAn_no());
+        if (loginedAdminMemberDto == null) {
+            nextPage = "redirect:/admin/member/member_login_form";
+        }
 
-        int result = petsAdminService.petsDeleteConfirm(petsAdminDto);
+        int result = petsAdminService.deletePetsConfirm(an_no);
 
-        log.info("an_no----------------->{}", petsAdminDto.getAn_no());
-
-        if (result > 0) {
-            session.removeAttribute("petsAdminDto");
-
-        } else {
-//            nextPage = "admin/delete_fail";
+        if (result <= 0) {
+            nextPage = "redirect:/admin/pets/admin/admin_shelter_list";
         }
 
         return nextPage;
 
-    }*/
-
+    }
+}
 
 
 

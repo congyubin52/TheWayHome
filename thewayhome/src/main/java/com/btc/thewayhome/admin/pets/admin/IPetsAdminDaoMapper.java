@@ -43,9 +43,9 @@ public interface IPetsAdminDaoMapper {
     public int updatePets(PetsAdminDto petsAdminDto);
 
     // 보호 동물 삭제
-    public int deletePets(String an_no);
+    public int deletePetsConfirm(String an_no);
 
-    public int selectPetsForDelete(String an_no);
+//    public int selectPetsForDelete(String an_no);
 
 
 

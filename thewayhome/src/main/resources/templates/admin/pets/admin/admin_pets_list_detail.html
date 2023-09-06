@@ -70,10 +70,11 @@
     <div class="go_pets_list text-center mt-5">
 
         <a th:href="@{/admin/pets/admin_modify_pets_form(an_no=${petsAdminDto.an_no})}" class="btn btn-primary btn-lg mr-2">수정</a>
-        <a th:href="@{'/delete/' + ${petsAdminDto.an_no}}" class="btn btn-danger btn-lg mr-2">삭제</a>
+        <a th:href="@{/admin/pets/admin_delete_pet_confirm(an_no=${petsAdminDto.an_no})}" class="btn btn-danger btn-lg mr-2" onclick="return confirm('정말로 삭제하시겠습니까')">삭제</a>
         <a href="javascript:history.back();" class="btn btn-success btn-lg">목록</a>
 <!--        <a th:href="@{/user/pets/pets_list(s_no=${petsAdminDto.s_no})}" class="btn btn-success">목록</a>-->
         <br><br>
+    </div>
     </div>
 
 </section>
