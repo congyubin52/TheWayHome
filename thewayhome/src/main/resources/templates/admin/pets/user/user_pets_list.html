@@ -14,6 +14,7 @@
 
 </head>
 <body>
+<script th:src="@{/js/admin/search_box_pets_form.js}" type="text/javascript"></script>
 
 <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
 <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
@@ -31,20 +32,19 @@
         </div>
 
         <div id="search_box" class="mb-3">
-            <div class="col-md-2">
-                <select class="form-select" name="kind">
-                    <option value="kind">축종</option>
-                    <option value="kind1">개</option>
-                    <option value="kind2">고양이</option>
-                    <option value="kind3">기타</option>
+
+            <div class="search">
+                <select id="search_option" name="search_option">
+                    <option value="0">축종</option>
+                    <option value="1">품종</option>
                 </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select" name="area">
-                    <option value="area">지역설정</option>
-                    <option value="area1">부산광역시</option>
-                    <option value="area2">광주광역시</option>
-                </select>
+                <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
+                <input type="button" value="검색" th:attr="onclick=|searchBoxPetConfirm(event)|">
+
+                <!--<form th:action="@{/user/pets/search_box_for_pets}" method="post" name="search_box_pets_form">
+                    <input type="text" name="an_k_kind" placeholder="검색어를 입력하세요">
+                    <input type="button" value="검색" onclick="searchBoxPetsForm();">
+                </form>-->
             </div>
         </div>
 
@@ -53,18 +53,19 @@
             <div class="col-md-3 " >
                 <div th:each="dto: ${petsUserDtos}" class="card mb-4">
 
-                    <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}">
+                    <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}" >
                     <img th:src="${dto.an_thumbnail}" alt="Pet Image" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
                          onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"
                          onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
                     </a>
 
                     <div class="card-body">
-                            <input type="hidden" name="s_no" th:value="${dto.s_no}">
+                            <input type="hidden" name="s_no" id="s_no" th:value="${dto.s_no}">
                             <!--                       <p> <span class="an_no" th:text="${dto.an_no}"></span> | </p>-->
                             <p><span class="an_n_no">
-                            <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}" th:text="${dto.an_n_no}" class="text-decoration-none text-dark"></a>
+<!--                            <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}" th:text="${dto.an_n_no}" class="text-decoration-none text-dark"></a>-->
                        </span></p>
+                            <span class="an_k_kind" th:text="${dto.an_an_kind}">  |   </span>
                             <span class="an_k_kind" th:text="${dto.an_k_kind}">  |   </span>
                             <p><span class="an_p_s_state" th:text="${dto.an_p_s_state}"></span></p>
 

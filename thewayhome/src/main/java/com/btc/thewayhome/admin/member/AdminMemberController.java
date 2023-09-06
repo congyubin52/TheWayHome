@@ -2,6 +2,7 @@ package com.btc.thewayhome.admin.member;
 
 import com.btc.thewayhome.admin.config.GetAreaData;
 import com.btc.thewayhome.admin.config.GetPetsData;
+import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -151,7 +152,10 @@ public class AdminMemberController {
 
     }
 
-    // 관리자 회원정보 수정 기능
+    /*
+     * 관리자 정보 수정 START
+     */
+    // 관리자 회원정보 수정 FORM
     @GetMapping("/member_modify_form")
     public String memberModifyForm() {
         log.info("memberModifyForm()");
@@ -163,7 +167,7 @@ public class AdminMemberController {
     }
     
     // 관리자 정보수정 기능
-    @PostMapping("/member_modify_confirm")
+   /* @PostMapping("/member_modify_confirm")
     public void memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto, HttpServletResponse response) throws IOException {
         log.info("memberModifyConfirm()");
 
@@ -188,6 +192,89 @@ public class AdminMemberController {
             out.flush();
 
         }
+    }
+
+    // 관리자 정보수정 기능
+    /*@PostMapping("/member_modify_confirm")
+    @ResponseBody
+    public AdminMemberDto memberModifyConfirm(@RequestBody Map<String, String> msgMap,HttpSession session) {
+        log.info("[AdminMemberController] memberModifyConfirm()");
+
+        //service에서 adminMemberDto로 받으므로 dto로 변환해서 들고 가야 함
+        AdminMemberDto adminMemberDto = new AdminMemberDto();
+        adminMemberDto.setA_m_no(Integer.parseInt(msgMap.get("a_m_no")));
+        adminMemberDto.setA_m_id(msgMap.get("a_m_id"));
+        adminMemberDto.setA_m_pw(msgMap.get("a_m_pw"));
+
+        adminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
+
+        if(adminMemberDto != null) {
+            AdminMemberDto loginedAdminMemberDto = adminMemberDto;
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60*30);
+
+            return adminMemberDto;
+
+        }
+        return null;
+    }*/
+
+    // 관리자 정보 수정 CONFIRM
+    @PostMapping("/member_modify_confirm")
+    public String memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto) {
+        log.info("memberModifyConfirm()");
+
+        String nextPage = "redirect:/admin/member/member_modify_form";
+
+        AdminMemberDto loginedAdminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
+
+        if(adminMemberDto != null) {
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60 * 30);
+        } else {
+            nextPage = "redirect:/admin/member/member_modify_form";
+
+        }
+            return nextPage;
+
+    }
+
+    // 관리자 비밀번호 수정 FORM
+    @GetMapping ("/member_password_modify_form")
+    public String adminMemeberPasswordModfiyForm() {
+        log.info("adminMemeberPasswordModfiyForm()");
+
+        String nextPage = "/admin/member/member_password_modify_form";
+
+        return nextPage;
+
+    }
+
+    // 관리자 비밀번호 수정 CONFIRM
+    @PostMapping ("/member_password_modify_confirm")
+    public String adminMemeberPasswordModfiyConfirm(HttpSession session,
+                                                   HttpServletResponse response,
+                                                   AdminMemberDto adminMemberDto,
+                                                   @RequestParam("a_m_pw") String currentPw,
+                                                   @RequestParam("a_m_Re_pw") String changePw) throws IOException {
+        log.info("adminMemeberPasswordModfiyConfirm()");
+
+        String nextPage = "redirect:/";
+
+        AdminMemberDto loginedAdminMemberDto = adminMemberService.adminMemberPasswordModifyConfirm(adminMemberDto, currentPw, changePw);
+
+        if(loginedAdminMemberDto != null){
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60 * 30);
+
+        } else {
+            response.setContentType("text/html; charset=euc-kr");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('비밀번호 수정 실패 했습니다.');</script>");
+            out.flush();
+
+        }
+        return nextPage;
     }
     
     // 관리자 계정 삭제 기능
