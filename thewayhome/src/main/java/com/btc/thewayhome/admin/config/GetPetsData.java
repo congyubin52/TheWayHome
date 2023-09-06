@@ -3,7 +3,7 @@ package com.btc.thewayhome.admin.config;
 import com.btc.thewayhome.admin.member.AdminMemberService;
 import com.btc.thewayhome.admin.member.ShelterInfoDto;
 import com.btc.thewayhome.admin.pets.admin.PetsAdminService;
-import com.btc.thewayhome.admin.pets.admin.PetsApiDto;
+import com.btc.thewayhome.admin.pets.admin.PetsAdminDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,13 +32,13 @@ public class GetPetsData {
         String responseString = "";
 
         ShelterInfoDto shelterInfoDto = new ShelterInfoDto();
-        PetsApiDto petsApiDto = new PetsApiDto();
+        PetsAdminDto petsAdminDto = new PetsAdminDto();
 
         try {
             String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?" +
                     "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
                     "&_type=json" +
-                    "&pageNo=4" +
+                    "&pageNo=10" +
                     "&numOfRows=100";
 
             URL url = new URL(apiUrl);
@@ -61,8 +61,8 @@ public class GetPetsData {
             e.printStackTrace();
         }
 
-//        adminMemberService.shelterRegistInfo(responseString, shelterInfoDto);
+        adminMemberService.shelterRegistInfo(responseString, shelterInfoDto);
 
-        petsAdminService.petsRegistInfo(responseString, petsApiDto);
+        petsAdminService.petsRegistInfo(responseString, petsAdminDto);
     }
 }
