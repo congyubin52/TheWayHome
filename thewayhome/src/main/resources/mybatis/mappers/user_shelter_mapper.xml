@@ -264,4 +264,24 @@
             a.an_k_kind like concat('%',#{an_k_kind},'%')
     </select>-->
 
+    <!-- 보호소 정보 상세 페이지 -->
+    <select id="selectShelterDetail"
+            parameterType="String"
+            resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
+
+        SELECT
+            a.s_name,
+            a.s_phone,
+            a.s_address,
+            a.an_reg_date
+        FROM
+            tbl_animal_api AS a
+            JOIN
+                tbl_shelter_num AS sn
+            ON
+                a.s_name = sn.s_name
+        WHERE
+            sn.s_no = #{s_no}
+    </select>
+
 </mapper>

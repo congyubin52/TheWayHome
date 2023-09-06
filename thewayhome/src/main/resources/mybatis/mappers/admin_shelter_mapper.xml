@@ -141,6 +141,7 @@
                 tbl_shelter_info i
             ON
                 n.s_name = i.s_name
+
         ORDER BY
             s_no ASC
     </select>

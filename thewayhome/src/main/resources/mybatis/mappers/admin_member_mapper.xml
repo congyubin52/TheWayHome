@@ -178,6 +178,7 @@
             tbl_member_admin
         SET
             use_yn = 'N',
+            a_m_approval = '0',
             a_m_mod_date = NOW()
         where
             a_m_no = #{a_m_no}

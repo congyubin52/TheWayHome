@@ -1,5 +1,6 @@
 package com.btc.thewayhome.admin.pets.user;
 
+import com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +117,7 @@ public class PetsUserController {
     }
 
     //보호소 검색엔진
-    @PostMapping("/search_box_for_pets")
+    /*@PostMapping("/search_box_for_pets")
     public String searchBoxForPets(UserPetsListInfoDto userPetsListInfoDto, Model model) {
         log.info("searchBoxForShelter()");
 
@@ -127,6 +128,21 @@ public class PetsUserController {
         model.addAttribute("userPetsListInfoDtos", userPetsListInfoDtos);
 
         log.info("userPetsListInfoDto----------->{}", userPetsListInfoDto.getAn_k_kind());
+
+        return nextPage;
+
+    }*/
+
+    // 보호 동물 입양 문의
+    @GetMapping("/adopt_pets_form")
+    public String adoptPetsConfirm(Model model,
+                                   @RequestParam("s_name") String s_name) {
+        log.info("adoptPetsConfirm()");
+
+        String nextPage = "admin/pets/user/user_adopt_pets_form";
+
+        List<PetsUserDto> petsUserDtos = petsUserService.searchShelterInfo(s_name);
+        model.addAttribute("petsUserDtos", petsUserDtos);
 
         return nextPage;
 

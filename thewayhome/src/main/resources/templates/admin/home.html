@@ -16,6 +16,8 @@
 </head>
 <body>
 
+<script th:src="@{/js/admin/member_delete_confirm.js}"></script>
+
 <header th:replace="~{/admin/include/admin_head_header_footer.html::header}">
 </header>
 
@@ -76,12 +78,14 @@
                                         <a th:href="@{/admin/member/create_account_form}" class="text-decoration-none text-dark">관리자 계정 생성</a>
                                         </p>
                                         </th:block>
+                                        <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval == '1'}">
                                         <p>
                                         <a th:href="@{/admin/member/member_modify_form}" class="text-decoration-none text-dark">관리자 계정 수정</a>
                                         </p>
                                         <p>
-                                        <a th:href="@{/admin/member/member_delete_confirm}" class="text-decoration-none text-dark">관리자 계정 탈퇴</a>
+                                        <a th:href="@{/admin/member/member_delete_confirm}" class="text-decoration-none text-dark" th:attr="onclick=|deleteConfirm(event)|">관리자 계정 탈퇴</a>
                                         </p>
+                                        </th:block>
                                         <th:block th:if="${session.loginedAdminMemberDto != null and session.loginedAdminMemberDto.a_m_approval == '2'}">
                                         <p>
                                         <a th:href="@{/admin/member/search_admin_list}" class="text-decoration-none text-dark">관리자 계정 리스트</a>

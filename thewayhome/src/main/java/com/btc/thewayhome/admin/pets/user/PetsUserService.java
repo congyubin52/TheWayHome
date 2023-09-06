@@ -1,5 +1,6 @@
 package com.btc.thewayhome.admin.pets.user;
 
+import com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -111,6 +112,17 @@ public class PetsUserService implements IPetsUserService {
         log.info("petsSearchBoxConfirm()");
 
         return iPetsUserDaoMapper.petsSelectBoxBySearch(userPetsListInfoDto);
+
+    }
+
+    // 보호소 정보 상세 페이지
+    @Override
+    public List<PetsUserDto> searchShelterInfo(String s_name) {
+        log.info("searchShelterInfo()");
+
+        List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectShelterDetail(s_name);
+
+        return petsUserDtos;
 
     }
 }

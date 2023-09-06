@@ -64,19 +64,8 @@
                         <span> ~ </span>
                         <span class="an_n_end" th:text="${dto.an_n_end}"></span>
                     </div>
-                    <!--<div class="text-right">
-                        <input type="button" value="삭제" onclick="deletePets" class="btn btn-sm btn-dark">
-                    </div>-->
                     <div class="text-right">
                         <div id="go_delete_pets_confirm">
-                            <!--<div class="btn_delete" th:if="${dto.use_yn} == 'Y'" style="background-color: #6c757d; color: #6c757d; padding: 5px 10px; border-radius: 5px;">
-                                <a class="delete" href='#none' style="color: #fff; text-decoration: none;">보호중</a>
-                            </div>
-                            <div class="btn_delete" th:unless="${dto.use_yn} == 'N'" style="background-color: #28a745; color: #fff; padding: 5px 10px; border-radius: 5px;">
-                                <a class="delete" href='#none' style="color: #fff; text-decoration: none;">종료</a>
-                            </div>-->
-<!--                            <a th:href="@{/admin/pets/pet_delete_confirm}" class="btn btn-dark" style="margin-left: 10px; margin-bottom: 10px;">삭제</a>-->
-<!--                           <a href="#none" class="btn btn-dark" style="margin-left: 10px; margin-bottom: 10px;">삭제</a>-->
                             <a href="#none" class='delete' data-no="${dto.an_no}" style="margin-left: 10px; margin-bottom: 10px;">삭제</a>
                         </div>
                     </div>
