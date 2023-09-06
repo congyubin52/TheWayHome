@@ -20,9 +20,9 @@ public class CommentController {
     CommentService commentService;
 
     // 댓글 작성 Form
-    @PostMapping ({"/write_comment_confirm", "/temp"})
+    @PostMapping ("/write_comment_confirm")
     @ResponseBody
-    public Object writeCommentConfirm(@RequestBody Map<String, Object> msgMap, CommentDto commentDto, HttpSession session) {
+    public Object writeCommentConfirm(@RequestBody Map<String, Object> msgMap, CommentDto commentDto) {
         log.info("writeCommentConfirm()");
 
         List<CommentDto> commentDtos = commentService.writeCommentConfirm(msgMap, commentDto);
