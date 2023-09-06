@@ -1,6 +1,7 @@
 package com.btc.thewayhome.admin.pets.admin;
 
 import com.btc.thewayhome.admin.member.AdminMemberDto;
+import com.btc.thewayhome.page.Criteria;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,7 +10,9 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Service
@@ -92,8 +95,15 @@ public class PetsAdminService implements IPetsAdminService{
 
     //보호소 리스트 -> SUPER, 일반 ADMIN에 따라 나눔
     @Override
-    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto) {
+    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto, int pageNum, int amount) {
         log.info("searchShelterList()");
+        Map<String, Object> map = new HashMap<>();
+
+        Criteria criteria = new Criteria(pageNum, amount);
+
+//        List<AdminShelterListInfoDto> adminShelterListInfoDtos = iPetsAdminDaoMapper.pageList(criteria);
+//
+//        int total
 
         //일반 admin 찾기
         boolean isAdmin = iPetsAdminDaoMapper.isAdminMemberBasic(loginedAdminMemberDto.getA_m_id(), loginedAdminMemberDto.getA_m_approval());

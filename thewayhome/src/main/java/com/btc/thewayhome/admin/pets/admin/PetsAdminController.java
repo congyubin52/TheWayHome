@@ -2,6 +2,8 @@ package com.btc.thewayhome.admin.pets.admin;
 
 
 import com.btc.thewayhome.admin.member.AdminMemberDto;
+import com.btc.thewayhome.page.PageDefine;
+import com.btc.thewayhome.page.PageMakerDto;
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -33,7 +35,9 @@ public class PetsAdminController {
 
     // 보호소 전체 리스트
     @GetMapping("/shelter_list")
-    public String shelterList(Model model, HttpSession session) {
+    public String shelterList(Model model, HttpSession session,
+                              @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
+                              @RequestParam(value="amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount) {
         log.info("shelterList()");
 
         String nextPage = "admin/pets/admin/admin_shelter_list";
@@ -42,8 +46,15 @@ public class PetsAdminController {
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
         // 여러 개의 보호소들을 담아주기 위해 List 사용
-        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto);
+//        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
+        Map<String, Object> map = (Map<String, Object>) petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
+
+
+        List<AdminShelterListInfoDto> adminShelterListInfoDtos = (List<AdminShelterListInfoDto>) map.get("adminShelterListInfoDtos");
+        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
+
         model.addAttribute("adminShelterListInfoDtos", adminShelterListInfoDtos);
+        model.addAttribute("pageMakerDto", pageMakerDto);
 
         return nextPage;
 
