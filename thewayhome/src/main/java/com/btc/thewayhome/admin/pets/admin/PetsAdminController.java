@@ -219,6 +219,8 @@ public class PetsAdminController {
 //        return map;
 //    }
 //}
+
+    // 보호 동물 삭제
     @GetMapping("/admin_delete_pet_confirm")
     public String deletePetsConfirm(HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petDeleteConfirm()");
