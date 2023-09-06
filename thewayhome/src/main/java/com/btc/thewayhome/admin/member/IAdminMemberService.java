@@ -29,6 +29,9 @@ public interface IAdminMemberService {
     //관리자 정보 수정
     public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto);
 
+    //관리자 비밀번호 변경
+    public AdminMemberDto adminMemberPasswordModifyConfirm(AdminMemberDto adminMemberDto, String currentPw, String changePw);
+
     //관리자 계정 삭제
     public int memberDeleteConfirm(int a_m_no);
 

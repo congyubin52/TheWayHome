@@ -49,8 +49,8 @@ public class PetsAdminController {
 
     }
 
-    // 보호 동물 리스트 -> 보호소 리스트에서 보호소명을 클릭 시 나타나는 페이지
-    @GetMapping("/pets_list")
+    //보호 동물 리스트 -> 보호소 리스트에서 보호소명을 클릭 시 나타나는 페이지
+    /*@GetMapping("/pets_list")
     public String petsList(Model model, @RequestParam("s_no") String s_no) {
         log.info("petsList()");
 
@@ -59,6 +59,32 @@ public class PetsAdminController {
         List<PetsAdminDto> petsAdminDtos = petsAdminService.searchPetsList(s_no);
         model.addAttribute("petsAdminDtos", petsAdminDtos);
 
+        return nextPage;
+
+    }*/
+
+    @GetMapping("/pets_list")
+    public String petsList(Model model,
+                           @RequestParam("s_no") String s_no,
+                           @RequestParam(required = false, value = "searchOption")String searchOption,
+                           @RequestParam(required = false, value = "sNameInput")String searchInput) {
+        log.info("petsList()");
+
+        log.info("----------->{}", searchOption);
+        log.info("----------->{}", searchInput);
+
+        String nextPage = "admin/pets/admin/admin_pets_list";
+
+        List<PetsAdminDto> petsAdminDtos = petsAdminService.searchPetsList(s_no, searchOption, searchInput);
+
+        if(petsAdminDtos != null) {
+            log.info("searchPetsList SUCCESS");
+            model.addAttribute("petsAdminDtos", petsAdminDtos);
+
+        } else {
+            log.info("searchPetsList FAIL");
+
+        }
         return nextPage;
 
     }

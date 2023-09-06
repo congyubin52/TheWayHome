@@ -49,6 +49,9 @@ public interface IAdminMemberDaoMapper {
     // 관리자 정보 수정 - 최신화
     public AdminMemberDto getLatestAccountInfo(AdminMemberDto adminMemberDto);
 
+    // 관리자 비밀번호 변경
+    int updateAdminMemberPassword(AdminMemberDto adminMemberDto);
+
     // 관리자 계정 삭제
     public int deleteAdmin(int a_m_no);
 
@@ -58,5 +61,6 @@ public interface IAdminMemberDaoMapper {
     //관리자 승인 처리
     public String selectAdminForApprovalFromNo(int a_m_no);  // approval 값 받기 위한 메서드
     public int updateAdminForApporoval(int a_m_no);  // approval이 1일 때 0으로, 0일 때 1으로 바꿈으로써 승인완료, 승인대기로 변경해줌
+
 
 }

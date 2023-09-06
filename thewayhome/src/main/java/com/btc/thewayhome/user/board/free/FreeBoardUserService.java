@@ -1,6 +1,10 @@
 package com.btc.thewayhome.user.board.free;
 
+import com.btc.thewayhome.page.Criteria;
+import com.btc.thewayhome.page.PageMakerDto;
 import com.btc.thewayhome.user.board.config.ImageService;
+import com.btc.thewayhome.user.board.review.ReviewBoardUserDto;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,7 @@ import java.util.Map;
 @Service
 public class FreeBoardUserService implements IFreeBoardUserService {
 
+    @Getter
     @Autowired
     IFreeBoardUserDaoMapper iFreeBoardUserDaoMapper;
 
@@ -31,15 +36,21 @@ public class FreeBoardUserService implements IFreeBoardUserService {
     }
 
     @Override
-    public Map<String, Object> getAllFreeBoard() {
+    public Map<String, Object> getAllFreeBoard(int pageNum, int amount) {
         log.info("getAllFreeBoard()");
 
         Map<String, Object> map = new HashMap<>();
-        List<FreeBoardUserDto> freeBoardUserDtos = iFreeBoardUserDaoMapper.selectAllFreeBoard();
+
+        //페이지 네이션
+        Criteria criteria = new Criteria(pageNum, amount);
+        List<FreeBoardUserDto> freeBoardUserDtos = iFreeBoardUserDaoMapper.selectAllFreeBoard(criteria.getSkip(), criteria.getAmount());
+        int totalCnt = iFreeBoardUserDaoMapper.getTotalCnt();
+        PageMakerDto pageMakerDto = new PageMakerDto(criteria, totalCnt);
 
         if(freeBoardUserDtos != null){
             log.info("NOT NULL");
             map.put("freeBoardUserDtos", freeBoardUserDtos);
+            map.put("pageMakerDto", pageMakerDto);
             return map;
 
         } else {
@@ -81,5 +92,12 @@ public class FreeBoardUserService implements IFreeBoardUserService {
         log.info("freeBoardDelete()");
         return iFreeBoardUserDaoMapper.deleteFreeBoard(fb_no);
 
+    }
+
+    @Override
+    public int freeBoardModifyConfirm(FreeBoardUserDto freeBoardUserDto) {
+        log.info("freeBoardModifyConfirm()");
+
+        return  iFreeBoardUserDaoMapper.updateFreeboard(freeBoardUserDto);
     }
 }

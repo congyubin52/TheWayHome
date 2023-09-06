@@ -173,9 +173,10 @@
             tbl_shelter_info i
         ON
             n.s_name = i.s_name
-        where s_no = #{s_no}
+        WHERE
+            s_no = #{s_no}
         ORDER BY
-            s_no ASC
+             s_reg_date desc;
     </select>
 
     <!-- 보호소 리스트 - super가 조회하는 페이지 -->
@@ -195,7 +196,7 @@
             ON
                 n.s_name = i.s_name
         ORDER BY
-            s_no ASC
+            an_reg_date DESC;
     </select>
 
     <!-- 보호소 리스트 - 일반 admin 검사 -->
@@ -225,7 +226,7 @@
     </select>
 
     <!-- 보호 동물 리스트 - 보호소 리스트에서 보호동물 리스트 불러오기 -->
-   <select id="selectPets"
+<!--   <select id="selectPets"
             parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
         SELECT
@@ -246,6 +247,79 @@
                 an.s_name = ad.s_name
         WHERE
             ad.s_no = #{s_no} and an.use_yn='Y'
+        AND
+            an.use_yn = 'Y'
+    </select>-->
+
+    <select id="selectPets"
+            parameterType="String"
+            resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
+        <choose>
+        <when test="searchInput == null">
+        SELECT
+            api.an_no,
+            api.an_thumbnail,
+            ad.s_no,
+            api.s_name,
+            api.an_an_kind,
+            api.an_k_kind,
+            api.an_n_start,
+            api.an_n_end,
+            api.an_p_s_state
+        FROM
+            tbl_animal_api AS api
+            JOIN
+                tbl_member_admin AS ad
+            ON
+                api.s_name = ad.s_name
+        WHERE
+            ad.s_no = #{s_no}
+        </when>
+        <otherwise>
+            <choose>
+                <when test="searchOption == '0'">
+                    SELECT
+                    api.an_no,
+                    api.an_thumbnail,
+                    ad.s_no,
+                    api.s_name,
+                    api.an_an_kind,
+                    api.an_k_kind,
+                    api.an_n_start,
+                    api.an_n_end,
+                    api.an_p_s_state
+                    FROM
+                    tbl_animal_api AS api
+                        JOIN
+                            tbl_member_admin AS ad
+                        ON
+                            api.s_name = ad.s_name
+                    WHERE
+                        api.an_an_kind like concat('%',#{searchInput},'%')
+                </when>
+                <otherwise>
+                    SELECT
+                        api.an_no,
+                        api.an_thumbnail,
+                        ad.s_no,
+                        api.s_name,
+                        api.an_an_kind,
+                        api.an_k_kind,
+                        api.an_n_start,
+                        api.an_n_end,
+                        api.an_p_s_state
+                    FROM
+                        tbl_animal_api AS api
+                        JOIN
+                            tbl_member_admin AS ad
+                        ON
+                        api.s_name = ad.s_name
+                    WHERE
+                        api.an_k_kind like concat('%',#{searchInput},'%')
+                </otherwise>
+            </choose>
+        </otherwise>
+        </choose>
     </select>
 
     <!-- 보호 동물 리스트 - 메뉴바에서 보호동물 리스트 눌렀을 때 보호동물 불러오기 -->
@@ -258,6 +332,7 @@
             a.an_thumbnail,
             sn.s_no,
             a.s_name,
+            a.an_an_kind,
             a.an_k_kind,
             a.an_n_start,
             a.an_n_end,
@@ -282,6 +357,7 @@
             a.an_thumbnail,
             sn.s_no,
             a.s_name,
+            a.an_an_kind,
             a.an_k_kind,
             a.an_n_start,
             a.an_n_end,
@@ -307,6 +383,7 @@
             an_color,
             an_age,
             an_weight,
+            an_an_kind,
             an_k_kind,
             an_n_start,
             an_n_end,
