@@ -171,6 +171,20 @@
             a_m_no = #{a_m_no}
     </select>
 
+    <!--비밀 번호 변경-->
+    <update id="updateAdminMemberPassword"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto">
+
+        UPDATE
+            tbl_member_admin
+        SET
+            a_m_pw = #{a_m_pw},
+            a_m_mod_date = NOW()
+        WHERE
+            a_m_no = #{a_m_no}
+
+    </update>
+
     <!-- admin 탈퇴 -->
     <update id="deleteAdmin"
             parameterType="Integer">
@@ -178,6 +192,7 @@
             tbl_member_admin
         SET
             use_yn = 'N',
+            a_m_approval = '0',
             a_m_mod_date = NOW()
         where
             a_m_no = #{a_m_no}
