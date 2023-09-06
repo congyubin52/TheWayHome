@@ -36,8 +36,19 @@ public interface IPetsAdminDaoMapper {
     // 보호 동물 등록
     public int registPets(PetsApiDto petsApiDto);
 
-    // 보호 동물 삭제
-    public int deletePets(String an_no);
+    // 보호 동물 수정 시 수정 전 정보 가져오기
+    PetsAdminDto selectPetsForModify(String an_no);
 
-    public int selectPetsForDelete(String an_no);
+    // 보호 동물 수정하기
+    public int updatePets(PetsAdminDto petsAdminDto);
+
+    // 보호 동물 삭제
+    public int deletePetsConfirm(String an_no);
+
+//    public int selectPetsForDelete(String an_no);
+
+
+
+
+
 }

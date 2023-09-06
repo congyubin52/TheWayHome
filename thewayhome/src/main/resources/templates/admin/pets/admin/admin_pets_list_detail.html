@@ -45,7 +45,7 @@
                     <input name="an_no" type="hidden" th:value="${petsAdminDto.an_no}">
                     <input name="an_no" type="hidden" th:value="${petsAdminDto.s_no}">
                     <p style="display: inline-block;"> 성별: <span th:text="${petsAdminDto.an_g_gender}"></span> | </p>
-                    <p style="display: inline-block;"> 색상: <span th:text="${petsAdminDto.an_c_color}"></span> | </p>
+                    <p style="display: inline-block;"> 색상: <span th:text="${petsAdminDto.an_color}"></span> | </p>
                     <p style="display: inline-block;"> 출생: <span th:text="${petsAdminDto.an_age}"></span> | </p>
                     <p style="display: inline-block;"> 몸무게: <span th:text="${petsAdminDto.an_weight}"></span></p>
                 </div>
@@ -69,9 +69,13 @@
     </div>
 
     <div class="go_pets_list text-center mt-5">
-        <a href="javascript:history.back();" class="btn btn-success">목록</a>
+
+        <a th:href="@{/admin/pets/admin_modify_pets_form(an_no=${petsAdminDto.an_no})}" class="btn btn-primary btn-lg mr-2">수정</a>
+        <a th:href="@{/admin/pets/admin_delete_pet_confirm(an_no=${petsAdminDto.an_no})}" class="btn btn-danger btn-lg mr-2" onclick="return confirm('정말로 삭제하시겠습니까')">삭제</a>
+        <a href="javascript:history.back();" class="btn btn-success btn-lg">목록</a>
 <!--        <a th:href="@{/user/pets/pets_list(s_no=${petsAdminDto.s_no})}" class="btn btn-success">목록</a>-->
         <br><br>
+    </div>
     </div>
 
 </section>

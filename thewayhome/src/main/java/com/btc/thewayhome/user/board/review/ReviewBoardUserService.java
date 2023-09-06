@@ -1,5 +1,9 @@
 package com.btc.thewayhome.user.board.review;
 
+import com.btc.thewayhome.page.Criteria;
+import com.btc.thewayhome.page.PageMakerDto;
+import com.btc.thewayhome.user.board.comment.CommentDto;
+import com.btc.thewayhome.user.board.comment.ICommentDaoMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,9 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
 
     @Autowired
     IReviewBoardUserDaoMapper iReviewBoardUserDaoMapper;
+
+    @Autowired
+    ICommentDaoMapper iCommentDaoMapper;
 
     @Override
     public int writeReviewConfirm(String u_m_id, String r_b_image, ReviewBoardUserDto reviewBoardUserDto) {
@@ -45,11 +52,16 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
     }
 
     @Override
-    public Map<String, Object> reviewBoardList() {
+    public Map<String, Object> reviewBoardList(int pageNum, int amount) {
         log.info("reviewBoardList()");
 
         Map<String, Object> map = new HashMap<>();
-        List<ReviewBoardUserDto> reviewBoardDtos = iReviewBoardUserDaoMapper.selectReviewAll();
+
+        //페이지 네이션
+        Criteria criteria = new Criteria(pageNum, amount);
+        List<ReviewBoardUserDto> reviewBoardDtos = iReviewBoardUserDaoMapper.selectReviewAll(criteria.getSkip(), criteria.getAmount());
+        int totalCnt = iReviewBoardUserDaoMapper.getTotalCnt();
+        PageMakerDto pageMakerDto = new PageMakerDto(criteria, totalCnt);
 
         if(reviewBoardDtos == null) {
             log.info("NULL");
@@ -58,6 +70,7 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
         } else {
             log.info("NOT NULL");
             map.put("reviewBoardDtos", reviewBoardDtos);
+            map.put("pageMakerDto", pageMakerDto);
             return map;
 
         }
@@ -69,6 +82,12 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
         log.info("reviewDeleteConfirm()");
         return iReviewBoardUserDaoMapper.reviewUseNForBNo(rBNo);
 
+    }
+
+    @Override
+    public List<CommentDto> getCommentAll() {
+        log.info("getCommentAll()");
+        return iCommentDaoMapper.selectCommentAll();
     }
 
 

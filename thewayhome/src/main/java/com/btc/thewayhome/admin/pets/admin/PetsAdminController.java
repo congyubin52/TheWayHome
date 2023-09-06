@@ -122,7 +122,7 @@ public class PetsAdminController {
 
 
     // 보호 동물 등록 페이지()
-    @RequestMapping("/admin_regist_pets_form")
+    @GetMapping("/admin_pets_regist_form")
     public String createRegistPetsForm(HttpSession session) {
         log.info("createRegistPetsForm()");
 
@@ -133,7 +133,8 @@ public class PetsAdminController {
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
         if (loginedAdminMemberDto != null) {
-            nextPage = "admin/pets/admin/admin_regist_pets_form";
+
+            nextPage = "admin/pets/admin/admin_pets_regist_form";
 
         }
         return nextPage;
@@ -141,20 +142,19 @@ public class PetsAdminController {
     }
 
     // 보호 동물 등록 성공 or 실패
-    @RequestMapping("/admin_regist_pets_confirm")
+    @PostMapping("/admin_pets_regist_confirm")
     public String petsRegistConfirm(PetsApiDto petsApiDto,
                                     @RequestParam("file") MultipartFile file,
-                                    @RequestParam("an_no") String an_no) {
+                                    HttpSession session) {
         log.info("createRegistConfirm()");
 
-        String nextPage = "admin/pets/admin/admin_regist_pets_success";
+        String nextPage = "admin/pets/admin/admin_pets_regist_success";
 
 
         // 파일을 바로 쓸수는 없고 객체로 만들어서 써야한다.
         // SAVE FILE (바이너리 파일을 서버로 저장하는 방법)
         String saveFileName = uploadFileService.upload(file);
 
-        petsApiDto.setAn_no(an_no);
 
         if (saveFileName != null) {
             petsApiDto.setAn_thumbnail(saveFileName);
@@ -172,54 +172,103 @@ public class PetsAdminController {
     }
 
 
-    //보호동물 삭제
-    /*@GetMapping("/pet_delete_confirm")
-    @ResponseBody
-    public Object petDeleteConfirm(PetsAdminDto petsAdminDto) {
-        log.info("petDeleteConfirm()");
+    // 보호 동물 수정
+    @GetMapping("/admin_modify_pets_form")
+    public String modifyPetsForm(HttpSession session,
+                                 @RequestParam("an_no") String an_no,
+                                 Model model) {
+        log.info("modifyPetsForm()");
 
-        Map<String, Object> map = petsAdminService.petsDeleteConfirm(petsAdminDto.getAn_no());
+        // loginedAdminMemberDto가 null인 경우, 로그인 페이지로 이동
+        String nextPage = "admin/pets/admin/admin_pets_modify_form";
 
-        return map;
-    }*/
 
-    //회원 탈퇴
-    @PostMapping("/pet_delete_confirm")
-    public int petDeleteConfirm(@RequestParam("className") String className) {
-        log.info("petDeleteConfirm()");
+        // 보호 동물 등록 시 로그인 된 관리자만 사용하기 위함
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
-        int result = petsAdminService.petsDeleteConfirm(className);
-
-        return result;
-
-    }
-}
-
-    /*@GetMapping("/pet_delete_confirm")
-    public String petDeleteConfirm(HttpSession session) {
-        log.info("petDeleteConfirm()");
-
-        String nextPage = "redirect:/admin/pets/admin/admin_pets_list_detail";
-
-        PetsAdminDto petsAdminDto = (PetsAdminDto) session.getAttribute("petsAdminDto");
-
-        log.info("petsAdminDto mo : " + petsAdminDto.getAn_no());
-
-        int result = petsAdminService.petsDeleteConfirm(petsAdminDto);
-
-        log.info("an_no----------------->{}", petsAdminDto.getAn_no());
-
-        if (result > 0) {
-            session.removeAttribute("petsAdminDto");
+        if (loginedAdminMemberDto == null) {
+            nextPage = "redirect:/admin/member/member_login_form";
 
         } else {
-//            nextPage = "admin/delete_fail";
+            PetsAdminDto petsAdminDto = petsAdminService.modifyPetsForm(an_no);
+            model.addAttribute("petsAdminDto", petsAdminDto);
+        }
+        return nextPage;
+
+    }
+
+    // 보호동물 등록한 것 수정
+    @PostMapping("/admin_pets_modify_confirm")
+    public String modifyPetsConfirm(PetsAdminDto petsAdminDto,
+                                    @RequestParam("file") MultipartFile file,
+                                    HttpSession session) {
+        log.info("modifyPetsConfirm()");
+
+        String nextPage = "admin/pets/admin/admin_pets_modify_success";
+
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
+        if (loginedAdminMemberDto == null) {
+            nextPage = "redirect:/admin/member/member_login_form";
+        }
+        if (!file.getOriginalFilename().equals("")) {
+            String saveFileName = uploadFileService.upload(file);
+
+            if (saveFileName != null) {
+                petsAdminDto.setAn_image(saveFileName);
+                petsAdminDto.setAn_thumbnail(saveFileName);
+            }
+        }
+        int result = petsAdminService.modifyPetsConfirm(petsAdminDto);
+
+        log.info("------------>" + petsAdminDto.getAn_no());
+
+        if (result <= 0) {
+            nextPage = "redirect:admin/pets/admin/admin_pets_list";
         }
 
         return nextPage;
 
-    }*/
+    }
 
+
+    //보호동물 삭제
+//    @GetMapping("/pet_delete_confirm")
+//    @ResponseBody
+//    public String petDeleteConfirm(PetsAdminDto petsAdminDto) {
+//        log.info("petDeleteConfirm()");
+//
+//        Map<String, Object> map = petsAdminService.petsDeleteConfirm(Integer.parseInt(petsAdminDto.getAn_no()));
+//
+//        log.info("an_no---=============>{}", petsAdminDto.getAn_no());
+//
+//        return map;
+//    }
+//}
+
+    // 보호 동물 삭제
+    @GetMapping("/admin_delete_pet_confirm")
+    public String deletePetsConfirm(HttpSession session, @RequestParam("an_no") String an_no) {
+        log.info("petDeleteConfirm()");
+
+        String nextPage = "redirect:/admin/pets/admin/admin_pets_list";
+
+        AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+
+        if (loginedAdminMemberDto == null) {
+            nextPage = "redirect:/admin/member/member_login_form";
+        }
+
+        int result = petsAdminService.deletePetsConfirm(an_no);
+
+        if (result <= 0) {
+            nextPage = "redirect:/admin/pets/admin/admin_shelter_list";
+        }
+
+        return nextPage;
+
+    }
+}
 
 
 

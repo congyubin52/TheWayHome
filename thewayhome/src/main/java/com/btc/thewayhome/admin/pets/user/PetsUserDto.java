@@ -11,7 +11,7 @@ public class PetsUserDto {
     private String an_happen_place;
     private String an_an_kind;
     private String an_k_kind;
-    private String an_c_color;
+    private String an_color;
     private String an_age;
     private String an_weight;
     private String an_n_no;

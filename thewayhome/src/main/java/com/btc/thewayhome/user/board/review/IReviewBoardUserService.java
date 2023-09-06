@@ -1,5 +1,8 @@
 package com.btc.thewayhome.user.board.review;
 
+import com.btc.thewayhome.user.board.comment.CommentDto;
+
+import java.util.List;
 import java.util.Map;
 
 public interface IReviewBoardUserService {
@@ -11,8 +14,10 @@ public interface IReviewBoardUserService {
     public ReviewBoardUserDto reviewDetailPage(int r_b_no);
 
     // 후기 게시판 - 게시글 전체 리스트
-    public Map<String, Object> reviewBoardList();
+    public Map<String, Object> reviewBoardList(int pageNum, int amount);
 
     // 후기 게시판 - 삭제
     public int reviewDeleteConfirm(int rBNo);
+
+    public List<CommentDto> getCommentAll();
 }

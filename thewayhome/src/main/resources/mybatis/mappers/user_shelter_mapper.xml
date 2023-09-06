@@ -180,7 +180,7 @@
         SELECT
             a.an_no,
             ag.an_g_gender,
-            ac.an_c_color,
+            ac.an_color,
             a.an_age,
             a.an_weight,
             ak.an_k_kind,
