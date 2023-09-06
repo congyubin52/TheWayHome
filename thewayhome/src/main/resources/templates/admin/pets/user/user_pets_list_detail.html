@@ -5,6 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
+
 </head>
 <body>
 <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
@@ -51,27 +52,27 @@
                     <p>발견장소: <span th:text="${petsUserDto.an_happen_place}"></span> </p>
                     <p>특이사항: <span th:text="${petsUserDto.an_special_mark}"></span> </p>
                     <p>보호센터: <span th:text="${petsUserDto.s_name}" id="s_name"></span> </p>
+                    <!--<input name="an_no" type="hidden" th:value="${petsUserDto.s_phone}">
+                    <input name="an_no" type="hidden" th:value="${petsUserDto.s_address}">
+                    <input name="an_no" type="hidden" th:value="${petsUserDto.s_reg_date}">-->
                 </div>
                 <br>
 <!--                <a th:href="@{/user/pets/adopt_pets_form(s_name=${petsUserDto.s_name})}" th:attr="onclick=|adoptPetsConfirm(event)|" class="btn btn-success">입양 문의</a>-->
                 <a th:href="@{/user/pets/adopt_pets_form(s_name=${petsUserDto.s_name})}" th:attr="onclick=|adoptPetsConfirm(event)|" class="btn btn-success">입양 문의</a>
+                <!--<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="adoptPetsConfirm();">
+                    입양문의
+                </button>-->
             </div>
 
-            <!-- Trigger button for the modal -->
-<!--            <a href="#" th:href="@{/user/pets/adopt_pets_form(s_name=${petsUserDto.s_name})}" th:attr="onclick=|adoptPetsConfirm(event)|" class="btn btn-success" data-toggle="modal" data-target="#myModal">입양 문의</a>-->
-
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">보호소 정보</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="pet_list_detail" class="row">
+               <!-- &lt;!&ndash; Modal &ndash;&gt;
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">보호소명</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="col-md-6 mb-4">
                                     <div class="basic_info" style="display: inline-block;">
                                         <p style="display: inline-block;"> 보호소명: <span th:text="${petsUserDto.s_name}"></span></p><br>
@@ -81,18 +82,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Understood</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-
         </div>
-    </div>
+    </div>-->
 
     <div class="go_pets_list text-center mt-5">
         <a href="javascript:history.back();" class="btn btn-dark">목록</a>

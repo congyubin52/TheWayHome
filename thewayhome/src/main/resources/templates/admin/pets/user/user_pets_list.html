@@ -39,7 +39,14 @@
                     <option value="1">품종</option>
                 </select>
                 <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
-                <input type="button" value="검색" th:attr="onclick=|searchBoxPetConfirm(event)|">
+
+                <button class="btn btn-outline-danger" placeholder="Search" th:attr="onclick=|searchBoxPetConfirm()|">Search</button>
+
+<!--                <button type="button" value="검색" th:attr="onclick=|searchBoxPetConfirm(event)|"> </button>-->
+
+<!--                <input class="form-control me-2" type="search" placeholder="검색어를 입력하세요" aria-label="Search" id="search">-->
+
+
 
                 <!--<form th:action="@{/user/pets/search_box_for_pets}" method="post" name="search_box_pets_form">
                     <input type="text" name="an_k_kind" placeholder="검색어를 입력하세요">
@@ -59,11 +66,11 @@
                     </a>
 
                     <div class="card-body">
-                        <input type="hidden" name="s_no" id="s_no" th:value="${dto.s_no}">
+                        <input type="hidden" name="s_no" th:value="${dto.s_no}">
                         <p><span class="an_n_no">
                     <!-- <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}" th:text="${dto.an_n_no}" class="text-decoration-none text-dark"></a> -->
                 </span></p>
-                        <span class="an_k_kind" th:text="${dto.an_an_kind}">  |   </span>
+                        <span class="an_an_kind" th:text="${dto.an_an_kind}">  |   </span>
                         <span class="an_k_kind" th:text="${dto.an_k_kind}">  |   </span>
                         <p><span class="an_p_s_state" th:text="${dto.an_p_s_state}"></span></p>
                         <span class="an_n_end" th:text="${dto.an_n_start}"></span>

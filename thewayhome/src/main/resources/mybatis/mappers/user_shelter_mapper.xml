@@ -27,7 +27,7 @@
     <select id="selectShelter"
             resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
         <choose>
-            <when test="searchInput == null">
+            <when test="searchInput == null or searchInput.equals('')">
                 SELECT
                     n.s_no,
                     n.s_name,
@@ -88,10 +88,10 @@
 
     <!--보호 동물 리스트(보호소 리스트 상세 페이지)-->
     <select id="selectPets"
-            parameterType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto"
+            parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto">
         <choose>
-        <when test="searchInput == null">
+        <when test="searchInput == null or searchInput.equals('')">
         SELECT
             a.an_no,
             a.an_thumbnail,
@@ -123,6 +123,8 @@
                             a.s_name = sn.s_name
                     WHERE
                         a.an_an_kind like concat('%',#{searchInput},'%')
+                    AND
+                        sn.s_no = #{s_no}
                 </when>
                 <otherwise>
                     SELECT
@@ -135,6 +137,8 @@
                             a.s_name = sn.s_name
                     WHERE
                         a.an_k_kind like concat('%',#{searchInput},'%')
+                    AND
+                        sn.s_no = #{s_no}
                 </otherwise>
             </choose>
         </otherwise>

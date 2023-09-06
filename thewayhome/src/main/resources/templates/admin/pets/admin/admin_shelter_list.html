@@ -46,7 +46,7 @@
                         <!--마우스 오버시 텍스트 출력-->
                         <div class="container">
                             <td class="s_name">
-                            <a th:href="@{/admin/pets/pets_list(s_no=${dto.s_no})}" data-toggle="tooltip"  th:text="${dto.s_name}" class="text-decoration-none text-dark" title="보호동물 페이지로 이동"></a>
+                            <a th:href="@{/admin/pets/pets_list(s_no=${dto.s_no})}" data-toggle="tooltip"  th:text="${dto.s_name}" class="text-decoration-none text-dark" title="클릭시 보호 동물 페이지로 이동합니다."></a>
                             </td>
                         </div>
                         <script>
@@ -58,6 +58,7 @@
                         <td class="s_address" th:text="${dto.s_address}"></td>
                         <td class="s_phone" th:text="${dto.s_phone}"></td>
                         <td class="s_reg_date" th:text="${dto.s_reg_date}"></td>
+                        <input type="hidden" th:value="${dto.a_m_approval}">
                     </tr>
                     </tbody>
                 </table>

@@ -180,7 +180,7 @@
     </select>
 
     <!-- 보호소 리스트 - super가 조회하는 페이지 -->
-    <select id="selectShelterSuper"
+    <!--<select id="selectShelterSuper"
             parameterType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto"
             resultType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto">
         SELECT
@@ -195,6 +195,31 @@
                 tbl_shelter_info i
             ON
                 n.s_name = i.s_name
+    </select>-->
+
+    <!-- 보호소 리스트 - super가 조회하는 페이지 -->
+    <select id="selectShelterSuper"
+            parameterType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto"
+            resultType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto">
+        SELECT
+            n.s_no,
+            n.s_name,
+            i.s_address,
+            i.s_phone,
+            i.s_reg_date,
+            a.a_m_approval
+        FROM
+            tbl_member_admin a
+                JOIN
+                    tbl_shelter_num n
+                ON
+                    a.s_no = n.s_no
+                JOIN
+                    tbl_shelter_info i
+                ON
+                n.s_name = i.s_name
+        WHERE
+            a_m_approval = '1'
     </select>
 
     <!-- 보호소 리스트 - 일반 admin 검사 -->
@@ -253,7 +278,7 @@
             parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
         <choose>
-        <when test="searchInput == null">
+            <when test="searchInput == null or searchInput.equals('')">
         SELECT
             api.an_no,
             api.an_thumbnail,
@@ -296,6 +321,8 @@
                             api.s_name = ad.s_name
                     WHERE
                         api.an_an_kind like concat('%',#{searchInput},'%')
+                    AND
+                        ad.s_no = #{s_no}
                 </when>
                 <otherwise>
                     SELECT
@@ -316,6 +343,8 @@
                         api.s_name = ad.s_name
                     WHERE
                         api.an_k_kind like concat('%',#{searchInput},'%')
+                    AND
+                        ad.s_no = #{s_no}
                 </otherwise>
             </choose>
         </otherwise>
