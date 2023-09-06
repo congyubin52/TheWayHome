@@ -5,86 +5,68 @@
 <mapper namespace="com.btc.thewayhome.admin.pets.user.IPetsUserDaoMapper">
 
     <!--보호소 리스트-->
-<!--    <select id="selectShelter"-->
-<!--            resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">-->
-<!--        SELECT-->
-<!--            n.s_no,-->
-<!--            n.s_name,-->
-<!--            i.s_address,-->
-<!--            i.s_phone,-->
-<!--            i.s_reg_date-->
-<!--        FROM-->
-<!--                tbl_shelter_num n-->
-<!--            INNER JOIN-->
-<!--                tbl_shelter_info i-->
-<!--            ON-->
-<!--                n.s_name = i.s_name-->
-<!--        ORDER BY-->
-<!--            s_no ASC-->
-<!--    </select>-->
+        <select id="selectShelter"
+                resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
+            <choose>
+                <when test="searchInput eq null">
+                    SELECT
+                        n.s_no,
+                        n.s_name,
+                        i.s_address,
+                        i.s_phone,
+                        i.s_reg_date
+                    FROM
+                            tbl_shelter_num n
+                        INNER JOIN
+                            tbl_shelter_info i
+                        ON
+                            n.s_name = i.s_name
+                    ORDER BY
+                        s_no ASC
+                </when>
+                <otherwise>
+                    <choose>
+                        <when test="searchOption eq '0'">
+                            SELECT
+                                n.s_no,
+                                n.s_name,
+                                i.s_address,
+                                i.s_phone,
+                                i.s_reg_date
+                            FROM
+                                tbl_shelter_num n
+                            INNER JOIN
+                                tbl_shelter_info i
+                            ON
+                                n.s_name = i.s_name
+                            WHERE
+                                n.s_name like concat('%', #{searchInput} ,'%')
+                            ORDER BY
+                                s_no ASC
+                        </when>
+                        <otherwise>
+                            SELECT
+                                n.s_no,
+                                n.s_name,
+                                i.s_address,
+                                i.s_phone,
+                                i.s_reg_date
+                            FROM
+                                tbl_shelter_num n
+                            INNER JOIN
+                                tbl_shelter_info i
+                            ON
+                                n.s_name = i.s_name
+                            WHERE
+                                i.s_address like concat('%', #{searchInput} ,'%')
+                            ORDER BY
+                                s_no ASC
+                        </otherwise>
+                    </choose>
+                </otherwise>
+            </choose>
+        </select>
 
-    <!--보호소 리스트-->
-    <select id="selectShelter"
-            resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
-        <choose>
-            <when test="searchInput == null">
-                SELECT
-                    n.s_no,
-                    n.s_name,
-                    i.s_address,
-                    i.s_phone,
-                    i.s_reg_date
-                FROM
-                        tbl_shelter_num n
-                    INNER JOIN
-                        tbl_shelter_info i
-                    ON
-                        n.s_name = i.s_name
-                ORDER BY
-                    s_no ASC
-            </when>
-            <otherwise>
-                <choose>
-                    <when test="searchOption == '0'">
-                        SELECT
-                            n.s_no,
-                            n.s_name,
-                            i.s_address,
-                            i.s_phone,
-                            i.s_reg_date
-                        FROM
-                            tbl_shelter_num n
-                        INNER JOIN
-                            tbl_shelter_info i
-                        ON
-                            n.s_name = i.s_name
-                        WHERE
-                            n.s_name like concat('%', #{searchInput}  ,'%')
-                        ORDER BY
-                            s_no ASC
-                    </when>
-                    <otherwise>
-                        SELECT
-                            n.s_no,
-                            n.s_name,
-                            i.s_address,
-                            i.s_phone,
-                            i.s_reg_date
-                        FROM
-                            tbl_shelter_num n
-                        INNER JOIN
-                            tbl_shelter_info i
-                        ON
-                            n.s_name = i.s_name
-                        WHERE
-                            i.s_address like concat('%', #{searchInput} ,'%')
-                        ORDER BY
-                            s_no ASC
-                    </otherwise>
-                </choose>
-            </otherwise>
-        </choose>
-    </select>
 
     <!--보호 동물 리스트(보호소 리스트 상세 페이지)-->
     <select id="selectPets"
