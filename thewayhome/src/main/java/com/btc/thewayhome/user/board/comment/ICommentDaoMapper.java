@@ -8,5 +8,5 @@ import java.util.List;
 public interface ICommentDaoMapper {
     public int insertComment(CommentDto commentDto);
 
-    public List<CommentDto> selectCommentAll();
+    public List<CommentDto> selectCommentAll(int b_no);
 }

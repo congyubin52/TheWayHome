@@ -85,9 +85,9 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
     }
 
     @Override
-    public List<CommentDto> getCommentAll() {
+    public List<CommentDto> getCommentAll(int b_no) {
         log.info("getCommentAll()");
-        return iCommentDaoMapper.selectCommentAll();
+        return iCommentDaoMapper.selectCommentAll(b_no);
     }
 
 

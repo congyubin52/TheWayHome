@@ -4,6 +4,7 @@
         console.log('READY!!');
 
         commentBtn();
+        ajax_comment_list();
 
     });
 
@@ -78,9 +79,11 @@
                 console.log('AJAX SUCCESS - ajax_comment_confirm()');
                 if (data != null) {
                     console.log('댓글 작성 완료');
-                    commentList(data.commentDtos);
+                    commentList(data.commentDtos)
+
                 } else {
                     alert('댓글 작성 실패!');
+
                 }
 
             },
@@ -106,6 +109,7 @@
                 if (data != null) {
                     console.log('댓글 출력 완료!');
                     commentList(data.commentDtos);
+
                 } else {
                     alert('댓글 출력 실패!');
                 }
@@ -114,6 +118,7 @@
             error: function (data) {
                 console.log('AJAX ERROR - ajax_comment_list()');
                 alert('댓글 통신 실패!');
+                console.log('안마ㅣㅏㅓ라너랄ㅇ날ㄴㄹ' + data.commentDtos);
 
             }
         });
