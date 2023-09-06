@@ -26,7 +26,7 @@ public class CommentService implements ICommentService{
         result = iCommentDaoMapper.insertComment(commentDto);
 
         if(result > 0) {
-            return iCommentDaoMapper.selectCommentAll();
+            return iCommentDaoMapper.selectCommentAll(commentDto.getB_no());
 
         } else {
             return null;
@@ -34,4 +34,5 @@ public class CommentService implements ICommentService{
         }
 
     }
+
 }

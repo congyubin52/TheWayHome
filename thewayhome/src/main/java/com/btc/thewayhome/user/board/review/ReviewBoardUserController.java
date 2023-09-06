@@ -3,6 +3,7 @@ package com.btc.thewayhome.user.board.review;
 import com.btc.thewayhome.page.PageDefine;
 import com.btc.thewayhome.page.PageMakerDto;
 import com.btc.thewayhome.user.board.comment.CommentDto;
+import com.btc.thewayhome.user.board.comment.CommentService;
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -101,16 +103,17 @@ public class ReviewBoardUserController {
 
     // 후기 게시판 상세보기
     @GetMapping("/review_detail")
-    public String reviewDetailPage(@RequestParam("r_b_no") int r_b_no, Model model) {
+    public String reviewDetailPage(@RequestParam("r_b_no") int r_b_no ,Model model) {
         log.info("reviewDetailPage()");
 
         String nextPage = "/user/board/review/review_detail";
 
         ReviewBoardUserDto selectReviewDto = reviewBoardUserService.reviewDetailPage(r_b_no);
 
-        List<CommentDto> commentDtos = reviewBoardUserService.getCommentAll();
+        List<CommentDto> commentDtos =  reviewBoardUserService.getCommentAll(r_b_no);
 
         model.addAttribute("selectReviewDto", selectReviewDto);
+        model.addAttribute("commentDtos", commentDtos);
 
         return nextPage;
     }
@@ -130,6 +133,32 @@ public class ReviewBoardUserController {
     }
 
     // 후기 게시판 수정 Confirm
+    @PostMapping("/write_modify_confirm")
+    public String reviewModifyConfirm(ReviewBoardUserDto reviewBoardUserDto, HttpServletResponse response) throws IOException {
+        log.info("reviewModifyConfirm()");
+
+        String nextPage = "redirect:/user/board/review_detail?r_b_no=" + reviewBoardUserDto.getR_b_no();
+
+        int result = reviewBoardUserService.reviewModifyConfirm(reviewBoardUserDto);
+
+        if(result > 0) {
+            log.info("수정 성공");
+
+        } else {
+            log.info("수정 실패");
+
+            PrintWriter out = response.getWriter();
+            out.println("<script>");
+            out.println("alert('게시글 수정에 실패했습니다.');");
+            out.println("history.back();");
+            out.println("</script>");
+            out.flush();
+
+            nextPage = "";
+        }
+        return nextPage;
+
+    }
 
 
     // 후기 게시판 삭제
