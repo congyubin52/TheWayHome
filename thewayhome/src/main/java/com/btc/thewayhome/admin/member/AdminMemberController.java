@@ -163,7 +163,7 @@ public class AdminMemberController {
     }
     
     // 관리자 정보수정 기능
-    @PostMapping("/member_modify_confirm")
+   /* @PostMapping("/member_modify_confirm")
     public void memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto, HttpServletResponse response) throws IOException {
         log.info("memberModifyConfirm()");
 
@@ -188,7 +188,33 @@ public class AdminMemberController {
             out.flush();
 
         }
+    }*/
+
+    // 관리자 정보수정 기능
+    @PostMapping("/member_modify_confirm")
+    @ResponseBody
+    public AdminMemberDto memberModifyConfirm(@RequestBody Map<String, String> msgMap,HttpSession session) {
+        log.info("[AdminMemberController] memberModifyConfirm()");
+
+        //service에서 adminMemberDto로 받으므로 dto로 변환해서 들고 가야 함
+        AdminMemberDto adminMemberDto = new AdminMemberDto();
+        adminMemberDto.setA_m_no(Integer.parseInt(msgMap.get("a_m_no")));
+        adminMemberDto.setA_m_id(msgMap.get("a_m_id"));
+        adminMemberDto.setA_m_pw(msgMap.get("a_m_pw"));
+
+        adminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
+
+        if(adminMemberDto != null) {
+            AdminMemberDto loginedAdminMemberDto = adminMemberDto;
+            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+            session.setMaxInactiveInterval(60*30);
+
+            return adminMemberDto;
+
+        }
+        return null;
     }
+
     
     // 관리자 계정 삭제 기능
     @GetMapping("/member_delete_confirm")
