@@ -67,7 +67,13 @@ function registPetsForm() {
         form.s_address.focus();
 
     } else {
-        form.submit();
+
+        let userConfirmed = confirm('정말 등록하시겠습니까?');
+        if(userConfirmed){
+            let form = document.getElementById("admin_pets_regist_form");
+
+            form.submit();
+        }
 
     }
 

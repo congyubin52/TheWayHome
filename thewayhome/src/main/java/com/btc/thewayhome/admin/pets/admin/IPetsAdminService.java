@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IPetsAdminService {
 
-    public void petsRegistInfo(String responseString, PetsApiDto petsApiDto);
+    public void petsRegistInfo(String responseString, PetsAdminDto petsAdminDto);
 
     //보호소 리스트
     public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto);
@@ -21,7 +21,7 @@ public interface IPetsAdminService {
     public PetsAdminDto searchPetsListDetail(String an_no);
 
     // 보호 동물 등록 하기(성공 or 실패)
-    public int petsRegistConfirm(PetsApiDto petsApiDto);
+    public int petsRegistConfirm(PetsAdminDto petsAdminDto);
 
     // 보호 동물 수정 시 수정 전 정보 가져오기
     public PetsAdminDto modifyPetsForm(String anNo);

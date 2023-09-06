@@ -30,7 +30,8 @@ public class PetsAdminController {
     /*
      * 관리자(ADMIN)에게 보이는 페이지
      */
-    //보호소 전체 리스트
+
+    // 보호소 전체 리스트
     @GetMapping("/shelter_list")
     public String shelterList(Model model, HttpSession session) {
         log.info("shelterList()");
@@ -62,7 +63,7 @@ public class PetsAdminController {
 
     }
 
-    //보호 동물 리스트 -> 메뉴바에서 보호동물 클릭 시 나타나는 페이지
+    // 보호 동물 리스트 -> 메뉴바에서 보호동물 클릭 시 나타나는 페이지
     @GetMapping("/all_pets_list")
     public String allPetsList(Model model, HttpSession session) {
         log.info("allPetsList()");
@@ -78,7 +79,7 @@ public class PetsAdminController {
 
     }
 
-    //보호 동물 상세 페이지
+    // 보호 동물 상세 페이지
     @GetMapping("/pets_list_detail")
     public String petsListDetail(Model model, PetsAdminDto petsAdminDto, HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petsListDetail()");
@@ -117,7 +118,7 @@ public class PetsAdminController {
 
     // 보호 동물 등록 성공 or 실패
     @PostMapping("/admin_pets_regist_confirm")
-    public String petsRegistConfirm(PetsApiDto petsApiDto,
+    public String petsRegistConfirm(PetsAdminDto petsAdminDto,
                                     @RequestParam("file") MultipartFile file,
                                     HttpSession session) {
         log.info("createRegistConfirm()");
@@ -131,10 +132,10 @@ public class PetsAdminController {
 
 
         if (saveFileName != null) {
-            petsApiDto.setAn_thumbnail(saveFileName);
-            petsApiDto.setAn_image(saveFileName);
+            petsAdminDto.setAn_thumbnail(saveFileName);
+            petsAdminDto.setAn_image(saveFileName);
 
-            int result = petsAdminService.petsRegistConfirm(petsApiDto);
+            int result = petsAdminService.petsRegistConfirm(petsAdminDto);
 
             if (result <= 0) {
                 nextPage = "admin/pets/admin/admin_regist_pets_fail";
@@ -171,7 +172,7 @@ public class PetsAdminController {
 
     }
 
-    // 보호동물 등록한 것 수정
+    // 보호 동물 등록한 것 수정
     @PostMapping("/admin_pets_modify_confirm")
     public String modifyPetsConfirm(PetsAdminDto petsAdminDto,
                                     @RequestParam("file") MultipartFile file,
@@ -206,26 +207,12 @@ public class PetsAdminController {
     }
 
 
-    //보호동물 삭제
-//    @GetMapping("/pet_delete_confirm")
-//    @ResponseBody
-//    public String petDeleteConfirm(PetsAdminDto petsAdminDto) {
-//        log.info("petDeleteConfirm()");
-//
-//        Map<String, Object> map = petsAdminService.petsDeleteConfirm(Integer.parseInt(petsAdminDto.getAn_no()));
-//
-//        log.info("an_no---=============>{}", petsAdminDto.getAn_no());
-//
-//        return map;
-//    }
-//}
-
     // 보호 동물 삭제
     @GetMapping("/admin_delete_pet_confirm")
     public String deletePetsConfirm(HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petDeleteConfirm()");
 
-        String nextPage = "redirect:/admin/pets/admin/admin_pets_list";
+        String nextPage = "redirect:/admin/pets/all_pets_list";
 
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
@@ -236,7 +223,7 @@ public class PetsAdminController {
         int result = petsAdminService.deletePetsConfirm(an_no);
 
         if (result <= 0) {
-            nextPage = "redirect:/admin/pets/admin/admin_shelter_list";
+            nextPage = "/admin/pets/admin/admin_delete_pet_fail";
         }
 
         return nextPage;

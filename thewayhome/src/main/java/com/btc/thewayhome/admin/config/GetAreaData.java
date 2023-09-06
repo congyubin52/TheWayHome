@@ -182,8 +182,8 @@ public class GetAreaData {
                             "&upr_cd=" + keyList.get(q) +
                             "&org_cd=" + mapValueArray.get(k) +
                             "&_type=json" +
-                            "&pageNo=1" +
-                            "&numOfRows=10";
+                            "&pageNo=2" +
+                            "&numOfRows=100";
                     System.out.println(">>url: " + apiUrl);
                     URL url = new URL(apiUrl);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(); // url 객체를 사용하여 HTTP 연결을 엽니다.

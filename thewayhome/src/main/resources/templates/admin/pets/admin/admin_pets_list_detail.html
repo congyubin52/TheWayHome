@@ -32,9 +32,8 @@
 
         <div id="pet_list_detail" class="row">
             <div class="col-md-6 mb-4">
-<!--                <img th:src="@{/img/temp1.png}" style="display:block; width:80%;" class="mx-auto" onclick="window.open(this.src)">-->
-<!--                <img th:src="@{/img/temp1.png}" style="display:block; width:80%; border: 2px solid #007bff; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);" onclick="window.open(this.src)">-->
-                <img th:src="${petsAdminDto.an_image}" style="display:block; width:60%;" onclick="window.open(this.src)" onmouseover="this.style.cursor='pointer'; this.style.border='2px solid #dadada'; this.style.boxShadow='2px 2px 5px rgba(0, 0, 0, 0.5)'" onmouseout="this.style.cursor='auto'; this.style.border='none'; this.style.boxShadow='none'">
+                <img th:if="${petsAdminDto.an_image.contains('http://www.animal.go.kr/files/shelter/')}" th:src="${petsAdminDto.an_image}" style="display:block; width:60%;" onclick="window.open(this.src)" onmouseover="this.style.cursor='pointer'; this.style.border='2px solid #dadada'; this.style.boxShadow='2px 2px 5px rgba(0, 0, 0, 0.5)'" onmouseout="this.style.cursor='auto'; this.style.border='none'; this.style.boxShadow='none'">
+                <img th:unless="${petsAdminDto.an_image.contains('http://www.animal.go.kr/files/shelter/')}" th:src="@{'/UploadImg/'} +  ${petsAdminDto.an_image}" style="display:block; width:60%;" onclick="window.open(this.src)" onmouseover="this.style.cursor='pointer'; this.style.border='2px solid #dadada'; this.style.boxShadow='2px 2px 5px rgba(0, 0, 0, 0.5)'" onmouseout="this.style.cursor='auto'; this.style.border='none'; this.style.boxShadow='none'">
             </div>
             <div class="col-md-6 mb-4">
                 <p>
@@ -53,7 +52,6 @@
                 <br>
                 <br>
                 <div class="detail_info">
-<!--                    <p>공고번호: <span th:text="${petsAdminDto.an_n_notice_no}"></span> </p>-->
                     <p>공고기간:
                         <span th:text="${petsAdminDto.an_n_start}"></span>
                         <span> ~ </span>

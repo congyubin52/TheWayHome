@@ -22,7 +22,7 @@ public class PetsAdminService implements IPetsAdminService{
     IPetsAdminDaoMapper iPetsAdminDaoMapper;
 
     @Override
-    public void petsRegistInfo(String responseString, PetsApiDto petsApiDto) {
+    public void petsRegistInfo(String responseString, PetsAdminDto petsAdminDto) {
         try {
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObj = (JSONObject) jsonParser.parse(responseString);
@@ -37,16 +37,16 @@ public class PetsAdminService implements IPetsAdminService{
             for (int i = 0; i < array.size(); i++) {
                 JSONObject jObj = (JSONObject) array.get(i);
 
-                petsApiDto.setAn_no(jObj.get("desertionNo").toString());
-                petsApiDto.setAn_thumbnail(jObj.get("filename").toString());
-                petsApiDto.setAn_happen_date(jObj.get("happenDt").toString());
-                petsApiDto.setAn_happen_place(jObj.get("happenPlace").toString());
+                petsAdminDto.setAn_no(jObj.get("desertionNo").toString());
+                petsAdminDto.setAn_thumbnail(jObj.get("filename").toString());
+                petsAdminDto.setAn_happen_date(jObj.get("happenDt").toString());
+                petsAdminDto.setAn_happen_place(jObj.get("happenPlace").toString());
 
                 String kindCd = jObj.get("kindCd").toString();
-//                petsApiDto.setAn_k_kind(jObj.get("kindCd").toString());
+//                petsAdminDto.setAn_k_kind(jObj.get("kindCd").toString());
                 String[] splitKindCd = kindCd.split(" ");
                 if (splitKindCd.length > 0) {
-                    petsApiDto.setAn_an_kind(splitKindCd[0]);
+                    petsAdminDto.setAn_an_kind(splitKindCd[0]);
                     if(splitKindCd.length > 1){
                         StringBuilder an_k_kind = new StringBuilder();
                         for (int j = 1; j < splitKindCd.length; j++) {
@@ -55,31 +55,33 @@ public class PetsAdminService implements IPetsAdminService{
                             }
                             an_k_kind.append(splitKindCd[j]); // 나머지 한 글자를 이어붙임
                         }
-                        petsApiDto.setAn_k_kind(an_k_kind.toString());
+                        petsAdminDto.setAn_k_kind(an_k_kind.toString());
                     }
                 }
 
-                log.info(petsApiDto.getAn_k_kind());
-                log.info(petsApiDto.getAn_an_kind());
+                log.info(petsAdminDto.getAn_k_kind());
+                log.info(petsAdminDto.getAn_an_kind());
 
-                petsApiDto.setAn_color(jObj.get("colorCd").toString());
-                petsApiDto.setAn_age(jObj.get("age").toString());
-                petsApiDto.setAn_weight(jObj.get("weight").toString());
-                petsApiDto.setAn_n_start(jObj.get("noticeSdt").toString());
-                petsApiDto.setAn_n_end(jObj.get("noticeEdt").toString());
-                petsApiDto.setAn_image(jObj.get("popfile").toString());
-                petsApiDto.setAn_p_s_state(jObj.get("processState").toString());
-                petsApiDto.setAn_g_gender(jObj.get("sexCd").toString());
-                petsApiDto.setAn_ne_neuter(jObj.get("neuterYn").toString());
-                petsApiDto.setAn_special_mark(jObj.get("specialMark").toString());
-                petsApiDto.setS_name(jObj.get("careNm").toString());
-                petsApiDto.setS_phone(jObj.get("careTel").toString());
-                petsApiDto.setS_address(jObj.get("careAddr").toString());
-//                petsApiDto.setAn_o_organization(jObj.get("orgNm").toString());
-//                petsApiDto.setAn_o_charge(jObj.get("chargeNm").toString());
-//                petsApiDto.setAn_o_charge_tel(jObj.get("officetel").toString());
-                iPetsAdminDaoMapper.insertPetsInfo(petsApiDto);
+                petsAdminDto.setAn_color(jObj.get("colorCd").toString());
+                petsAdminDto.setAn_age(jObj.get("age").toString());
+                petsAdminDto.setAn_weight(jObj.get("weight").toString());
+                petsAdminDto.setAn_n_start(jObj.get("noticeSdt").toString());
+                petsAdminDto.setAn_n_end(jObj.get("noticeEdt").toString());
+                petsAdminDto.setAn_image(jObj.get("popfile").toString());
+                petsAdminDto.setAn_p_s_state(jObj.get("processState").toString());
+                petsAdminDto.setAn_g_gender(jObj.get("sexCd").toString());
+                petsAdminDto.setAn_ne_neuter(jObj.get("neuterYn").toString());
+                petsAdminDto.setAn_special_mark(jObj.get("specialMark").toString());
+                petsAdminDto.setS_name(jObj.get("careNm").toString());
+                petsAdminDto.setS_phone(jObj.get("careTel").toString());
+                petsAdminDto.setS_address(jObj.get("careAddr").toString());
 
+                boolean isPetsNumInfo = iPetsAdminDaoMapper.isPetsNumInfo(petsAdminDto);
+
+                if(!isPetsNumInfo) {
+                    // 중복되는 유기번호가 없어야만 DB에 api데이터가 들어갈 수 있다.
+                    iPetsAdminDaoMapper.insertPetsInfo(petsAdminDto);
+                }
             }
 
 
@@ -178,10 +180,10 @@ public class PetsAdminService implements IPetsAdminService{
 
     // 보호 동물 등록 성공 or 실패 확인
     @Override
-    public int petsRegistConfirm(PetsApiDto petsApiDto) {
+    public int petsRegistConfirm(PetsAdminDto petsAdminDto) {
         log.info("petsRegistConfirm()");
 
-        int result = iPetsAdminDaoMapper.registPets(petsApiDto);
+        int result = iPetsAdminDaoMapper.registPets(petsAdminDto);
 
         if(result > 0){
             return PETS_REGISTER_SUCCESS;
