@@ -22,10 +22,8 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("loadUserByUsername()");
 
-        log.info("userName: " + username);
-
         UserMemberDto userMemberDto = new UserMemberDto();
-        //Service에서 Dto로 넘겨주니 타입 안 맞으니까 넣어서
+        //Service에서 iUserMemberDaoMapper에 Dto로 넘겨주니 타입 일치화
         userMemberDto.setU_m_id(username);
 
         UserMemberDto selectedUserMemberDto = iUserMemberDaoMapper.selectUserForLogin(userMemberDto);
@@ -33,7 +31,7 @@ public class MyUserDetailsService implements UserDetailsService {
         return User.builder()
                 .username(selectedUserMemberDto.getU_m_id())
                 .password(selectedUserMemberDto.getU_m_pw())
-                .roles("USER")  //권한 사용 하지 않아서 필요 없음
+                .roles("USER")
                 .build();
     }
 }

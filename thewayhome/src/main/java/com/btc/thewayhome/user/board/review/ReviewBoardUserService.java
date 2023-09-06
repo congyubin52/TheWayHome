@@ -1,5 +1,7 @@
 package com.btc.thewayhome.user.board.review;
 
+import com.btc.thewayhome.page.Criteria;
+import com.btc.thewayhome.page.PageMakerDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,25 +16,30 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
 
     @Autowired
     IReviewBoardUserDaoMapper iReviewBoardUserDaoMapper;
+
     @Override
-    public int writeReviewConfirm(ReviewBoardUserDto reviewBoardUserDto) {
-        log.info("[ReviewBoardUserService] writeReviewConfirm()");
+    public int writeReviewConfirm(String u_m_id, String r_b_image, ReviewBoardUserDto reviewBoardUserDto) {
+        log.info("writeReviewConfirm()");
+
+        reviewBoardUserDto.setU_m_id(u_m_id);
+        reviewBoardUserDto.setR_b_image(r_b_image);
 
         return iReviewBoardUserDaoMapper.insertWriteReview(reviewBoardUserDto);
+
     }
 
     @Override
     public ReviewBoardUserDto reviewDetailPage(int r_b_no) {
-        log.info("[ReviewBoardUserService] reviewDetailPage()");
+        log.info("reviewDetailPage()");
 
         int result = iReviewBoardUserDaoMapper.updateHits(r_b_no);
 
         if(result > 0) {
-            log.info("[ReviewBoardUserService] 조회수 업데이트 성공");
+            log.info("hits update success");
             return iReviewBoardUserDaoMapper.selectReviewForBNo(r_b_no);
 
         }else {
-            log.info("[ReviewBoardUserService] 조회수 업데이트 실패");
+            log.info("hits update fail");
             return null;
 
         }
@@ -40,29 +47,36 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
     }
 
     @Override
-    public Map<String, Object> reviewBoardList() {
-        log.info("[ReviewBoardUserService] reviewBoardList()");
+    public Map<String, Object> reviewBoardList(int pageNum, int amount) {
+        log.info("reviewBoardList()");
 
         Map<String, Object> map = new HashMap<>();
 
-        List<ReviewBoardUserDto> reviewBoardDtos = iReviewBoardUserDaoMapper.selectReviewAll();
+        //페이지 네이션
+        Criteria criteria = new Criteria(pageNum, amount);
+        List<ReviewBoardUserDto> reviewBoardDtos = iReviewBoardUserDaoMapper.selectReviewAll(criteria.getSkip(), criteria.getAmount());
+        int totalCnt = iReviewBoardUserDaoMapper.getTotalCnt();
+        PageMakerDto pageMakerDto = new PageMakerDto(criteria, totalCnt);
 
         if(reviewBoardDtos == null) {
-            log.info("reviewBoardDtos == null");
+            log.info("NULL");
+            return null;
+
         } else {
-            log.info("[ReviewBoardUserService] NOT NULL");
+            log.info("NOT NULL");
+            map.put("reviewBoardDtos", reviewBoardDtos);
+            map.put("pageMakerDto", pageMakerDto);
+            return map;
+
         }
 
-        map.put("reviewBoardDtos", reviewBoardDtos);
-
-        return map;
     }
 
     @Override
     public int reviewDeleteConfirm(int rBNo) {
-        log.info("[ReviewBoardUserService] reviewDeleteConfirm()");
-
+        log.info("reviewDeleteConfirm()");
         return iReviewBoardUserDaoMapper.reviewUseNForBNo(rBNo);
+
     }
 
 

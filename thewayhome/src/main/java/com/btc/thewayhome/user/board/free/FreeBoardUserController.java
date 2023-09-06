@@ -8,12 +8,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,18 +21,13 @@ import java.util.Map;
 @Controller
 public class FreeBoardUserController {
 
-
     @Autowired
     FreeBoardUserService freeBoardUserService;
 
     @Autowired
     UploadFileService uploadFileService;
 
-
-
-    /*
-      실종/목격 게시판 Home
-   */
+    // 실종/목격 게시판 Home
     @GetMapping({"", "/"})
     public String freeBoardHome() {
         log.info("freeBoardHome()");
@@ -44,25 +35,30 @@ public class FreeBoardUserController {
         return "redirect:/user/board/free_board_list";
     }
 
+    // 실종/목격 게시판 리스트
     @GetMapping("/free_board_list")
     public String freeBoardList(Model model){
+        log.info("freeBoardList()");
 
         String nextPage = "/user/board/free/free_board_list";
 
+        //서비스에서 Map으로 넘겨주기 때문에 Map 타입으로 받음
         Map<String, Object> map = freeBoardUserService.getAllFreeBoard();
         List<FreeBoardUserDto> freeBoardUserDtos = (List<FreeBoardUserDto>) map.get("freeBoardUserDtos");
+
         if(freeBoardUserDtos == null){
             log.info("freeBoardUserDtos IS NULL!!!");
+
         } else {
             log.info("freeBoardUserDtos SELECT SUCCESS!!!");
             model.addAttribute("freeBoardUserDtos", freeBoardUserDtos);
+
         }
         return nextPage;
+
     }
 
-    /*
-      실종/목격 게시판 글 작성 Form
-   */
+    // 실종/목격 게시판 글 작성 Form
     @GetMapping({"free_board_form"})
     public String freeBoardWriteForm(HttpSession session) {
         log.info("freeBoardWriteForm()");
@@ -70,6 +66,7 @@ public class FreeBoardUserController {
         String nextPage = "/user/board/free/free_board_form";
 
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserMemberDto");
+
         if(loginedUserDto == null){
             nextPage = "user/member/member_login_form";
         }
@@ -77,37 +74,37 @@ public class FreeBoardUserController {
         return nextPage;
     }
 
-    /*
-      실종/목격 게시판 글 작성 Confirm
-   */
+    // 실종/목격 게시판 글 작성 Confirm
     @PostMapping({"/free_board_write_confirm"})
     public String freeBoardWriteConfirm(HttpSession session, FreeBoardUserDto freeBoardUserDto, @RequestParam("file") MultipartFile file) {
         log.info("freeBoardWriteConfirm()");
 
-        UserMemberDto loginedUserMemberDto = (UserMemberDto) session.getAttribute("loginedUserMemberDto");
-
         String nextPage = "redirect:/user/board/";
 
+        UserMemberDto loginedUserMemberDto = (UserMemberDto) session.getAttribute("loginedUserMemberDto");
 
         String saveFileName = "noImage";
 
         // SAVE FILE
         if(!file.isEmpty()) {
-            //SAVE FILE
             saveFileName = uploadFileService.upload(file);
         }
 
         int result = freeBoardUserService.freeBoardWriteConfirm(loginedUserMemberDto.getU_m_id(), saveFileName, freeBoardUserDto);
+
         if(result > 0){
             log.info("DB UPLOAD SUCCESS");
-            return nextPage;
+
         } else {
             log.info("DB UPLOAD FAIL");
             nextPage = "/";
-            return nextPage;
+
         }
+        return nextPage;
+
     }
 
+    // 실종/목격 게시판 상세보기
     @GetMapping("/free_board_detail")
     public String freeBoardDetail(@RequestParam("fb_no") int fb_no, FreeBoardUserDto freeBoardUserDto, Model model, HttpSession session) {
         log.info("freeBoardDetail()");
@@ -126,6 +123,7 @@ public class FreeBoardUserController {
 
     }
 
+    // 실종/목격 게시판 수정 Form
     @GetMapping("/free_board_modify_form")
     public String freeBoardModify(FreeBoardUserDto freeBoardUserDto, Model model){
         log.info("freeBoardModify");
@@ -139,6 +137,10 @@ public class FreeBoardUserController {
         return nextPage;
     }
 
+    // 실종/목격 게시판 수정 Confirm
+
+
+    // 실종/목격 게시판 삭제
     @GetMapping("/free_board_delete_confirm")
     public String freeBoardDelete(@RequestParam("fb_no") int fb_no, HttpServletResponse response) throws IOException {
         log.info("freeBoardModify");
@@ -159,12 +161,13 @@ public class FreeBoardUserController {
             out.println("</script>");
             out.flush();
 
-            nextPage = "/user/board/free/free_board_list";
+            nextPage = "";
 
         }
-
         return nextPage;
+
     }
+
 
 
 

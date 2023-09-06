@@ -47,10 +47,10 @@ public class SpringSecurityConfig {
 	public SecurityFilterChain filterChainForUser(HttpSecurity http) throws Exception {
 		log.info("filterChain");
 
-		http.csrf().disable()	//CSRF 보호 기능 비활성화
-				.cors().disable()	//CORS 설정 비활성화
+		http.csrf().disable()
+				.cors().disable()
 				.authorizeHttpRequests(request -> request
-						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()		//HTTP 요청 인증 설정
+						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()  // HTTP 요청 인증 설정
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
 								"/user/member/create_account_form",
                                 "/user/member/create_account_confirm",
@@ -60,16 +60,16 @@ public class SpringSecurityConfig {
 								"/user/board/free_board_list",
 								"/user/board/free_board_detail",
 								"/UploadImg/**").permitAll()
-						.anyRequest().authenticated()	//위에 있는 경로 외 요청은 전부 인증 필요
+						.anyRequest().authenticated()  // 해당 경로 외의 요청은 모두 인증 필요
 				)
-				.formLogin(login -> login                           // 로그인 시 폼(form)을 이용
+				.formLogin(login -> login  // 로그인 시 폼(form)을 이용
 						.loginPage(
 								"/user/member/member_login_form"
-						)    // 로그인 시 폼 주소 설정
+						)  // 로그인 시 폼(form) 주소 설정
 						.loginProcessingUrl("/user/member/member_login_confirm")
 						.usernameParameter("u_m_id")
 						.passwordParameter("u_m_pw")
-						.successHandler((request, response, authentication) -> {	// 로그인 성공 시(추가 구현 예정 ex) 로그인 페이지로 오기전에 있던 페이지로 다시 보내는 거)
+						.successHandler((request, response, authentication) -> {  // 로그인 성공 시(추가 구현 예정: 로그인 페이지로 오기 이전에 있던 페이지로 이동)
 							log.info("successHandler!!");
 
 							UserMemberDto userMemberDto = new UserMemberDto();
@@ -85,7 +85,7 @@ public class SpringSecurityConfig {
 							response.sendRedirect("/");
 
 						})
-						.failureHandler((request, response, exception) -> {		//로그인 실패 시(추가 구현 예정 ex) 아이디 혹은 비밀번호를 다시 확인해주세요 문구 띄우는 거)
+						.failureHandler((request, response, exception) -> {		//로그인 실패 시(추가 구현 예정: 아이디 혹은 비밀번호를 다시 확인해주세요 알림)
 							log.info("failureHandler!!");
 							response.sendRedirect("/user/member/member_login_form");
 
