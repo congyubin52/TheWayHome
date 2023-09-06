@@ -144,6 +144,8 @@ public class PetsUserController {
         List<PetsUserDto> petsUserDtos = petsUserService.searchShelterInfo(s_name);
         model.addAttribute("petsUserDtos", petsUserDtos);
 
+        log.info("s_name----------->", s_name);
+
         return nextPage;
 
     }

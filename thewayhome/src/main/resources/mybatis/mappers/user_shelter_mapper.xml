@@ -45,7 +45,7 @@
             </when>
             <otherwise>
                 <choose>
-                    <when test="searchOption == '0'">
+                    <when test="searchOption eq '0'.toString()">
                         SELECT
                             n.s_no,
                             n.s_name,
@@ -112,7 +112,7 @@
         </when>
         <otherwise>
             <choose>
-                <when test="searchOption == '0'">
+                <when test="searchOption eq '0'.toString()">
                     SELECT
                         *
                     FROM

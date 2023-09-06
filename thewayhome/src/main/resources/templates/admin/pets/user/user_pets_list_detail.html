@@ -64,7 +64,7 @@
                 </div>
                 <br>
 <!--                <input type="button" value="입양 문의" onclick="adoptPets" class="btn btn-success"onclick=|adoptPetsForm(eve">-->
-                <a th:href="@{/user/pets/adopt_pets_form(s_name=${petsUserDto.s_name})}" th:attr=nt)|" class="btn btn-success">입양 문의</a>
+                <a th:href="@{/user/pets/adopt_pets_form(s_name=${petsUserDto.s_name})}" th:attr="onclick=|adoptPetsConfirm(event)|" class="btn btn-success">입양 문의</a>
             </div>
         </div>
     </div>

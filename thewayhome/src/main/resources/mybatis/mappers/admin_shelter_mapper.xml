@@ -182,8 +182,6 @@
                 tbl_shelter_info i
             ON
                 n.s_name = i.s_name
-        ORDER BY
-            an_reg_date DESC;
     </select>
 
     <!-- 보호소 리스트 - 일반 admin 검사 -->
@@ -264,7 +262,7 @@
         </when>
         <otherwise>
             <choose>
-                <when test="searchOption == '0'">
+                <when test="searchOption eq '0'.toString()">
                     SELECT
                     api.an_no,
                     api.an_thumbnail,
