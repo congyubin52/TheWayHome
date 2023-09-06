@@ -15,9 +15,6 @@ import java.util.UUID;
 @Controller
 public class ImageController {
 
-    @Autowired
-    ImageService imageService;
-
     private String uploadDir = "C:\\localImage\\";
 
     @PostMapping(value = "/image/upload")

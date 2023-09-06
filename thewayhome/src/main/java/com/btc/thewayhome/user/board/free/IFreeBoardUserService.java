@@ -13,7 +13,7 @@ public interface IFreeBoardUserService {
     public int freeBoardWriteConfirm(String u_m_id, String fb_image, FreeBoardUserDto freeBoardUserDto);
 
     // 실종/목격 게시판 - 게시글 전체 리스트
-    public Map<String, Object> getAllFreeBoard();
+    public Map<String, Object> getAllFreeBoard(int pageNum, int amount);
 
     // 실종/목격 게시판 - 상세보기
     public Map<String, Object> freeBoardDetail(int fb_no, FreeBoardUserDto freeBoardUserDto);
@@ -23,5 +23,8 @@ public interface IFreeBoardUserService {
 
     // 실종/목격 게시판 - 삭제
     public int freeBoardDelete(int fb_no);
+
+    // 실종/목격 게시판 - 수정 Confirm
+    public int freeBoardModifyConfirm(FreeBoardUserDto freeBoardUserDto);
 
 }

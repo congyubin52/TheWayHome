@@ -10,21 +10,24 @@
 
 <header th:replace="~{user/include/head_header_footer.html::header}"></header>
 
+<style>
+    .ck-editor__editable { height: 250px; }
+</style>
+
 <section>
-    <div id="section_wrap">
-        <div class="form-group w-35 p-3 mt-3 mx-auto text-center">
+        <div class="w-25 bg-danger p-1 mt-4 mx-auto text-center text-light" style="border-radius: 5px;">
             <span style="font-size: 24px; white-space: nowrap;">실종/목격 글 작성 페이지</span>
         </div>
-        <div class="free_board_write_form">
+        <div class="container w-50 px-lg-5 mt-4">
             <form th:action="@{/user/board/free_board_write_confirm}" name="free_board_write_confirm" method="post" enctype="multipart/form-data">
-                <select name="fb_category">
+                <select class="form-select form-select-sm mb-3" name="fb_category">
                     <option value="0">-- 실종/목격 선택하시오 --</option>
                     <option value="1">-- 실종 --</option>
                     <option value="2">-- 목격 --</option>
                 </select>
-                <input type="text" name="fb_title" placeholder="INPUT title"><br>
-                <textarea id="editor" name="fb_content" ></textarea><br>
-                <select name="fb_region">
+                <input class="w-100 p-2 mb-3 border border-secondarys" style="border-radius: 3px;" type="text" name="fb_title" placeholder="INPUT title"><br>
+
+                <select class="form-select form-select-sm" name="fb_region">
                     <option value="0">-- 지역을 선택하시오 --</option>
                     <option value="1">-- 서울특별시 --</option>
                     <option value="2">-- 부산광역시 --</option>
@@ -44,29 +47,33 @@
                     <option value="16">-- 경상남도 --</option>
                     <option value="17">-- 제주특별자치도 --</option>
                 </select><br>
-                <input type="text" name="fb_kind" placeholder="품종"><br>
-                <input type="text" name="fb_color" placeholder="색상"><br>
-                <input type="text" name="fb_age" placeholder="나이"><br>
-                <input type="text" name="fb_weight" placeholder="체중"><br>
-                <select name="fb_gender" >
+
+                품종 : <input class="form-control-sm mb-1"  type="text" name="fb_kind" placeholder="품종">
+                색상 : <input class="form-control-sm mb-1"  type="text" name="fb_color" placeholder="색상"><br>
+                나이 : <input class="form-control-sm mb-3"  type="text" name="fb_age" placeholder="나이">
+                체중 : <input class="form-control-sm mb-3" type="text" name="fb_weight" placeholder="체중"><br>
+
+                <select class="form-select form-select-sm mb-1" name="fb_gender" >
                     <option value="0">-- 성별 선택 --</option>
                     <option value="M">-- 수컷 --</option>
-                    <option value="W">-- 암컷 --</option>
+                    <option value="F">-- 암컷 --</option>
                     <option value="Q">-- 미상 --</option>
                 </select><br>
-                <select name="fb_neuter">
+                <select class="form-select form-select-sm mb-1" name="fb_neuter">
                     <option value="0">-- 중성화 여부 --</option>
                     <option value="Y">-- 중성화 O --</option>
                     <option value="N">-- 중성화 X --</option>
                     <option value="U">-- 미상 --</option>
                 </select><br>
-                이미지 : <input type="file" name="file"><br>
-                <input id="submitBtn" type="button" value="write">&nbsp;&nbsp;
-                <input type="reset" value="reset">
+                <textarea id="editor" name="fb_content" ></textarea><br>
+                <div class="mb-3">
+                    <input class="form-control" type="file" name="file" id="formFile">
+                </div>
+                <input class="btn btn-outline-danger mb-3" id="submitBtn" type="button" value="작성">&nbsp;&nbsp;
+                <input class="btn btn-outline-danger ms-3 mb-3" type="button" value="취소" onclick="cancelButton();">
             </form>
         </div>
 
-    </div>
 </section>
 
 <footer th:replace="~{user/include/head_header_footer.html::footer}"></footer>

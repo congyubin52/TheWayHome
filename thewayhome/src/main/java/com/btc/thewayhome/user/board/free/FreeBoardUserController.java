@@ -1,11 +1,16 @@
 package com.btc.thewayhome.user.board.free;
 
+import com.btc.thewayhome.page.PageDefine;
+import com.btc.thewayhome.page.PageMakerDto;
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import com.btc.thewayhome.user.member.UserMemberDto;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,14 +42,17 @@ public class FreeBoardUserController {
 
     // 실종/목격 게시판 리스트
     @GetMapping("/free_board_list")
-    public String freeBoardList(Model model){
+    public String freeBoardList(Model model,
+                                @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
+                                @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount){
         log.info("freeBoardList()");
 
         String nextPage = "/user/board/free/free_board_list";
 
         //서비스에서 Map으로 넘겨주기 때문에 Map 타입으로 받음
-        Map<String, Object> map = freeBoardUserService.getAllFreeBoard();
+        Map<String, Object> map = freeBoardUserService.getAllFreeBoard(pageNum, amount);
         List<FreeBoardUserDto> freeBoardUserDtos = (List<FreeBoardUserDto>) map.get("freeBoardUserDtos");
+        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
 
         if(freeBoardUserDtos == null){
             log.info("freeBoardUserDtos IS NULL!!!");
@@ -52,6 +60,7 @@ public class FreeBoardUserController {
         } else {
             log.info("freeBoardUserDtos SELECT SUCCESS!!!");
             model.addAttribute("freeBoardUserDtos", freeBoardUserDtos);
+            model.addAttribute("pageMakerDto", pageMakerDto);
 
         }
         return nextPage;
@@ -126,7 +135,7 @@ public class FreeBoardUserController {
     // 실종/목격 게시판 수정 Form
     @GetMapping("/free_board_modify_form")
     public String freeBoardModify(FreeBoardUserDto freeBoardUserDto, Model model){
-        log.info("freeBoardModify");
+        log.info("freeBoardModify()");
 
         String nextPage = "user/board/free/free_board_modify_form";
 
@@ -138,6 +147,31 @@ public class FreeBoardUserController {
     }
 
     // 실종/목격 게시판 수정 Confirm
+    @PostMapping("/free_board_modify_confirm")
+    public String freeBoardModifyConfirm(FreeBoardUserDto freeBoardUserDto, HttpServletResponse response) throws IOException  {
+        log.info("freeBoardModifyConfirm()");
+
+        String nextPage = "redirect:/user/board/free_board_detail?fb_no=" + freeBoardUserDto.getFb_no();
+
+        int result = freeBoardUserService.freeBoardModifyConfirm(freeBoardUserDto);
+        if(result > 0){
+            log.info("MODIFY SUCCESS");
+        } else {
+            log.info("MODIFY FAIL");
+
+            PrintWriter out = response.getWriter();
+            out.println("<script>");
+            out.println("alert('게시글 수정에 실패했습니다.');");
+            out.println("history.back();");
+            out.println("</script>");
+            out.flush();
+
+            nextPage = "";
+        }
+
+
+        return nextPage;
+    }
 
 
     // 실종/목격 게시판 삭제
@@ -167,11 +201,6 @@ public class FreeBoardUserController {
         return nextPage;
 
     }
-
-
-
-
-
 
 
 }
