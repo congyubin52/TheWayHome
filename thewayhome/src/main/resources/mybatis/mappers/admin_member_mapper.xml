@@ -218,6 +218,7 @@
             a_m_mod_date = NOW()
         WHERE
             a_m_no = #{a_m_no}
+        AND
             use_yn = 'Y'
     </update>
 

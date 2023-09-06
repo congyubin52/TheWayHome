@@ -9,7 +9,7 @@ public interface IPetsAdminService {
     public void petsRegistInfo(String responseString, PetsAdminDto petsAdminDto);
 
     //보호소 리스트
-    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto, int pageNum, int amount);
+    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto);
 
     //보호 동물 리스트(보호소 리스트 상세 페이지)
     public List<PetsAdminDto> searchPetsList(String s_no, String searchOption, String searchInput);

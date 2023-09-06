@@ -35,9 +35,7 @@ public class PetsAdminController {
 
     // 보호소 전체 리스트
     @GetMapping("/shelter_list")
-    public String shelterList(Model model, HttpSession session,
-                              @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
-                              @RequestParam(value="amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount) {
+    public String shelterList(Model model, HttpSession session) {
         log.info("shelterList()");
 
         String nextPage = "admin/pets/admin/admin_shelter_list";
@@ -47,14 +45,15 @@ public class PetsAdminController {
 
         // 여러 개의 보호소들을 담아주기 위해 List 사용
 //        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
-        Map<String, Object> map = (Map<String, Object>) petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
+//        Map<String, Object> map = (Map<String, Object>) petsAdminService.searchShelterList(loginedAdminMemberDto);
 
+        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto);
 
-        List<AdminShelterListInfoDto> adminShelterListInfoDtos = (List<AdminShelterListInfoDto>) map.get("adminShelterListInfoDtos");
-        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
+//        List<AdminShelterListInfoDto> adminShelterListInfoDtos = (List<AdminShelterListInfoDto>) map.get("adminShelterListInfoDtos");
+//        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
 
         model.addAttribute("adminShelterListInfoDtos", adminShelterListInfoDtos);
-        model.addAttribute("pageMakerDto", pageMakerDto);
+//        model.addAttribute("pageMakerDto", pageMakerDto);
 
         return nextPage;
 

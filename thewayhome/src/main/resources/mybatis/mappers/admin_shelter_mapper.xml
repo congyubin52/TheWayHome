@@ -272,6 +272,8 @@
                 api.s_name = ad.s_name
         WHERE
             ad.s_no = #{s_no}
+        ORDER BY
+            api.an_n_end ASC;
         </when>
         <otherwise>
             <choose>
@@ -343,6 +345,8 @@
                 a.s_name = sn.s_name
         WHERE
             sn.s_no= ${s_no} AND use_yn = 'Y'
+        ORDER BY
+            a.an_n_end ASC;
     </select>
 
     <!--보호 동물 리스트 - 보호동물 리스트 눌렀을 때 보호동물 불러오기 -->

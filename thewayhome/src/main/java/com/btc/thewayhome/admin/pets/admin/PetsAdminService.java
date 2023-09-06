@@ -95,11 +95,11 @@ public class PetsAdminService implements IPetsAdminService{
 
     //보호소 리스트 -> SUPER, 일반 ADMIN에 따라 나눔
     @Override
-    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto, int pageNum, int amount) {
+    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto) {
         log.info("searchShelterList()");
-        Map<String, Object> map = new HashMap<>();
+//        Map<String, Object> map = new HashMap<>();
 
-        Criteria criteria = new Criteria(pageNum, amount);
+//        Criteria criteria = new Criteria(pageNum, amount);
 
 //        List<AdminShelterListInfoDto> adminShelterListInfoDtos = iPetsAdminDaoMapper.pageList(criteria);
 //
