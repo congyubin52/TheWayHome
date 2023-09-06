@@ -22,4 +22,11 @@
             b_type = "2" AND b_no =#{b_no}
     </select>
 
+    <delete id="deleteCommentCNo" parameterType="Integer">
+        DELETE FROM
+            tbl_board_comment
+        WHERE
+            r_c_no = #{r_c_no}
+    </delete>
+
 </mapper>

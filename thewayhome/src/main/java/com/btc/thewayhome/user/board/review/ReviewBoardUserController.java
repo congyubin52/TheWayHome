@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -109,14 +111,30 @@ public class ReviewBoardUserController {
         String nextPage = "/user/board/review/review_detail";
 
         ReviewBoardUserDto selectReviewDto = reviewBoardUserService.reviewDetailPage(r_b_no);
-
-        List<CommentDto> commentDtos =  reviewBoardUserService.getCommentAll(r_b_no);
+//        List<CommentDto> commentDtos =  reviewBoardUserService.getCommentAll(r_b_no);
 
         model.addAttribute("selectReviewDto", selectReviewDto);
-        model.addAttribute("commentDtos", commentDtos);
+//        model.addAttribute("commentDtos", commentDtos);
 
         return nextPage;
     }
+
+//    @GetMapping("/review_detail_json")
+//    @ResponseBody
+//    public List<CommentDto> reviewDetailPageJson(@RequestParam("r_b_no") int r_b_no ,Model model) {
+//        log.info("reviewDetailPageJson()");
+//
+////        ReviewBoardUserDto selectReviewDto = reviewBoardUserService.reviewDetailPage(r_b_no);
+////
+////        List<ReviewBoardUserDto> selectReviewDtoList = new ArrayList<ReviewBoardUserDto>();
+////        selectReviewDtoList.add(selectReviewDto);
+//
+//        List<CommentDto> commentDtos =  reviewBoardUserService.getCommentAll(r_b_no);
+//        model.addAttribute("commentDtos", commentDtos);
+//
+//        return commentDtos;
+//    }
+
 
     // 후기 게시판 수정 Form
     @GetMapping("/review_modify_form")
