@@ -35,7 +35,7 @@
                             <a th:unless="${reviewDto.r_b_image != 'noImage'}" th:href="@{/user/board/review_detail(r_b_no=${reviewDto.r_b_no})}">
                                 <img th:src="@{/img/no_img.png}" alt="img" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover;">
                             </a>
-                        <a href="#none" class="text-dark" style="text-decoration: none;">
+                        <a th:href="@{/user/board/review_detail(r_b_no=${reviewDto.r_b_no})}" class="text-dark" style="text-decoration: none;">
                             <h3 class="fs-4 fw-bold" th:text="${reviewDto.r_b_title}"></h3>
                         </a>
                         <div class="mb-4">

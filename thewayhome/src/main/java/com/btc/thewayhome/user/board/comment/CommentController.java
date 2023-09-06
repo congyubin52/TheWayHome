@@ -33,6 +33,20 @@ public class CommentController {
         return map;
 
     }
+//    // 댓글 작성 Form
+//    @PostMapping ("/write_comment_confirm")
+//    @ResponseBody
+//    public Object writeCommentConfirm(@RequestBody Map<String, Object> msgMap, CommentDto commentDto) {
+//        log.info("writeCommentConfirm()");
+//
+//        List<CommentDto> commentDtos = commentService.writeCommentConfirm(msgMap, commentDto);
+//        Map<String, Object> map = new HashMap<>();
+//
+//        map.put("commentDtos", commentDtos);
+//
+//        return map;
+//
+//    }
 
 
 }

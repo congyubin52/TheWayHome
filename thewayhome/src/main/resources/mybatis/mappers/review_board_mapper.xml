@@ -56,6 +56,18 @@
             r_b_no = #{r_b_no} AND use_yn = "Y"
     </update>
 
+    <!--후기 게시판 - 수정-->
+    <update id="updateReviewboard" parameterType="com.btc.thewayhome.user.board.review.ReviewBoardUserDto" >
+        UPDATE
+            tbl_review_board
+        SET
+            r_b_title = #{r_b_title},
+            r_b_content = #{r_b_content},
+            r_b_mod_date = NOW()
+        WHERE
+            r_b_no = #{r_b_no}
+    </update>
+
     <!--후기 게시판 - 삭제-->
     <update id="reviewUseNForBNo" parameterType="Integer">
         UPDATE

@@ -23,9 +23,9 @@
     <div class="container w-50 px-lg-5 mt-4">
         <form th:action="@{/user/board/write_modify_confirm}" name="write_modify_form" method="post">
             <input type="hidden" name="r_b_no" th:value="${selectReviewDto.r_b_no}">
-            <div class="mb-0"><input class="w-100 p-2 border border-secondarys" type="text" name="b_title" th:value="${selectReviewDto.r_b_title}" style="border-radius: 3px;"></div> <br/>
-            <textarea name="b_content" th:text="${selectReviewDto.r_b_content}" id="editor" ></textarea> <br/>
-            <input type="file" name="file" th:value="${selectReviewDto.r_b_image}">
+            <div class="mb-0"><input class="w-100 p-2 border border-secondarys" type="text" name="r_b_title" th:value="${selectReviewDto.r_b_title}" style="border-radius: 3px;"></div> <br/>
+            <textarea name="r_b_content" th:text="${selectReviewDto.r_b_content}" id="editor" ></textarea> <br/>
+<!--            <input type="file" name="file" th:value="${selectReviewDto.r_b_image}">-->
             <div class="d-flex justify-content-end mb-4">
                 <input class="btn btn-outline-success" type="button" value="수정" id="submitBtn">
                 <input class="btn btn-outline-success ms-3" type="button" value="취소" onclick="cancelButton();">
@@ -42,9 +42,6 @@
 
     ClassicEditor.create(document.querySelector('#editor'),{
         language: "ko",
-        ckfinder : {
-            uploadUrl: "/image/upload"
-        }
     }).then(editor=>{
         $('#submitBtn').click(function() {
             reviewModifyConfirm(editor);
