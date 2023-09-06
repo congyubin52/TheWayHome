@@ -192,14 +192,30 @@ public class PetsAdminService implements IPetsAdminService{
         }
     }
 
+    // 보호 동물 수정 시 수정 전 정보 가져오기
+    @Override
+    public PetsAdminDto modifyPetsForm(String an_no) {
+
+        PetsAdminDto petsAdminDto = iPetsAdminDaoMapper.selectPetsForModify(an_no);
+        return petsAdminDto;
+    }
+
+
+    // 보호 동물 수정 성공 or 실패 확인
+    @Override
+    public int modifyPetsConfirm(PetsAdminDto petsAdminDto) {
+        log.info("modifyPetsConfirm()");
+
+        return iPetsAdminDaoMapper.updatePets(petsAdminDto);
+
+    }
+
     // 보호 동물 삭제
     @Override
-    public int petsDeleteConfirm(PetsAdminDto petsAdminDto) {
+    public int deletePetsConfirm(String an_no) {
         log.info("petsDeleteConfirm()");
 
-        log.info("an_no----------------->{}", petsAdminDto.getAn_no());
-
-        return iPetsAdminDaoMapper.deletePets(petsAdminDto.getAn_no());
+        return iPetsAdminDaoMapper.deletePetsConfirm(an_no);
 
     }
 

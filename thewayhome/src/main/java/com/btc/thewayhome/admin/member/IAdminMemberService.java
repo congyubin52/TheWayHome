@@ -38,4 +38,5 @@ public interface IAdminMemberService {
     //관리자 승인 처리
     public Map<String, Object> memberApprovalConfirm(int a_m_no);
 
+
 }
