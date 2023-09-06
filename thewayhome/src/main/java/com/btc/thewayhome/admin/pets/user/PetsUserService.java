@@ -9,7 +9,9 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Service
@@ -118,12 +120,18 @@ public class PetsUserService implements IPetsUserService {
 
     // 보호소 정보 상세 페이지
     @Override
-    public List<PetsUserDto> searchShelterInfo(String s_name) {
+    public PetsUserDto searchShelterInfo(String s_name) {
         log.info("searchShelterInfo()");
 
-        List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectShelterDetail(s_name);
+        Map<String, Object> map = new HashMap<>();
+        PetsUserDto petsUserDto = iPetsUserDaoMapper.selectShelterDetail(s_name);
 
-        return petsUserDtos;
+        log.info("s_name---------------->----->{}", petsUserDto.getS_name());
+        log.info("getS_phone---------------->----->{}", petsUserDto.getS_phone());
+        log.info("getS_address---------------->----->{}", petsUserDto.getS_address());
+        log.info("getAn_reg_date---------------->----->{}", petsUserDto.getAn_reg_date());
+
+        return petsUserDto;
 
     }
 }

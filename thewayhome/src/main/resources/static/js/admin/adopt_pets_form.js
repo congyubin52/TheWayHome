@@ -1,9 +1,9 @@
 function adoptPetsConfirm() {
     console.log('adoptPetsConfirm() CALLED!!');
-    var sName  = $('#s_name').val();
-    var s_name = document.getElementById("s_name").value;
-    console.log(sName);
+    let s_name  = $('#s_name').text();
+    // let s_name = document.getElementById("s_name").value;
+    console.log(s_name);
 
-        alert(`보호소로 문의해주세요`);
+        alert(`${s_name} 로 문의해주세요`);
 
 }

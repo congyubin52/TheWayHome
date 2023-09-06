@@ -91,6 +91,8 @@ public class PetsAdminController {
             log.info("searchPetsList SUCCESS");
             model.addAttribute("petsAdminDtos", petsAdminDtos);
 
+
+
         } else {
             log.info("searchPetsList FAIL");
 
