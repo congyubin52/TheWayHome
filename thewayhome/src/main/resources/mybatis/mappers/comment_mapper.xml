@@ -19,7 +19,7 @@
         FROM
             tbl_board_comment
         WHERE
-            b_type = "2"
+            b_type = "2" AND b_no =#{b_no}
     </select>
 
 </mapper>

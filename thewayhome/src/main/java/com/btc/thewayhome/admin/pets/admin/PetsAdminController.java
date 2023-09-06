@@ -2,6 +2,8 @@ package com.btc.thewayhome.admin.pets.admin;
 
 
 import com.btc.thewayhome.admin.member.AdminMemberDto;
+import com.btc.thewayhome.page.PageDefine;
+import com.btc.thewayhome.page.PageMakerDto;
 import com.btc.thewayhome.user.board.config.UploadFileService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -30,9 +32,12 @@ public class PetsAdminController {
     /*
      * 관리자(ADMIN)에게 보이는 페이지
      */
-    //보호소 전체 리스트
+
+    // 보호소 전체 리스트
     @GetMapping("/shelter_list")
-    public String shelterList(Model model, HttpSession session) {
+    public String shelterList(Model model, HttpSession session,
+                              @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
+                              @RequestParam(value="amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount) {
         log.info("shelterList()");
 
         String nextPage = "admin/pets/admin/admin_shelter_list";
@@ -41,8 +46,15 @@ public class PetsAdminController {
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
         // 여러 개의 보호소들을 담아주기 위해 List 사용
-        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto);
+//        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
+        Map<String, Object> map = (Map<String, Object>) petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
+
+
+        List<AdminShelterListInfoDto> adminShelterListInfoDtos = (List<AdminShelterListInfoDto>) map.get("adminShelterListInfoDtos");
+        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
+
         model.addAttribute("adminShelterListInfoDtos", adminShelterListInfoDtos);
+        model.addAttribute("pageMakerDto", pageMakerDto);
 
         return nextPage;
 
@@ -88,7 +100,7 @@ public class PetsAdminController {
 
     }
 
-    //보호 동물 리스트 -> 메뉴바에서 보호동물 클릭 시 나타나는 페이지
+    // 보호 동물 리스트 -> 메뉴바에서 보호동물 클릭 시 나타나는 페이지
     @GetMapping("/all_pets_list")
     public String allPetsList(Model model, HttpSession session) {
         log.info("allPetsList()");
@@ -104,7 +116,7 @@ public class PetsAdminController {
 
     }
 
-    //보호 동물 상세 페이지
+    // 보호 동물 상세 페이지
     @GetMapping("/pets_list_detail")
     public String petsListDetail(Model model, PetsAdminDto petsAdminDto, HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petsListDetail()");
@@ -143,7 +155,7 @@ public class PetsAdminController {
 
     // 보호 동물 등록 성공 or 실패
     @PostMapping("/admin_pets_regist_confirm")
-    public String petsRegistConfirm(PetsApiDto petsApiDto,
+    public String petsRegistConfirm(PetsAdminDto petsAdminDto,
                                     @RequestParam("file") MultipartFile file,
                                     HttpSession session) {
         log.info("createRegistConfirm()");
@@ -157,10 +169,10 @@ public class PetsAdminController {
 
 
         if (saveFileName != null) {
-            petsApiDto.setAn_thumbnail(saveFileName);
-            petsApiDto.setAn_image(saveFileName);
+            petsAdminDto.setAn_thumbnail(saveFileName);
+            petsAdminDto.setAn_image(saveFileName);
 
-            int result = petsAdminService.petsRegistConfirm(petsApiDto);
+            int result = petsAdminService.petsRegistConfirm(petsAdminDto);
 
             if (result <= 0) {
                 nextPage = "admin/pets/admin/admin_regist_pets_fail";
@@ -197,7 +209,7 @@ public class PetsAdminController {
 
     }
 
-    // 보호동물 등록한 것 수정
+    // 보호 동물 등록한 것 수정
     @PostMapping("/admin_pets_modify_confirm")
     public String modifyPetsConfirm(PetsAdminDto petsAdminDto,
                                     @RequestParam("file") MultipartFile file,
@@ -232,26 +244,12 @@ public class PetsAdminController {
     }
 
 
-    //보호동물 삭제
-//    @GetMapping("/pet_delete_confirm")
-//    @ResponseBody
-//    public String petDeleteConfirm(PetsAdminDto petsAdminDto) {
-//        log.info("petDeleteConfirm()");
-//
-//        Map<String, Object> map = petsAdminService.petsDeleteConfirm(Integer.parseInt(petsAdminDto.getAn_no()));
-//
-//        log.info("an_no---=============>{}", petsAdminDto.getAn_no());
-//
-//        return map;
-//    }
-//}
-
     // 보호 동물 삭제
     @GetMapping("/admin_delete_pet_confirm")
     public String deletePetsConfirm(HttpSession session, @RequestParam("an_no") String an_no) {
         log.info("petDeleteConfirm()");
 
-        String nextPage = "redirect:/admin/pets/admin/admin_pets_list";
+        String nextPage = "redirect:/admin/pets/all_pets_list";
 
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
@@ -262,7 +260,7 @@ public class PetsAdminController {
         int result = petsAdminService.deletePetsConfirm(an_no);
 
         if (result <= 0) {
-            nextPage = "redirect:/admin/pets/admin/admin_shelter_list";
+            nextPage = "/admin/pets/admin/admin_delete_pet_fail";
         }
 
         return nextPage;

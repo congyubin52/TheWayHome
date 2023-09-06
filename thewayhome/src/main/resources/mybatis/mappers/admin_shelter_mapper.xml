@@ -4,9 +4,23 @@
 
 <mapper namespace="com.btc.thewayhome.admin.pets.admin.IPetsAdminDaoMapper">
 
+
+    <!--들어오는 유기동물 번호와 DB에 있는  유기동물 번호 중복체크-->
+    <select id="isPetsNumInfo"
+            parameterType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto"
+            resultType="boolean">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_animal_api
+        WHERE
+            an_no=#{an_no}
+    </select>
+
+
     <!-- pet API DB에 삽입 -->
     <insert id="insertPetsInfo"
-            parameterType="com.btc.thewayhome.admin.pets.admin.PetsApiDto">
+            parameterType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
         INSERT INTO tbl_animal_api(an_no,
                                    an_thumbnail,
                                    an_happen_date,
@@ -56,7 +70,7 @@
 
     <!-- admin 보호소가 보호 동물을 DB에 직접 등록 -->
     <insert id="registPets"
-            parameterType="com.btc.thewayhome.admin.pets.admin.PetsApiDto">
+            parameterType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
         INSERT INTO tbl_animal_api(an_no,
                                    an_thumbnail,
                                    an_happen_date,
@@ -103,7 +117,6 @@
                 NOW()
                )
     </insert>
-
 
 <!-- 보호 동물 수정시 수정전 데이터를 불러오기 위함 -->
     <select id="selectPetsForModify" parameterType="String" resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
@@ -353,6 +366,8 @@
             tbl_shelter_num AS sn
             ON
                 a.s_name = sn.s_name AND use_yn = 'Y'
+        ORDER BY
+            a.an_n_end ASC;
     </select>
 
     <!-- 보호 동물 상세 페이지 -->
