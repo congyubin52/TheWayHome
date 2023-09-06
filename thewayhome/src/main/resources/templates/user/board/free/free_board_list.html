@@ -15,7 +15,6 @@
     </div>
 
     <div class="container px-lg-5 mt-2">
-
         <div class="navbar navbar-light bg-light m-3">
             <div class="container-fluid">
                     <a class="btn btn-outline-danger navbar-brand" th:href="@{/user/board/free_board_form}" role="button">글쓰기</a>
@@ -31,26 +30,6 @@
             </div>
         </div>
 
-<!--        <div class="row">-->
-<!--            <div class="col-6">-->
-<!--                <span class="m-3">-->
-<!--                    <a class="btn btn-outline-danger ms-3 mb-3" th:href="@{/user/board/free_board_form}" role="button">글쓰기</a>-->
-<!--                </span>-->
-<!--            </div>-->
-<!--            <div class="col-6">-->
-<!--                <select>-->
-<!--                    <option value="0">실종/목격</option>-->
-<!--                </select>-->
-<!--                <select>-->
-<!--                    <option value="0">축종</option>-->
-<!--                </select>-->
-<!--                <select>-->
-<!--                    <option value="0">품종</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--        </div>-->
-
-
         <!-- Page Features-->
         <div th:if="${freeBoardUserDtos == null}">
             현재 게시글이 없습니다.
@@ -61,6 +40,8 @@
                 <div class="card bg-danger-subtle border-0 h-100">
                     <div class="card-body p-2 p-lg-5 pt-0 pt-lg-0">
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-collection"></i></div>
+                        <div th:if="${freeBoardUserDto.fb_category == '1'}">실종</div>
+                        <div th:if="${freeBoardUserDto.fb_category == '2'}">목격</div>
                         <a th:if="${freeBoardUserDto.fb_image != 'noImage'}" th:href="@{/user/board/free_board_detail(fb_no=${freeBoardUserDto.fb_no})}">
                             <img th:src="@{'/UploadImg/' + ${freeBoardUserDto.fb_image}}" alt="img" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover;">
                         </a>
