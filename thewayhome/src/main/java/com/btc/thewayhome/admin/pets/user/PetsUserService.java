@@ -50,6 +50,7 @@ public class PetsUserService implements IPetsUserService {
     public List<UserShelterListInfoDto> searchShelterList(String searchOption, String searchInput) {
         log.info("searchShelterList()");
 
+        log.info("searchOption "+ searchOption);
         log.info("searchInput "+ searchInput);
 
         return iPetsUserDaoMapper.selectShelter(searchOption, searchInput);

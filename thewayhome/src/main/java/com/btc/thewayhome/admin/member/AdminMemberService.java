@@ -1,5 +1,6 @@
 package com.btc.thewayhome.admin.member;
 
+import com.btc.thewayhome.user.member.UserMemberDto;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -192,7 +193,7 @@ public class AdminMemberService implements IAdminMemberService {
 
     }
 
-    // 회원정보 수정 기능
+    // 관리자 정보 수정 기능
     @Override
     public AdminMemberDto memberModifyConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] memberModifyConfirm()");
@@ -202,10 +203,37 @@ public class AdminMemberService implements IAdminMemberService {
 
         // 위의 updateAccount 메서드에서 update가 되었다면 정보를 가장 최신화 해주기 위한 작업
         if (result > 0) {
-            log.info("[AdminMemberService] result success");
             return iAdminMemberDaoMapper.getLatestAccountInfo(adminMemberDto);
 
         } else {
+            return null;
+
+        }
+
+    }
+
+    @Override
+    // 관리자 비밀번호 변경 기능
+    public AdminMemberDto adminMemberPasswordModifyConfirm(AdminMemberDto adminMemberDto, String currentPw, String changePw) {
+        log.info("adminMemberPasswordModifyConfirm()");
+
+        AdminMemberDto idVerifiedMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
+
+        if (idVerifiedMemberDto != null && !passwordEncoder.matches(passwordEncoder.encode(adminMemberDto.getA_m_pw()),
+                idVerifiedMemberDto.getA_m_pw())) {
+            adminMemberDto.setA_m_pw(passwordEncoder.encode(changePw));
+            int result = iAdminMemberDaoMapper.updateAdminMemberPassword(adminMemberDto);
+
+            if (result > 0){
+                return iAdminMemberDaoMapper.getLatestAccountInfo(adminMemberDto);
+
+            } else{
+                log.info("service false");
+                return null;
+
+            }
+        } else{
+            log.info("service false");
             return null;
 
         }
@@ -252,5 +280,6 @@ public class AdminMemberService implements IAdminMemberService {
         return map;
 
     }
+
 
 }

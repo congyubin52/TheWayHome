@@ -63,7 +63,8 @@
                     </div>
                     <div class="text-center mb-4">
 <!--                    <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%">-->
-                        <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%">
+                        <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%" onclick="memberModifyForm()">
+                        <input type="button" value="비밀번호 변경" class="btn btn-dark" style="width:40%" th:onclick="|location.href='@{/user/member/member_password_modify_form}'|">
                     </div>
                 </form>
             </div>
