@@ -133,6 +133,32 @@ public class ReviewBoardUserController {
     }
 
     // 후기 게시판 수정 Confirm
+    @PostMapping("/write_modify_confirm")
+    public String reviewModifyConfirm(ReviewBoardUserDto reviewBoardUserDto, HttpServletResponse response) throws IOException {
+        log.info("reviewModifyConfirm()");
+
+        String nextPage = "redirect:/user/board/review_detail?r_b_no=" + reviewBoardUserDto.getR_b_no();
+
+        int result = reviewBoardUserService.reviewModifyConfirm(reviewBoardUserDto);
+
+        if(result > 0) {
+            log.info("수정 성공");
+
+        } else {
+            log.info("수정 실패");
+
+            PrintWriter out = response.getWriter();
+            out.println("<script>");
+            out.println("alert('게시글 수정에 실패했습니다.');");
+            out.println("history.back();");
+            out.println("</script>");
+            out.flush();
+
+            nextPage = "";
+        }
+        return nextPage;
+
+    }
 
 
     // 후기 게시판 삭제

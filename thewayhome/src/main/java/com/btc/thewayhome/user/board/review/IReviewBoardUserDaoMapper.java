@@ -25,4 +25,6 @@ public interface IReviewBoardUserDaoMapper {
     public int reviewUseNForBNo(int rBNo);
 
     public int getTotalCnt();
+
+    int updateReviewboard(ReviewBoardUserDto reviewBoardUserDto);
 }

@@ -20,4 +20,6 @@ public interface IReviewBoardUserService {
     public int reviewDeleteConfirm(int rBNo);
 
     public List<CommentDto> getCommentAll(int b_no);
+
+    int reviewModifyConfirm(ReviewBoardUserDto reviewBoardUserDto);
 }

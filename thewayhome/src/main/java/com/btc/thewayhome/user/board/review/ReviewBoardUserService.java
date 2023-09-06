@@ -90,5 +90,12 @@ public class ReviewBoardUserService implements IReviewBoardUserService{
         return iCommentDaoMapper.selectCommentAll(b_no);
     }
 
+    @Override
+    public int reviewModifyConfirm(ReviewBoardUserDto reviewBoardUserDto) {
+        log.info("reviewModifyConfirm()");
+        return iReviewBoardUserDaoMapper.updateReviewboard(reviewBoardUserDto);
+
+    }
+
 
 }
