@@ -20,6 +20,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.PrintWriter;
+
 @Log4j2
 @Configuration
 @EnableWebSecurity
@@ -151,7 +153,13 @@ public class SpringSecurityConfig {
 
 						})
 						.failureHandler((request, response, exception) -> {
-							log.info("failureHandler!!");
+							response.setContentType("text/html; charset=utf-8");
+							PrintWriter out = response.getWriter();
+							out.println("<script>");
+							out.println("alert('관리자의 승인이 필요합니다.');");
+							out.println("history.back();");
+							out.println("</script>");
+							out.flush();
 							response.sendRedirect("/admin/member/member_login_form");
 
 						})

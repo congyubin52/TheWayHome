@@ -30,4 +30,5 @@ public interface IPetsUserDaoMapper {
 
     // 보호소 정보 상세페이지
     public PetsUserDto selectShelterDetail(String s_name);
+
 }

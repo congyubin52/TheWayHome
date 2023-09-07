@@ -12,11 +12,7 @@
     <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
     <script th:replace="~{/admin/include/admin_member_js.html::js}" type="text/javascript"></script>
 
-<!--
-    <script th:src="@{/js/admin/member_login_form_js.js}" type="text/javascript"></script>
--->
     <style>
-        /* 추가한 CSS 스타일 */
         .custom-td {
             vertical-align: middle !important;
             text-align: center;
@@ -28,7 +24,6 @@
 
     <header th:replace="~{/admin/include/admin_head_header_footer.html::header}">
     </header>
-
 
     <section class="container mt-4">
         <div id="section_wrap">
@@ -55,7 +50,6 @@
                         <td class="s_no text-center" th:text="${dto.s_no}"></td>
                         <td class="s_name text-center" th:text="${dto.s_name}"></td>
                         <td class="s_address text-center" style="max-width: 300px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" th:text="${dto.s_address}"></td>
-<!--                        <td class="s_address text-center" style="white-space: normal;" th:text="${dto.s_address}"></td>-->
                         <td class="btn_approval text-center">
                             <div class="approval" th:if="${dto.a_m_approval} == 0" style="background-color: #6c757d; color: #6c757d; padding: 5px 10px; border-radius: 5px;">
                                 <a class="approval" href='#none' style="color: #fff; text-decoration: none;">승인대기</a>

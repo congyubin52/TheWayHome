@@ -25,7 +25,6 @@
             (#{s_no}, #{s_name})
     </insert>
 
-
 <!-- 보호소 이름 중복체크  -->
     <select id="isShelterNameForInfo"
             parameterType="com.btc.thewayhome.admin.member.ShelterInfoDto"
@@ -38,7 +37,6 @@
             s_name=#{s_name}
     </select>
 
-
     <!--보호소 이름, 전화번호, 주소 DB에 삽입-->
     <insert id="insertShelterInfo"
             parameterType="com.btc.thewayhome.admin.member.ShelterInfoDto">
@@ -47,7 +45,6 @@
         VALUES
             (#{s_name}, #{s_phone}, #{s_address}, NOW(), NOW())
     </insert>
-
 
     <!-- 회원가입시 DB에 있는 보호소 이름 출력  -->
     <select id="selectSearchShelterName"

@@ -19,7 +19,5 @@ public interface IReviewBoardUserService {
     // 후기 게시판 - 삭제
     public int reviewDeleteConfirm(int rBNo);
 
-    public List<CommentDto> getCommentAll(int b_no);
-
     int reviewModifyConfirm(ReviewBoardUserDto reviewBoardUserDto);
 }

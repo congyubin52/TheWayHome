@@ -10,7 +10,7 @@ public interface IPetsAdminDaoMapper {
 
     // api 삽입시 보호 동물 번호가 DB에 있는지 중복성 체크
     public boolean isPetsNumInfo(PetsAdminDto petsAdminDto);
-    
+
     // 보호 동물 API DB에 삽입
     public void insertPetsInfo(PetsAdminDto petsAdminDto);
 

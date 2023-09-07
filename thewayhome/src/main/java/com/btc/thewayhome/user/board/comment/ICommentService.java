@@ -7,9 +7,13 @@ import java.util.Map;
 
 public interface ICommentService {
 
-    List<CommentDto> writeCommentConfirm(Map<String, Object> msgMap, CommentDto commentDto);
+    public int writeReviewCommentConfirm(Map<String, Object> msgMap, CommentDto commentDto);
+    public int writeFreeBoardCommentConfirm(Map<String, Object> msgMap, CommentDto commentDto);
 
-    List<CommentDto> getCommentAll(int rBNo);
+    public List<CommentDto> getCommentAllForReview(int rBNo);
+    public List<CommentDto> getCommentAllForFreeBoard(int rBNo);
 
-    int reviewCommentDelete(int r_c_no);
+    public int reviewCommentDelete(int r_c_no);
+
+    public int freeBoardCommentDelete(int b_c_no);
 }

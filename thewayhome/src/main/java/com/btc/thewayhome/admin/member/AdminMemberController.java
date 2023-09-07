@@ -39,7 +39,6 @@ public class AdminMemberController {
     public Object shelterRegistNum() {
         log.info("shelterRegistNum()");
 
-
         // DB에 시도, 시군구 데이터를 통해 보호소 api삽입
         getAreaData.getData();
 

@@ -16,9 +16,6 @@
         <div id="section_wrap">
 
             <div th:fragment="content" class="container mx-auto m-5" style="width: 500px;">
-            <!--<div class="word">
-                MODIFY FORM
-            </div>-->
 
                     <div class="form-group w-35 p-3 mt-3 mx-auto text-center">
                         <span style="font-size: 24px; white-space: nowrap;">회원정보 수정</span>
@@ -52,7 +49,6 @@
                         <label for="floatingSPhone">Phone</label>
                     </div>
                     <div class="text-center mb-4">
-<!--                    <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%">-->
                         <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%" th:onclick="memberModifyForm()">
                         <input type="button" value="비밀번호 변경" class="btn btn-dark" style="width:40%" th:onclick="|location.href='@{/admin/member/admin_password_modify_form}'|">
                     </div>
@@ -62,7 +58,7 @@
 
             <div class="text-center m-5">
             <div class="go_delete_confirm">
-                <a th:href = "@{/admin/member/member_delete_confirm}" class="btn btn-gray" id="delete" th:attr="onclick=|deleteConfirm(event)|">회원탈퇴</a>
+                <div class="btn btn-gray" id="delete" th:attr="onclick=|deleteConfirm(event)|">회원탈퇴</div>
             </div>
             </div>
 
