@@ -2,6 +2,8 @@ package com.btc.thewayhome.user.board.free;
 
 import com.btc.thewayhome.page.Criteria;
 import com.btc.thewayhome.page.PageMakerDto;
+import com.btc.thewayhome.user.board.comment.CommentDto;
+import com.btc.thewayhome.user.board.comment.ICommentDaoMapper;
 import com.btc.thewayhome.user.board.config.ImageService;
 import com.btc.thewayhome.user.board.review.ReviewBoardUserDto;
 import lombok.Getter;
@@ -23,6 +25,9 @@ public class FreeBoardUserService implements IFreeBoardUserService {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    ICommentDaoMapper iCommentDaoMapper;
 
     @Override
     public int freeBoardWriteConfirm(String u_m_id, String fb_image, FreeBoardUserDto freeBoardUserDto) {

@@ -8,8 +8,6 @@
 
     });
 
-
-
     function commentBtn() {
         $(document).on('click', 'input[value="작성"]', function () {
             console.log('commentBtn CLICK HANDLER!!');
@@ -27,8 +25,6 @@
             }
         });
     }
-
-
 
     function commentList(data) {
         console.log('commentList()');
@@ -64,11 +60,7 @@
         }
 
         $('#comment_list').html(append);
-
-        // $('a.commentDeleteBtn').on("click", function () {
-        //     const b_c_no = $(this).data('b_c_no');
-        //     commentDeleteBtn(b_c_no);
-        // });
+        $('#comment_input').val('');
     }
 
     /*ajax START*/
@@ -83,7 +75,7 @@
         };
 
         $.ajax({
-            url: "/user/comment/write_comment_confirm",
+            url: "/user/comment/write_free_board_comment_confirm",
             type: 'POST',
             data: JSON.stringify(msgDto),
             contentType: 'application/json; charset=utf-8',
@@ -119,7 +111,7 @@
         const params = url.searchParams;
 
         $.ajax({
-            url: "/user/comment/review_detail_json?r_b_no="+params.get("r_b_no"),
+            url: "/user/comment/free_board_detail_json?fb_no="+params.get("fb_no"),
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -156,7 +148,7 @@
             };
 
             $.ajax({
-                url: "/user/comment/review_comment_delete",
+                url: "/user/comment/free_board_comment_delete",
                 type: 'POST',
                 data: JSON.stringify(jsonData),
                 contentType: 'application/json; charset=utf-8',
@@ -179,6 +171,7 @@
                 },
                 complete: function (data) {
                     ajax_comment_list();
+
                 }
             });
         } else {
