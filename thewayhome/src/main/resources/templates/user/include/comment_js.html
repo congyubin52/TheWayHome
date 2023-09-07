@@ -8,6 +8,11 @@
 
     });
 
+    function deleteReply(replayNo){
+        alert("replayNo"+replayNo);
+    }
+
+
     function commentBtn() {
         $(document).on('click', 'input[value="작성"]', function () {
             console.log('commentBtn CLICK HANDLER!!');
@@ -56,7 +61,7 @@
             append+='<span>' + data[i].b_c_content + '</span>';
             append+='</div>';
             if(loginedUser != null && loginedUser.u_m_id  == data[i].u_m_id) {
-                append += '<small><a id="commentDeleteBtn" class="text-dark" style="text-decoration: none;" data-b_c_no="' + data[i].b_c_no + '">삭제</a></small>';
+                append += '<small><a id="commentDeleteBtn" class="text-dark" style="text-decoration: none;" onclick="deleteReply(' + data[i].b_c_no + ')"  data-b_c_no="' + data[i].b_c_no + '">삭제</a></small>';
 
             }
             append+='</div>';
