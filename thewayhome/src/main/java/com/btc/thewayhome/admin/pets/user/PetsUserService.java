@@ -138,7 +138,7 @@ public class PetsUserService implements IPetsUserService {
         log.info("s_name---------------->----->{}", petsUserDto.getS_name());
         log.info("getS_phone---------------->----->{}", petsUserDto.getS_phone());
         log.info("getS_address---------------->----->{}", petsUserDto.getS_address());
-        log.info("getAn_reg_date---------------->----->{}", petsUserDto.getAn_reg_date());
+        log.info("getAn_reg_date---------------->----->{}", petsUserDto.getS_reg_date());
 
         return petsUserDto;
 

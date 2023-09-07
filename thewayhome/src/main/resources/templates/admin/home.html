@@ -22,8 +22,8 @@
 </header>
 
 <section>
-    <div id="section_wrap">
-        <div id="carouselExampleCaptions" class="carousel slide mx-auto" style="max-width: 1800px;">
+    <div id="section_wrap" style="height: 550px;">
+        <div id="carouselExampleCaptions" class="carousel slide mx-auto" style="max-width: 1500px;">
             <div class="container-fluid">
                 <div class="row">
                     <!-- 사이드바 -->
@@ -71,7 +71,7 @@
                         <div class="container">
                     <div class="row my-4"> <!-- 위아래 간격을 추가 -->
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 300px;">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 200px;">
                                         <h2 style="margin-bottom: 20px;">관리자 계정 관리</h2>
                                         <!-- 관리자 섹션 내용 -->
                                         <th:block th:if="${session.loginedAdminMemberDto == null}">
@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 300px;">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 200px;">
                                         <h2 style="margin-bottom: 20px;">보호소</h2>
                                         <!-- 보호소 섹션 내용 -->
                                         <th:block th:if="${session.loginedAdminMemberDto != null}">
@@ -115,7 +115,7 @@
                             </div>
                             <div class="row my-4"> <!-- 위아래 간격을 추가 -->
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 300px;">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 200px;">
                                         <h2 style="margin-bottom: 20px;">실종 게시판</h2>
                                         <!-- 실종 게시판 섹션 내용 -->
                                         <p>
@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 300px;">
+                                    <div class="admin bg-light p-3 align-self-stretch" style="min-width: 600px; min-height: 200px;">
                                         <h2 style="margin-bottom: 20px;">후기 게시판</h2>
                                         <!-- 후기 게시판 섹션 내용 -->
                                         <p>
