@@ -147,36 +147,43 @@
 
     function deleteReply(b_c_no){
 
-        var jsonData = { // Body에 첨부할 json 데이터
-            "b_c_no" : b_c_no,
-        };
+        var delComment = confirm("댓글 삭제 하시겠습니까?");
+        if(delComment) {
 
-        $.ajax({
-            url: "/user/comment/review_comment_delete",
-            type: 'POST',
-            data: JSON.stringify(jsonData),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (data) {
-                console.log('AJAX SUCCESS - ajax_comment_confirm()');
-                if (data != null) {
-                    console.log('댓글 삭제 완료');
 
-                } else {
-                    alert('댓글 삭제 실패!');
+            var jsonData = { // Body에 첨부할 json 데이터
+                "b_c_no": b_c_no,
+            };
 
+            $.ajax({
+                url: "/user/comment/review_comment_delete",
+                type: 'POST',
+                data: JSON.stringify(jsonData),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    console.log('AJAX SUCCESS - ajax_comment_confirm()');
+                    if (data != null) {
+                        console.log('댓글 삭제 완료');
+
+                    } else {
+                        alert('댓글 삭제 실패!');
+
+                    }
+
+                },
+                error: function (data) {
+                    console.log('AJAX ERROR - ajax_comment_confirm()');
+                    alert('댓글 통신 실패!');
+
+                },
+                complete: function (data) {
+                    ajax_comment_list();
                 }
-
-            },
-            error: function (data) {
-                console.log('AJAX ERROR - ajax_comment_confirm()');
-                alert('댓글 통신 실패!');
-
-            },
-            complete : function (data){
-                ajax_comment_list();
-            }
-        });
+            });
+        } else {
+            alert('삭제가 취소되었습니다.');
+        }
 
     }
 

@@ -40,32 +40,6 @@ public class FreeBoardUserController {
         return "redirect:/user/board/free_board_list";
     }
 
-    // 실종/목격 게시판 리스트
-//    @GetMapping("/free_board_list")
-//    public String freeBoardList(Model model,
-//                                @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
-//                                @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount){
-//        log.info("freeBoardList()");
-//
-//        String nextPage = "/user/board/free/free_board_list";
-//
-//        //서비스에서 Map으로 넘겨주기 때문에 Map 타입으로 받음
-//        Map<String, Object> map = freeBoardUserService.getAllFreeBoard(pageNum, amount);
-//        List<FreeBoardUserDto> freeBoardUserDtos = (List<FreeBoardUserDto>) map.get("freeBoardUserDtos");
-//        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
-//
-//        if(freeBoardUserDtos == null){
-//            log.info("freeBoardUserDtos IS NULL!!!");
-//
-//        } else {
-//            log.info("freeBoardUserDtos SELECT SUCCESS!!!");
-//            model.addAttribute("freeBoardUserDtos", freeBoardUserDtos);
-//            model.addAttribute("pageMakerDto", pageMakerDto);
-//
-//        }
-//        return nextPage;
-//
-//    }
     @GetMapping("/free_board_list")
     public String freeBoardList(Model model,
                                 @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
@@ -145,15 +119,12 @@ public class FreeBoardUserController {
     public String freeBoardDetail(@RequestParam("fb_no") int fb_no, FreeBoardUserDto freeBoardUserDto, Model model, HttpSession session) {
         log.info("freeBoardDetail()");
 
-        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserMemberDto");
-
         String nextPage = "user/board/free/free_board_detail";
 
         Map<String, Object> map = freeBoardUserService.freeBoardDetail(fb_no, freeBoardUserDto);
 
         FreeBoardUserDto freeBoardDetailDto = (FreeBoardUserDto) map.get("freeBoardDetailDto");
         model.addAttribute("freeBoardDetailDto", freeBoardDetailDto);
-        model.addAttribute("loginedUserDto", loginedUserDto);
 
         return nextPage;
 

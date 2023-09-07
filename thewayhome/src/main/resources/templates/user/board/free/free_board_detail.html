@@ -68,7 +68,7 @@
         <div class="w-100 d-flex justify-content-end mt-3">
             <!--해당 게시글이 로그인 중인 자신의 게시글인 경우에만 나타나는 수정 버튼-->
 
-            <div th:if="${session.loginedUserMemberDto != null && loginedUserDto.u_m_id == freeBoardDetailDto.u_m_id}">
+            <div th:if="${session.loginedUserMemberDto != null && session.loginedUserMemberDto.u_m_id == freeBoardDetailDto.u_m_id}">
                 <a class="btn btn-outline-danger ms-3" th:href="@{/user/board/free_board_modify_form(fb_no=${freeBoardDetailDto.fb_no})}" style="text-decoration: none;">수정</a>
                 <a class="btn btn-outline-danger ms-3" style="text-decoration: none;" th:attr="onclick=|deleteFreeBoardConfirm('${freeBoardDetailDto.fb_no}')|">삭제</a>
             </div>
