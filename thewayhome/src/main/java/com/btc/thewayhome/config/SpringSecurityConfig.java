@@ -63,6 +63,7 @@ public class SpringSecurityConfig {
 								"/user/board/free_board_detail",
 								"/UploadImg/**",
 								"/user/comment/review_detail_json",
+								"/user/pets/list",
 								"/user/pets/all_pets_list",
 								"/user/pets/shelter_list"
 								).permitAll()
