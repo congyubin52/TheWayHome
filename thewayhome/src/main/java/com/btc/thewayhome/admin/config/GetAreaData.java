@@ -41,7 +41,7 @@ public class GetAreaData {
         List<String> shelterCdList = new ArrayList<>();
         ShelterNumDto shelterNumDto = new ShelterNumDto();
 
-
+        /* 시도 코드 api 받기 시작*/
         try {
             String apiUrl = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?" +
                     "serviceKey=IyQg8I2dXbv8kkUs2Gki35cm64Cu%2BxaUWkNCsFipH3WWV6%2FiZD4HHrq4v%2Bykezvft92l9H5S0zULIYrQonfaUA%3D%3D" +
@@ -81,16 +81,16 @@ public class GetAreaData {
                 orgCd = jObj.get("orgCd").toString();
                 log.info("orgCd : " + orgCd);
                 orgCdList.add(jObj.get("orgCd").toString());
-
+                // 여러 시도 코드를 받기 위해 리스트에 담아줌
             }
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        /* 시도 코드 api 받기 끝*/
 
-        log.info("---------> " + orgCdList);
-
+        /* 시도 코드 api를 통해 시군구 코드 api를 받기 시작 */
         Map<String, Object> resultMap = new HashMap<>();
 
         for (int i = 0; i < orgCdList.size(); i++) {
@@ -118,7 +118,6 @@ public class GetAreaData {
                     response.append(returnLine);
                 }
                 urlConnection.disconnect();
-
 
                 responseString = response.toString();
 
@@ -148,8 +147,9 @@ public class GetAreaData {
                 e.printStackTrace();
             }
         } // try 반복문 끝
+        /* 시도 코드 api를 통해 시군구 코드 api를 받기 끝 */
 
-
+        /**/
         log.info("sigungu!!!!---------> " + sigunguCdList); // 시군구 코드 출력
         log.info("orgCdList!!!!---------> " + orgCdList); // 시군구 코드 출력
 
