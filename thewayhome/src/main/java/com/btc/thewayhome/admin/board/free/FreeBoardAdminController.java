@@ -37,7 +37,7 @@ public class FreeBoardAdminController {
                                 @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount){
         log.info("superFreeBoardList()");
 
-        String nextPage = "/admin/board/super_free_board_list";
+        String nextPage = "admin/board/super_free_board_list";
 
         //서비스에서 Map으로 넘겨주기 때문에 Map 타입으로 받음
         Map<String, Object> map = freeBoardAdminService.superFreeBoardList(pageNum, amount);
