@@ -20,6 +20,7 @@
             tbl_board_comment
         WHERE
             b_type = "2" AND b_no =#{b_no}
+        ORDER BY b_c_no desc
     </select>
 
     <delete id="deleteCommentCNo" parameterType="Integer">
