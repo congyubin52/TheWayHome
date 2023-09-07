@@ -22,6 +22,7 @@ public class PetsUserController {
     /*
      *  사용자(USER)에게 보이는 페이지
      */
+
     //보호소 전체 리스트
     @GetMapping("/shelter_list")
     public String shelterList(Model model,
@@ -47,20 +48,6 @@ public class PetsUserController {
         return nextPage;
         
     }
-
-    //보호 동물 전체 리스트 -> 보호소 리스트 상세 페이지에서 보호소명 클릭 시 나타나는 페이지
-    /*@GetMapping("/pets_list")
-    public String petsList(Model model, PetsUserDto petsUserDto, @RequestParam("s_no") String s_no) {
-        log.info("petsList()");
-
-        String nextPage = "admin/pets/user/user_pets_list";
-
-        List<PetsUserDto> petsUserDtos = petsUserService.searchPetsList(s_no);
-        model.addAttribute("petsUserDtos", petsUserDtos);
-
-        return nextPage;
-
-    }*/
 
     @GetMapping("/pets_list")
     public String petsList(Model model, PetsUserDto petsUserDto,
@@ -116,42 +103,6 @@ public class PetsUserController {
 
     }
 
-    //보호소 검색엔진
-    /*@PostMapping("/search_box_for_pets")
-    public String searchBoxForPets(UserPetsListInfoDto userPetsListInfoDto, Model model) {
-        log.info("searchBoxForShelter()");
-
-//        String nextPage = "admin/pets/user/user_pets_list";
-        String nextPage = "admin/pets/user/user_pets_list";
-
-        List<UserPetsListInfoDto> userPetsListInfoDtos = petsUserService.petsSearchBoxConfirm(userPetsListInfoDto);
-        model.addAttribute("userPetsListInfoDtos", userPetsListInfoDtos);
-
-        log.info("userPetsListInfoDto----------->{}", userPetsListInfoDto.getAn_k_kind());
-
-        return nextPage;
-
-    }*/
-
-    /*// 보호 동물 입양 문의
-    @GetMapping("/adopt_pets_form")
-    public String adoptPetsConfirm(Model model,
-                                   @RequestParam("s_name") String s_name) {
-        log.info("adoptPetsConfirm()");
-
-        log.info("s_name----------->", s_name);
-
-        String nextPage = "admin/pets/user/user_adopt_pets_form";
-
-        List<PetsUserDto> petsUserDtos = petsUserService.searchShelterInfo(s_name);
-        model.addAttribute("petsUserDtos", petsUserDtos);
-
-        log.info("s_name----------->", s_name);
-
-        return nextPage;
-
-    }*/
-
     // 보호 동물 입양 문의
     @GetMapping("/adopt_pets_form")
     public String adoptPetsConfirm(Model model,
@@ -161,9 +112,6 @@ public class PetsUserController {
         String nextPage = "admin/pets/user/user_adopt_pets_form";
 
         PetsUserDto petsUserDto = petsUserService.searchShelterInfo(s_name);
-
-        log.info("s_name----------->{}", petsUserDto.getS_name());
-
         model.addAttribute("petsUserDto", petsUserDto);
 
         return nextPage;

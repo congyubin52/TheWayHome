@@ -171,15 +171,15 @@ public class AdminMemberService implements IAdminMemberService {
 
             switch (result) {
                 case DATABASE_COMMUNICATION_TROUBLE:
-                    log.info("[MemberService] DATABASE_COMMUNICATION_TROUBLE");
+                    log.info("DATABASE_COMMUNICATION_TROUBLE");
                     break;
 
                 case INSERT_FAIL_AT_DATABASE:
-                    log.info("[MemberService] INSERT_FAIL_AT_DATABASE");
+                    log.info("INSERT_FAIL_AT_DATABASE");
                     break;
 
                 case INSERT_SUCCESS_AT_DATABASE:
-                    log.info("[MemberService] INSERT_SUCCESS_DATABASE");
+                    log.info("INSERT_SUCCESS_DATABASE");
 
                     break;
 

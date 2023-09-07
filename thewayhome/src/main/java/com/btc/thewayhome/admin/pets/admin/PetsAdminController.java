@@ -40,7 +40,7 @@ public class PetsAdminController {
 
         String nextPage = "admin/pets/admin/admin_shelter_list";
 
-        // 로그인된 관리자 계정으로 볼 수 있도록 하기 위해 session에 담아놨던 정보 가지고 옴 
+        // 로그인된 관리자 계정으로 볼 수 있도록 하기 위해 session에 담아놨던 정보 가지고 옴
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
         // 여러 개의 보호소들을 담아주기 위해 List 사용
@@ -269,9 +269,3 @@ public class PetsAdminController {
 
     }
 }
-
-
-
-
-
-

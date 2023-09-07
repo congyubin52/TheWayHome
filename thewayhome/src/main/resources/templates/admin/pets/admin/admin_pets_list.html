@@ -4,16 +4,12 @@
 
     <link rel="stylesheet" th:href="@{/css/admin/common.css}">
 
-        </head>
+</head>
 <body>
 <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
 <script th:src="@{/js/admin/search_box_pets_form_admin.js}" type="text/javascript"></script>
 
-<!--<script th:replace="~{admin/include/admin_pets_js.html::js}" type="text/javascript"></script>-->
-
 <header th:replace="~{admin/include/admin_head_header_footer.html::header}">
-
-<!--<script th:replace="~{include/use_console.html::js}" type="text/javascript"></script>-->
 
 </header>
 
@@ -28,23 +24,21 @@
 
         <div id="search_box" class="mb-3">
             <div class="search">
-                <select id="search_option" name="search_option">
-                    <option value="0">축종</option>
-                    <option value="1">품종</option>
-                </select>
-                <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
-                <input type="button" value="검색" th:attr="onclick=|searchBoxPetConfirmAdmin(event)|">
+                <div class="input-group mb-3">
+                    <select id="search_option" name="search_option" class="form-select" aria-label="Search Option">
+                        <option value="0">축종</option>
+                        <option value="1">품종</option>
+                    </select>
+                    <input type="text" name="search" id="search" class="form-control" placeholder="검색어를 입력하세요">
+                    <button class="btn btn-dark" type="button" onclick="searchBoxPetConfirmAdmin(event)">검색</button>
+                </div>
+            </div>
 
-        </div>
-
-        <!-- Bootstrap 그리드로 게시물 표시 -->
+            <!-- Bootstrap 그리드로 게시물 표시 -->
         <div class="row">
             <div class="col-md-3" th:each="dto: ${petsAdminDtos}">
                 <div class="card mb-4">
                     <a th:href="@{/admin/pets/pets_list_detail(an_no=${dto.an_no})}">
-<!--                        <img th:src="@{'/UploadImg/'} + ${dto.an_thumbnail}" alt="Pet Image" class="d-block w-100 h-100 " style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"-->
-<!--                             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"-->
-<!--                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">-->
                         <img th:if="${dto.an_thumbnail.contains('http://www.animal.go.kr/files/shelter/')}"
                              th:src="${dto.an_thumbnail}" alt="Pet Image 2" class="d-block w-100 h-100"
                              style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
@@ -73,9 +67,7 @@
                     </div>
                 </div>
             </div>
-            <!--게시글 추가-->
         </div>
-        <!-- 다른 게시물 추가 (동일한 방식으로) -->
     </div>
     </div>
 </section>

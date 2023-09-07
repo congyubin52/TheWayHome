@@ -52,18 +52,8 @@ public class PetsUserService implements IPetsUserService {
     public List<UserShelterListInfoDto> searchShelterList(String searchOption, String searchInput) {
         log.info("searchShelterList()");
 
-        log.info("searchOption "+ searchOption);
-        log.info("searchInput "+ searchInput);
-
         return iPetsUserDaoMapper.selectShelter(searchOption, searchInput);
 
-//        if(userShelterListInfoDtos != null) {
-//            iPetsUserDaoMapper.selectShelterForSearch();
-//
-//        }
-
-//        return userShelterListInfoDtos;
-        
     }
 
     //보호 동물 리스트 -> 보호소 리스트 상세 페이지에서 보호소명 클릭 시 나타나는 페이지
@@ -78,7 +68,6 @@ public class PetsUserService implements IPetsUserService {
             log.info("33333 : "+ searchInput);
 
         }
-
 
         List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectPets(s_no, searchOption, searchInput);
 
@@ -134,11 +123,6 @@ public class PetsUserService implements IPetsUserService {
 
         Map<String, Object> map = new HashMap<>();
         PetsUserDto petsUserDto = iPetsUserDaoMapper.selectShelterDetail(s_name);
-
-        log.info("s_name---------------->----->{}", petsUserDto.getS_name());
-        log.info("getS_phone---------------->----->{}", petsUserDto.getS_phone());
-        log.info("getS_address---------------->----->{}", petsUserDto.getS_address());
-        log.info("getAn_reg_date---------------->----->{}", petsUserDto.getS_reg_date());
 
         return petsUserDto;
 

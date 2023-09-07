@@ -28,6 +28,5 @@ public class PetsAdminDto {
     private String an_o_organization;
     private String an_o_charge;
     private String an_o_charge_tel;
-
     private String s_no;
 }
