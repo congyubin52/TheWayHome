@@ -118,6 +118,7 @@ public class AdminMemberController {
     public String createAccountConfirm(AdminMemberDto adminMemberDto, Model model) {
         log.info("[AdminMemberController] createAccountConfirm()");
 
+        // 보호소 회원가입 시 DB에 ID와 고유번호 중복성 체크
         String nextPage = "admin/member/create_account_fail";
 
         int result = adminMemberService.createAccountConfirm(adminMemberDto);
@@ -128,10 +129,6 @@ public class AdminMemberController {
             nextPage = "/admin/member/create_account_success";
 
         }
-
-//        else if(result == adminMemberService.INSERT_FAIL_AT_DATABASE){
-////            nextPage = "/admin/member/create_account_fail";
-//        }
 
         return nextPage;
 
