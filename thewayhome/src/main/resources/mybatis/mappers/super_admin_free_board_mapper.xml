@@ -4,6 +4,7 @@
 
 <mapper namespace="com.btc.thewayhome.admin.board.free.IFreeBoardAdminDaoMapper">
 
+<!--    실종 목격 게시판의 페이지 네이션을 위함-->
     <select id="selectAllFreeBoard" resultType="hashmap">
         SELECT
             *
@@ -39,6 +40,7 @@
             use_yn = 'Y'
     </select>
 
+<!--    super 관리자가 실종/목격 게시글 삭제 -->
     <update id="deleteFreeBoard"
             parameterType="Integer" >
         UPDATE

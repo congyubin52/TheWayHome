@@ -20,6 +20,7 @@ public class FreeBoardAdminService implements IFreeBoardAdminService{
 
     @Override
     public Map<String, Object> superFreeBoardList(int pageNum, int amount) {
+        log.info("superFreeBoardList");
 
         Map<String, Object> map = new HashMap<>();
 
@@ -69,7 +70,7 @@ public class FreeBoardAdminService implements IFreeBoardAdminService{
     // 게시글 삭제
     @Override
     public int superFreeBoardDelete(int fb_no) {
-        log.info("freeBoardDelete()");
+        log.info("superFreeBoardDelete()");
 
         return iFreeBoardAdminDaoMapper.deleteFreeBoard(fb_no);
     }

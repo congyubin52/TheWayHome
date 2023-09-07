@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Controller
 @Log4j2
-@RequestMapping("/admin/board")
+@RequestMapping("/admin/free/board")
 public class FreeBoardAdminController {
 
     @Autowired
@@ -45,10 +45,8 @@ public class FreeBoardAdminController {
         PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
 
         if(freeBoardUserDtos == null){
-            log.info("freeBoardUserDtos IS NULL!!!");
 
         } else {
-            log.info("freeBoardUserDtos SELECT SUCCESS!!!");
             model.addAttribute("freeBoardUserDtos", freeBoardUserDtos);
             model.addAttribute("pageMakerDto", pageMakerDto);
 
@@ -79,9 +77,9 @@ public class FreeBoardAdminController {
     // 실종/목격 게시판 삭제
     @GetMapping("/super_free_board_delete_confirm")
     public String freeBoardDelete(@RequestParam("fb_no") int fb_no, HttpServletResponse response) throws IOException {
-        log.info("freeBoardModify");
+        log.info("freeBoardDelete");
 
-        String nextPage = "redirect:/admin/board/super_free_board_list";
+        String nextPage = "redirect:/admin/free/board/super_free_board_list";
 
         int result = freeBoardAdminService.superFreeBoardDelete(fb_no);
 
