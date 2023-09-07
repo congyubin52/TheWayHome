@@ -146,7 +146,7 @@ public class PetsAdminService implements IPetsAdminService{
 
     }
 
-    //보호 동물 리스트 - 메뉴바에서 보호 동물 클릭 시 나타나는 페이지
+    // 보호 동물 리스트 - 메뉴바에서 보호 동물 클릭 시 나타나는 페이지
     @Override
     public List<PetsAdminDto> searchAllPetsList(AdminMemberDto loginedAdminMemberDto) {
         log.info("searchPetsListBasic()");

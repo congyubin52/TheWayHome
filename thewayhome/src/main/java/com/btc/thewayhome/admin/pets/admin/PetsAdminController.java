@@ -73,6 +73,7 @@ public class PetsAdminController {
 
     }*/
 
+    // 보호 동물(보호소 눌렀을때 나오는 보호 동물)
     @GetMapping("/pets_list")
     public String petsList(Model model,
                            @RequestParam("s_no") String s_no,
@@ -101,7 +102,7 @@ public class PetsAdminController {
 
     }
 
-    // 보호 동물 리스트 -> 메뉴바에서 보호동물 클릭 시 나타나는 페이지
+    // 보호 동물 리스트 -> 사용자 메뉴바에서 보호동물 클릭 시 나타나는 페이지
     @GetMapping("/all_pets_list")
     public String allPetsList(Model model, HttpSession session) {
         log.info("allPetsList()");

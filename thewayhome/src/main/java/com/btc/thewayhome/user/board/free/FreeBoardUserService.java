@@ -100,4 +100,6 @@ public class FreeBoardUserService implements IFreeBoardUserService {
 
         return  iFreeBoardUserDaoMapper.updateFreeboard(freeBoardUserDto);
     }
+
+
 }

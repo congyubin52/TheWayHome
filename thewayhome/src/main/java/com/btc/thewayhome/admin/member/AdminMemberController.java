@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,12 +35,13 @@ public class AdminMemberController {
      */
 
     // 보호소 api db에 삽입
-    @RequestMapping("/")
+    @Scheduled(cron = "0 50 8 * * *")
     public Object shelterRegistNum() {
         log.info("shelterRegistNum()");
 
+
         // DB에 시도, 시군구 데이터를 통해 보호소 api삽입
-        // getAreaData.getData();
+        getAreaData.getData();
 
         // DB에 유기동물 데이터 api삽입
         getPetsData.getpets();

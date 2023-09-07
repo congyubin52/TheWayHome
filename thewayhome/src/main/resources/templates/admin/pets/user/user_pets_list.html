@@ -60,9 +60,22 @@
             <div th:each="dto: ${petsUserDtos}" class="col-md-3">
                 <div class="card mb-4">
                     <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}">
-                        <img th:src="${dto.an_thumbnail}" alt="Pet Image" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+<!--                        <img th:src="${dto.an_thumbnail}" alt="Pet Image" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"-->
+<!--                             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"-->
+<!--                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">-->
+
+                        <img th:if="${dto.an_thumbnail.contains('http://www.animal.go.kr/files/shelter/')}"
+                             th:src="${dto.an_thumbnail}" alt="Pet Image 2" class="d-block w-100 h-100"
+                             style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
                              onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"
                              onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+
+                        <img th:unless="${dto.an_thumbnail.contains('http://www.animal.go.kr/files/shelter/')}"
+                             th:src="@{'/UploadImg/'} + ${dto.an_thumbnail}" alt="Pet Image 1" class="d-block w-100 h-100"
+                             style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+                             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"
+                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+
                     </a>
 
                     <div class="card-body">
