@@ -309,6 +309,7 @@
             <when test="searchInput == null or searchInput.equals('')">
         SELECT
             api.an_no,
+            api.use_yn,
             api.an_thumbnail,
             ad.s_no,
             api.s_name,
@@ -324,7 +325,7 @@
             ON
                 api.s_name = ad.s_name
         WHERE
-            ad.s_no = #{s_no}
+            ad.s_no = #{s_no} AND api.use_yn='Y'
         ORDER BY
             api.an_n_end ASC;
         </when>
@@ -333,6 +334,7 @@
                 <when test="searchOption eq '0'.toString()">
                     SELECT
                     api.an_no,
+                    api.use_yn,
                     api.an_thumbnail,
                     ad.s_no,
                     api.s_name,
@@ -348,13 +350,14 @@
                         ON
                             api.s_name = ad.s_name
                     WHERE
-                        api.an_an_kind like concat('%',#{searchInput},'%')
+                        api.an_an_kind like concat('%',#{searchInput},'%') AND api.use_yn='Y'
                     AND
                         ad.s_no = #{s_no}
                 </when>
                 <otherwise>
                     SELECT
                         api.an_no,
+                        api.use_yn,
                         api.an_thumbnail,
                         ad.s_no,
                         api.s_name,
@@ -370,7 +373,7 @@
                         ON
                         api.s_name = ad.s_name
                     WHERE
-                        api.an_k_kind like concat('%',#{searchInput},'%')
+                        api.an_k_kind like concat('%',#{searchInput},'%') AND api.use_yn='Y'
                     AND
                         ad.s_no = #{s_no}
                 </otherwise>
@@ -401,7 +404,7 @@
             ON
                 a.s_name = sn.s_name
         WHERE
-            sn.s_no= ${s_no} AND use_yn = 'Y'
+            sn.s_no= ${s_no} AND a.use_yn = 'Y'
         ORDER BY
             a.an_n_end ASC;
     </select>
