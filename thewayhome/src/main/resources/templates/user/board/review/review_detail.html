@@ -7,7 +7,10 @@
 
 <script th:src="@{/js/user/review_board_js.js}" type="text/javascript"></script>
 <script th:replace="~{/user/include/comment_js.html::js}" type="text/javascript"></script>
+<script  type="text/javascript">
 
+
+</script>
 <style>
     .ck-editor__editable { height: 400px; }
 </style>
@@ -57,7 +60,7 @@
 
     <!--댓글 - 로그인 후-->
     <div class="container w-100 px-lg-5 mt-4" th:if="${session.loginedUserMemberDto != null}">
-        <form name="write_comment_form">
+        <form name="write_comment_form" id="write_comment_form">
             <div class="mb-0">
                 <input type="hidden" name="u_m_id" th:value="${session.loginedUserMemberDto.getU_m_id()}">
                 <input type="hidden" name="b_type" value="2">

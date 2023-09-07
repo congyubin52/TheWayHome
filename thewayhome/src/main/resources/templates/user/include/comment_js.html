@@ -113,6 +113,9 @@
                 console.log('AJAX ERROR - ajax_comment_confirm()');
                 alert('댓글 통신 실패!');
 
+            },
+            complete : function (data){
+                ajax_comment_list();
             }
         });
 
