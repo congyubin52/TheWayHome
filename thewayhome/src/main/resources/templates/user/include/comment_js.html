@@ -26,21 +26,39 @@
         });
     }
 
+    function commentDeleteBtn(b_c_no) {
+        $(document).on('click', 'a.commentDeleteBtn', function () {
+            console.log('commentDeleteBtn CLICK HANDLER!!');
+            console.log('b_c_no -> ' + b_c_no);
+
+            if(confirm("정말 삭제하시겠습니까?")) {
+                ajax_comment_delete(b_c_no);
+
+            }
+
+        });
+    }
+
     function commentList(data) {
         console.log('commentList()');
 
-        $('#comment_list').html();
+        $('#comment_list').html('');
         let append="";
+        let loginedUser = [[${session.loginedUserMemberDto}]];
+
         for(let i = 0; i < data.length; i++) {
             append+='<div class=\"container w-100 px-lg-5 mt-3 mb-3\">';
             append+='<div class=\"row d-flex justify-content-center\">';
             append+='<div class=\"card p-3\">';
             append+='<div class=\"d-flex justify-content-between align-items-center\">';
             append+='<div class=\"user d-flex flex-row align-items-center\">';
-            append+='<span class=\"font-weight-bold\">"' + data[i].u_m_id + '"</span> &nbsp;&nbsp;';
+            append+='<span class=\"font-weight-bold\">' + data[i].u_m_id + '</span> &nbsp;&nbsp;';
             append+='<span>' + data[i].b_c_content + '</span>';
             append+='</div>';
-            append+='<small><a class="text-dark" href=\'#none\' style="text-decoration: none;">삭제</a></small>';
+            if(loginedUser != null && loginedUser.u_m_id  == data[i].u_m_id) {
+                append += '<small><a id="commentDeleteBtn" class="text-dark" style="text-decoration: none;" data-b_c_no="' + data[i].b_c_no + '">삭제</a></small>';
+
+            }
             append+='</div>';
             append+='<div class="action d-flex justify-content-between mt-2 align-items-center">';
             append+='<div class="reply">';
@@ -56,6 +74,10 @@
 
         $('#comment_list').html(append);
 
+        $('a.commentDeleteBtn').on("click", function () {
+            const b_c_no = $(this).data('b_c_no');
+            commentDeleteBtn(b_c_no);
+        });
     }
 
     /*ajax START*/
@@ -79,7 +101,7 @@
                 console.log('AJAX SUCCESS - ajax_comment_confirm()');
                 if (data != null) {
                     console.log('댓글 작성 완료');
-                    commentList(data.commentDtos)
+
 
                 } else {
                     alert('댓글 작성 실패!');
@@ -89,7 +111,7 @@
             },
             error: function (data) {
                 console.log('AJAX ERROR - ajax_comment_confirm()');
-                alert('댓글 작성 실패!');
+                alert('댓글 통신 실패!');
 
             }
         });
@@ -99,8 +121,11 @@
     function ajax_comment_list() {
         console.log('ajax_comment_list() CALLED!!');
 
+        const url = new URL( window.location.href );
+        const params = url.searchParams;
+
         $.ajax({
-            url: "/user/board/review_detail",
+            url: "/user/comment/review_detail_json?r_b_no="+params.get("r_b_no"),
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -108,7 +133,9 @@
                 console.log('AJAX SUCCESS - ajax_comment_list()');
                 if (data != null) {
                     console.log('댓글 출력 완료!');
-                    commentList(data.commentDtos);
+                    console.log(JSON.stringify(data));
+                    console.log(data);
+                    commentList(data);
 
                 } else {
                     alert('댓글 출력 실패!');
@@ -118,7 +145,37 @@
             error: function (data) {
                 console.log('AJAX ERROR - ajax_comment_list()');
                 alert('댓글 통신 실패!');
-                console.log('안마ㅣㅏㅓ라너랄ㅇ날ㄴㄹ' + data.commentDtos);
+
+            }
+        });
+
+    }
+
+    function ajax_comment_delete(b_c_no) {
+        console.log('ajax_comment_confirm() CALLED!!');
+
+        var b_c_no = b_c_no;
+
+        $.ajax({
+            url: "/user/comment/review_comment_delete",
+            type: 'POST',
+            data: JSON.stringify(b_c_no),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+                console.log('AJAX SUCCESS - ajax_comment_confirm()');
+                if (data != null) {
+                    console.log('댓글 삭제 완료');
+
+                } else {
+                    alert('댓글 삭제 실패!');
+
+                }
+
+            },
+            error: function (data) {
+                console.log('AJAX ERROR - ajax_comment_confirm()');
+                alert('댓글 통신 실패!');
 
             }
         });
