@@ -45,9 +45,9 @@ public class CommentService implements ICommentService{
     }
 
     @Override
-    public int reviewCommentDelete(int r_c_no) {
+    public int reviewCommentDelete(int b_c_no) {
         log.info("reviewCommentDelete()");
-        return iCommentDaoMapper.deleteCommentCNo(r_c_no);
+        return iCommentDaoMapper.deleteCommentCNo(b_c_no);
     }
 
 }

@@ -45,18 +45,25 @@ public class CommentController {
         return commentDtos;
     }
 
-    @GetMapping("/review_comment_delete")
+    @PostMapping("/review_comment_delete")
     @ResponseBody
-    public List<CommentDto> reviewCommentDelete(@RequestParam("r_b_no") int r_b_no ,@RequestParam("r_c_no") int r_c_no ,Model model) {
+    public Object reviewCommentDelete(@RequestBody Map<String, String> msgMap) {
         log.info("reviewDetailPageJson()");
 
-        int result = commentService.reviewCommentDelete(r_c_no);
+        Map<String, Object> map = new HashMap<>();
 
-        List<CommentDto> commentDtos =  commentService.getCommentAll(r_b_no);
-        model.addAttribute("commentDtos", commentDtos);
+        int result = -1;
+        int b_c_no = Integer.parseInt(msgMap.get("b_c_no").toString());
+        result = commentService.reviewCommentDelete(b_c_no);
+        if(result > 0){
+            log.info("COMMENT DELETE SUCCESS");
 
-        return commentDtos;
+        } else {
+            log.info("COMMENT DELETE FAIL");
+
+        }
+
+        map.put("result", result);
+    return map;
     }
-
-
 }
