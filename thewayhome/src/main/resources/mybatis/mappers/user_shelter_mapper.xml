@@ -24,10 +24,10 @@
 <!--    </select>-->
 
     <!--보호소 리스트-->
-    <select id="selectShelter"
+    <!--<select id="selectShelter"
             resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
         <choose>
-            <when test="searchInput == null">
+            <when test="searchInput == null or searchInput.equals('')">
                 SELECT
                     n.s_no,
                     n.s_name,
@@ -84,14 +84,74 @@
                 </choose>
             </otherwise>
         </choose>
+    </select>-->
+
+
+
+    <select id="selectShelter"
+            resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
+        <choose>
+            <when test="searchInput == null or searchInput.equals('')">
+                SELECT
+                    s_no,
+                    s_name,
+                    s_address,
+                    s_phone,
+                    a_m_reg_date
+                FROM
+                    tbl_member_admin
+                where
+                    a_m_approval = '1'
+                ORDER BY
+                    s_name ASC
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="searchOption eq '0'.toString()">
+                        SELECT
+                            s_no,
+                            s_name,
+                            s_address,
+                            s_phone,
+                            a_m_reg_date
+                        FROM
+                            tbl_member_admin
+                        WHERE
+                            s_name like concat('%', #{searchInput}  ,'%')
+                        AND
+                            a_m_approval = '1'
+                        ORDER BY
+                            s_name ASC
+                    </when>
+                    <otherwise>
+                        SELECT
+                            s_no,
+                            s_name,
+                            s_address,
+                            s_phone,
+                            a_m_reg_date
+                        FROM
+                            tbl_member_admin
+                        WHERE
+                            s_address like concat('%', #{searchInput}  ,'%')
+                        AND
+                            a_m_approval = '1'
+                        ORDER BY
+                            s_name ASC
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
     </select>
+
+
 
     <!--보호 동물 리스트(보호소 리스트 상세 페이지)-->
     <select id="selectPets"
-            parameterType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto"
+            parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto">
         <choose>
-        <when test="searchInput == null">
+        <when test="searchInput == null or searchInput.equals('')">
         SELECT
             a.an_no,
             a.an_thumbnail,
@@ -123,6 +183,8 @@
                             a.s_name = sn.s_name
                     WHERE
                         a.an_an_kind like concat('%',#{searchInput},'%')
+                    AND
+                        sn.s_no = #{s_no}
                 </when>
                 <otherwise>
                     SELECT
@@ -135,6 +197,8 @@
                             a.s_name = sn.s_name
                     WHERE
                         a.an_k_kind like concat('%',#{searchInput},'%')
+                    AND
+                        sn.s_no = #{s_no}
                 </otherwise>
             </choose>
         </otherwise>

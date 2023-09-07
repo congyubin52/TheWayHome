@@ -71,6 +71,15 @@ public class PetsUserService implements IPetsUserService {
     public List<PetsUserDto> searchPetsList(String s_no, String searchOption, String searchInput) {
         log.info("searchShelterList()");
 
+            log.info("11111 : "+ s_no);
+        if(searchInput == null){
+            log.info("22222 : "+ searchInput);
+        }else {
+            log.info("33333 : "+ searchInput);
+
+        }
+
+
         List<PetsUserDto> petsUserDtos = iPetsUserDaoMapper.selectPets(s_no, searchOption, searchInput);
 
         return petsUserDtos;
@@ -129,7 +138,7 @@ public class PetsUserService implements IPetsUserService {
         log.info("s_name---------------->----->{}", petsUserDto.getS_name());
         log.info("getS_phone---------------->----->{}", petsUserDto.getS_phone());
         log.info("getS_address---------------->----->{}", petsUserDto.getS_address());
-        log.info("getAn_reg_date---------------->----->{}", petsUserDto.getAn_reg_date());
+        log.info("getAn_reg_date---------------->----->{}", petsUserDto.getS_reg_date());
 
         return petsUserDto;
 
