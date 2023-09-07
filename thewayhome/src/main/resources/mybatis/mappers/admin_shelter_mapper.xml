@@ -118,7 +118,7 @@
                )
     </insert>
 
-<!-- 보호 동물 수정시 수정전 데이터를 불러오기 위함 -->
+    <!-- 보호 동물 수정시 수정전 데이터를 불러오기 위함 -->
     <select id="selectPetsForModify" parameterType="String" resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
         SELECT
             *
@@ -129,7 +129,7 @@
 
     </select>
 
-<!--  보호동물 수정   -->
+    <!--  보호동물 수정   -->
     <update id="updatePets" parameterType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
         UPDATE tbl_animal_api
         SET
