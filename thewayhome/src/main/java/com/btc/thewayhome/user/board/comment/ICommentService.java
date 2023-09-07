@@ -9,4 +9,7 @@ public interface ICommentService {
 
     List<CommentDto> writeCommentConfirm(Map<String, Object> msgMap, CommentDto commentDto);
 
+    List<CommentDto> getCommentAll(int rBNo);
+
+    int reviewCommentDelete(int r_c_no);
 }
