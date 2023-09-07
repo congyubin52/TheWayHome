@@ -14,7 +14,9 @@ public interface IFreeBoardAdminDaoMapper {
     // 실종 목격 게시판 - 페이지 네이션
     public int getTotalCnt();
 
+    // 실종 목격 게시판 - 상세 보기
     public FreeBoardUserDto selectContent(FreeBoardUserDto freeBoardUserDto);
 
+    // 실종 목격 게시판 - 게시글 삭제
     public int deleteFreeBoard(int fb_no);
 }
