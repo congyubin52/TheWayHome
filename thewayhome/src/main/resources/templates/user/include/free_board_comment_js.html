@@ -26,19 +26,6 @@
         });
     }
 
-    function commentDeleteBtn(b_c_no) {
-        $(document).on('click', 'a.commentDeleteBtn', function () {
-            console.log('commentDeleteBtn CLICK HANDLER!!');
-            console.log('b_c_no -> ' + b_c_no);
-
-            if(confirm("정말 삭제하시겠습니까?")) {
-                ajax_comment_delete(b_c_no);
-
-            }
-
-        });
-    }
-
     function commentList(data) {
         console.log('commentList()');
 
@@ -56,7 +43,7 @@
             append+='<span>' + data[i].b_c_content + '</span>';
             append+='</div>';
             if(loginedUser != null && loginedUser.u_m_id  == data[i].u_m_id) {
-                append += '<small><a id="commentDeleteBtn" class="text-dark" style="text-decoration: none;" data-b_c_no="' + data[i].b_c_no + '">삭제</a></small>';
+                append += '<small><a id="commentDeleteBtn" class="text-dark" style="text-decoration: none;" onclick="deleteReply(' + data[i].b_c_no + ')">삭제</a></small>';
 
             }
             append+='</div>';
@@ -73,11 +60,7 @@
         }
 
         $('#comment_list').html(append);
-
-        $('a.commentDeleteBtn').on("click", function () {
-            const b_c_no = $(this).data('b_c_no');
-            commentDeleteBtn(b_c_no);
-        });
+        $('#comment_input').val('');
     }
 
     /*ajax START*/
@@ -92,7 +75,7 @@
         };
 
         $.ajax({
-            url: "/user/comment/write_comment_confirm",
+            url: "/user/comment/write_free_board_comment_confirm",
             type: 'POST',
             data: JSON.stringify(msgDto),
             contentType: 'application/json; charset=utf-8',
@@ -113,6 +96,9 @@
                 console.log('AJAX ERROR - ajax_comment_confirm()');
                 alert('댓글 통신 실패!');
 
+            },
+            complete : function (data){
+                ajax_comment_list();
             }
         });
 
@@ -125,7 +111,7 @@
         const params = url.searchParams;
 
         $.ajax({
-            url: "/user/comment/review_detail_json?r_b_no="+params.get("r_b_no"),
+            url: "/user/comment/free_board_detail_json?fb_no="+params.get("fb_no"),
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -151,36 +137,47 @@
 
     }
 
-    function ajax_comment_delete(b_c_no) {
-        console.log('ajax_comment_confirm() CALLED!!');
+    function deleteReply(b_c_no){
 
-        var b_c_no = b_c_no;
+        var delComment = confirm("댓글 삭제 하시겠습니까?");
+        if(delComment) {
 
-        $.ajax({
-            url: "/user/comment/review_comment_delete",
-            type: 'POST',
-            data: JSON.stringify(b_c_no),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (data) {
-                console.log('AJAX SUCCESS - ajax_comment_confirm()');
-                if (data != null) {
-                    console.log('댓글 삭제 완료');
 
-                } else {
-                    alert('댓글 삭제 실패!');
+            var jsonData = { // Body에 첨부할 json 데이터
+                "b_c_no": b_c_no,
+            };
+
+            $.ajax({
+                url: "/user/comment/free_board_comment_delete",
+                type: 'POST',
+                data: JSON.stringify(jsonData),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    console.log('AJAX SUCCESS - ajax_comment_confirm()');
+                    if (data != null) {
+                        console.log('댓글 삭제 완료');
+
+                    } else {
+                        alert('댓글 삭제 실패!');
+
+                    }
+
+                },
+                error: function (data) {
+                    console.log('AJAX ERROR - ajax_comment_confirm()');
+                    alert('댓글 통신 실패!');
+
+                },
+                complete: function (data) {
+                    ajax_comment_list();
 
                 }
-
-            },
-            error: function (data) {
-                console.log('AJAX ERROR - ajax_comment_confirm()');
-                alert('댓글 통신 실패!');
-
-            }
-        });
+            });
+        } else {
+            alert('삭제가 취소되었습니다.');
+        }
 
     }
-
 
 </script>

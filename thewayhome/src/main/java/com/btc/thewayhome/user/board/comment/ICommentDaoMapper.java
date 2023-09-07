@@ -6,9 +6,16 @@ import java.util.List;
 
 @Mapper
 public interface ICommentDaoMapper {
-    public int insertComment(CommentDto commentDto);
+    public int insertReviewComment(CommentDto commentDto);
+    public int insertFreeBoardComment(CommentDto commentDto);
 
-    public List<CommentDto> selectCommentAll(int b_no);
+    public List<CommentDto> selectCommentAllForReview(int b_no);
+    public List<CommentDto> selectCommentAllForFreeBoard(int b_no);
 
-    public int deleteCommentCNo(int r_c_no);
+
+    public int deleteCommentCNoForReview(int r_c_no);
+
+    public int deleteCommentCNoForFreeBoard(int r_c_no);
+
+
 }
