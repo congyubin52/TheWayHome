@@ -11,9 +11,6 @@ public interface IPetsUserService {
     //보호 동물 리스트 -> 보호소 리스트 상세 페이지에서 보호소명 클릭 시 나타나는 페이지
     public List<PetsUserDto> searchPetsList(String s_no, String searchOption, String searchInput);
 
-    //보호 동물 리스트 -> 보호소 리스트 상세 페이지에서 보호소명 클릭 시 나타나는 페이지
-//    public List<PetsUserDto> searchPetsList(String s_no, String searchOption, String searchInputs);
-
     //보호 동물 리스트 -> 메뉴바에서 보호 동물 클릭 시 나타나는 페이지
     public List<PetsUserDto> searchAllPetsList();
 

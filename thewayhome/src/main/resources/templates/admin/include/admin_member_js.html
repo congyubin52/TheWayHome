@@ -12,12 +12,18 @@
         $(document).on('click', '#search_admin_list tbody td.btn_approval', function (e) {
             console.log("btn_approval CLICK HANDLER");
 
-            confirm('상태를 변경하시겠습니까?')
+            var result = confirm('상태를 변경하시겠습니까?')
 
-            let no = $(this).parent().attr('id');
-            ajax_approval_confirm(no);
+            if(result) {
+                let no = $(this).parent().attr('id');
+                ajax_approval_confirm(no);
+
+            } else {
+                alert("취소되었습니다.");
+            }
 
         });
+
         //정보수정
         $(document).on('click', '#section_wrap input[value="회원정보 수정"]', function (e) {
             console.log('button CLICK HANDLER!!');

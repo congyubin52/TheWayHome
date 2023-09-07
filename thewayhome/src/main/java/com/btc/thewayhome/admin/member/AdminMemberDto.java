@@ -20,4 +20,5 @@ public class AdminMemberDto {
     private String a_m_mod_date;
     private String s_reg_date;
 
+
 }

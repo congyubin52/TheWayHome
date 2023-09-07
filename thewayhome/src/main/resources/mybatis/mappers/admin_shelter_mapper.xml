@@ -136,23 +136,23 @@
         <if test="an_thumbnail  != null">
             an_thumbnail = #{an_thumbnail},
         </if>
-            an_happen_date = #{an_happen_date},
-            an_happen_place = #{an_happen_place},
-            an_an_kind = #{an_an_kind},
-            an_k_kind = #{an_k_kind},
-            an_color = #{an_color},
-            an_age = #{an_age},
-            an_weight = #{an_weight},
-            an_n_start = #{an_n_start},
-            an_n_end = #{an_n_end},
+        an_happen_date = #{an_happen_date},
+        an_happen_place = #{an_happen_place},
+        an_an_kind = #{an_an_kind},
+        an_k_kind = #{an_k_kind},
+        an_color = #{an_color},
+        an_age = #{an_age},
+        an_weight = #{an_weight},
+        an_n_start = #{an_n_start},
+        an_n_end = #{an_n_end},
         <if test="an_image  != null">
             an_image = #{an_image},
         </if>
-            an_p_s_state = #{an_p_s_state},
-            an_g_gender = #{an_g_gender},
-            an_ne_neuter = #{an_ne_neuter},
-            an_special_mark = #{an_special_mark},
-            an_mod_date = NOW()
+        an_p_s_state = #{an_p_s_state},
+        an_g_gender = #{an_g_gender},
+        an_ne_neuter = #{an_ne_neuter},
+        an_special_mark = #{an_special_mark},
+        an_mod_date = NOW()
         WHERE an_no = #{an_no}
 
     </update>
@@ -214,7 +214,7 @@
                 n.s_name = i.s_name
     </select> -->
 
-     <!--보호소 리스트 - super가 조회하는 페이지 -->
+    <!--보호소 리스트 - super가 조회하는 페이지 -->
     <select id="selectShelterSuper"
             parameterType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto"
             resultType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto">
@@ -260,7 +260,7 @@
             tbl_member_admin
         WHERE
             a_m_id = #{a_m_id}
-        AND
+          AND
             a_m_approval = '1'
     </select>
 
@@ -277,85 +277,62 @@
     </select>
 
     <!-- 보호 동물 리스트 - 보호소 리스트에서 보호동물 리스트 불러오기 -->
-<!--   <select id="selectPets"
-            parameterType="String"
-            resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
-        SELECT
-            an.an_no,
-            an.use_yn,
-            an.an_thumbnail,
-            ad.s_no,
-            an.s_name,
-            an.an_k_kind,
-            an.an_n_start,
-            an.an_n_end,
-            an.an_p_s_state
-        FROM
-            tbl_animal_api AS an
-            Inner JOIN
-                tbl_member_admin AS ad
-            ON
-                an.s_name = ad.s_name
-        WHERE
-            ad.s_no = #{s_no} and an.use_yn='Y'
-        AND
-            an.use_yn = 'Y'
-    </select>-->
+    <!--   <select id="selectPets"
+                parameterType="String"
+                resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
+            SELECT
+                an.an_no,
+                an.use_yn,
+                an.an_thumbnail,
+                ad.s_no,
+                an.s_name,
+                an.an_k_kind,
+                an.an_n_start,
+                an.an_n_end,
+                an.an_p_s_state
+            FROM
+                tbl_animal_api AS an
+                Inner JOIN
+                    tbl_member_admin AS ad
+                ON
+                    an.s_name = ad.s_name
+            WHERE
+                ad.s_no = #{s_no} and an.use_yn='Y'
+            AND
+                an.use_yn = 'Y'
+        </select>-->
 
     <select id="selectPets"
             parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
         <choose>
             <when test="searchInput == null or searchInput.equals('')">
-        SELECT
-            api.an_no,
-            api.use_yn,
-            api.an_thumbnail,
-            ad.s_no,
-            api.s_name,
-            api.an_an_kind,
-            api.an_k_kind,
-            api.an_n_start,
-            api.an_n_end,
-            api.an_p_s_state
-        FROM
-            tbl_animal_api AS api
-            JOIN
+                SELECT
+                api.an_no,
+                api.use_yn,
+                api.an_thumbnail,
+                ad.s_no,
+                api.s_name,
+                api.an_an_kind,
+                api.an_k_kind,
+                api.an_n_start,
+                api.an_n_end,
+                api.an_p_s_state
+                FROM
+                tbl_animal_api AS api
+                JOIN
                 tbl_member_admin AS ad
-            ON
+                ON
                 api.s_name = ad.s_name
-        WHERE
-            ad.s_no = #{s_no} AND api.use_yn='Y'
-        ORDER BY
-            api.an_n_end ASC;
-        </when>
-        <otherwise>
-            <choose>
-                <when test="searchOption eq '0'.toString()">
-                    SELECT
-                    api.an_no,
-                    api.use_yn,
-                    api.an_thumbnail,
-                    ad.s_no,
-                    api.s_name,
-                    api.an_an_kind,
-                    api.an_k_kind,
-                    api.an_n_start,
-                    api.an_n_end,
-                    api.an_p_s_state
-                    FROM
-                    tbl_animal_api AS api
-                        JOIN
-                            tbl_member_admin AS ad
-                        ON
-                            api.s_name = ad.s_name
-                    WHERE
-                        api.an_an_kind like concat('%',#{searchInput},'%') AND api.use_yn='Y'
-                    AND
-                        ad.s_no = #{s_no}
-                </when>
-                <otherwise>
-                    SELECT
+                WHERE
+                ad.s_no = #{s_no} AND api.use_yn='Y'
+                ORDER BY
+                api.an_n_end ASC;
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="searchOption eq '0'.toString()">
+                        SELECT
                         api.an_no,
                         api.use_yn,
                         api.an_thumbnail,
@@ -366,19 +343,46 @@
                         api.an_n_start,
                         api.an_n_end,
                         api.an_p_s_state
-                    FROM
+                        FROM
                         tbl_animal_api AS api
                         JOIN
-                            tbl_member_admin AS ad
+                        tbl_member_admin AS ad
                         ON
                         api.s_name = ad.s_name
-                    WHERE
-                        api.an_k_kind like concat('%',#{searchInput},'%') AND api.use_yn='Y'
-                    AND
+                        WHERE
+                        api.an_an_kind like concat('%',#{searchInput},'%')
+                        AND
                         ad.s_no = #{s_no}
-                </otherwise>
-            </choose>
-        </otherwise>
+                        AND
+                        api.use_yn='Y'
+                    </when>
+                    <otherwise>
+                        SELECT
+                        api.an_no,
+                        api.use_yn,
+                        api.an_thumbnail,
+                        ad.s_no,
+                        api.s_name,
+                        api.an_an_kind,
+                        api.an_k_kind,
+                        api.an_n_start,
+                        api.an_n_end,
+                        api.an_p_s_state
+                        FROM
+                        tbl_animal_api AS api
+                        JOIN
+                        tbl_member_admin AS ad
+                        ON
+                        api.s_name = ad.s_name
+                        WHERE
+                        api.an_k_kind like concat('%',#{searchInput},'%')
+                        AND
+                        ad.s_no = #{s_no}
+                        AND
+                        api.use_yn='Y'
+                    </otherwise>
+                </choose>
+            </otherwise>
         </choose>
     </select>
 
@@ -399,12 +403,12 @@
             a.an_p_s_state
         FROM
             tbl_animal_api AS a
-            JOIN
-                tbl_shelter_num AS sn
+                JOIN
+            tbl_shelter_num AS sn
             ON
                 a.s_name = sn.s_name
         WHERE
-            sn.s_no= ${s_no} AND a.use_yn = 'Y'
+            sn.s_no= ${s_no} AND use_yn = 'Y'
         ORDER BY
             a.an_n_end ASC;
     </select>
