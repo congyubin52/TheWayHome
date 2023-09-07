@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head th:replace="~{user/include/head_header_footer.html::head}">
 
@@ -38,8 +38,26 @@
             성별   : <span th:text="${freeBoardDetailDto.fb_gender}" />&nbsp;/
             중성화 : <span th:text="${freeBoardDetailDto.fb_neuter}" />&nbsp;/
             나이   : <span th:text="${freeBoardDetailDto.fb_age}" />&nbsp;/
-            몸무게 : <span th:text="${freeBoardDetailDto.fb_weight}" /> kg
-            지역   : <span th:text="${freeBoardDetailDto.fb_region}" />
+            몸무게 : <span th:text="${freeBoardDetailDto.fb_weight}" /> kg&nbsp;/
+
+            <span th:if="${freeBoardDetailDto.fb_region == '1'}">지역 : 서울특별시</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '2'}">지역 : 부산광역시</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '3'} " >지역 : 대구광역시</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '4'}" >지역 : 인천광역시</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '5'} " >지역 : 광주광역시</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '6'}" >지역 : 세종특별자치시</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '7'}" >지역 : 대전광역시</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '8'}" >지역 : 울산광역시</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '9'}" >지역 : 경기도</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '10'}" >지역 : 강원특별자치도</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '11'}" >지역 : 충청북도</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '12'}" >지역 : 충청남도</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '13'}" >지역 : 전라북도</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '14'}" >지역 : 전라남도</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '15'}" >지역 : 경상북도</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '16'}" >지역 : 경상남도</span>
+            <span th:if="${freeBoardDetailDto.fb_region == '17'}" >지역 : 제주특별자치도</span>
+
 
             <!--내용-->
             <div class="m-5">

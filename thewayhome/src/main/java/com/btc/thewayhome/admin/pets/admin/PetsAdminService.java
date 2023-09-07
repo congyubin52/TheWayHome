@@ -2,7 +2,6 @@ package com.btc.thewayhome.admin.pets.admin;
 
 import com.btc.thewayhome.admin.member.AdminMemberDto;
 import com.btc.thewayhome.page.Criteria;
-import com.btc.thewayhome.page.PageMakerDto;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,9 +16,9 @@ import java.util.Map;
 
 @Log4j2
 @Service
-public class PetsAdminService implements IPetsAdminService {
+public class PetsAdminService implements IPetsAdminService{
 
-    final static public int PETS_REGISTER_SUCCESS = 1;        // 신규 도서 등록 성공
+    final static public int PETS_REGISTER_SUCCESS = 1;		// 신규 도서 등록 성공
     final static public int PETS_REGISTER_FAIL = -1;
 
     @Autowired
@@ -51,7 +50,7 @@ public class PetsAdminService implements IPetsAdminService {
                 String[] splitKindCd = kindCd.split(" ");
                 if (splitKindCd.length > 0) {
                     petsAdminDto.setAn_an_kind(splitKindCd[0]);
-                    if (splitKindCd.length > 1) {
+                    if(splitKindCd.length > 1){
                         StringBuilder an_k_kind = new StringBuilder();
                         for (int j = 1; j < splitKindCd.length; j++) {
                             if (j > 1) {
@@ -82,7 +81,7 @@ public class PetsAdminService implements IPetsAdminService {
 
                 boolean isPetsNumInfo = iPetsAdminDaoMapper.isPetsNumInfo(petsAdminDto);
 
-                if (!isPetsNumInfo) {
+                if(!isPetsNumInfo) {
                     // 중복되는 유기번호가 없어야만 DB에 api데이터가 들어갈 수 있다.
                     iPetsAdminDaoMapper.insertPetsInfo(petsAdminDto);
                 }
@@ -96,74 +95,54 @@ public class PetsAdminService implements IPetsAdminService {
 
     //보호소 리스트 -> SUPER, 일반 ADMIN에 따라 나눔
     @Override
-    public Map<String, Object> searchShelterList(AdminMemberDto loginedAdminMemberDto, int pageNum, int amount) {
+    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto) {
         log.info("searchShelterList()");
-        Map<String, Object> map = new HashMap<>();
+//        Map<String, Object> map = new HashMap<>();
 
-        Criteria criteria = new Criteria(pageNum, amount);
-        List<AdminShelterListInfoDto> adminShelterListInfoDtos = iPetsAdminDaoMapper.selectAllShelterList(criteria.getSkip(), criteria.getAmount());
+//        Criteria criteria = new Criteria(pageNum, amount);
 
-        int totalCnt = iPetsAdminDaoMapper.getTotalCnt();
-        PageMakerDto pageMakerDto = new PageMakerDto(criteria, totalCnt);
+//        List<AdminShelterListInfoDto> adminShelterListInfoDtos = iPetsAdminDaoMapper.pageList(criteria);
+//
+//        int total
 
-        if (adminShelterListInfoDtos != null) {
+        //일반 admin 찾기
+        boolean isAdmin = iPetsAdminDaoMapper.isAdminMemberBasic(loginedAdminMemberDto.getA_m_id(), loginedAdminMemberDto.getA_m_approval());
 
-            //일반 admin 찾기
-            boolean isAdmin = iPetsAdminDaoMapper.isAdminMemberBasic(loginedAdminMemberDto.getA_m_id(), loginedAdminMemberDto.getA_m_approval());
+        List<AdminShelterListInfoDto> adminShelterListInfoDtos;
 
+        if(isAdmin) {
+            log.info("isAdmin()");
 
-            if (isAdmin) {
-                log.info("isAdmin()");
+            // 일반 ADMIN인 경우
+            adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelter(loginedAdminMemberDto);
 
-                // 일반 ADMIN인 경우
-                adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelter(loginedAdminMemberDto);
+        } else {
+            //super 계정 찾기
+            boolean isSuper = iPetsAdminDaoMapper.isAdminMemberSuper(loginedAdminMemberDto.getA_m_approval());
+
+            if (isSuper) {
+                log.info("isSuper()");
+                // SUPER ADMIN인 경우
+                adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelterSuper();
 
             } else {
-                //super 계정 찾기
-                boolean isSuper = iPetsAdminDaoMapper.isAdminMemberSuper(loginedAdminMemberDto.getA_m_approval());
-
-                if (isSuper) {
-                    log.info("isSuper()");
-                    // SUPER ADMIN인 경우
-                    adminShelterListInfoDtos = iPetsAdminDaoMapper.selectShelterSuper();
-
-                }
+                return null;
 
             }
 
-//            log.info("pageMakerDtopageMakerDtopageMakerDtopageMakerDto" + pageMakerDto);
-
-            map.put("adminShelterListInfoDtos", adminShelterListInfoDtos);
-            map.put("pageMakerDto", pageMakerDto);
-
-            return map;
-
-        } else {
-            return null;
         }
+        return adminShelterListInfoDtos;
+
     }
 
-    // 보호 동물 리스트 - 보호소 리스트 상세 페이지
+    //보호 동물 리스트 - 보호소 리스트 상세 페이지
     @Override
-    public Map<String, Object> searchPetsList(String s_no, String searchOption, String searchInput, int pageNum, int amount) {
+    public List<PetsAdminDto> searchPetsList(String s_no, String searchOption, String searchInput) {
         log.info("searchShelterList()");
-        Map<String, Object> map = new HashMap<>();
 
-        Criteria criteria = new Criteria(pageNum, amount);
         List<PetsAdminDto> petsAdminDtos = iPetsAdminDaoMapper.selectPets(s_no, searchOption, searchInput);
-        List<PetsAdminDto> petsAdminDtosForList = iPetsAdminDaoMapper.selectPetsForList(criteria.getSkip(), criteria.getAmount());
-        int totalCnt = iPetsAdminDaoMapper.getTotalCntPets();
-        PageMakerDto pageMakerDto = new PageMakerDto(criteria, totalCnt);
 
-        if(petsAdminDtos != null){
-            map.put("petsAdminDtosForList", petsAdminDtosForList);
-            map.put("petsAdminDtos", petsAdminDtos);
-            map.put("pageMakerDto", pageMakerDto);
-            return map;
-
-        } else{
-          return null;
-        }
+        return petsAdminDtos;
 
     }
 
@@ -177,7 +156,7 @@ public class PetsAdminService implements IPetsAdminService {
 
         List<PetsAdminDto> petsAdminDtos;
 
-        if (isAdmin) {
+        if(isAdmin) {
             // 일반 ADMIN인 경우
             petsAdminDtos = iPetsAdminDaoMapper.selectAllPets(loginedAdminMemberDto);
 
@@ -216,7 +195,7 @@ public class PetsAdminService implements IPetsAdminService {
 
         int result = iPetsAdminDaoMapper.registPets(petsAdminDto);
 
-        if (result > 0) {
+        if(result > 0){
             return PETS_REGISTER_SUCCESS;
 
         } else {

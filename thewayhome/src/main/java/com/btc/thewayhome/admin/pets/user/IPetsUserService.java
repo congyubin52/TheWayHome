@@ -23,6 +23,6 @@ public interface IPetsUserService {
     //보호소 검색 엔진
     public List<UserShelterListInfoDto> shelterSearchBoxConfirm(UserShelterListInfoDto userShelterListInfoDto);
 
-    public List<PetsUserDto> searchShelterInfo(String s_no);
+    public PetsUserDto searchShelterInfo(String s_name);
 
 }

@@ -158,7 +158,7 @@
     </update>
 
     <!-- 보호소 리스트 - 관리자가 조회하는 페이지 -->
-    <select id="selectShelter"
+    <!--<select id="selectShelter"
             parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
             resultType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto">
         SELECT
@@ -177,10 +177,27 @@
             s_no = #{s_no}
         ORDER BY
              s_reg_date desc;
+    </select>-->
+
+    <select id="selectShelter"
+            parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
+            resultType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto">
+        SELECT
+            s_no,
+            s_name,
+            s_address,
+            s_phone,
+            a_m_reg_date
+        FROM
+            tbl_member_admin
+        WHERE
+            s_no = #{s_no}
+        ORDER BY
+            s_name ASC
     </select>
 
     <!-- 보호소 리스트 - super가 조회하는 페이지 -->
-    <select id="selectShelterSuper"
+    <!--<select id="selectShelterSuper"
             parameterType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto"
             resultType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto">
         SELECT
@@ -195,8 +212,42 @@
                 tbl_shelter_info i
             ON
                 n.s_name = i.s_name
-        ORDER BY
-            s_reg_date DESC;
+    </select> -->
+
+     <!--보호소 리스트 - super가 조회하는 페이지 -->
+    <select id="selectShelterSuper"
+            parameterType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto"
+            resultType="com.btc.thewayhome.admin.pets.admin.AdminShelterListInfoDto">
+        /*SELECT
+            n.s_no,
+            n.s_name,
+            i.s_address,
+            i.s_phone,
+            i.s_reg_date,
+            a.a_m_approval
+        FROM
+            tbl_member_admin a
+                JOIN
+                    tbl_shelter_num n
+                ON
+                    a.s_no = n.s_no
+                JOIN
+                    tbl_shelter_info i
+                ON
+                n.s_name = i.s_name
+        WHERE
+            a_m_approval = '1'*/
+        SELECT
+            s_no,
+            s_name,
+            s_address,
+            s_phone,
+            a_m_reg_date
+        FROM
+            tbl_member_admin
+        WHERE
+            a_m_approval = '1'
+
     </select>
 
     <!-- 보호소 리스트 - 일반 admin 검사 -->
@@ -255,7 +306,7 @@
             parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
         <choose>
-        <when test="searchInput == null">
+            <when test="searchInput == null or searchInput.equals('')">
         SELECT
             api.an_no,
             api.an_thumbnail,
@@ -274,10 +325,12 @@
                 api.s_name = ad.s_name
         WHERE
             ad.s_no = #{s_no}
+        ORDER BY
+            api.an_n_end ASC;
         </when>
         <otherwise>
             <choose>
-                <when test="searchOption == '0'">
+                <when test="searchOption eq '0'.toString()">
                     SELECT
                     api.an_no,
                     api.an_thumbnail,
@@ -296,6 +349,8 @@
                             api.s_name = ad.s_name
                     WHERE
                         api.an_an_kind like concat('%',#{searchInput},'%')
+                    AND
+                        ad.s_no = #{s_no}
                 </when>
                 <otherwise>
                     SELECT
@@ -316,7 +371,8 @@
                         api.s_name = ad.s_name
                     WHERE
                         api.an_k_kind like concat('%',#{searchInput},'%')
-
+                    AND
+                        ad.s_no = #{s_no}
                 </otherwise>
             </choose>
         </otherwise>
@@ -346,9 +402,11 @@
                 a.s_name = sn.s_name
         WHERE
             sn.s_no= ${s_no} AND use_yn = 'Y'
+        ORDER BY
+            a.an_n_end ASC;
     </select>
 
-    <!--보호 동물 리스트 - 보호동물 리스트 눌렀을 때 보호동물 불러오기 -->
+    <!--보호 동물 리스트 - 보호동물 리스트 눌렀을 때 보호동물 불러오기(super) -->
     <select id="selectAllPetsSuper"
             parameterType="com.btc.thewayhome.admin.member.AdminMemberDto"
             resultType="com.btc.thewayhome.admin.pets.admin.PetsAdminDto">
@@ -408,62 +466,5 @@
         WHERE
             an_no = #{an_no}
     </update>
-
-<!--  페이지 네이션을 위함 -->
-    <select id="selectAllShelterList" resultType="hashmap">
-        SELECT
-            *
-        FROM
-            tbl_shelter_num n
-                INNER JOIN
-            tbl_shelter_info i
-            ON
-                n.s_name = i.s_name
-        ORDER BY
-            s_reg_date DESC
-            LIMIT
-            #{skip}, #{amount}
-    </select>
-
-    <!-- 총 개수 -->
-    <select id="getTotalCnt" resultType="Integer">
-        SELECT
-            COUNT(*)
-        FROM
-            tbl_shelter_num n
-                INNER JOIN
-            tbl_shelter_info i
-            ON
-                n.s_name = i.s_name
-    </select>
-
-
-    <select id="selectPetsForList" resultType="hashmap">
-        SELECT
-            *
-        FROM
-            tbl_animal_api AS api
-                JOIN
-            tbl_member_admin AS ad
-            ON
-                api.s_name = ad.s_name
---         ORDER BY
-            LIMIT
-            #{skip}, #{amount}
-    </select>
-
-
-    <select id="getTotalCntPets" resultType="Integer">
-        SELECT
-            COUNT(*)
-        FROM
-                tbl_animal_api AS api
-                        JOIN
-                            tbl_member_admin AS ad
-        ON
-            api.s_name = ad.s_name
-    </select>
-
-
 
 </mapper>

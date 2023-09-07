@@ -153,7 +153,7 @@
         UPDATE
             tbl_member_admin
         SET
-            a_m_pw = #{a_m_pw},
+            s_phone = #{s_phone},
             a_m_mod_date = NOW()
         WHERE
             a_m_no = #{a_m_no}
@@ -218,6 +218,8 @@
             a_m_mod_date = NOW()
         WHERE
             a_m_no = #{a_m_no}
+        AND
+            use_yn = 'Y'
     </update>
 
     <!-- admin 승인 처리 - a_m_approval 값을 받기 위함 -->

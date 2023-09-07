@@ -56,10 +56,14 @@ public class SpringSecurityConfig {
                                 "/user/member/create_account_confirm",
 								"/user/board/review_board",
                                 "/user/board/review_detail",
-								"/user/board/",
+								"/user/board",
 								"/user/board/free_board_list",
 								"/user/board/free_board_detail",
-								"/UploadImg/**").permitAll()
+								"/UploadImg/**",
+								"/user/comment/review_detail_json",
+								"/user/pets/all_pets_list",
+								"/user/pets/shelter_list"
+								).permitAll()
 						.anyRequest().authenticated()  // 해당 경로 외의 요청은 모두 인증 필요
 				)
 				.formLogin(login -> login  // 로그인 시 폼(form)을 이용
@@ -122,7 +126,7 @@ public class SpringSecurityConfig {
 				.authorizeHttpRequests(request -> request
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-								"/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()
+								"/admin/member/create_account_form", "/admin/member/create_account_confirm", "/admin/pets/shelter_list").permitAll()
 						.anyRequest().authenticated()
 				)
 				.formLogin(login -> login

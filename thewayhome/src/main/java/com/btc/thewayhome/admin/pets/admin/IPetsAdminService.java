@@ -3,17 +3,16 @@ package com.btc.thewayhome.admin.pets.admin;
 import com.btc.thewayhome.admin.member.AdminMemberDto;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IPetsAdminService {
 
     public void petsRegistInfo(String responseString, PetsAdminDto petsAdminDto);
 
     //보호소 리스트
-    public Map<String, Object> searchShelterList(AdminMemberDto loginedAdminMemberDto, int pageNum, int amount);
+    public List<AdminShelterListInfoDto> searchShelterList(AdminMemberDto loginedAdminMemberDto);
 
     //보호 동물 리스트(보호소 리스트 상세 페이지)
-    public Map<String, Object> searchPetsList(String s_no, String searchOption, String searchInput, int pageNum, int amount);
+    public List<PetsAdminDto> searchPetsList(String s_no, String searchOption, String searchInput);
 
     //보호 동물 전체 리스트(보호소 리스트 상세 페이지) - 일반 admin
     List<PetsAdminDto> searchAllPetsList(AdminMemberDto loginedAdminMemberDto);

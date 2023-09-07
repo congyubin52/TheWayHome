@@ -36,14 +36,14 @@ public class FreeBoardUserService implements IFreeBoardUserService {
     }
 
     @Override
-    public Map<String, Object> getAllFreeBoard(int pageNum, int amount) {
+    public Map<String, Object> getAllFreeBoard(int pageNum, int amount, String searchOption, String searchInput) {
         log.info("getAllFreeBoard()");
 
         Map<String, Object> map = new HashMap<>();
 
         //페이지 네이션
         Criteria criteria = new Criteria(pageNum, amount);
-        List<FreeBoardUserDto> freeBoardUserDtos = iFreeBoardUserDaoMapper.selectAllFreeBoard(criteria.getSkip(), criteria.getAmount());
+        List<FreeBoardUserDto> freeBoardUserDtos = iFreeBoardUserDaoMapper.selectAllFreeBoard(criteria.getSkip(), criteria.getAmount(), searchOption, searchInput);
         int totalCnt = iFreeBoardUserDaoMapper.getTotalCnt();
         PageMakerDto pageMakerDto = new PageMakerDto(criteria, totalCnt);
 

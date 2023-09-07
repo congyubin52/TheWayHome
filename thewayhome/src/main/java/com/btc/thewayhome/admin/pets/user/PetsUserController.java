@@ -133,6 +133,25 @@ public class PetsUserController {
 
     }*/
 
+    /*// 보호 동물 입양 문의
+    @GetMapping("/adopt_pets_form")
+    public String adoptPetsConfirm(Model model,
+                                   @RequestParam("s_name") String s_name) {
+        log.info("adoptPetsConfirm()");
+
+        log.info("s_name----------->", s_name);
+
+        String nextPage = "admin/pets/user/user_adopt_pets_form";
+
+        List<PetsUserDto> petsUserDtos = petsUserService.searchShelterInfo(s_name);
+        model.addAttribute("petsUserDtos", petsUserDtos);
+
+        log.info("s_name----------->", s_name);
+
+        return nextPage;
+
+    }*/
+
     // 보호 동물 입양 문의
     @GetMapping("/adopt_pets_form")
     public String adoptPetsConfirm(Model model,
@@ -141,8 +160,11 @@ public class PetsUserController {
 
         String nextPage = "admin/pets/user/user_adopt_pets_form";
 
-        List<PetsUserDto> petsUserDtos = petsUserService.searchShelterInfo(s_name);
-        model.addAttribute("petsUserDtos", petsUserDtos);
+        PetsUserDto petsUserDto = petsUserService.searchShelterInfo(s_name);
+
+        log.info("s_name----------->{}", petsUserDto.getS_name());
+
+        model.addAttribute("petsUserDto", petsUserDto);
 
         return nextPage;
 

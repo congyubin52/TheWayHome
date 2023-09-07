@@ -2,6 +2,8 @@
 function createAccountForm() {
     console.log('createAccountForm() CALLED!!');
 
+    var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+    var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     let form = document.create_account_form;
     if (form.u_m_id.value == '') {
         alert('아이디를 입력하세요.');
@@ -23,11 +25,19 @@ function createAccountForm() {
         alert('메일을 입력하세요.');
         form.u_m_mail.focus();
 
-    } else if (form.u_m_phone.value == '') {
+    }  else if (!regExpEmail.test(form.u_m_mail.value)) {
+        alert('메일을 형식이 틀립니다..');
+        form.u_m_mail.focus();
+
+    }  else if (form.u_m_phone.value == '') {
         alert('연락처를 입력하세요.');
         form.u_m_phone.focus();
 
-    }  else if (form.u_m_pw_again.value != form.u_m_pw.value) {
+    } else if (!patternPhone.test(form.u_m_phone.value)) {
+        alert('연락처를 형식이 틀립니다.');
+        form.u_m_phone.focus();
+
+    }   else if (form.u_m_pw_again.value != form.u_m_pw.value) {
         alert('비밀번호가 일치하지 않습니다. \n다시 확인해주세요.');
         form.u_m_pw_again.focus();
 
@@ -64,21 +74,33 @@ function memberLoginForm() {
 function memberModifyForm() {
     console.log('memberModifyForm() CALLED!!');
 
+    var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+    var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+
     let form = document.member_modify_form;
 
     if (form.u_m_name.value == '') {
-        alert('INPUT NAME');
+        alert('이름을 입력하세요.');
         form.u_m_name.focus();
 
     }  else if (form.u_m_mail.value == '') {
-        alert('INPUT MAIL');
+        alert('이메일을 입력하세요.');
+        form.u_m_mail.focus();
+
+    } else if (!regExpEmail.test(form.u_m_mail.value)) {
+        alert('메일을 형식이 틀립니다..');
         form.u_m_mail.focus();
 
     } else if (form.u_m_phone.value == '') {
-        alert('INPUT PHONE');
+        alert('연락처를 입력하세요.');
         form.u_m_phone.focus();
 
-    } else {
+    } else if (!patternPhone.test(form.u_m_phone.value)) {
+        alert('연락처를 형식이 틀립니다.');
+        form.u_m_phone.focus();
+
+    }else {
         form.submit();
 
     }

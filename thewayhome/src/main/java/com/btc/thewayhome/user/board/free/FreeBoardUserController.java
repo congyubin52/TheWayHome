@@ -41,16 +41,43 @@ public class FreeBoardUserController {
     }
 
     // 실종/목격 게시판 리스트
+//    @GetMapping("/free_board_list")
+//    public String freeBoardList(Model model,
+//                                @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
+//                                @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount){
+//        log.info("freeBoardList()");
+//
+//        String nextPage = "/user/board/free/free_board_list";
+//
+//        //서비스에서 Map으로 넘겨주기 때문에 Map 타입으로 받음
+//        Map<String, Object> map = freeBoardUserService.getAllFreeBoard(pageNum, amount);
+//        List<FreeBoardUserDto> freeBoardUserDtos = (List<FreeBoardUserDto>) map.get("freeBoardUserDtos");
+//        PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
+//
+//        if(freeBoardUserDtos == null){
+//            log.info("freeBoardUserDtos IS NULL!!!");
+//
+//        } else {
+//            log.info("freeBoardUserDtos SELECT SUCCESS!!!");
+//            model.addAttribute("freeBoardUserDtos", freeBoardUserDtos);
+//            model.addAttribute("pageMakerDto", pageMakerDto);
+//
+//        }
+//        return nextPage;
+//
+//    }
     @GetMapping("/free_board_list")
     public String freeBoardList(Model model,
                                 @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
-                                @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount){
+                                @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount,
+                                @RequestParam(required = false, value = "searchOption")String searchOption,
+                                @RequestParam(required = false, value = "sNameInput")String searchInput){
         log.info("freeBoardList()");
 
-        String nextPage = "/user/board/free/free_board_list";
+        String nextPage = "user/board/free/free_board_list";
 
         //서비스에서 Map으로 넘겨주기 때문에 Map 타입으로 받음
-        Map<String, Object> map = freeBoardUserService.getAllFreeBoard(pageNum, amount);
+        Map<String, Object> map = freeBoardUserService.getAllFreeBoard(pageNum, amount, searchOption, searchInput);
         List<FreeBoardUserDto> freeBoardUserDtos = (List<FreeBoardUserDto>) map.get("freeBoardUserDtos");
         PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
 
@@ -201,6 +228,8 @@ public class FreeBoardUserController {
         return nextPage;
 
     }
+
+
 
 
 }

@@ -15,7 +15,6 @@
 
 <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
 <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
-<script th:replace="~{/admin/include/shelter_list_pagenation_js.html::js}" type="text/javascript"></script>
 
 <header th:replace="~{/admin/include/admin_head_header_footer.html::header}">
 </header>
@@ -23,19 +22,9 @@
 <section class="container">
     <div id="section_wrap">
 
-        <h1 class="word">보호소 리스트</h1>
+        <h1 class="word">보호소</h1>
 
-        <div id="search_box" class="mb-3">
-            <div class="col-md-2">
-            <select class="form-select" name="area">
-                <option value="area">지역설정</option>
-                <option value="area1">부산광역시</option>
-                <option value="area2">광주광역시</option>
-            </select>
-            </div>
-        </div>
-
-        <div id="shelter_list">
+        <div id="shelter_list" class="mb-3">
             <form th:action="@{/admin/pets/pets_list}" name="shelter_list" method="post">
                 <!-- Bootstrap 테이블 클래스를 추가합니다. -->
                 <table class="table table-bordered table-hover" style="background-color: #fff; border-radius: 10px;">
@@ -51,32 +40,33 @@
                     <tbody>
                     <tr th:each="dto: ${adminShelterListInfoDtos}">
                         <td class="s_no" th:text="${dto.s_no}"></td>
-                        <td class="s_name">
+                        <!--<td class="s_name">
                             <a th:href="@{/admin/pets/pets_list(s_no=${dto.s_no})}" th:text="${dto.s_name}" class="text-decoration-none text-dark"></a>
-                        </td>
+                        </td>-->
+                        <!--마우스 오버시 텍스트 출력-->
+                        <div class="container">
+                            <td class="s_name">
+                            <a th:href="@{/admin/pets/pets_list(s_no=${dto.s_no})}" data-toggle="tooltip"  th:text="${dto.s_name}" class="text-decoration-none text-dark" title="클릭시 보호 동물 페이지로 이동합니다."></a>
+                            </td>
+                        </div>
+                        <script>
+                            $(document).ready(function(){
+                                $('[data-toggle="tooltip"]').tooltip();
+                            });
+                        </script>
+
                         <td class="s_address" th:text="${dto.s_address}"></td>
                         <td class="s_phone" th:text="${dto.s_phone}"></td>
-                        <td class="s_reg_date" th:text="${dto.s_reg_date}"></td>
+                        <td class="s_reg_date" th:text="${dto.a_m_reg_date}"></td>
+                        <input type="hidden" th:value="${dto.a_m_approval}">
+                    </tr>
                     </tbody>
                 </table>
             </form>
         </div>
 
-<!--            <div class="w-25 p-3 mb-5 mx-auto text-center">-->
-
-<!--                <div class="mx-auto m5">-->
-<!--                    <div class="page_number">-->
-
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-
-    </div>
-
-    <div class="w-25 p-3 mb-5 mx-auto text-center">
-
-        <div class="mx-auto m5">
+        <!-- 페이지 네이션  -->
+        <div class="page_wrap">
             <div class="page_number">
 
             </div>

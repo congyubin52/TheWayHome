@@ -21,31 +21,31 @@
             <form th:action="@{/user/board/free_board_modify_confirm}" name="free_board_modify_confirm" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="fb_no" th:value="${freeBoardUserDto.fb_no}">
                 <select class="form-select form-select-sm mb-3" name="fb_category" th:value="${freeBoardUserDto.fb_category}">
-                    <option th:selected="${freeBoardUserDto.fb_category} == '0'">-- 실종/목격 선택하시오 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_category} == '1'">-- 실종 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_category} == '2'">-- 목격 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_category} == '0'" value="0">-- 실종/목격 선택하시오 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_category} == '1'" value="1">-- 실종 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_category} == '2'" value="2">-- 목격 --</option>
                 </select>
                 <input class="w-100 p-2 mb-3 border border-secondarys" style="border-radius: 3px;" type="text" name="fb_title" th:value="${freeBoardUserDto.fb_title}"><br>
 
                 <select class="form-select form-select-sm" name="fb_region" th:value="${freeBoardUserDto.fb_region}">
                     <option th:selected="${freeBoardUserDto.fb_region} == '0'" value="0" >-- 지역을 선택하시오 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '1'" value="1" >-- 서울특별시 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '2'" value="2" >-- 부산광역시 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '3'" value="3" >-- 대구광역시 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '4'" value="4" >-- 인천광역시 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '5'" value="5" >-- 광주광역시 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '6'" value="6" >-- 세종특별자치시 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '7'" value="7" >-- 대전광역시 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '8'" value="8" >-- 울산광역시 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '9'" value="9" >-- 경기도 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '10'" value="10" >-- 강원특별자치도 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '11'" value=11 >-- 충청북도 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '12'" value="12" >-- 충청남도 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '13'" value="13" >-- 전라북도 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '14'" value="14" >-- 전라남도 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '15'" value="15" >-- 경상북도 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '16'" value="16" >-- 경상남도 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_region} == '17'" value="17" >-- 제주특별자치도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '서울특별시'" value="서울특별시" >-- 서울특별시 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '부산광역시'" value="부산광역시" >-- 부산광역시 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '대구광역시'" value="대구광역시" >-- 대구광역시 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '인천광역시'" value="인천광역시" >-- 인천광역시 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '광주광역시'" value="광주광역시" >-- 광주광역시 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '세종특별자치시'" value="세종특별자치시" >-- 세종특별자치시 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '대전광역시'" value="대전광역시" >-- 대전광역시 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '울산광역시'" value="울산광역시" >-- 울산광역시 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '경기도'" value="경기도" >-- 경기도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '강원특별자치도'" value="강원특별자치도" >-- 강원특별자치도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '충청북도'" value=충청북도 >-- 충청북도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '충청남도'" value="충청남도" >-- 충청남도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '전라북도'" value="전라북도" >-- 전라북도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '전라남도'" value="전라남도" >-- 전라남도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '경상북도'" value="경상북도" >-- 경상북도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '경상남도'" value="경상남도" >-- 경상남도 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_region} == '제주특별자치도'" value="제주특별자치도" >-- 제주특별자치도 --</option>
                 </select><br>
                 품종 : <input class="form-control-sm mb-1" type="text" name="fb_kind" th:value="${freeBoardUserDto.fb_kind}">
                 색상 : <input class="form-control-sm mb-1" type="text" name="fb_color" th:value="${freeBoardUserDto.fb_color}"><br>

@@ -24,10 +24,10 @@
 <!--    </select>-->
 
     <!--보호소 리스트-->
-    <select id="selectShelter"
+    <!--<select id="selectShelter"
             resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
         <choose>
-            <when test="searchInput == null">
+            <when test="searchInput == null or searchInput.equals('')">
                 SELECT
                     n.s_no,
                     n.s_name,
@@ -45,7 +45,7 @@
             </when>
             <otherwise>
                 <choose>
-                    <when test="searchOption == '0'">
+                    <when test="searchOption eq '0'.toString()">
                         SELECT
                             n.s_no,
                             n.s_name,
@@ -84,14 +84,74 @@
                 </choose>
             </otherwise>
         </choose>
+    </select>-->
+
+
+
+    <select id="selectShelter"
+            resultType="com.btc.thewayhome.admin.pets.user.UserShelterListInfoDto">
+        <choose>
+            <when test="searchInput == null or searchInput.equals('')">
+                SELECT
+                    s_no,
+                    s_name,
+                    s_address,
+                    s_phone,
+                    a_m_reg_date
+                FROM
+                    tbl_member_admin
+                where
+                    a_m_approval = '1'
+                ORDER BY
+                    s_name ASC
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="searchOption eq '0'.toString()">
+                        SELECT
+                            s_no,
+                            s_name,
+                            s_address,
+                            s_phone,
+                            a_m_reg_date
+                        FROM
+                            tbl_member_admin
+                        WHERE
+                            s_name like concat('%', #{searchInput}  ,'%')
+                        AND
+                            a_m_approval = '1'
+                        ORDER BY
+                            s_name ASC
+                    </when>
+                    <otherwise>
+                        SELECT
+                            s_no,
+                            s_name,
+                            s_address,
+                            s_phone,
+                            a_m_reg_date
+                        FROM
+                            tbl_member_admin
+                        WHERE
+                            s_address like concat('%', #{searchInput}  ,'%')
+                        AND
+                            a_m_approval = '1'
+                        ORDER BY
+                            s_name ASC
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
     </select>
+
+
 
     <!--보호 동물 리스트(보호소 리스트 상세 페이지)-->
     <select id="selectPets"
-            parameterType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto"
+            parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.user.UserPetsListInfoDto">
         <choose>
-        <when test="searchInput == null">
+        <when test="searchInput == null or searchInput.equals('')">
         SELECT
             a.an_no,
             a.an_thumbnail,
@@ -112,7 +172,7 @@
         </when>
         <otherwise>
             <choose>
-                <when test="searchOption == '0'">
+                <when test="searchOption eq '0'.toString()">
                     SELECT
                         *
                     FROM
@@ -123,6 +183,8 @@
                             a.s_name = sn.s_name
                     WHERE
                         a.an_an_kind like concat('%',#{searchInput},'%')
+                    AND
+                        sn.s_no = #{s_no}
                 </when>
                 <otherwise>
                     SELECT
@@ -135,6 +197,8 @@
                             a.s_name = sn.s_name
                     WHERE
                         a.an_k_kind like concat('%',#{searchInput},'%')
+                    AND
+                        sn.s_no = #{s_no}
                 </otherwise>
             </choose>
         </otherwise>
@@ -265,7 +329,7 @@
     </select>-->
 
     <!-- 보호소 정보 상세 페이지 -->
-    <select id="selectShelterDetail"
+    <!--<select id="selectShelterDetail"
             parameterType="String"
             resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
 
@@ -282,6 +346,36 @@
                 a.s_name = sn.s_name
         WHERE
             sn.s_no = #{s_no}
+    </select>-->
+
+    <!-- 보호소 정보 상세 페이지 -->
+ <!--   <select id="selectShelterDetail"
+            parameterType="String"
+            resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
+        SELECT DISTINCT a.s_name,
+                        a.s_phone,
+                        a.s_address,
+                        a.an_reg_date
+        FROM
+            tbl_animal_api AS a
+            JOIN tbl_shelter_num AS sn
+            ON a.s_name = sn.s_name
+        where
+            a.s_name = #{s_name}
+        limit 1
+    </select>-->
+
+    <select id="selectShelterDetail"
+            parameterType="String"
+            resultType="com.btc.thewayhome.admin.pets.user.PetsUserDto">
+        SELECT s_name,
+               s_phone,
+               s_address,
+               s_reg_date
+        FROM
+            tbl_shelter_info
+        where
+            s_name = #{s_name}
     </select>
 
 </mapper>

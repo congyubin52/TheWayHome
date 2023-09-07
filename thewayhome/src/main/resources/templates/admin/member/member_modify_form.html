@@ -1,26 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <!--    <title th:replace="~{/include/title.html::title}"></title>-->
-    <title>회원정보 수정</title>
+<head th:replace="~{admin/include/admin_head_header_footer.html::head}">
     <link rel="stylesheet" th:href="@{/css/admin/common.css}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" th:href="@{/css/admin/common.css}">
-
-    <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
-    <script th:replace="~{/include/use_console.html::js}" type="text/javascript"></script>
-<!--    <script th:src="@{/js/admin/member_modify_form_js.js}"></script>-->
-    <script th:replace="~{/admin/include/admin_member_js.html::js}" type="text/javascript"></script>
-    <script th:src="@{/js/admin/member_delete_confirm.js}"></script>
-
 </head>
+
 <body>
+
+<script th:src="@{/js/admin/member_js.js}"></script>
+<script th:src="@{/js/admin/member_delete_confirm.js}"></script>
+
     <header th:replace="~{/admin/include/admin_head_header_footer.html::header}">
     </header>
-
 
     <section>
         <div id="section_wrap">
@@ -38,33 +28,33 @@
                 <form th:action="@{/admin/member/member_modify_confirm}" name="member_modify_form" method="post">
                     <input type="hidden" name="a_m_no" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.a_m_no}">
                     <div class="form-floating mb-3">
-                    <input type="text" name="a_m_id" class="form-control" id="floatingId" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.a_m_id}" readonly="readonly" disabled="disabled">
+                    <input type="text" name="a_m_id" class="form-control" id="floatingId" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.a_m_id}" readonly>
                         <label for="floatingId">ID</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" name="a_m_pw" value="******" class="form-control" id="floatingPassword"  >
+                        <input type="password" name="a_m_pw" value="******" class="form-control" id="floatingPassword" readonly disabled>
                         <label for="floatingPassword">Password</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="s_no" th:value="${session.loginedAdminMemberDto.s_no}" class="form-control" id="floatingSNo"  >
+                        <input type="text" name="s_no" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.s_no}" class="form-control" id="floatingSNo" readonly="readonly" disabled="disabled">
                         <label for="floatingSNo">고유번호</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="s_name" th:value="${session.loginedAdminMemberDto.s_name}" class="form-control" id="floatingSName"  >
+                        <input type="text" name="s_name" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.s_name}" class="form-control" id="floatingSName"  readonly="readonly" disabled="disabled">
                         <label for="floatingSName">name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="s_address" th:value="${session.loginedAdminMemberDto.s_address}" class="form-control" id="floatingSAddress"  >
+                        <input type="text" name="s_address" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.s_address}" class="form-control" id="floatingSAddress"  readonly="readonly" disabled="disabled">
                         <label for="floatingSAddress">Address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="s_phone" th:value="${session.loginedAdminMemberDto.s_phone}" class="form-control" id="floatingSPhone"  >
+                        <input type="text" name="s_phone" th:if="${session.loginedAdminMemberDto != null}" th:value="${session.loginedAdminMemberDto.s_phone}" class="form-control" id="floatingSPhone"  >
                         <label for="floatingSPhone">Phone</label>
                     </div>
                     <div class="text-center mb-4">
 <!--                    <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%">-->
-                        <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%" onclick="memberModifyForm()">
-                        <input type="button" value="비밀번호 변경" class="btn btn-dark" style="width:40%" th:onclick="|location.href='@{/user/member/member_password_modify_form}'|">
+                        <input type="button" value="회원정보 수정" class="btn btn-dark" style="width:40%" th:onclick="memberModifyForm()">
+                        <input type="button" value="비밀번호 변경" class="btn btn-dark" style="width:40%" th:onclick="|location.href='@{/admin/member/admin_password_modify_form}'|">
                     </div>
                 </form>
             </div>
@@ -72,7 +62,7 @@
 
             <div class="text-center m-5">
             <div class="go_delete_confirm">
-                <a th:href = "@{/admin/member/member_delete_confirm}" id="delete" th:attr="onclick=|deleteConfirm(event)|">회원탈퇴</a>
+                <a th:href = "@{/admin/member/member_delete_confirm}" class="btn btn-gray" id="delete" th:attr="onclick=|deleteConfirm(event)|">회원탈퇴</a>
             </div>
             </div>
 

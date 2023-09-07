@@ -29,5 +29,5 @@ public interface IPetsUserDaoMapper {
     public List<UserPetsListInfoDto> petsSelectBoxBySearch(UserPetsListInfoDto userPetsListInfoDto);
 
     // 보호소 정보 상세페이지
-    public List<PetsUserDto> selectShelterDetail(String s_name);
+    public PetsUserDto selectShelterDetail(String s_name);
 }

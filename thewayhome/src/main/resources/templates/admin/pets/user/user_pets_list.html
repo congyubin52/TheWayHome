@@ -39,7 +39,14 @@
                     <option value="1">품종</option>
                 </select>
                 <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
-                <input type="button" value="검색" th:attr="onclick=|searchBoxPetConfirm(event)|">
+
+                <button class="btn btn-outline-danger" placeholder="Search" th:attr="onclick=|searchBoxPetConfirm()|">Search</button>
+
+<!--                <button type="button" value="검색" th:attr="onclick=|searchBoxPetConfirm(event)|"> </button>-->
+
+<!--                <input class="form-control me-2" type="search" placeholder="검색어를 입력하세요" aria-label="Search" id="search">-->
+
+
 
                 <!--<form th:action="@{/user/pets/search_box_for_pets}" method="post" name="search_box_pets_form">
                     <input type="text" name="an_k_kind" placeholder="검색어를 입력하세요">
@@ -50,34 +57,30 @@
 
         <!-- Bootstrap 그리드로 게시물 표시 -->
         <div class="row">
-            <div class="col-md-3 " >
-                <div th:each="dto: ${petsUserDtos}" class="card mb-4">
-
-                    <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}" >
-                    <img th:src="${dto.an_thumbnail}" alt="Pet Image" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
-                         onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"
-                         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+            <div th:each="dto: ${petsUserDtos}" class="col-md-3">
+                <div class="card mb-4">
+                    <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}">
+                        <img th:src="${dto.an_thumbnail}" alt="Pet Image" class="d-block w-100 h-100 mb-4" style="max-height: 200px; object-fit: cover; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;"
+                             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(0, 0, 0, 0.2)';"
+                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
                     </a>
 
                     <div class="card-body">
-                            <input type="hidden" name="s_no" id="s_no" th:value="${dto.s_no}">
-                            <!--                       <p> <span class="an_no" th:text="${dto.an_no}"></span> | </p>-->
-                            <p><span class="an_n_no">
-<!--                            <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}" th:text="${dto.an_n_no}" class="text-decoration-none text-dark"></a>-->
-                       </span></p>
-                            <span class="an_k_kind" th:text="${dto.an_an_kind}">  |   </span>
-                            <span class="an_k_kind" th:text="${dto.an_k_kind}">  |   </span>
-                            <p><span class="an_p_s_state" th:text="${dto.an_p_s_state}"></span></p>
-
+                        <input type="hidden" name="s_no" th:value="${dto.s_no}">
+                        <p><span class="an_n_no">
+                    <!-- <a th:href="@{/user/pets/pets_list_detail(an_no=${dto.an_no})}" th:text="${dto.an_n_no}" class="text-decoration-none text-dark"></a> -->
+                </span></p>
+                        <span class="an_an_kind" th:text="${dto.an_an_kind}">  |   </span>
+                        <span class="an_k_kind" th:text="${dto.an_k_kind}">  |   </span>
+                        <p><span class="an_p_s_state" th:text="${dto.an_p_s_state}"></span></p>
                         <span class="an_n_end" th:text="${dto.an_n_start}"></span>
-                            <span> ~ </span>
-                            <span class="an_n_end" th:text="${dto.an_n_end}"></span>
-
+                        <span> ~ </span>
+                        <span class="an_n_end" th:text="${dto.an_n_end}"></span>
                     </div>
                 </div>
             </div>
-            <!--게시글 추가-->
         </div>
+
 
         <!-- 다른 게시물 추가 (동일한 방식으로) -->
 

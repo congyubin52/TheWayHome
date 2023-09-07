@@ -13,20 +13,83 @@
             (#{u_m_id}, #{fb_category}, #{fb_title}, #{fb_content}, #{fb_image}, #{fb_region}, #{fb_kind}, #{fb_color}, #{fb_age}, #{fb_weight}, #{fb_gender}, #{fb_neuter}, NOW(),NOW())
     </insert>
 
-    <select id="selectAllFreeBoard" resultType="hashmap">
-        SELECT
-            *
-        FROM
-            tbl_free_board
-        WHERE
-            use_yn = 'Y'
-        ORDER BY
-            fb_no DESC
-            LIMIT
-            #{skip}, #{amount}
-    </select>
+<!--    <select id="selectAllFreeBoard" resultType="hashmap">-->
+<!--        SELECT-->
+<!--            *-->
+<!--        FROM-->
+<!--            tbl_free_board-->
+<!--        WHERE-->
+<!--            use_yn = 'Y'-->
+<!--        ORDER BY-->
+<!--            fb_no DESC-->
+<!--            LIMIT-->
+<!--            #{skip}, #{amount}-->
+<!--    </select>-->
 
-    <!--후기 게시판 - 게시글 개수-->
+    <select id="selectAllFreeBoard" resultType="hashmap">
+            <choose>
+                <when test="searchInput eq null">
+                    SELECT
+                        *
+                    FROM
+                        tbl_free_board
+                    WHERE
+                        use_yn = 'Y'
+                    ORDER BY
+                        fb_no DESC
+                    LIMIT
+                        #{skip}, #{amount}
+                </when>
+                <otherwise>
+                    <choose>
+                        <when test="searchOption eq '0'.toString()">
+                            SELECT
+                                *
+                            FROM
+                                tbl_free_board
+                            WHERE
+                                use_yn = 'Y'
+                            AND
+                                fb_title like concat('%', #{searchInput}  ,'%')
+                            ORDER BY
+                                fb_no DESC
+                            LIMIT
+                                #{skip}, #{amount}
+                        </when>
+                        <when test="searchOption eq '1'.toString()">
+                            SELECT
+                                *
+                            FROM
+                                tbl_free_board
+                            WHERE
+                                use_yn = 'Y'
+                            AND
+                                fb_kind like concat('%', #{searchInput}  ,'%')
+                            ORDER BY
+                                fb_no DESC
+                            LIMIT
+                                #{skip}, #{amount}
+                        </when>
+                        <when test="searchOption eq '2'.toString()">
+                            SELECT
+                                *
+                            FROM
+                                tbl_free_board
+                            WHERE
+                                use_yn = 'Y'
+                            AND
+                                fb_region like concat('%', #{searchInput}  ,'%')
+                            ORDER BY
+                                fb_no DESC
+                            LIMIT
+                                #{skip}, #{amount}
+                        </when>
+                    </choose>
+                </otherwise>
+            </choose>
+        </select>
+
+        <!--후기 게시판 - 게시글 개수-->
     <select id="getTotalCnt" resultType="Integer">
         SELECT
             COUNT(*)
@@ -109,6 +172,7 @@
 
 
     </update>
+
 
 
 </mapper>

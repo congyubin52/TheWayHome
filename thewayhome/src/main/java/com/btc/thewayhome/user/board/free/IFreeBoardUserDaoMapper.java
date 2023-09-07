@@ -11,7 +11,7 @@ public interface IFreeBoardUserDaoMapper {
     public int insertFreeBoardContent(FreeBoardUserDto freeBoardUserDto);
 
     // 실종/목격 게시판 - 게시글 전체 리스트
-    public List<FreeBoardUserDto> selectAllFreeBoard(int skip, int amount);
+    public List<FreeBoardUserDto> selectAllFreeBoard(int skip, int amount, String searchOption, String searchInput);
 
     // 실종/목격 게시판 - 조회수
     public int updateHits(int fb_no);

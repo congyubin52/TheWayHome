@@ -217,10 +217,11 @@ public class AdminMemberService implements IAdminMemberService {
     public AdminMemberDto adminMemberPasswordModifyConfirm(AdminMemberDto adminMemberDto, String currentPw, String changePw) {
         log.info("adminMemberPasswordModifyConfirm()");
 
-        AdminMemberDto idVerifiedMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
+        AdminMemberDto loginedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
 
-        if (idVerifiedMemberDto != null && !passwordEncoder.matches(passwordEncoder.encode(adminMemberDto.getA_m_pw()),
-                idVerifiedMemberDto.getA_m_pw())) {
+        if (loginedAdminMemberDto != null && !passwordEncoder.matches(passwordEncoder.encode(adminMemberDto.getA_m_pw()),
+                loginedAdminMemberDto.getA_m_pw())) {
+            
             adminMemberDto.setA_m_pw(passwordEncoder.encode(changePw));
             int result = iAdminMemberDaoMapper.updateAdminMemberPassword(adminMemberDto);
 

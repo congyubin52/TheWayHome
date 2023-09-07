@@ -2,7 +2,6 @@ package com.btc.thewayhome.admin.member;
 
 import com.btc.thewayhome.admin.config.GetAreaData;
 import com.btc.thewayhome.admin.config.GetPetsData;
-import com.btc.thewayhome.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -103,7 +102,7 @@ public class AdminMemberController {
      * API DB에 저장 END
      */
 
-    // 보호소 회원가입(admin 회원가입)
+    // 보호소 회원가입 FORM(admin 회원가입)
     @GetMapping("/create_account_form")
     public String createAccountForm() {
         log.info("createAccountForm()");
@@ -114,6 +113,7 @@ public class AdminMemberController {
 
     }
 
+    // 보호소 회원가입 CONFIRM
     @PostMapping("/create_account_confirm")
     public String createAccountConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] createAccountConfirm()");
@@ -167,59 +167,6 @@ public class AdminMemberController {
         return nextPage;
 
     }
-    
-    // 관리자 정보수정 기능
-   /* @PostMapping("/member_modify_confirm")
-    public void memberModifyConfirm(HttpSession session, AdminMemberDto adminMemberDto, HttpServletResponse response) throws IOException {
-        log.info("memberModifyConfirm()");
-
-        // 정보 수정한 것을 Dto에 담아줌
-        AdminMemberDto loginedAdminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
-
-        // 위의 메서드에서 수정된 것이 있다면 session에 키,값 쌍으로 저장
-        if (loginedAdminMemberDto != null) {
-            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
-            session.setMaxInactiveInterval(60 * 30);
-
-            // alert를 띄우기 위한 코드
-            response.setContentType("text/html; charset=euc-kr");
-            PrintWriter out = response.getWriter();
-            // 성공 시 alert 메시지를 띄우고 페이지를 이동
-                out.println("<script>alert('수정이 완료되었습니다.'); location.href = \"/admin/member/member_modify_form\";</script>");
-                out.flush();
-        } else {
-            // 실패 시 alert 메시지를 띄우고 페이지를 이동
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert(''); location.href = \"/admin/member/member_modify_form\";</script>");
-            out.flush();
-
-        }
-    }
-
-    // 관리자 정보수정 기능
-    /*@PostMapping("/member_modify_confirm")
-    @ResponseBody
-    public AdminMemberDto memberModifyConfirm(@RequestBody Map<String, String> msgMap,HttpSession session) {
-        log.info("[AdminMemberController] memberModifyConfirm()");
-
-        //service에서 adminMemberDto로 받으므로 dto로 변환해서 들고 가야 함
-        AdminMemberDto adminMemberDto = new AdminMemberDto();
-        adminMemberDto.setA_m_no(Integer.parseInt(msgMap.get("a_m_no")));
-        adminMemberDto.setA_m_id(msgMap.get("a_m_id"));
-        adminMemberDto.setA_m_pw(msgMap.get("a_m_pw"));
-
-        adminMemberDto = adminMemberService.memberModifyConfirm(adminMemberDto);
-
-        if(adminMemberDto != null) {
-            AdminMemberDto loginedAdminMemberDto = adminMemberDto;
-            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
-            session.setMaxInactiveInterval(60*30);
-
-            return adminMemberDto;
-
-        }
-        return null;
-    }*/
 
     // 관리자 정보 수정 CONFIRM
     @PostMapping("/member_modify_confirm")
@@ -233,6 +180,9 @@ public class AdminMemberController {
         if(adminMemberDto != null) {
             session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
             session.setMaxInactiveInterval(60 * 30);
+
+            log.info("loginedAdminMemberDto----------------->", loginedAdminMemberDto.getA_m_pw());
+
         } else {
             nextPage = "redirect:/admin/member/member_modify_form";
 
@@ -242,11 +192,11 @@ public class AdminMemberController {
     }
 
     // 관리자 비밀번호 수정 FORM
-    @GetMapping ("/member_password_modify_form")
+    @GetMapping ("/admin_password_modify_form")
     public String adminMemeberPasswordModfiyForm() {
         log.info("adminMemeberPasswordModfiyForm()");
 
-        String nextPage = "/admin/member/member_password_modify_form";
+        String nextPage = "admin/member/admin_password_modify_form";
 
         return nextPage;
 
@@ -261,7 +211,7 @@ public class AdminMemberController {
                                                    @RequestParam("a_m_Re_pw") String changePw) throws IOException {
         log.info("adminMemeberPasswordModfiyConfirm()");
 
-        String nextPage = "redirect:/";
+        String nextPage = "redirect:/admin";
 
         AdminMemberDto loginedAdminMemberDto = adminMemberService.adminMemberPasswordModifyConfirm(adminMemberDto, currentPw, changePw);
 
@@ -278,6 +228,9 @@ public class AdminMemberController {
         }
         return nextPage;
     }
+    /*
+     * 관리자 정보 수정 END
+     */
     
     // 관리자 계정 삭제 기능
     @GetMapping("/member_delete_confirm")
