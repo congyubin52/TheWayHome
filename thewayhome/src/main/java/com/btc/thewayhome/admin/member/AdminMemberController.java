@@ -115,17 +115,24 @@ public class AdminMemberController {
 
     // 보호소 회원가입 CONFIRM
     @PostMapping("/create_account_confirm")
-    public String createAccountConfirm(AdminMemberDto adminMemberDto) {
+    public String createAccountConfirm(AdminMemberDto adminMemberDto, Model model) {
         log.info("[AdminMemberController] createAccountConfirm()");
 
-        String nextPage = "redirect:/admin/member/create_account_form";
+        String nextPage = "admin/member/create_account_fail";
 
         int result = adminMemberService.createAccountConfirm(adminMemberDto);
 
         if(result > adminMemberService.INSERT_FAIL_AT_DATABASE) {
+            model.addAttribute("a_m_id", adminMemberDto.getA_m_id());
+            model.addAttribute("s_no", adminMemberDto.getS_no());
             nextPage = "/admin/member/create_account_success";
 
         }
+
+//        else if(result == adminMemberService.INSERT_FAIL_AT_DATABASE){
+////            nextPage = "/admin/member/create_account_fail";
+//        }
+
         return nextPage;
 
     }

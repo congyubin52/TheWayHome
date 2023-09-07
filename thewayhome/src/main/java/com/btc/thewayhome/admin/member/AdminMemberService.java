@@ -187,7 +187,9 @@ public class AdminMemberService implements IAdminMemberService {
             return result;
 
         } else {
-            return INSERT_FAIL_AT_DATABASE;
+
+
+            return INSERT_FAIL_AT_DATABASE; // 0
 
         }
 
