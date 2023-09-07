@@ -49,6 +49,14 @@ public interface IPetsAdminDaoMapper {
     // 보호 동물 삭제
     public int deletePetsConfirm(String an_no);
 
+    public List<AdminShelterListInfoDto> selectAllShelterList(int skip, int amount);
+
+    public int getTotalCnt();
+
+    public int getTotalCntPets();
+
+    public List<PetsAdminDto> selectPetsForList(int skip, int amount);
+
 
 //    public int selectPetsForDelete(String an_no);
 

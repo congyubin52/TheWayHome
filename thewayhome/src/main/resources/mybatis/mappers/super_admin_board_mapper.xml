@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.thewayhome.admin.board.free.IFreeBoardAdminDaoMapper">
+
+    <select id="selectAllFreeBoard" resultType="hashmap">
+        SELECT
+            *
+        FROM
+            tbl_free_board
+        WHERE
+            use_yn = 'Y'
+        ORDER BY
+            fb_no DESC
+            LIMIT
+            #{skip}, #{amount}
+    </select>
+
+    <select id="getTotalCnt" resultType="Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_free_board
+        WHERE
+            use_yn = "Y"
+    </select>
+
+    <select id="selectContent"
+            parameterType="com.btc.thewayhome.user.board.free.FreeBoardUserDto"
+            resultType="com.btc.thewayhome.user.board.free.FreeBoardUserDto">
+        SELECT
+            *
+        FROM
+            tbl_free_board
+        WHERE
+            fb_no = #{fb_no}
+          AND
+            use_yn = 'Y'
+    </select>
+
+    <update id="deleteFreeBoard"
+            parameterType="Integer" >
+        UPDATE
+            tbl_free_board
+        SET
+            use_yn = 'N'
+        WHERE
+            fb_no = #{fb_no}
+
+    </update>
+
+
+</mapper>

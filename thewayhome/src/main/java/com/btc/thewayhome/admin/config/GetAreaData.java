@@ -48,7 +48,7 @@ public class GetAreaData {
                     "&_type=json" +
                     "&pageNo=1" +
                     "&numOfRows=17";
-            System.out.println(">>url: " + apiUrl);
+            log.info(">>url: " + apiUrl);
             URL url = new URL(apiUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -79,7 +79,7 @@ public class GetAreaData {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject jObj = (JSONObject) array.get(i);
                 orgCd = jObj.get("orgCd").toString();
-                System.out.println("orgCd : " + orgCd);
+                log.info("orgCd : " + orgCd);
                 orgCdList.add(jObj.get("orgCd").toString());
 
             }
@@ -89,8 +89,8 @@ public class GetAreaData {
             e.printStackTrace();
         }
 
-        System.out.println("---------> " + orgCdList);
-        // result 리스트에 "orgCd" 값들이 저장되어 있음 ---------> [6110000, 6260000, 6270000, 6280000, 6290000]
+        log.info("---------> " + orgCdList);
+
         Map<String, Object> resultMap = new HashMap<>();
 
         for (int i = 0; i < orgCdList.size(); i++) {
@@ -102,7 +102,7 @@ public class GetAreaData {
                         "&_type=json" +
                         "&pageNo=1" +
                         "&numOfRows=10";
-                System.out.println(">>url: " + apiUrl);
+                log.info(">>url: " + apiUrl);
                 URL url = new URL(apiUrl);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -141,7 +141,7 @@ public class GetAreaData {
                         }
                         resultMap.put(orgCdList.get(i), kindCollectList); // map의 키에 시도코드의 리스트의 값들을 넣어준다.
                         // value에는 시도코드에 따른 시군구 코드의 list를 넣어준다.
-                        System.out.println("resultMap!!!!!!!!!!" + resultMap.get(orgCdList.get(i)));
+                        log.info("resultMap!!!!!!!!!!" + resultMap.get(orgCdList.get(i)));
                     }
                 }
             } catch (Exception e) {
@@ -150,8 +150,8 @@ public class GetAreaData {
         } // try 반복문 끝
 
 
-        System.out.println("sigungu!!!!---------> " + sigunguCdList); // 시군구 코드 출력
-        System.out.println("orgCdList!!!!---------> " + orgCdList); // 시군구 코드 출력
+        log.info("sigungu!!!!---------> " + sigunguCdList); // 시군구 코드 출력
+        log.info("orgCdList!!!!---------> " + orgCdList); // 시군구 코드 출력
 
         List<String> keyList = new ArrayList<>();
 
@@ -159,11 +159,11 @@ public class GetAreaData {
         while (keys.hasNext()) {
             String key = keys.next();
             resultMap.get(key);
-            System.out.println("key-------->" + key);
+            log.info("key-------->" + key);
             keyList.add(key);
         }
 
-        System.out.println("keyList!!!!" + keyList);
+        log.info("keyList!!!!" + keyList);
 
 
         List<String> shelterNumLists = new ArrayList<>();
@@ -184,7 +184,7 @@ public class GetAreaData {
                             "&_type=json" +
                             "&pageNo=2" +
                             "&numOfRows=100";
-                    System.out.println(">>url: " + apiUrl);
+                    log.info(">>url: " + apiUrl);
                     URL url = new URL(apiUrl);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(); // url 객체를 사용하여 HTTP 연결을 엽니다.
                     urlConnection.setRequestMethod("GET"); // HTTP 요청 메서드를 설정합니다. 이 경우 "GET" 메서드를 사용하여 서버로부터 데이터를 가져옵니다.

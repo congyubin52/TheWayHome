@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,12 +46,19 @@ public class PetsAdminController {
         // 로그인된 관리자 계정으로 볼 수 있도록 하기 위해 session에 담아놨던 정보 가지고 옴 
         AdminMemberDto loginedAdminMemberDto = (AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 
+
+
+
         // 여러 개의 보호소들을 담아주기 위해 List 사용
 //        List<AdminShelterListInfoDto> adminShelterListInfoDtos = petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
-        Map<String, Object> map = (Map<String, Object>) petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
+        Map<String, Object> map = petsAdminService.searchShelterList(loginedAdminMemberDto, pageNum, amount);
 
 
         List<AdminShelterListInfoDto> adminShelterListInfoDtos = (List<AdminShelterListInfoDto>) map.get("adminShelterListInfoDtos");
+
+        log.info("AdminShelterListInfoDtoAdminShelterListInfoDtoAdminShelterListInfoDtoAdminShelterListInfoDtoAdminShelterListInfoDto" + adminShelterListInfoDtos.size());
+
+
         PageMakerDto pageMakerDto = (PageMakerDto) map.get("pageMakerDto");
 
         model.addAttribute("adminShelterListInfoDtos", adminShelterListInfoDtos);
@@ -74,11 +82,14 @@ public class PetsAdminController {
 
     }*/
 
+    // 보호 동물(보호소 눌렀을때 나오는 보호 동물)
     @GetMapping("/pets_list")
     public String petsList(Model model,
                            @RequestParam("s_no") String s_no,
                            @RequestParam(required = false, value = "searchOption")String searchOption,
-                           @RequestParam(required = false, value = "sNameInput")String searchInput) {
+                           @RequestParam(required = false, value = "sNameInput")String searchInput,
+                           @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
+                           @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount) {
         log.info("petsList()");
 
         log.info("----------->{}", searchOption);
@@ -86,21 +97,29 @@ public class PetsAdminController {
 
         String nextPage = "admin/pets/admin/admin_pets_list";
 
-        List<PetsAdminDto> petsAdminDtos = petsAdminService.searchPetsList(s_no, searchOption, searchInput);
+//        List<PetsAdminDto> petsAdminDtos = petsAdminService.searchPetsList(s_no, searchOption, searchInput);
+        Map<String, Object> map =  petsAdminService.searchPetsList(s_no, searchOption, searchInput, pageNum, amount);
+        List<PetsAdminDto> petsAdminDtos = (List<PetsAdminDto>)map.get("petsAdminDtos");
+        List<PetsAdminDto> petsAdminDtosForList = (List<PetsAdminDto>)map.get("petsAdminDtosForList");
+        PageMakerDto pageMakerDto = (PageMakerDto)map.get("petsAdminDtosForList");
+
 
         if(petsAdminDtos != null) {
             log.info("searchPetsList SUCCESS");
             model.addAttribute("petsAdminDtos", petsAdminDtos);
+            model.addAttribute("petsAdminDtosForList", petsAdminDtosForList);
+            model.addAttribute("pageMakerDto",pageMakerDto);
 
         } else {
             log.info("searchPetsList FAIL");
+
 
         }
         return nextPage;
 
     }
 
-    // 보호 동물 리스트 -> 메뉴바에서 보호동물 클릭 시 나타나는 페이지
+    // 보호 동물 리스트 -> 사용자 메뉴바에서 보호동물 클릭 시 나타나는 페이지
     @GetMapping("/all_pets_list")
     public String allPetsList(Model model, HttpSession session) {
         log.info("allPetsList()");

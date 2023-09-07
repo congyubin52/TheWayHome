@@ -26,6 +26,7 @@ public class GetPetsData {
     @Autowired
     AdminMemberService adminMemberService;
 
+
     public void getpets(){
 
         List<String> result = new ArrayList<>();
