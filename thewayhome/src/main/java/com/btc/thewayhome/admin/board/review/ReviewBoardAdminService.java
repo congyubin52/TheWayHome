@@ -19,6 +19,7 @@ public class ReviewBoardAdminService implements IReviewBoardAdminService{
     @Autowired
     IReviewBoardAdminDaoMapper iReviewBoardAdminDaoMapper;
 
+    // 후기 게시판 리스트 출력과 페이지 네이션
     @Override
     public Map<String, Object> superReviewBoardList(int pageNum, int amount) {
         log.info("superReviewBoardList");
@@ -43,6 +44,7 @@ public class ReviewBoardAdminService implements IReviewBoardAdminService{
         }
     }
 
+    // 후기 게시판 상세보기
     @Override
     public Map<String, Object> superReviewBoardDetail(int r_b_no, ReviewBoardUserDto reviewBoardUserDto) {
         log.info("superReviewBoardDetail()");
@@ -57,6 +59,7 @@ public class ReviewBoardAdminService implements IReviewBoardAdminService{
         return map;
     }
 
+    // super 관리자가 게시글 삭제
     public int superReviewBoardDelete(int r_b_no) {
         log.info("superReviewBoardDelete()");
 

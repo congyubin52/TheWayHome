@@ -31,6 +31,7 @@ public class FreeBoardAdminController {
     @Autowired
     FreeBoardAdminService freeBoardAdminService;
 
+    // 실종 목격 게시판 리스트 출력과 페이지 네이션
     @GetMapping("/super_free_board_list")
     public String superFreeBoardList(Model model,
                                 @RequestParam(value="pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,

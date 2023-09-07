@@ -18,6 +18,7 @@ public class FreeBoardAdminService implements IFreeBoardAdminService{
     @Autowired
     IFreeBoardAdminDaoMapper iFreeBoardAdminDaoMapper;
 
+    // 실종/목격 게시글 리스트 출력과 페이지네이션
     @Override
     public Map<String, Object> superFreeBoardList(int pageNum, int amount) {
         log.info("superFreeBoardList");
@@ -43,6 +44,8 @@ public class FreeBoardAdminService implements IFreeBoardAdminService{
         }
 
     }
+
+    // 실종/목격 게시글 상세 페이지
     @Override
     public Map<String, Object> superFreeBoardDetail(int fb_no, FreeBoardUserDto freeBoardUserDto) {
 
@@ -67,7 +70,7 @@ public class FreeBoardAdminService implements IFreeBoardAdminService{
 
     }
 
-    // 게시글 삭제
+    // 실종/목격 게시글 삭제
     @Override
     public int superFreeBoardDelete(int fb_no) {
         log.info("superFreeBoardDelete()");

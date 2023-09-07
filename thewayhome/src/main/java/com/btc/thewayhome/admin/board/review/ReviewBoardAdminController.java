@@ -75,7 +75,7 @@ public class ReviewBoardAdminController {
 
     }
 
-    // 실종/목격 게시판 삭제
+    // 후기 게시판 삭제
     @GetMapping("/super_review_board_delete_confirm")
     public String reviewBoardDelete(@RequestParam("fb_no") int r_b_no, HttpServletResponse response) throws IOException {
         log.info("reviewBoardDelete");

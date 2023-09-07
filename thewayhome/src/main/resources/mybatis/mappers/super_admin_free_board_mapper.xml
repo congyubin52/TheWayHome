@@ -18,6 +18,7 @@
             #{skip}, #{amount}
     </select>
 
+<!--  실종 목격 게시판의 페이지 네이션을 위해 전체 페이지 수 알기  -->
     <select id="getTotalCnt" resultType="Integer">
         SELECT
             COUNT(*)
@@ -27,6 +28,7 @@
             use_yn = "Y"
     </select>
 
+<!--  실종 목격 게시판 상세 보기  -->
     <select id="selectContent"
             parameterType="com.btc.thewayhome.user.board.free.FreeBoardUserDto"
             resultType="com.btc.thewayhome.user.board.free.FreeBoardUserDto">

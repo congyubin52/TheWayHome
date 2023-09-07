@@ -4,6 +4,7 @@
 
 <mapper namespace="com.btc.thewayhome.admin.board.review.IReviewBoardAdminDaoMapper">
 
+<!--  후기 게시글 페이지 네이션  -->
     <select id="selectAllReviewBoard" resultType="hashmap">
         SELECT
             *
@@ -17,6 +18,7 @@
             #{skip}, #{amount}
     </select>
 
+<!--  후기 게시글 총 페이지수 알기  -->
     <select id="getTotalCnt" resultType="Integer">
         SELECT
             COUNT(*)
@@ -26,6 +28,7 @@
             use_yn = 'Y'
     </select>
 
+<!--  후기 게시글 상세페이지  -->
     <select id="selectReviewDetail" parameterType="Integer" resultType="com.btc.thewayhome.user.board.review.ReviewBoardUserDto">
         SELECT
             *
