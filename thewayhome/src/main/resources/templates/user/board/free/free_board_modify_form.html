@@ -21,9 +21,9 @@
             <form th:action="@{/user/board/free_board_modify_confirm}" name="free_board_modify_confirm" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="fb_no" th:value="${freeBoardUserDto.fb_no}">
                 <select class="form-select form-select-sm mb-3" name="fb_category" th:value="${freeBoardUserDto.fb_category}">
-                    <option th:selected="${freeBoardUserDto.fb_category} == '0'">-- 실종/목격 선택하시오 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_category} == '1'">-- 실종 --</option>
-                    <option th:selected="${freeBoardUserDto.fb_category} == '2'">-- 목격 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_category} == '0'" value="0">-- 실종/목격 선택하시오 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_category} == '1'" value="1">-- 실종 --</option>
+                    <option th:selected="${freeBoardUserDto.fb_category} == '2'" value="2">-- 목격 --</option>
                 </select>
                 <input class="w-100 p-2 mb-3 border border-secondarys" style="border-radius: 3px;" type="text" name="fb_title" th:value="${freeBoardUserDto.fb_title}"><br>
 
